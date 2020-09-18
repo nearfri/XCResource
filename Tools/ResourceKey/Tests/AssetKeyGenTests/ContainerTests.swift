@@ -1,5 +1,4 @@
 import XCTest
-import SampleData
 @testable import AssetKeyGen
 
 final class ContainerRecordTests: XCTestCase {
@@ -14,14 +13,6 @@ final class ContainerRecordTests: XCTestCase {
         XCTAssertEqual(container.type, .folder)
         XCTAssertEqual(container.providesNamespace, false)
         XCTAssertEqual(container.name, "Common")
-    }
-    
-    func assetURL(_ name: String = "") -> URL {
-        let fullName = "Resources/Media.xcassets\(name.isEmpty ? "" : "/\(name)")"
-        guard let url = Bundle.sample.url(forResource: fullName, withExtension: nil) else {
-            preconditionFailure("Media.xcassets not found. Bundle: \(Bundle.sample.bundlePath)")
-        }
-        return url
     }
     
     func test_initContentsOf_namespaceFolder() throws {

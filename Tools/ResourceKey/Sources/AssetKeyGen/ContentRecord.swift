@@ -26,7 +26,7 @@ struct ContentRecord: Decodable {
             case providesNamespace = "provides-namespace"
         }
         
-        var providesNamespace: Bool
+        var providesNamespace: Bool?
     }
     
     fileprivate enum CodingKeys: String, CodingKey {

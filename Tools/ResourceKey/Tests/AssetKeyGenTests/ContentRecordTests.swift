@@ -20,6 +20,16 @@ final class ContentRecordTests: XCTestCase {
         XCTAssertEqual(content.properties?.providesNamespace, true)
     }
     
+    func test_initFromDecoder_onDemandFolder() throws {
+        // When
+        let content = try JSONDecoder().decode(ContentRecord.self, from: Seed.onDemandFolderJSON)
+        
+        // Then
+        XCTAssertNil(content.type)
+        XCTAssertNotNil(content.properties)
+        XCTAssertNil(content.properties?.providesNamespace)
+    }
+    
     func test_initFromDecoder_image() throws {
         // When
         let content = try JSONDecoder().decode(ContentRecord.self, from: Seed.imageJSON)
@@ -57,6 +67,20 @@ private enum Seed {
       },
       "properties" : {
         "provides-namespace" : true
+      }
+    }
+    """.data(using: .utf8)!
+    
+    static let onDemandFolderJSON = """
+    {
+      "info" : {
+        "author" : "xcode",
+        "version" : 1
+      },
+      "properties" : {
+        "on-demand-resource-tags" : [
+          "customTag"
+        ]
       }
     }
     """.data(using: .utf8)!
