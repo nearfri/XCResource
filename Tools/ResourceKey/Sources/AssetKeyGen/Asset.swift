@@ -1,5 +1,6 @@
 import Foundation
 
+
 // Node, Asset, Folder, Group, Leaf
 // keyPath, contentType("", images, colors
 protocol AssetNode: AnyObject {

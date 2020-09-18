@@ -34,6 +34,13 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "AssetKeyGenTests",
-            dependencies: ["AssetKeyGen"])
+            dependencies: ["AssetKeyGen", "SampleData"]),
+        
+        .target(
+            name: "SampleData",
+            resources: [
+                // 테스트용 애셋 폴더로 쓰기 위해 통째로 복사한다.
+                .copy("Resources"),
+            ]),
     ]
 )
