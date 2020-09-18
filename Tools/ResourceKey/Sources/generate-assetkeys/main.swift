@@ -1,0 +1,15 @@
+import Foundation
+import ArgumentParser
+
+// argument 파싱
+// xcasset 폴더 뒤져서 모델화
+// 필요한 타입들만 필터링
+//   빈 폴더는 제거해야 함
+// 코드로 생성
+//   테스트 argument 있으면 테스트 파일에 모든 키 추출
+
+// generate-assetkeys -i Assets.xcassets -i Assets2.xcassets -o ImageKey.swift
+let inputFiles: [String] = []
+let outputFile: String = ""
+let inputURL: URL = URL(fileURLWithPath: "/")
+let outputURL: URL = URL(fileURLWithPath: "/")
