@@ -15,7 +15,7 @@ final class TreeTests: XCTestCase {
         XCTAssertEqual(parent.children.first, child)
     }
     
-    func test_makeIterator() {
+    func test_preOrderSequence() {
         // Given
         let a = Tree("a")
         
@@ -40,11 +40,12 @@ final class TreeTests: XCTestCase {
         ac.addChild(acc)
         
         // When
-        let allElements: [String] = a.reduce(into: []) { $0.append($1) }
+        let allTrees: [Tree<String>] = PreOrderTreeSequence(tree: a)
+            .reduce(into: [], { $0.append($1) })
         
         // Then
-        XCTAssertEqual(allElements, [
-            "a", "aa", "aaa", "aab", "ab", "aba", "abaa", "ac", "aca", "acb", "acc"
+        XCTAssertEqual(allTrees, [
+            a, aa, aaa, aab, ab, aba, abaa, ac, aca, acb, acc
         ])
     }
 }

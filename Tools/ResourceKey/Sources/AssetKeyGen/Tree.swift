@@ -31,22 +31,24 @@ extension Tree: Hashable {
     }
 }
 
-extension Tree: Sequence {
+struct PreOrderTreeSequence<Element>: Sequence {
+    let tree: Tree<Element>
+    
     func makeIterator() -> Iterator {
-        return Iterator(root: self)
+        return Iterator(tree: tree)
     }
     
     struct Iterator: IteratorProtocol {
-        private var stack: [Tree]
+        private var stack: [Tree<Element>]
         
-        init(root: Tree) {
-            self.stack = [root]
+        init(tree: Tree<Element>) {
+            self.stack = [tree]
         }
         
-        mutating func next() -> Element? {
+        mutating func next() -> Tree<Element>? {
             guard let last = stack.popLast() else { return nil }
             stack.append(contentsOf: last.children.reversed())
-            return last.element
+            return last
         }
     }
 }
