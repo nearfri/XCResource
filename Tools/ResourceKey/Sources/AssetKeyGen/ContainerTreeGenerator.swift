@@ -13,7 +13,8 @@ private struct GeneratorInternal {
     
     func load() throws -> ContainerTree {
         let tree = Tree(try Container(contentsOf: url))
-        for case let childURL as URL in try makeShallowDirectoryEnumerator() {
+        
+        for childURL in try childURLs() {
             guard let resourceValues = try? childURL.resourceValues(forKeys: [.isDirectoryKey]),
                   let isDirectory = resourceValues.isDirectory else { continue }
             
@@ -22,24 +23,19 @@ private struct GeneratorInternal {
                 tree.addChild(childTree)
             }
         }
+        
         return tree
     }
     
-    private func makeShallowDirectoryEnumerator() throws -> FileManager.DirectoryEnumerator {
+    private func childURLs() throws -> [URL] {
         let fm = FileManager.default
         let resourceKeys: [URLResourceKey] = [.isDirectoryKey]
-        let options: FileManager.DirectoryEnumerationOptions = [
-            .skipsHiddenFiles, .skipsSubdirectoryDescendants
-        ]
-        
-        let enumerator = fm.enumerator(at: url,
-                                       includingPropertiesForKeys: resourceKeys,
-                                       options: options)
-        guard let result = enumerator else {
-            throw NSError(domain: URLError.errorDomain,
-                          code: URLError.fileDoesNotExist.rawValue,
-                          userInfo: nil)
+        let options: FileManager.DirectoryEnumerationOptions = [.skipsHiddenFiles]
+        let childURLs = try fm.contentsOfDirectory(at: url,
+                                                   includingPropertiesForKeys: resourceKeys,
+                                                   options: options)
+        return childURLs.sorted { lhs, rhs -> Bool in
+            lhs.path.localizedStandardCompare(rhs.path) == .orderedAscending
         }
-        return result
     }
 }
