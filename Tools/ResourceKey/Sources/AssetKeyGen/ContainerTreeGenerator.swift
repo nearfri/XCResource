@@ -1,7 +1,5 @@
 import Foundation
 
-typealias ContainerTree = Tree<Container>
-
 class ContainerTreeGenerator {
     func load(contentsOf url: URL) throws -> ContainerTree {
         return try GeneratorInternal(url: url).load()
@@ -12,7 +10,7 @@ private struct GeneratorInternal {
     let url: URL
     
     func load() throws -> ContainerTree {
-        let tree = Tree(try Container(contentsOf: url))
+        let tree = ContainerTree(try Container(contentsOf: url))
         
         for childURL in try childURLs() {
             guard let resourceValues = try? childURL.resourceValues(forKeys: [.isDirectoryKey]),

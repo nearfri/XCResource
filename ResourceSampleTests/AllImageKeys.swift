@@ -1,6 +1,8 @@
 import Foundation
 @testable import ResourceSample
 
-let allImageKeys: [ImageKey] = [
-    .btnSelect,
-]
+extension ImageKey {
+    static let allGeneratedKeys: [ImageKey] = [
+        .btnSelect,
+    ]
+}

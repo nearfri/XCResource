@@ -40,8 +40,7 @@ final class TreeTests: XCTestCase {
         ac.addChild(acc)
         
         // When
-        let allTrees: [Tree<String>] = PreOrderTreeSequence(tree: a)
-            .reduce(into: [], { $0.append($1) })
+        let allTrees: [Tree<String>] = a.makePreOrderSequence().reduce(into: [], { $0.append($1) })
         
         // Then
         XCTAssertEqual(allTrees, [

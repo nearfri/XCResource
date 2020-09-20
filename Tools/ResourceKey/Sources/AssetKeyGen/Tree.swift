@@ -31,6 +31,12 @@ extension Tree: Hashable {
     }
 }
 
+extension Tree {
+    func makePreOrderSequence() -> PreOrderTreeSequence<Element> {
+        return PreOrderTreeSequence(tree: self)
+    }
+}
+
 struct PreOrderTreeSequence<Element>: Sequence {
     let tree: Tree<Element>
     
