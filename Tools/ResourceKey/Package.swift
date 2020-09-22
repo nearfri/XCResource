@@ -8,7 +8,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [.macOS(.v10_15)],
     products: [
-        .executable(name: "generate-assetkeys", targets: ["generate-assetkeys"]),
+        .executable(name: "generate-asset-keys", targets: ["generate-asset-keys"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
     ],
     dependencies: [
@@ -20,14 +20,14 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "generate-assetkeys",
+            name: "generate-asset-keys",
             dependencies: [
                 "AssetKeyGen",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]),
         .testTarget(
-            name: "generate-assetkeysTests",
-            dependencies: ["generate-assetkeys"]),
+            name: "generate-asset-keysTests",
+            dependencies: ["generate-asset-keys"]),
         
         .target(
             name: "AssetKeyGen",

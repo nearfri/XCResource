@@ -42,9 +42,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "generate-assetkeys"
-               BuildableName = "generate-assetkeys"
-               BlueprintName = "generate-assetkeys"
+               BlueprintIdentifier = "generate-asset-keys"
+               BuildableName = "generate-asset-keys"
+               BlueprintName = "generate-asset-keys"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -70,9 +70,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "generate-assetkeysTests"
-               BuildableName = "generate-assetkeysTests"
-               BlueprintName = "generate-assetkeysTests"
+               BlueprintIdentifier = "generate-asset-keysTests"
+               BuildableName = "generate-asset-keysTests"
+               BlueprintName = "generate-asset-keysTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -112,9 +112,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "generate-assetkeysTests"
-               BuildableName = "generate-assetkeysTests"
-               BlueprintName = "generate-assetkeysTests"
+               BlueprintIdentifier = "generate-asset-keysTests"
+               BuildableName = "generate-asset-keysTests"
+               BlueprintName = "generate-asset-keysTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -133,9 +133,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "generate-assetkeys"
-            BuildableName = "generate-assetkeys"
-            BlueprintName = "generate-assetkeys"
+            BlueprintIdentifier = "generate-asset-keys"
+            BuildableName = "generate-asset-keys"
+            BlueprintName = "generate-asset-keys"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
@@ -149,9 +149,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "generate-assetkeys"
-            BuildableName = "generate-assetkeys"
-            BlueprintName = "generate-assetkeys"
+            BlueprintIdentifier = "generate-asset-keys"
+            BuildableName = "generate-asset-keys"
+            BlueprintName = "generate-asset-keys"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

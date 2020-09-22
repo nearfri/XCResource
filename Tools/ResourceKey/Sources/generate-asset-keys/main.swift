@@ -14,7 +14,7 @@ import AssetKeyGen
 // --output-file
 // --key-list-file
 // --module-name
-// generate-assetkeys -i Assets.xcassets -i Assets2.xcassets -o ImageKey.swift
+// generate-asset-keys -i Assets.xcassets -i Assets2.xcassets -o ImageKey.swift
 
 extension AssetType: ExpressibleByArgument {
     public init?(argument: String) {
@@ -35,7 +35,7 @@ extension AssetType: ExpressibleByArgument {
     }
 }
 
-struct Command: ParsableCommand {
+struct GenerateAssetKeys: ParsableCommand {
     @Option(name: .customLong("input-xcassets"))
     var inputXCAssets: [String]
     
@@ -67,4 +67,4 @@ struct Command: ParsableCommand {
     }
 }
 
-Command.main()
+GenerateAssetKeys.main()
