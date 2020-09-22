@@ -1,5 +1,6 @@
 import Foundation
 import ArgumentParser
+import AssetKeyGen
 
 // argument 파싱
 // v xcasset 폴더 뒤져서 모델화
@@ -14,7 +15,56 @@ import ArgumentParser
 // --key-list-file
 // --module-name
 // generate-assetkeys -i Assets.xcassets -i Assets2.xcassets -o ImageKey.swift
-let inputFiles: [String] = []
-let outputFile: String = ""
-let inputURL: URL = URL(fileURLWithPath: "/")
-let outputURL: URL = URL(fileURLWithPath: "/")
+
+extension AssetType: ExpressibleByArgument {
+    public init?(argument: String) {
+        switch argument {
+        case "image":   self = .imageSet
+        case "color":   self = .colorSet
+        case "symbol":  self = .symbolSet
+        default:        return nil
+        }
+    }
+    
+    public var defaultValueDescription: String {
+        return "image"
+    }
+    
+    public static var allValueStrings: [String] {
+        return ["image", "color", "symbol"]
+    }
+}
+
+struct Command: ParsableCommand {
+    @Option(name: .customLong("input-xcassets"))
+    var inputXCAssets: [String]
+    
+    @Option var assetType: AssetType = .imageSet
+    
+    @Option var keyTypeName: String
+    
+    @Option var moduleName: String?
+    
+    @Flag var excludeTypeDeclation: Bool = false
+    
+    @Option var outputFile: String
+    
+    @Option var keyListFile: String
+    
+    mutating func run() throws {
+        let codes = try generateCodes()
+        
+        print(codes)
+    }
+    
+    private func generateCodes() throws -> AssetKeyGenerator.Result {
+        let generatorRequest = AssetKeyGenerator.Request(
+            catalogURLs: inputXCAssets.map({ URL(fileURLWithPath: $0) }),
+            assetType: assetType,
+            keyTypeName: keyTypeName)
+        
+        return try AssetKeyGenerator().generate(for: generatorRequest)
+    }
+}
+
+Command.main()

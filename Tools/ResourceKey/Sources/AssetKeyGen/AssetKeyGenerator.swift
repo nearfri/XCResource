@@ -16,17 +16,29 @@ protocol KeyListGenerator: AnyObject {
     func generate(from catalogs: [AssetCatalog], keyTypeName: String) -> String
 }
 
-public extension AssetKeyGenerator {
-    struct Request {
-        var catalogURLs: [URL]
-        var assetType: AssetType
-        var keyTypeName: String
+extension AssetKeyGenerator {
+    public struct Request {
+        public var catalogURLs: [URL]
+        public var assetType: AssetType
+        public var keyTypeName: String
+        
+        public init(catalogURLs: [URL], assetType: AssetType, keyTypeName: String) {
+            self.catalogURLs = catalogURLs
+            self.assetType = assetType
+            self.keyTypeName = keyTypeName
+        }
     }
     
-    struct Result {
-        var typeDeclaration: String
-        var keyDeclarations: String
-        var keyList: String
+    public struct Result {
+        public var typeDeclaration: String
+        public var keyDeclarations: String
+        public var keyList: String
+        
+        public init(typeDeclaration: String, keyDeclarations: String, keyList: String) {
+            self.typeDeclaration = typeDeclaration
+            self.keyDeclarations = keyDeclarations
+            self.keyList = keyList
+        }
     }
 }
 
