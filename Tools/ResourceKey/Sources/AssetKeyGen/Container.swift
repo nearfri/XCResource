@@ -2,6 +2,14 @@ import Foundation
 
 enum ContainerType {
     case folder, imageSet, colorSet, symbolSet
+    
+    init(_ assetType: AssetType) {
+        switch assetType {
+        case .imageSet:     self = .imageSet
+        case .colorSet:     self = .colorSet
+        case .symbolSet:    self = .symbolSet
+        }
+    }
 }
 
 struct Container {

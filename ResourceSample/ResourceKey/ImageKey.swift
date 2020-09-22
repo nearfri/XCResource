@@ -12,7 +12,11 @@ struct ImageKey: ExpressibleByStringLiteral {
     }
 }
 
+// MARK: - Media.xcassets
+
 extension ImageKey {
-    // MARK: - ImageKey > Button
+    
+    // MARK: Common/Button
     static let btnSelect: ImageKey = "btnSelect"
+    
 }
