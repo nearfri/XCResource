@@ -1,20 +1,12 @@
 import Foundation
 import ArgumentParser
 import AssetKeyGen
+import Util
 
-// argument 파싱
-// v xcasset 폴더 뒤져서 모델화
-// 필요한 타입들만 필터링해서 코드로 생성
-//   테스트 파일 argument 있으면 테스트 파일에 모든 키 추출. 모듈 이름도 있으면 @test import 추가
-
-// --input-xcassets
-// --asset-type
-// --key-type-name
-// --excludes-type-declaration or includes-type-declaration
-// --output-file
-// --key-list-file
-// --module-name
-// generate-asset-keys -i Assets.xcassets -i Assets2.xcassets -o ImageKey.swift
+// 주석도 넣어줘야 함
+// 모듈 이름도 있으면 @test import 추가
+// ~ 처리 추가해야 함
+// relativePath 버그를 Asset에서 고칠지, ActualKeyDeclarationGenerator에서 고칠지 고민..
 
 extension AssetType: ExpressibleByArgument {
     public init?(argument: String) {
@@ -47,23 +39,39 @@ struct GenerateAssetKeys: ParsableCommand {
     
     @Flag var excludeTypeDeclation: Bool = false
     
-    @Option var outputFile: String
+    @Option var keyDeclFile: String
     
-    @Option var keyListFile: String
+    @Option var keyListFile: String?
     
     mutating func run() throws {
         let codes = try generateCodes()
         
-        print(codes)
+        try writeKeyDeclFile(from: codes)
+        
+        try writeKeyListFileIfNeeded(from: codes)
     }
     
     private func generateCodes() throws -> AssetKeyGenerator.Result {
-        let generatorRequest = AssetKeyGenerator.Request(
+        let request = AssetKeyGenerator.Request(
             catalogURLs: inputXCAssets.map({ URL(fileURLWithPath: $0) }),
             assetType: assetType,
             keyTypeName: keyTypeName)
         
-        return try AssetKeyGenerator().generate(for: generatorRequest)
+        return try AssetKeyGenerator().generate(for: request)
+    }
+    
+    private func writeKeyDeclFile(from codes: AssetKeyGenerator.Result) throws {
+        var stream = try TextFileOutputStream(forWritingTo: keyDeclFile)
+        if !excludeTypeDeclation {
+            print(codes.typeDeclaration, to: &stream)
+        }
+        print(codes.keyDeclarations, to: &stream)
+    }
+    
+    private func writeKeyListFileIfNeeded(from codes: AssetKeyGenerator.Result) throws {
+        guard let keyListFile = keyListFile else { return }
+        var stream = try TextFileOutputStream(forWritingTo: keyListFile)
+        print(codes.keyList, to: &stream)
     }
 }
 

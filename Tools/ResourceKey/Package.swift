@@ -23,6 +23,7 @@ let package = Package(
             name: "generate-asset-keys",
             dependencies: [
                 "AssetKeyGen",
+                "Util",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]),
         .testTarget(
@@ -35,6 +36,13 @@ let package = Package(
         .testTarget(
             name: "AssetKeyGenTests",
             dependencies: ["AssetKeyGen", "SampleData"]),
+        
+        .target(
+            name: "Util",
+            dependencies: []),
+        .testTarget(
+            name: "UtilTests",
+            dependencies: ["Util"]),
         
         .target(
             name: "SampleData",

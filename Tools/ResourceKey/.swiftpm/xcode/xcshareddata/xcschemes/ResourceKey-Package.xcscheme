@@ -90,6 +90,20 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Util"
+               BuildableName = "Util"
+               BlueprintName = "Util"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -115,6 +129,16 @@
                BlueprintIdentifier = "generate-asset-keysTests"
                BuildableName = "generate-asset-keysTests"
                BlueprintName = "generate-asset-keysTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "UtilTests"
+               BuildableName = "UtilTests"
+               BlueprintName = "UtilTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

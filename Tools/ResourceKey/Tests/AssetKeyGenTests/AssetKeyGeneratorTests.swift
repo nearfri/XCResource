@@ -39,6 +39,8 @@ final class AssetKeyGeneratorTests: XCTestCase {
     var sut: AssetKeyGenerator!
     
     override func setUp() {
+        super.setUp()
+        
         sut = AssetKeyGenerator(
             catalogFetcher: StubAssetCatalogFetcher(),
             typeDeclarationGenerator: StubTypeDeclarationGenerator(),
