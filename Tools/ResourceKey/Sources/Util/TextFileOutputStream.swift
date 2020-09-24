@@ -24,7 +24,7 @@ public class TextFileOutputStream {
     }
     
     public convenience init(forWritingTo path: String, append shouldAppend: Bool = false) throws {
-        try self.init(forWritingTo: URL(fileURLWithPath: path))
+        try self.init(forWritingTo: URL(fileURLWithExpandingTildeInPath: path))
     }
     
     public func close() throws {

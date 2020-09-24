@@ -5,7 +5,6 @@ import Util
 
 // 주석도 넣어줘야 함
 // 모듈 이름도 있으면 @test import 추가
-// ~ 처리 추가해야 함
 // relativePath 버그를 Asset에서 고칠지, ActualKeyDeclarationGenerator에서 고칠지 고민..
 
 extension AssetType: ExpressibleByArgument {
@@ -53,7 +52,7 @@ struct GenerateAssetKeys: ParsableCommand {
     
     private func generateCodes() throws -> AssetKeyGenerator.Result {
         let request = AssetKeyGenerator.Request(
-            catalogURLs: inputXCAssets.map({ URL(fileURLWithPath: $0) }),
+            catalogURLs: inputXCAssets.map({ URL(fileURLWithExpandingTildeInPath: $0) }),
             assetType: assetType,
             keyTypeName: keyTypeName)
         
