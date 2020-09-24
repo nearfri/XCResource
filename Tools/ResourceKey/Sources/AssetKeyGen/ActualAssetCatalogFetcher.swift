@@ -7,7 +7,7 @@ class ActualAssetCatalogFetcher: AssetCatalogFetcher {
         let assets = rootContainer
             .makePreOrderSequence()
             .filter({ $0.element.type == containerType })
-            .map({ Asset(name: $0.fullName, relativePath: $0.relativePath) })
+            .map({ Asset(name: $0.fullName, path: $0.relativePath) })
         
         return AssetCatalog(name: rootContainer.fullName, assets: assets)
     }

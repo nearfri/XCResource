@@ -1,4 +1,5 @@
 import Foundation
+import Util
 
 typealias ContainerTree = Tree<Container>
 
@@ -19,6 +20,6 @@ extension ContainerTree {
     var relativePath: String {
         guard let parent = parent else { return "" }
         
-        return parent.relativePath.appendingPathComponent(element.name)
+        return parent.relativePath.appendingPathComponent(element.url.lastPathComponent)
     }
 }

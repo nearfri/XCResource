@@ -8,14 +8,14 @@ final class ActualKeyListGeneratorTests: XCTestCase {
             AssetCatalog(
                 name: "Media.xcassets",
                 assets: [
-                    Asset(name: "buttonSelect", relativePath: "Common/Buttons"),
-                    Asset(name: "checkIcon", relativePath: "Common/Icons")
+                    Asset(name: "buttonSelect", path: "Common/Buttons"),
+                    Asset(name: "checkIcon", path: "Common/Icons")
                 ]),
             AssetCatalog(
                 name: "Extra.xcassets",
                 assets: [
-                    Asset(name: "dice", relativePath: "Toy/Cube"),
-                    Asset(name: "dolphin", relativePath: "Animal/Sea")
+                    Asset(name: "dice", path: "Toy/Cube"),
+                    Asset(name: "dolphin", path: "Animal/Sea")
                 ]),
         ]
         let keyTypeName = "ImageKey"

@@ -16,8 +16,8 @@ final class ContainerTreeTests: XCTestCase {
                 providesNamespace: false))
         let grandchild = ContainerTree(
             Container(
-                url: URL(fileURLWithPath: "grandchild"),
-                type: .folder,
+                url: URL(fileURLWithPath: "grandchild.imageset"),
+                type: .imageSet,
                 providesNamespace: false))
         
         root.addChild(child)
@@ -43,8 +43,8 @@ final class ContainerTreeTests: XCTestCase {
                 providesNamespace: false))
         let grandchild = ContainerTree(
             Container(
-                url: URL(fileURLWithPath: "grandchild"),
-                type: .folder,
+                url: URL(fileURLWithPath: "grandchild.imageset"),
+                type: .imageSet,
                 providesNamespace: false))
         
         root.addChild(child)
@@ -70,8 +70,8 @@ final class ContainerTreeTests: XCTestCase {
                 providesNamespace: true))
         let grandchild = ContainerTree(
             Container(
-                url: URL(fileURLWithPath: "grandchild"),
-                type: .folder,
+                url: URL(fileURLWithPath: "grandchild.imageset"),
+                type: .imageSet,
                 providesNamespace: false))
         
         root.addChild(child)
@@ -97,8 +97,8 @@ final class ContainerTreeTests: XCTestCase {
                 providesNamespace: true))
         let grandchild = ContainerTree(
             Container(
-                url: URL(fileURLWithPath: "grandchild"),
-                type: .folder,
+                url: URL(fileURLWithPath: "grandchild.imageset"),
+                type: .imageSet,
                 providesNamespace: false))
         
         root.addChild(child)
@@ -124,8 +124,8 @@ final class ContainerTreeTests: XCTestCase {
                 providesNamespace: false))
         let grandchild = ContainerTree(
             Container(
-                url: URL(fileURLWithPath: "grandchild"),
-                type: .folder,
+                url: URL(fileURLWithPath: "grandchild.imageset"),
+                type: .imageSet,
                 providesNamespace: false))
         
         root.addChild(child)
@@ -134,6 +134,6 @@ final class ContainerTreeTests: XCTestCase {
         // Then
         XCTAssertEqual(root.relativePath, "")
         XCTAssertEqual(child.relativePath, "child")
-        XCTAssertEqual(grandchild.relativePath, "child/grandchild")
+        XCTAssertEqual(grandchild.relativePath, "child/grandchild.imageset")
     }
 }

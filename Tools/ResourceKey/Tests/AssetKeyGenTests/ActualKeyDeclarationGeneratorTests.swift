@@ -7,8 +7,8 @@ final class ActualKeyDeclarationGeneratorTests: XCTestCase {
         let catalog = AssetCatalog(
             name: "Media.xcassets",
             assets: [
-                Asset(name: "buttonSelect", relativePath: "Common/Buttons"),
-                Asset(name: "checkIcon", relativePath: "Common/Icons")
+                Asset(name: "buttonSelect", path: "Common/Buttons/buttonSelect.imageset"),
+                Asset(name: "checkIcon", path: "Common/Icons/checkIcon.imageset")
             ])
         let keyTypeName = "ImageKey"
         

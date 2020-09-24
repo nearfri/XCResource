@@ -18,10 +18,6 @@ class StubTypeDeclarationGenerator: TypeDeclarationGenerator {
 class StubKeyDeclarationGenerator: KeyDeclarationGenerator {
     static let declarationsString = "{ Key Declaration }"
     
-    static func declarationsString(count: Int) -> String {
-        return Array(repeating: declarationsString, count: count).reduce(into: "", +=)
-    }
-    
     func generate(from catalog: AssetCatalog, keyTypeName: String) -> String {
         return Self.declarationsString
     }
@@ -61,8 +57,11 @@ final class AssetKeyGeneratorTests: XCTestCase {
         // Then
         XCTAssertEqual(result.typeDeclaration, StubTypeDeclarationGenerator.declarationString)
         
-        XCTAssertEqual(result.keyDeclarations,
-                       StubKeyDeclarationGenerator.declarationsString(count: 2))
+        XCTAssertEqual(
+            result.keyDeclarations,
+            Array(repeating: StubKeyDeclarationGenerator.declarationsString, count: 2)
+                .joined(separator: "")
+        )
         
         XCTAssertEqual(result.keyList, StubKeyListGenerator.keyListString)
     }

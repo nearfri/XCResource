@@ -32,7 +32,7 @@ let package = Package(
         
         .target(
             name: "AssetKeyGen",
-            dependencies: []),
+            dependencies: ["Util"]),
         .testTarget(
             name: "AssetKeyGenTests",
             dependencies: ["AssetKeyGen", "SampleData"]),

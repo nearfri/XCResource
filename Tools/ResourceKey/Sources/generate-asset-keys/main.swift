@@ -5,7 +5,6 @@ import Util
 
 // 주석도 넣어줘야 함
 // 모듈 이름도 있으면 @test import 추가
-// relativePath 버그를 Asset에서 고칠지, ActualKeyDeclarationGenerator에서 고칠지 고민..
 
 extension AssetType: ExpressibleByArgument {
     public init?(argument: String) {
