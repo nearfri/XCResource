@@ -5,10 +5,14 @@ extension String {
         if isEmpty { return str }
         if str.isEmpty { return self }
         
-        if hasSuffix("/") || str.hasPrefix("/") {
+        switch (hasSuffix("/"), str.hasPrefix("/")) {
+        case (false, false):
+            return self + "/" + str
+        case (true, false), (false, true):
             return self + str
+        case (true, true):
+            return self + str.dropFirst()
         }
-        return self + "/" + str
     }
     
     public var deletingLastPathComponent: String {

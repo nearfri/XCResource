@@ -15,9 +15,7 @@ final class StringTests: XCTestCase {
         
         XCTAssertEqual("hello".appendingPathComponent("/world"), "hello/world")
         XCTAssertEqual("hello/".appendingPathComponent("world"), "hello/world")
-        
-        // slash가 두 번 나올 수 있지만 딱히 문제되진 않으니 그냥 둔다.
-        XCTAssertEqual("hello/".appendingPathComponent("/world"), "hello//world")
+        XCTAssertEqual("hello/".appendingPathComponent("/world"), "hello/world")
     }
     
     func test_deletingLastPathComponent() {
