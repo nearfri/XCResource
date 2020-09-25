@@ -23,3 +23,9 @@ extension ContainerTree {
         return parent.relativePath.appendingPathComponent(element.url.lastPathComponent)
     }
 }
+
+extension ContainerTree {
+    func toAsset() -> Asset {
+        return Asset(name: fullName, path: relativePath)
+    }
+}

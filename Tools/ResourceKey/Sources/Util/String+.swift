@@ -19,7 +19,7 @@ extension String {
             .dropFirst()                // pmt/
             .reversed()                 // /tmp
         
-        if truncatedPath.isEmpty && self.hasPrefix("/") {
+        if truncatedPath.isEmpty && hasPrefix("/") {
             return "/"
         }
         return String(truncatedPath)
