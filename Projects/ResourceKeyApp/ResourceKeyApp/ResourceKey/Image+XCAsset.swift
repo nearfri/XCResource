@@ -4,12 +4,6 @@ import SwiftUI
 
 extension UIImage {
     convenience init(key: ImageKey) {
-        #if DEBUG
-        if UIImage(named: key.rawValue, in: .module, compatibleWith: nil) == nil {
-            preconditionFailure("UIImage \(key.rawValue) not found.")
-        }
-        #endif
-        
         self.init(named: key.rawValue, in: .module, compatibleWith: nil)!
     }
 }

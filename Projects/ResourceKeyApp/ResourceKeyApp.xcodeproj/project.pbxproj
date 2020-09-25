@@ -80,6 +80,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0826A007251E45FA00F9A77D /* ResourceKey */ = {
+			isa = PBXGroup;
+			children = (
+				08765F4B2511D7510024D427 /* AllImageKeys.swift */,
+				08765F4D2511D7920024D427 /* AllColorKeys.swift */,
+				08765F4F2511DC190024D427 /* AllStringKeys.swift */,
+			);
+			path = ResourceKey;
+			sourceTree = "<group>";
+		};
 		08765F022511A5660024D427 = {
 			isa = PBXGroup;
 			children = (
@@ -131,9 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				08765F412511D5200024D427 /* ResourceKeyAppTests.swift */,
-				08765F4B2511D7510024D427 /* AllImageKeys.swift */,
-				08765F4D2511D7920024D427 /* AllColorKeys.swift */,
-				08765F4F2511DC190024D427 /* AllStringKeys.swift */,
+				0826A007251E45FA00F9A77D /* ResourceKey */,
 				08765F432511D5200024D427 /* Info.plist */,
 			);
 			path = ResourceKeyAppTests;
