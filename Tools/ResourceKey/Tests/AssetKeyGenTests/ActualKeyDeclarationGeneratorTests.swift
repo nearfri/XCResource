@@ -16,15 +16,12 @@ final class ActualKeyDeclarationGeneratorTests: XCTestCase {
         // MARK: - Media.xcassets
         
         extension ImageKey {
-            
             // MARK: Common/Buttons
             static let buttonSelect: ImageKey = "buttonSelect"
             
             // MARK: Common/Icons
             static let checkIcon: ImageKey = "checkIcon"
-            
         }
-        \n
         """
         
         let sut = ActualKeyDeclarationGenerator()

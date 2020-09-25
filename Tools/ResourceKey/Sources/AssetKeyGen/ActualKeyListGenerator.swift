@@ -7,18 +7,18 @@ class ActualKeyListGenerator: KeyListGenerator {
         print("extension \(keyTypeName) {", to: &result)
         print("    static let allGeneratedKeys: [\(keyTypeName)] = [", to: &result)
         
+        var commentPrefix = ""
         for catalog in catalogs {
-            print("        ", to: &result)
+            defer { commentPrefix = "        \n" }
+            print(commentPrefix, terminator: "", to: &result)
             print("        // MARK: \(catalog.name)", to: &result)
             for asset in catalog.assets {
                 print("        .\(asset.key),", to: &result)
             }
         }
         
-        print("        ", to: &result)
         print("    ]", to: &result)
-        print("}", to: &result)
-        print("", to: &result)
+        print("}", terminator: "", to: &result)
         
         return result
     }

@@ -23,7 +23,6 @@ final class ActualKeyListGeneratorTests: XCTestCase {
         let expectedList = """
         extension ImageKey {
             static let allGeneratedKeys: [ImageKey] = [
-                
                 // MARK: Media.xcassets
                 .buttonSelect,
                 .checkIcon,
@@ -31,10 +30,8 @@ final class ActualKeyListGeneratorTests: XCTestCase {
                 // MARK: Extra.xcassets
                 .dice,
                 .dolphin,
-                
             ]
         }
-        \n
         """
         
         let sut = ActualKeyListGenerator()

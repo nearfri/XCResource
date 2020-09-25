@@ -9,10 +9,12 @@ class ActualKeyDeclarationGenerator: KeyDeclarationGenerator {
         print("extension \(keyTypeName) {", to: &result)
         
         var currentDirectoryPath = ""
+        var commentPrefix = ""
         for asset in catalog.assets {
+            defer { commentPrefix = "    \n" }
             let assetDirectoryPath = asset.path.deletingLastPathComponent
             if assetDirectoryPath != currentDirectoryPath {
-                print("    ", to: &result)
+                print(commentPrefix, terminator: "", to: &result)
                 print("    // MARK: \(assetDirectoryPath)", to: &result)
                 currentDirectoryPath = assetDirectoryPath
             }
@@ -20,9 +22,7 @@ class ActualKeyDeclarationGenerator: KeyDeclarationGenerator {
             print("    static let \(asset.key): \(keyTypeName) = \"\(asset.name)\"", to: &result)
         }
         
-        print("    ", to: &result)
-        print("}", to: &result)
-        print("", to: &result)
+        print("}", terminator: "", to: &result)
         
         return result
     }
