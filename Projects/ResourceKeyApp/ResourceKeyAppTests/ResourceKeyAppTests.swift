@@ -1,7 +1,7 @@
 import XCTest
-@testable import ResourceSample
+@testable import ResourceKeyApp
 
-class ResourceSampleTests: XCTestCase {
+class ResourceKeyAppTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

@@ -1,5 +1,5 @@
 import Foundation
-@testable import ResourceSample
+@testable import ResourceKeyApp
 
 let allColorKeys: [ColorKey] = [
     .battleshipGrey8,

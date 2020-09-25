@@ -1,5 +1,5 @@
 import Foundation
-@testable import ResourceSample
+@testable import ResourceKeyApp
 
 let allStringKeys: [StringKey] = [
     .error_description_invalidVersion,
