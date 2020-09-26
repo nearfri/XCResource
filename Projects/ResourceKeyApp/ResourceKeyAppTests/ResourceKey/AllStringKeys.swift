@@ -1,6 +1,7 @@
-import Foundation
 @testable import ResourceKeyApp
 
-let allStringKeys: [StringKey] = [
-    .error_description_invalidVersion,
-]
+extension StringKey {
+    static let allKeys: [StringKey] = [
+        .editing_menu_addBGM,
+    ]
+}

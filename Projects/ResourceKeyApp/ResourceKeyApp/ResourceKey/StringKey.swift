@@ -9,6 +9,7 @@ struct StringKey {
 }
 
 extension StringKey {
-    static let error_description_invalidVersion = StringKey("error_description_invalidVersion",
-                                                            comment: "")
+    /// 음악 추가
+    static let editing_menu_addBGM = StringKey("editing_menu_addBGM",
+                                               comment: "음악 추가")
 }

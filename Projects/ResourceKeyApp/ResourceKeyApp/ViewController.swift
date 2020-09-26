@@ -1,15 +1,15 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var label: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        _ = UIImage(key: .btnSelect)
-        _ = UIColor(key: .battleshipGrey8)
-        _ = String(key: .error_description_invalidVersion)
+        
+        imageView.image = UIImage(key: .icoSoundPressed)
+        
+        label.textColor = UIColor(key: .coralPink)
+        label.text = String(key: .editing_menu_addBGM)
     }
-
-
 }
-
