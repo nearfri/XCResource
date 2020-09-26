@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0826A00D251ECF8600F9A77D /* ImageKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0826A00C251ECF8600F9A77D /* ImageKeyTests.swift */; };
+		0826A013251ED0CC00F9A77D /* ColorKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0826A012251ED0CC00F9A77D /* ColorKeyTests.swift */; };
 		08765F0F2511A5660024D427 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F0E2511A5660024D427 /* AppDelegate.swift */; };
 		08765F112511A5660024D427 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F102511A5660024D427 /* SceneDelegate.swift */; };
 		08765F132511A5660024D427 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F122511A5660024D427 /* ViewController.swift */; };
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0826A00C251ECF8600F9A77D /* ImageKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageKeyTests.swift; sourceTree = "<group>"; };
+		0826A012251ED0CC00F9A77D /* ColorKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorKeyTests.swift; sourceTree = "<group>"; };
 		08765F0B2511A5660024D427 /* ResourceKeyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResourceKeyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08765F0E2511A5660024D427 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08765F102511A5660024D427 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +90,8 @@
 				08765F4B2511D7510024D427 /* AllImageKeys.swift */,
 				08765F4D2511D7920024D427 /* AllColorKeys.swift */,
 				08765F4F2511DC190024D427 /* AllStringKeys.swift */,
+				0826A00C251ECF8600F9A77D /* ImageKeyTests.swift */,
+				0826A012251ED0CC00F9A77D /* ColorKeyTests.swift */,
 			);
 			path = ResourceKey;
 			sourceTree = "<group>";
@@ -266,8 +272,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				08765F422511D5200024D427 /* ResourceKeyAppTests.swift in Sources */,
+				0826A013251ED0CC00F9A77D /* ColorKeyTests.swift in Sources */,
 				08765F4C2511D7510024D427 /* AllImageKeys.swift in Sources */,
 				08765F502511DC190024D427 /* AllStringKeys.swift in Sources */,
+				0826A00D251ECF8600F9A77D /* ImageKeyTests.swift in Sources */,
 				08765F4E2511D7920024D427 /* AllColorKeys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
