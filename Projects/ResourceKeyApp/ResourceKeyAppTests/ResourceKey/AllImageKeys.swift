@@ -4,7 +4,7 @@
 @testable import ResourceKeyApp
 
 extension ImageKey {
-    static let allGeneratedKeys: [ImageKey] = [
+    static let allGeneratedKeys: Set<ImageKey> = [
         // MARK: Assets.xcassets
         .appIcon,
         .icoFold,

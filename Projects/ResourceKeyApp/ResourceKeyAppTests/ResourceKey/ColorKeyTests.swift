@@ -11,7 +11,7 @@ class ColorKeyTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
+    func test_colorsExist() throws {
         for key in ColorKey.allGeneratedKeys {
             XCTAssertNotNil(UIColor(named: key.rawValue, in: .module, compatibleWith: nil),
                             "\(key.rawValue) color not found")

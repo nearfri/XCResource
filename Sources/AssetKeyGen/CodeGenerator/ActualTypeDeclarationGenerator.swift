@@ -3,7 +3,7 @@ import Foundation
 class ActualTypeDeclarationGenerator: TypeDeclarationGenerator {
     func generate(keyTypeName: String) -> String {
         return """
-            struct \(keyTypeName): ExpressibleByStringLiteral {
+            struct \(keyTypeName): ExpressibleByStringLiteral, Hashable {
                 var rawValue: String
                 
                 init(_ rawValue: String) {

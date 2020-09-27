@@ -1,6 +1,6 @@
 import Foundation
 
-struct StringKey {
+struct StringKey: Hashable {
     var rawValue: String
     
     init(_ rawValue: String, comment: String) {

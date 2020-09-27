@@ -5,7 +5,7 @@ class ActualKeyListGenerator: KeyListGenerator {
         var result = ""
         
         print("extension \(keyTypeName) {", to: &result)
-        print("    static let allGeneratedKeys: [\(keyTypeName)] = [", to: &result)
+        print("    static let allGeneratedKeys: Set<\(keyTypeName)> = [", to: &result)
         
         var commentPrefix = ""
         for catalog in catalogs {
