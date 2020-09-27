@@ -4,7 +4,7 @@
 @testable import ResourceKeyApp
 
 extension ColorKey {
-    static let allGeneratedKeys: Set<ColorKey> = [
+    static let allGeneratedKeys: [ColorKey] = [
         // MARK: Assets.xcassets
         .accentColor,
         .battleshipGrey8,

@@ -60,7 +60,7 @@ swift run --package-path <path/to/ResourceKey> generate-asset-keys \
 @testable import ResourceKeyApp
 
 extension ImageKey {
-    static let allGeneratedKeys: Set<ImageKey> = [
+    static let allGeneratedKeys: [ImageKey] = [
         // MARK: Assets.xcassets
         .appIcon,
         .icoFold,
