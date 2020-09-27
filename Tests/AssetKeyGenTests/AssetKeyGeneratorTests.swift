@@ -34,7 +34,7 @@ class StubKeyListGenerator: KeyListGenerator {
 final class AssetKeyGeneratorTests: XCTestCase {
     var sut: AssetKeyGenerator!
     
-    override func setUp() {
+    override func setUpWithError() throws {
         super.setUp()
         
         sut = AssetKeyGenerator(
