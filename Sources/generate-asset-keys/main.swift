@@ -28,14 +28,23 @@ extension AssetType: ExpressibleByArgument {
 }
 
 struct GenerateAssetKeys: ParsableCommand {
+    static let configuration: CommandConfiguration = .init(
+        abstract: "Asset Catalog 가지고 키 파일 생성.",
+        discussion: """
+            Xcode Asset Catalog(.xcassets)에서 리소스 이름을 추출해서 키 파일을 생성한다.
+            추출한 키 파일은 앱 개발 시 리소스 로딩에 사용할 수 있다.
+            """)
+    
     @Option(name: .customLong("input-xcassets"))
     var inputXCAssets: [String]
     
-    @Option var assetType: AssetType = .imageSet
+    @Option(help: ArgumentHelp(valueName: "image, color, or symbol"))
+    var assetType: AssetType = .imageSet
     
     @Option var keyTypeName: String
     
-    @Option var moduleName: String?
+    @Option(help: "<key-list-file>에 '@testable import <module-name>' 추가")
+    var moduleName: String?
     
     @Flag var excludeTypeDeclation: Bool = false
     
