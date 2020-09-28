@@ -1,5 +1,5 @@
 import XCTest
-@testable import AssetKeyGen
+@testable import Util
 
 final class StringTests: XCTestCase {
     func test_appendingPathComponent() {
