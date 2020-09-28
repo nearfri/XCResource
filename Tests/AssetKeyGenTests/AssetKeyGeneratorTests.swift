@@ -59,8 +59,11 @@ final class AssetKeyGeneratorTests: XCTestCase {
         
         XCTAssertEqual(
             result.keyDeclarations,
-            Array(repeating: StubKeyDeclarationGenerator.declarationsString, count: 2)
-                .joined(separator: "")
+            """
+            \(StubKeyDeclarationGenerator.declarationsString)
+            
+            \(StubKeyDeclarationGenerator.declarationsString)
+            """
         )
         
         XCTAssertEqual(result.keyList, StubKeyListGenerator.keyListString)

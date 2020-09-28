@@ -4,11 +4,12 @@
 Xcode Asset Catalog (.xcassets 폴더) 에서 리소스 이름을 추출해서 키 파일을 생성해주는 툴입니다.
 
 ### Usage
-아래의 커맨드는 `<Assets.xcassets>`가 포함한 모든 이미지들의 이름을 `ImageKey.swift`에 저장합니다.
+아래의 커맨드는 `<Assets.xcassets>`과 `<Media.xcassets>`가 포함한 모든 이미지들의 이름을 `ImageKey.swift`에 저장합니다.
 
 ```sh
 swift run --package-path <path/to/ResourceKey> generate-asset-keys \
     --input-xcassets <path/to/Assets.xcassets> \
+    --input-xcassets <path/to/Media.xcassets> \
     --asset-type image \
     --key-type-name <ImageKey> \
     --key-decl-file <path/to/ImageKey.swift>

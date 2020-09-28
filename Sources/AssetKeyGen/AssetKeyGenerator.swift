@@ -73,9 +73,9 @@ public class AssetKeyGenerator {
         
         let typeDeclaration = typeDeclarationGenerator.generate(keyTypeName: request.keyTypeName)
         
-        let keyDeclarations = catalogs.reduce(into: "") { ret, catalog in
-            ret += keyDeclarationGenerator.generate(from: catalog, keyTypeName: request.keyTypeName)
-        }
+        let keyDeclarations = catalogs
+            .map({ keyDeclarationGenerator.generate(from: $0, keyTypeName: request.keyTypeName) })
+            .joined(separator: "\n\n")
         
         let keyList = keyListGenerator.generate(from: catalogs, keyTypeName: request.keyTypeName)
         
