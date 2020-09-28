@@ -54,6 +54,13 @@
 			remoteGlobalIDString = 08765F0A2511A5660024D427;
 			remoteInfo = ResourceSample;
 		};
+		087D7D022522237B00AACA6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08765F032511A5660024D427 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0826A06F252020D100F9A77D;
+			remoteInfo = "Generate-AssetKeys";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -195,6 +202,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				087D7D032522237B00AACA6B /* PBXTargetDependency */,
 			);
 			name = ResourceKeyApp;
 			productName = ResourceSample;
@@ -344,6 +352,11 @@
 			isa = PBXTargetDependency;
 			target = 08765F0A2511A5660024D427 /* ResourceKeyApp */;
 			targetProxy = 08765F442511D5200024D427 /* PBXContainerItemProxy */;
+		};
+		087D7D032522237B00AACA6B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0826A06F252020D100F9A77D /* Generate-AssetKeys */;
+			targetProxy = 087D7D022522237B00AACA6B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
