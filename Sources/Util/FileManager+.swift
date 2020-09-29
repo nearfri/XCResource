@@ -11,10 +11,7 @@ extension FileManager {
     }
     
     public func compareAndMoveFile(from srcURL: URL, to dstURL: URL) throws {
-        let sourceData = try Data(contentsOf: srcURL)
-        let targetData = try? Data(contentsOf: dstURL)
-        
-        if sourceData != targetData {
+        if !contentsEqual(atPath: srcURL.path, andPath: dstURL.path) {
             try? removeItem(at: dstURL)
             try moveItem(at: srcURL, to: dstURL)
         }
