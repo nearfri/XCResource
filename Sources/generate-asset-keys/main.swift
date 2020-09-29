@@ -38,7 +38,7 @@ struct GenerateAssetKeys: ParsableCommand {
     @Option(name: .customLong("input-xcassets"))
     var inputXCAssets: [String]
     
-    @Option(help: ArgumentHelp(valueName: "image, color, or symbol"))
+    @Option(help: ArgumentHelp(valueName: "image|color|symbol"))
     var assetType: AssetType = .imageSet
     
     @Option var keyTypeName: String
