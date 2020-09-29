@@ -38,6 +38,8 @@ extension Tree {
 }
 
 struct PreOrderTreeSequence<Element>: Sequence {
+    typealias Element = Tree<Element>
+    
     let tree: Tree<Element>
     
     func makeIterator() -> Iterator {
