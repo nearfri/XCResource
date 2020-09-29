@@ -19,9 +19,6 @@ extension ImageKey {
     static let appIcon: ImageKey = "AppIcon"
     
     // MARK: Common/BGMNavigationBar
-    static let icoFold: ImageKey = "icoFold"
-    static let icoFoldDim: ImageKey = "icoFoldDim"
-    static let icoFoldPressed: ImageKey = "icoFoldPressed"
     static let icoMusic: ImageKey = "icoMusic"
     static let icoMusicPressed: ImageKey = "icoMusicPressed"
     
@@ -40,11 +37,7 @@ extension ImageKey {
     static let icoClose: ImageKey = "icoClose"
     static let icoClosePressed: ImageKey = "icoClosePressed"
     static let icoConfirm: ImageKey = "icoConfirm"
-    static let icoConfirmDisabled: ImageKey = "icoConfirmDisabled"
     static let icoConfirmPressed: ImageKey = "icoConfirmPressed"
-    static let icoDrag: ImageKey = "icoDrag"
-    static let icoNext: ImageKey = "icoNext"
-    static let iconPointer: ImageKey = "iconPointer"
     
     // MARK: Common/NavigationBar
     static let icoFoldDown: ImageKey = "icoFoldDown"
@@ -70,89 +63,46 @@ extension ImageKey {
     // MARK: Component/ComponentIcons
     static let component_blog: ImageKey = "component.blog"
     static let component_book: ImageKey = "component.book"
-    static let component_comingsoon: ImageKey = "component.comingsoon"
     static let component_date: ImageKey = "component.date"
     static let component_link: ImageKey = "component.link"
-    static let component_moment: ImageKey = "component.moment"
     static let component_movie: ImageKey = "component.movie"
     static let component_news: ImageKey = "component.news"
     static let component_place: ImageKey = "component.place"
-    static let component_question: ImageKey = "component.question"
-    static let component_shopping: ImageKey = "component.shopping"
-    static let component_vote: ImageKey = "component.vote"
-    static let component_weather: ImageKey = "component.weather"
-    
-    // MARK: Component
-    static let icoCalendar: ImageKey = "icoCalendar"
-    static let icoCalendarSelected: ImageKey = "icoCalendarSelected"
     
     // MARK: Component/PlaceSearch/LocationAgreementWebView
-    static let se_nt_bg_2: ImageKey = "se_nt_bg_2"
     static let se_nt_ico_on_1: ImageKey = "se_nt_ico_on_1"
     static let se_nt_ico_on_2: ImageKey = "se_nt_ico_on_2"
-    static let se_nt_ico_on_3: ImageKey = "se_nt_ico_on_3"
-    static let se_nt_ico_on_4: ImageKey = "se_nt_ico_on_4"
     
     // MARK: Component/PlaceSearch
     static let placeSearch_icoLocation: ImageKey = "PlaceSearch.icoLocation"
     static let placeSearch_icoPinSearch: ImageKey = "PlaceSearch.icoPinSearch"
-    
-    // MARK: Component/Question
-    static let icoQWhite: ImageKey = "icoQWhite"
-    static let imgBgAnswer: ImageKey = "imgBgAnswer"
-    static let imgBgPoint: ImageKey = "imgBgPoint"
-    static let imgBgQuestion: ImageKey = "imgBgQuestion"
     
     // MARK: Scenes/Editing/BGMEditor
     static let btnAddNormal: ImageKey = "btnAddNormal"
     static let btnAddPressed: ImageKey = "btnAddPressed"
     static let btnPauseSmallNormal: ImageKey = "btnPauseSmallNormal"
     static let btnPlaySmallNormal: ImageKey = "btnPlaySmallNormal"
-    static let icoDeleteActSmall: ImageKey = "icoDeleteActSmall"
-    static let icoDeleteSmall: ImageKey = "icoDeleteSmall"
-    static let icoEditmusic: ImageKey = "icoEditmusic"
-    static let icoRepeat: ImageKey = "icoRepeat"
-    static let icoRepeatAct: ImageKey = "icoRepeatAct"
     
     // MARK: Scenes/Editing/Component
     static let component_icoFoldPressed: ImageKey = "component.icoFoldPressed"
     static let logoVlog34: ImageKey = "logoVlog34"
     
-    // MARK: Scenes/Editing/Component/Vote
-    static let iconDdayNormalBlack: ImageKey = "iconDdayNormalBlack"
-    static let iconDdayNormalWhite: ImageKey = "iconDdayNormalWhite"
-    static let iconDdaySelectBlack: ImageKey = "iconDdaySelectBlack"
-    static let iconDdaySelectWhite: ImageKey = "iconDdaySelectWhite"
-    static let iconSelectNormalBlack: ImageKey = "iconSelectNormalBlack"
-    static let iconSelectNormalWhite: ImageKey = "iconSelectNormalWhite"
-    static let iconSelectSelectBlack: ImageKey = "iconSelectSelectBlack"
-    static let iconSelectSelectWhite: ImageKey = "iconSelectSelectWhite"
-    static let imgDot: ImageKey = "imgDot"
-    
     // MARK: Scenes/Editing/DetailEdit/Color
-    static let icoAdjustment: ImageKey = "icoAdjustment"
-    static let icoAdjustmentOn: ImageKey = "icoAdjustmentOn"
-    static let icoBrightness: ImageKey = "icoBrightness"
-    static let icoContrast: ImageKey = "icoContrast"
-    static let icoFilter: ImageKey = "icoFilter"
-    static let icoFilterOn: ImageKey = "icoFilterOn"
-    static let iconClip: ImageKey = "iconClip"
-    static let iconClipOn: ImageKey = "iconClipOn"
-    static let icoSaturation: ImageKey = "icoSaturation"
-    static let icoSharpness: ImageKey = "icoSharpness"
-    static let icoTemperature: ImageKey = "icoTemperature"
-    static let seThumbnail01Original: ImageKey = "seThumbnail01Original"
+    static let detailEdit_color_icoAdjustment: ImageKey = "DetailEdit/Color/icoAdjustment"
+    static let detailEdit_color_icoAdjustmentOn: ImageKey = "DetailEdit/Color/icoAdjustmentOn"
+    static let detailEdit_color_icoBrightness: ImageKey = "DetailEdit/Color/icoBrightness"
+    static let detailEdit_color_icoContrast: ImageKey = "DetailEdit/Color/icoContrast"
+    static let detailEdit_color_icoFilter: ImageKey = "DetailEdit/Color/icoFilter"
+    static let detailEdit_color_icoFilterOn: ImageKey = "DetailEdit/Color/icoFilterOn"
     
     // MARK: Scenes/Editing/DetailEdit/Copyright
-    static let checkOnTop: ImageKey = "checkOnTop"
-    static let copyrightCheckOff: ImageKey = "copyrightCheckOff"
-    static let imgVideoCopy: ImageKey = "imgVideoCopy"
+    static let detailEdit_checkOnTop: ImageKey = "DetailEdit/checkOnTop"
+    static let detailEdit_copyrightCheckOff: ImageKey = "DetailEdit/copyrightCheckOff"
+    static let detailEdit_imgVideoCopy: ImageKey = "DetailEdit/imgVideoCopy"
     
     // MARK: Scenes/Editing/DetailEdit/Volume
-    static let icoMusicSmall: ImageKey = "icoMusicSmall"
-    static let icoMusicSmallMute: ImageKey = "icoMusicSmallMute"
-    static let icoVolumeSmall: ImageKey = "icoVolumeSmall"
-    static let icoVolumeSmallMute: ImageKey = "icoVolumeSmallMute"
+    static let detailEdit_icoMusicSmall: ImageKey = "DetailEdit/icoMusicSmall"
+    static let detailEdit_icoMusicSmallMute: ImageKey = "DetailEdit/icoMusicSmallMute"
     
     // MARK: Scenes/Editing/EditMenuIcons
     static let icoColorEdit: ImageKey = "icoColorEdit"
@@ -161,17 +111,8 @@ extension ImageKey {
     static let icoCropPressed: ImageKey = "icoCropPressed"
     static let icoDraw: ImageKey = "icoDraw"
     static let icoDrawPressed: ImageKey = "icoDrawPressed"
-    static let icoMark: ImageKey = "icoMark"
-    static let icoMarkPressed: ImageKey = "icoMarkPressed"
     static let icoSound: ImageKey = "icoSound"
     static let icoSoundPressed: ImageKey = "icoSoundPressed"
-    static let icoSticker: ImageKey = "icoSticker"
-    static let icoText: ImageKey = "icoText"
-    static let icoTextPressed: ImageKey = "icoTextPressed"
-    
-    // MARK: Scenes/Editing
-    static let icoDel: ImageKey = "icoDel"
-    static let icoDelActive: ImageKey = "icoDelActive"
     
     // MARK: Scenes/Editing/PopupNavigation
     static let btnStyle1: ImageKey = "btnStyle1"
@@ -179,22 +120,6 @@ extension ImageKey {
     
     // MARK: Scenes/Editing
     static let previewGradationTop: ImageKey = "previewGradationTop"
-    
-    // MARK: Scenes/MediaPicker
-    static let bgCamera: ImageKey = "bgCamera"
-    static let checkOff: ImageKey = "checkOff"
-    static let checkOffTitle: ImageKey = "checkOffTitle"
-    static let checkOffTop: ImageKey = "checkOffTop"
-    static let checkOnTitle: ImageKey = "checkOnTitle"
-    static let icoCamera: ImageKey = "icoCamera"
-    static let icoCameraPressed: ImageKey = "icoCameraPressed"
-    static let icoGif: ImageKey = "icoGif"
-    static let iconCheckOn: ImageKey = "iconCheckOn"
-    static let iconCheckPressed: ImageKey = "iconCheckPressed"
-    static let icoPickerDel: ImageKey = "icoPickerDel"
-    static let picker_icoFold: ImageKey = "picker.icoFold"
-    static let picker_icoFoldPressed: ImageKey = "picker.icoFoldPressed"
-    static let seIconVideoCloud: ImageKey = "seIconVideoCloud"
     
     // MARK: Scenes/PreviewPlayer
     static let previewPlayerPause: ImageKey = "previewPlayerPause"
@@ -207,16 +132,6 @@ extension ImageKey {
     static let icoMerge: ImageKey = "icoMerge"
     static let icoTip: ImageKey = "icoTip"
     
-    // MARK: Scenes/Publish/Tutorial
-    static let btnNextDisabled: ImageKey = "btnNextDisabled"
-    static let btnNextNormal: ImageKey = "btnNextNormal"
-    static let btnPreDisabled: ImageKey = "btnPreDisabled"
-    static let btnPreNormal: ImageKey = "btnPreNormal"
-    static let publish_tutorial1: ImageKey = "publish_tutorial1"
-    static let publish_tutorial2: ImageKey = "publish_tutorial2"
-    static let publish_tutorial3: ImageKey = "publish_tutorial3"
-    static let publish_tutorial4: ImageKey = "publish_tutorial4"
-    
     // MARK: Scenes/Snapshot
     static let iconCheck: ImageKey = "iconCheck"
     static let iconCheckOff: ImageKey = "iconCheckOff"
@@ -228,20 +143,6 @@ extension ImageKey {
     static let iconLeftArrowDisable: ImageKey = "iconLeftArrowDisable"
     static let iconRightArrow: ImageKey = "iconRightArrow"
     static let iconRightArrowDisable: ImageKey = "iconRightArrowDisable"
-    static let styleActive: ImageKey = "styleActive"
-    static let styleComingsoon: ImageKey = "styleComingsoon"
-    static let styleCozy: ImageKey = "styleCozy"
-    static let styleDaily: ImageKey = "styleDaily"
-    static let styleFancy: ImageKey = "styleFancy"
-    static let styleMono: ImageKey = "styleMono"
-    static let styleNone: ImageKey = "styleNone"
-    static let stylePicnic: ImageKey = "stylePicnic"
-    static let stylePlain: ImageKey = "stylePlain"
-    static let styleRetro: ImageKey = "styleRetro"
-    static let styleRomantic: ImageKey = "styleRomantic"
-    static let styleSentimental: ImageKey = "styleSentimental"
-    static let styleSpring: ImageKey = "styleSpring"
-    static let styleSweet: ImageKey = "styleSweet"
     
     // MARK: TextEditor
     static let icoAlignCenter: ImageKey = "icoAlignCenter"
@@ -250,77 +151,4 @@ extension ImageKey {
     static let icoAlignLeftAct: ImageKey = "icoAlignLeftAct"
     static let icoAlignRight: ImageKey = "icoAlignRight"
     static let icoAlignRightAct: ImageKey = "icoAlignRightAct"
-    static let icoB3TriangleL: ImageKey = "icoB3TriangleL"
-    static let icoB3TriangleR: ImageKey = "icoB3TriangleR"
-    static let icoC10Left: ImageKey = "icoC10Left"
-    static let icoC10Right: ImageKey = "icoC10Right"
-    static let icoColor: ImageKey = "icoColor"
-    static let icoColorAct: ImageKey = "icoColorAct"
-    static let icoDelete: ImageKey = "icoDelete"
-    static let icoDeleteDisabled: ImageKey = "icoDeleteDisabled"
-    static let icoKeyboard: ImageKey = "icoKeyboard"
-    static let icoKeyboardAct: ImageKey = "icoKeyboardAct"
-    static let icoPen1: ImageKey = "icoPen1"
-    static let icoPen2: ImageKey = "icoPen2"
-    static let icoPickerB: ImageKey = "icoPickerB"
-    static let icoPickerCheck: ImageKey = "icoPickerCheck"
-    static let icoPickerWh: ImageKey = "icoPickerWh"
-    static let icoTextpreset: ImageKey = "icoTextpreset"
-    static let icoTextpresetAct: ImageKey = "icoTextpresetAct"
-    static let icoTextWave: ImageKey = "icoTextWave"
-    static let icoTime: ImageKey = "icoTime"
-    static let icoTimeAct: ImageKey = "icoTimeAct"
-    static let icoTrans30: ImageKey = "icoTrans30"
-    static let icoTrans30Pressed: ImageKey = "icoTrans30Pressed"
-    static let icoTrans60: ImageKey = "icoTrans60"
-    static let icoTrans60Pressed: ImageKey = "icoTrans60Pressed"
-    static let icoTransFill: ImageKey = "icoTransFill"
-    static let icoTransFillPressed: ImageKey = "icoTransFillPressed"
-    static let icoUndo: ImageKey = "icoUndo"
-    static let icoUndoDisabled: ImageKey = "icoUndoDisabled"
-    
-    // MARK: TextEditor/Preset
-    static let textTypeA0: ImageKey = "textTypeA0"
-    static let textTypeA1: ImageKey = "textTypeA1"
-    static let textTypeA2: ImageKey = "textTypeA2"
-    static let textTypeA3: ImageKey = "textTypeA3"
-    static let textTypeA4: ImageKey = "textTypeA4"
-    static let textTypeA5: ImageKey = "textTypeA5"
-    static let textTypeA6: ImageKey = "textTypeA6"
-    static let textTypeA7: ImageKey = "textTypeA7"
-    static let textTypeA8: ImageKey = "textTypeA8"
-    static let textTypeA9: ImageKey = "textTypeA9"
-    static let textTypeA10: ImageKey = "textTypeA10"
-    static let textTypeA11: ImageKey = "textTypeA11"
-    static let textTypeA12: ImageKey = "textTypeA12"
-    static let textTypeA13: ImageKey = "textTypeA13"
-    static let textTypeA14: ImageKey = "textTypeA14"
-    static let textTypeA15: ImageKey = "textTypeA15"
-    static let textTypeA16: ImageKey = "textTypeA16"
-    static let textTypeB1: ImageKey = "textTypeB1"
-    static let textTypeB2: ImageKey = "textTypeB2"
-    static let textTypeB3: ImageKey = "textTypeB3"
-    static let textTypeB4: ImageKey = "textTypeB4"
-    static let textTypeC1: ImageKey = "textTypeC1"
-    static let textTypeC2: ImageKey = "textTypeC2"
-    static let textTypeC3: ImageKey = "textTypeC3"
-    static let textTypeC4: ImageKey = "textTypeC4"
-    static let textTypeC5: ImageKey = "textTypeC5"
-    static let textTypeC6: ImageKey = "textTypeC6"
-    static let textTypeC7: ImageKey = "textTypeC7"
-    static let textTypeC8: ImageKey = "textTypeC8"
-    static let textTypeC9: ImageKey = "textTypeC9"
-    static let textTypeC10: ImageKey = "textTypeC10"
-    static let textTypeC11: ImageKey = "textTypeC11"
-    static let textTypeC12: ImageKey = "textTypeC12"
-    static let textTypeC13: ImageKey = "textTypeC13"
-    static let textTypeD1: ImageKey = "textTypeD1"
-    static let textTypeD2: ImageKey = "textTypeD2"
-    static let textTypeD3: ImageKey = "textTypeD3"
-    static let textTypeD4: ImageKey = "textTypeD4"
-    
-    // MARK: Tutorial
-    static let tutorial_01: ImageKey = "tutorial_01"
-    static let tutorial_02: ImageKey = "tutorial_02"
-    static let tutorial_03: ImageKey = "tutorial_03"
 }
