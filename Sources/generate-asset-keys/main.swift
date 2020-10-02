@@ -32,13 +32,13 @@ struct GenerateAssetKeys: ParsableCommand {
         abstract: "Asset Catalog 가지고 키 파일 생성.",
         discussion: """
             Xcode Asset Catalog(.xcassets)에서 리소스 이름을 추출해서 키 파일을 생성한다.
-            추출한 키 파일은 앱 개발 시 리소스 로딩에 사용할 수 있다.
+            추출한 키 파일은 앱에서 리소스 로딩에 사용할 수 있다.
             """)
     
     @Option(name: .customLong("input-xcassets"))
     var inputXCAssets: [String]
     
-    @Option(help: ArgumentHelp(valueName: "image|color|symbol"))
+    @Option(help: ArgumentHelp(valueName: AssetType.allValueStrings.joined(separator: "|")))
     var assetType: AssetType = .imageSet
     
     @Option var keyTypeName: String
@@ -60,8 +60,8 @@ struct GenerateAssetKeys: ParsableCommand {
         try writeKeyListFileIfNeeded(from: codes)
     }
     
-    private func generateCodes() throws -> AssetKeyGenerator.Result {
-        let request = AssetKeyGenerator.Request(
+    private func generateCodes() throws -> AssetKeyGenerator.CodeResult {
+        let request = AssetKeyGenerator.CodeRequest(
             catalogURLs: inputXCAssets.map({ URL(fileURLWithExpandingTildeInPath: $0) }),
             assetType: assetType,
             keyTypeName: keyTypeName)
@@ -69,7 +69,7 @@ struct GenerateAssetKeys: ParsableCommand {
         return try AssetKeyGenerator().generate(for: request)
     }
     
-    private func writeKeyDeclFile(from codes: AssetKeyGenerator.Result) throws {
+    private func writeKeyDeclFile(from codes: AssetKeyGenerator.CodeResult) throws {
         let tempFileURL = FileManager.default.makeTemporaryFileURL()
         var stream = try TextFileOutputStream(forWritingTo: tempFileURL)
         
@@ -85,7 +85,7 @@ struct GenerateAssetKeys: ParsableCommand {
         try FileManager.default.compareAndMoveFile(from: tempFileURL, to: keyDeclFile)
     }
     
-    private func writeKeyListFileIfNeeded(from codes: AssetKeyGenerator.Result) throws {
+    private func writeKeyListFileIfNeeded(from codes: AssetKeyGenerator.CodeResult) throws {
         guard let keyListFile = keyListFile else { return }
         
         let tempFileURL = FileManager.default.makeTemporaryFileURL()
