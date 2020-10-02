@@ -10,11 +10,13 @@ let package = Package(
     products: [
         .executable(name: "generate-asset-keys", targets: ["generate-asset-keys"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
+        .library(name: "SourceKeyListGen", targets: ["SourceKeyListGen"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.1"),
+        .package(url: "https://github.com/jpsim/SourceKitten", from: "0.30.1"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -36,6 +38,15 @@ let package = Package(
         .testTarget(
             name: "AssetKeyGenTests",
             dependencies: ["AssetKeyGen", "SampleData"]),
+        
+        .target(
+            name: "SourceKeyListGen",
+            dependencies: [
+                .product(name: "SourceKittenFramework", package: "SourceKitten"),
+            ]),
+        .testTarget(
+            name: "SourceKeyListGenTests",
+            dependencies: ["SourceKeyListGen"]),
         
         .target(
             name: "Util",
