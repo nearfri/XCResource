@@ -10,7 +10,7 @@ let package = Package(
     products: [
         .executable(name: "generate-asset-keys", targets: ["generate-asset-keys"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
-        .library(name: "SourceKeyListGen", targets: ["SourceKeyListGen"]),
+        .library(name: "StaticKeyListGen", targets: ["StaticKeyListGen"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -40,13 +40,13 @@ let package = Package(
             dependencies: ["AssetKeyGen", "SampleData"]),
         
         .target(
-            name: "SourceKeyListGen",
+            name: "StaticKeyListGen",
             dependencies: [
                 .product(name: "SourceKittenFramework", package: "SourceKitten"),
             ]),
         .testTarget(
-            name: "SourceKeyListGenTests",
-            dependencies: ["SourceKeyListGen"]),
+            name: "StaticKeyListGenTests",
+            dependencies: ["StaticKeyListGen"]),
         
         .target(
             name: "Util",

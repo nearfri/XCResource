@@ -1,6 +1,6 @@
 import XCTest
 import SourceKittenFramework
-@testable import SourceKeyListGen
+@testable import StaticKeyListGen
 
 private enum Seed {
     static let sourceStructure: [String: SourceKitRepresentable] = [
