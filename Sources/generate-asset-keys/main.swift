@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 import AssetKeyGen
-import Util
+import ResourceKeyUtil
 
 let headerComment = """
 // This is a generated file, do not edit!
