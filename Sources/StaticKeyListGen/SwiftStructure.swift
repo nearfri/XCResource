@@ -3,11 +3,15 @@ import SourceKittenFramework
 
 // SourceKittenFramework.Structure에서 키 리스트를 추출하는데 필요한 값들만 담는다
 struct SwiftStructure: Codable {
+    @SwiftValueWrapper<String, SwiftValue.Accessibility>
     var accessibility: String?
+    
+    @SwiftValueWrapper<String, SwiftValue.Kind>
     var kind: String?
+    
     var name: String?
     var typeName: String?
-    var offset: Int?
+    var offset: Int64?
     var substructures: [SwiftStructure]?
     
     enum CodingKeys: String, CodingKey {
@@ -22,7 +26,7 @@ struct SwiftStructure: Codable {
 
 extension SwiftStructure {
     init(dictionary: [String: SourceKitRepresentable]) {
-        func value<T>(for key: CodingKeys, type: T.Type = T.self) -> T? {
+        func value<T>(for key: CodingKeys) -> T? {
             return dictionary[key.rawValue] as? T
         }
         
@@ -30,7 +34,7 @@ extension SwiftStructure {
         self.kind = value(for: .kind)
         self.name = value(for: .name)
         self.typeName = value(for: .typeName)
-        self.offset = value(for: .offset, type: Int64.self).map(Int.init)
+        self.offset = value(for: .offset)
         
         self.substructures = dictionary[CodingKeys.substructures.rawValue]
             .flatMap({ $0 as? [[String: SourceKitRepresentable]] })
