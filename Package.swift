@@ -46,7 +46,7 @@ let package = Package(
             ]),
         .testTarget(
             name: "StaticKeyListGenTests",
-            dependencies: ["StaticKeyListGen"]),
+            dependencies: ["StaticKeyListGen", "Util"]),
         
         .target(
             name: "Util",

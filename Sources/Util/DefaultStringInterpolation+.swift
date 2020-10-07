@@ -1,7 +1,7 @@
 import Foundation
 
 extension DefaultStringInterpolation {
-    mutating func appendInterpolation<T: Encodable>(json value: T) throws {
+    public mutating func appendInterpolation<T: Encodable>(json value: T) throws {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         let encodedData = try encoder.encode(value)
