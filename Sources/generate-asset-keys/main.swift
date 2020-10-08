@@ -35,6 +35,8 @@ struct GenerateAssetKeys: ParsableCommand {
             추출한 키 파일은 앱에서 리소스 로딩에 사용할 수 있다.
             """)
     
+    // MARK: - Arguments
+    
     @Option(name: .customLong("input-xcassets"))
     var inputXCAssets: [String]
     
@@ -51,6 +53,8 @@ struct GenerateAssetKeys: ParsableCommand {
     @Option var keyDeclFile: String
     
     @Option var keyListFile: String?
+    
+    // MARK: - Run
     
     mutating func run() throws {
         let codes = try generateCodes()

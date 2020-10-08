@@ -9,6 +9,7 @@ let package = Package(
     platforms: [.macOS(.v10_15)],
     products: [
         .executable(name: "generate-asset-keys", targets: ["generate-asset-keys"]),
+        .executable(name: "generate-keylist", targets: ["generate-keylist"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
         .library(name: "StaticKeyListGen", targets: ["StaticKeyListGen"]),
     ],
@@ -31,6 +32,14 @@ let package = Package(
         .testTarget(
             name: "generate-asset-keysTests",
             dependencies: ["generate-asset-keys"]),
+        
+        .target(
+            name: "generate-keylist",
+            dependencies: [
+                "StaticKeyListGen",
+                "ResourceKeyUtil",
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+            ]),
         
         .target(
             name: "AssetKeyGen",

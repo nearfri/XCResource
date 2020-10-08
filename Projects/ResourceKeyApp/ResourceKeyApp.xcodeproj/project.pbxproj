@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		0826A06F252020D100F9A77D /* Generate-AssetKeys */ = {
+		0826A06F252020D100F9A77D /* Generate-ResourceKeys */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 0826A072252020D100F9A77D /* Build configuration list for PBXAggregateTarget "Generate-AssetKeys" */;
+			buildConfigurationList = 0826A072252020D100F9A77D /* Build configuration list for PBXAggregateTarget "Generate-ResourceKeys" */;
 			buildPhases = (
-				0826A087252022C700F9A77D /* Generate AssetKeys */,
+				0826A087252022C700F9A77D /* Generate ResourceKeys */,
 			);
 			dependencies = (
 			);
-			name = "Generate-AssetKeys";
+			name = "Generate-ResourceKeys";
 			productName = "Generate-AssetKeys";
 		};
 /* End PBXAggregateTarget section */
@@ -54,12 +54,12 @@
 			remoteGlobalIDString = 08765F0A2511A5660024D427;
 			remoteInfo = ResourceSample;
 		};
-		087D7D022522237B00AACA6B /* PBXContainerItemProxy */ = {
+		0893AE52252EE7FD00CB9473 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08765F032511A5660024D427 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 0826A06F252020D100F9A77D;
-			remoteInfo = "Generate-AssetKeys";
+			remoteInfo = "Generate-ResourceKeys";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -202,7 +202,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				087D7D032522237B00AACA6B /* PBXTargetDependency */,
+				0893AE53252EE7FD00CB9473 /* PBXTargetDependency */,
 			);
 			name = ResourceKeyApp;
 			productName = ResourceSample;
@@ -264,7 +264,7 @@
 			targets = (
 				08765F0A2511A5660024D427 /* ResourceKeyApp */,
 				08765F3E2511D5200024D427 /* ResourceKeyAppTests */,
-				0826A06F252020D100F9A77D /* Generate-AssetKeys */,
+				0826A06F252020D100F9A77D /* Generate-ResourceKeys */,
 			);
 		};
 /* End PBXProject section */
@@ -292,7 +292,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0826A087252022C700F9A77D /* Generate AssetKeys */ = {
+		0826A087252022C700F9A77D /* Generate ResourceKeys */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -301,14 +301,14 @@
 			);
 			inputPaths = (
 			);
-			name = "Generate AssetKeys";
+			name = "Generate ResourceKeys";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"${SRCROOT}/Tools\"\n./run-generate-asset-keys.sh\n";
+			shellScript = "cd \"${SRCROOT}/Tools\"\n./run-generate-asset-keys.sh\n./run-generate-keylist.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -353,10 +353,10 @@
 			target = 08765F0A2511A5660024D427 /* ResourceKeyApp */;
 			targetProxy = 08765F442511D5200024D427 /* PBXContainerItemProxy */;
 		};
-		087D7D032522237B00AACA6B /* PBXTargetDependency */ = {
+		0893AE53252EE7FD00CB9473 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0826A06F252020D100F9A77D /* Generate-AssetKeys */;
-			targetProxy = 087D7D022522237B00AACA6B /* PBXContainerItemProxy */;
+			target = 0826A06F252020D100F9A77D /* Generate-ResourceKeys */;
+			targetProxy = 0893AE52252EE7FD00CB9473 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -625,7 +625,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0826A072252020D100F9A77D /* Build configuration list for PBXAggregateTarget "Generate-AssetKeys" */ = {
+		0826A072252020D100F9A77D /* Build configuration list for PBXAggregateTarget "Generate-ResourceKeys" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0826A070252020D100F9A77D /* Debug */,
