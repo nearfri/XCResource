@@ -40,6 +40,9 @@ let package = Package(
                 "ResourceKeyUtil",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]),
+        .testTarget(
+            name: "generate-keylistTests",
+            dependencies: ["generate-keylist", "SampleData"]),
         
         .target(
             name: "AssetKeyGen",

@@ -6,26 +6,22 @@ final class generate_assetkeysTests: XCTestCase {
     func testExample() throws {
         let fm = FileManager.default
         
-        let keyDeclFileURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         let keyListFileURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         
         defer {
-            try? fm.removeItem(at: keyDeclFileURL)
             try? fm.removeItem(at: keyListFileURL)
         }
         
-        let executableURL = productsDirectory.appendingPathComponent("generate-asset-keys")
+        let executableURL = productsDirectory.appendingPathComponent("generate-keylist")
         
         let process = Process()
         process.executableURL = executableURL
         
         process.arguments = [
-            "--input-xcassets", SampleData.assetURL().path,
-            "--asset-type", "color",
-            "--key-type-name", "ColorKey",
+            "--type-name", "StringKey",
             "--module-name", "SampleApp",
-            "--key-decl-file", keyDeclFileURL.path,
-            "--key-list-file", keyListFileURL.path,
+            "--input-file", SampleData.sourceCodeURL("StringKey.swift").path,
+            "--output-file", keyListFileURL.path,
         ]
         
         let pipe = Pipe()
@@ -34,11 +30,8 @@ final class generate_assetkeysTests: XCTestCase {
         try process.run()
         process.waitUntilExit()
         
-        XCTAssertEqual(try String(contentsOf: keyDeclFileURL),
-                       try String(contentsOf: SampleData.sourceCodeURL("ColorKey.swift")))
-        
         XCTAssertEqual(try String(contentsOf: keyListFileURL),
-                       try String(contentsOf: SampleData.sourceCodeURL("AllColorKeys.swift")))
+                       try String(contentsOf: SampleData.sourceCodeURL("AllStringKeys.swift")))
     }
     
     /// Returns path to the built products directory.
