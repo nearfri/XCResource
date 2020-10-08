@@ -1,47 +1,55 @@
 import XCTest
 import class Foundation.Bundle
+import SampleData
 
 final class generate_assetkeysTests: XCTestCase {
     func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-
-        // Some of the APIs that we use below are available in macOS 10.13 and above.
-        guard #available(macOS 10.13, *) else {
-            return
+        let fm = FileManager.default
+        
+        let keyDeclFileURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let keyListFileURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        
+        defer {
+            try? fm.removeItem(at: keyDeclFileURL)
+            try? fm.removeItem(at: keyListFileURL)
         }
-
-//        let fooBinary = productsDirectory.appendingPathComponent("generate-asset-keys")
-//
-//        let process = Process()
-//        process.executableURL = fooBinary
-//
-//        let pipe = Pipe()
-//        process.standardOutput = pipe
-//
-//        try process.run()
-//        process.waitUntilExit()
-//
-//        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-//        let output = String(data: data, encoding: .utf8)
-//
-//        XCTAssertEqual(output, "Hello, world!\n")
+        
+        let executableURL = productsDirectory.appendingPathComponent("generate-asset-keys")
+        
+        let process = Process()
+        process.executableURL = executableURL
+        
+        process.arguments = [
+            "--input-xcassets", SampleData.assetURL().path,
+            "--asset-type", "color",
+            "--key-type-name", "ColorKey",
+            "--module-name", "SampleApp",
+            "--key-decl-file", keyDeclFileURL.path,
+            "--key-list-file", keyListFileURL.path,
+        ]
+        
+        let pipe = Pipe()
+        process.standardOutput = pipe
+        
+        try process.run()
+        process.waitUntilExit()
+        
+        XCTAssert(fm.contentsEqual(atPath: keyDeclFileURL.path,
+                                   andPath: SampleData.sourceCodeURL("ColorKey.swift").path))
+        
+        XCTAssert(fm.contentsEqual(atPath: keyListFileURL.path,
+                                   andPath: SampleData.sourceCodeURL("AllColorKeys.swift").path))
     }
-
+    
     /// Returns path to the built products directory.
     var productsDirectory: URL {
-      #if os(macOS)
+        #if os(macOS)
         for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
             return bundle.bundleURL.deletingLastPathComponent()
         }
         fatalError("couldn't find the products directory")
-      #else
+        #else
         return Bundle.main.bundleURL
-      #endif
+        #endif
     }
-
-    static var allTests = [
-        ("testExample", testExample),
-    ]
 }

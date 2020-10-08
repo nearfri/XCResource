@@ -31,7 +31,7 @@ let package = Package(
             ]),
         .testTarget(
             name: "generate-asset-keysTests",
-            dependencies: ["generate-asset-keys"]),
+            dependencies: ["generate-asset-keys", "SampleData"]),
         
         .target(
             name: "generate-keylist",
@@ -67,7 +67,7 @@ let package = Package(
         .target(
             name: "SampleData",
             resources: [
-                // 테스트용 애셋 폴더로 쓰기 위해 통째로 복사한다.
+                // 테스트용 리소스 폴더로 쓰기 위해 통째로 복사한다.
                 .copy("Resources"),
             ]),
     ]

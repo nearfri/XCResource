@@ -5,7 +5,7 @@ import SampleData
 final class ContainerTreeGeneratorTests: XCTestCase {
     func test_load_root() throws {
         // Given
-        let url = assetURL()
+        let url = SampleData.assetURL()
         
         // When
         let root = try ContainerTreeGenerator().load(contentsOf: url)
@@ -20,7 +20,7 @@ final class ContainerTreeGeneratorTests: XCTestCase {
     
     func test_load_childFolder() throws {
         // Given
-        let url = assetURL()
+        let url = SampleData.assetURL()
         
         // When
         let root = try ContainerTreeGenerator().load(contentsOf: url)
@@ -46,7 +46,7 @@ final class ContainerTreeGeneratorTests: XCTestCase {
     
     func test_load_imageSet() throws {
         // Given
-        let url = assetURL()
+        let url = SampleData.assetURL()
         
         // When
         let root = try ContainerTreeGenerator().load(contentsOf: url)
@@ -62,7 +62,7 @@ final class ContainerTreeGeneratorTests: XCTestCase {
     
     func test_load_colorSet() throws {
         // Given
-        let url = assetURL()
+        let url = SampleData.assetURL()
         
         // When
         let root = try ContainerTreeGenerator().load(contentsOf: url)

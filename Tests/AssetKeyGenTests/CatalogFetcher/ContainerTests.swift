@@ -1,10 +1,11 @@
 import XCTest
+import SampleData
 @testable import AssetKeyGen
 
 final class ContainerRecordTests: XCTestCase {
     func test_initContentsOf_folder() throws {
         // Given
-        let url = assetURL("Common")
+        let url = SampleData.assetURL("Common")
         
         // When
         let container = try Container(contentsOf: url)
@@ -17,7 +18,7 @@ final class ContainerRecordTests: XCTestCase {
     
     func test_initContentsOf_namespaceFolder() throws {
         // Given
-        let url = assetURL("Common/ClipListView")
+        let url = SampleData.assetURL("Common/ClipListView")
         
         // When
         let container = try Container(contentsOf: url)
@@ -30,7 +31,7 @@ final class ContainerRecordTests: XCTestCase {
     
     func test_initContentsOf_imageSet() throws {
         // Given
-        let url = assetURL("Common/btnSelect.imageset")
+        let url = SampleData.assetURL("Common/btnSelect.imageset")
         
         // When
         let container = try Container(contentsOf: url)
@@ -43,7 +44,7 @@ final class ContainerRecordTests: XCTestCase {
     
     func test_initContentsOf_colorSet() throws {
         // Given
-        let url = assetURL("Color/battleshipGrey8.colorset")
+        let url = SampleData.assetURL("Color/battleshipGrey8.colorset")
         
         // When
         let container = try Container(contentsOf: url)
