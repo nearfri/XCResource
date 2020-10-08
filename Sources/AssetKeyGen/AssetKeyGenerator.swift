@@ -17,7 +17,7 @@ protocol KeyListGenerator: AnyObject {
 }
 
 extension AssetKeyGenerator {
-    public struct Request {
+    public struct CodeRequest {
         public var catalogURLs: [URL]
         public var assetType: AssetType
         public var keyTypeName: String
@@ -29,7 +29,7 @@ extension AssetKeyGenerator {
         }
     }
     
-    public struct Result {
+    public struct CodeResult {
         public var typeDeclaration: String
         public var keyDeclarations: String
         public var keyList: String
@@ -66,7 +66,7 @@ public class AssetKeyGenerator {
                   keyListGenerator: ActualKeyListGenerator())
     }
     
-    public func generate(for request: Request) throws -> Result {
+    public func generate(for request: CodeRequest) throws -> CodeResult {
         let catalogs: [AssetCatalog] = try request.catalogURLs.map { url in
             try catalogFetcher.fetch(at: url, type: request.assetType)
         }
@@ -79,8 +79,8 @@ public class AssetKeyGenerator {
         
         let keyList = keyListGenerator.generate(from: catalogs, keyTypeName: request.keyTypeName)
         
-        return Result(typeDeclaration: typeDeclaration,
-                      keyDeclarations: keyDeclarations,
-                      keyList: keyList)
+        return CodeResult(typeDeclaration: typeDeclaration,
+                          keyDeclarations: keyDeclarations,
+                          keyList: keyList)
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 import AssetKeyGen
-import Util
+import ResourceKeyUtil
 
 let headerComment = """
 // This is a generated file, do not edit!
@@ -32,13 +32,15 @@ struct GenerateAssetKeys: ParsableCommand {
         abstract: "Asset Catalog 가지고 키 파일 생성.",
         discussion: """
             Xcode Asset Catalog(.xcassets)에서 리소스 이름을 추출해서 키 파일을 생성한다.
-            추출한 키 파일은 앱 개발 시 리소스 로딩에 사용할 수 있다.
+            추출한 키 파일은 앱에서 리소스 로딩에 사용할 수 있다.
             """)
+    
+    // MARK: - Arguments
     
     @Option(name: .customLong("input-xcassets"))
     var inputXCAssets: [String]
     
-    @Option(help: ArgumentHelp(valueName: "image|color|symbol"))
+    @Option(help: ArgumentHelp(valueName: AssetType.allValueStrings.joined(separator: "|")))
     var assetType: AssetType = .imageSet
     
     @Option var keyTypeName: String
@@ -52,6 +54,8 @@ struct GenerateAssetKeys: ParsableCommand {
     
     @Option var keyListFile: String?
     
+    // MARK: - Run
+    
     mutating func run() throws {
         let codes = try generateCodes()
         
@@ -60,8 +64,8 @@ struct GenerateAssetKeys: ParsableCommand {
         try writeKeyListFileIfNeeded(from: codes)
     }
     
-    private func generateCodes() throws -> AssetKeyGenerator.Result {
-        let request = AssetKeyGenerator.Request(
+    private func generateCodes() throws -> AssetKeyGenerator.CodeResult {
+        let request = AssetKeyGenerator.CodeRequest(
             catalogURLs: inputXCAssets.map({ URL(fileURLWithExpandingTildeInPath: $0) }),
             assetType: assetType,
             keyTypeName: keyTypeName)
@@ -69,8 +73,8 @@ struct GenerateAssetKeys: ParsableCommand {
         return try AssetKeyGenerator().generate(for: request)
     }
     
-    private func writeKeyDeclFile(from codes: AssetKeyGenerator.Result) throws {
-        let tempFileURL = FileManager.default.makeTemporaryFileURL()
+    private func writeKeyDeclFile(from codes: AssetKeyGenerator.CodeResult) throws {
+        let tempFileURL = FileManager.default.makeTemporaryItemURL()
         var stream = try TextFileOutputStream(forWritingTo: tempFileURL)
         
         print(headerComment, terminator: "\n\n", to: &stream)
@@ -82,13 +86,13 @@ struct GenerateAssetKeys: ParsableCommand {
         print(codes.keyDeclarations, to: &stream)
         
         try stream.close()
-        try FileManager.default.compareAndMoveFile(from: tempFileURL, to: keyDeclFile)
+        try FileManager.default.compareAndReplaceItem(at: keyDeclFile, withItemAt: tempFileURL)
     }
     
-    private func writeKeyListFileIfNeeded(from codes: AssetKeyGenerator.Result) throws {
+    private func writeKeyListFileIfNeeded(from codes: AssetKeyGenerator.CodeResult) throws {
         guard let keyListFile = keyListFile else { return }
         
-        let tempFileURL = FileManager.default.makeTemporaryFileURL()
+        let tempFileURL = FileManager.default.makeTemporaryItemURL()
         var stream = try TextFileOutputStream(forWritingTo: tempFileURL)
         
         print(headerComment, terminator: "\n\n", to: &stream)
@@ -100,7 +104,7 @@ struct GenerateAssetKeys: ParsableCommand {
         print(codes.keyList, to: &stream)
         
         try stream.close()
-        try FileManager.default.compareAndMoveFile(from: tempFileURL, to: keyListFile)
+        try FileManager.default.compareAndReplaceItem(at: keyListFile, withItemAt: tempFileURL)
     }
 }
 

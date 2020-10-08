@@ -3,8 +3,18 @@ import XCTest
 
 final class ContentRecordTests: XCTestCase {
     func test_initFromDecoder_folder() throws {
+        // Given
+        let json = """
+        {
+          "info" : {
+            "author" : "xcode",
+            "version" : 1
+          }
+        }
+        """.data(using: .utf8)!
+        
         // When
-        let content = try JSONDecoder().decode(ContentRecord.self, from: Seed.folderJSON)
+        let content = try JSONDecoder().decode(ContentRecord.self, from: json)
         
         // Then
         XCTAssertNil(content.type)
@@ -12,8 +22,21 @@ final class ContentRecordTests: XCTestCase {
     }
     
     func test_initFromDecoder_namespaceFolder() throws {
+        // Given
+        let json = """
+        {
+          "info" : {
+            "author" : "xcode",
+            "version" : 1
+          },
+          "properties" : {
+            "provides-namespace" : true
+          }
+        }
+        """.data(using: .utf8)!
+        
         // When
-        let content = try JSONDecoder().decode(ContentRecord.self, from: Seed.namespaceFolderJSON)
+        let content = try JSONDecoder().decode(ContentRecord.self, from: json)
         
         // Then
         XCTAssertNil(content.type)
@@ -21,8 +44,23 @@ final class ContentRecordTests: XCTestCase {
     }
     
     func test_initFromDecoder_onDemandFolder() throws {
+        // Given
+        let json = """
+        {
+          "info" : {
+            "author" : "xcode",
+            "version" : 1
+          },
+          "properties" : {
+            "on-demand-resource-tags" : [
+              "customTag"
+            ]
+          }
+        }
+        """.data(using: .utf8)!
+        
         // When
-        let content = try JSONDecoder().decode(ContentRecord.self, from: Seed.onDemandFolderJSON)
+        let content = try JSONDecoder().decode(ContentRecord.self, from: json)
         
         // Then
         XCTAssertNil(content.type)
@@ -31,8 +69,35 @@ final class ContentRecordTests: XCTestCase {
     }
     
     func test_initFromDecoder_image() throws {
+        // Given
+        let json = """
+        {
+          "images" : [
+            {
+              "filename" : "icoClose.png",
+              "idiom" : "universal",
+              "scale" : "1x"
+            },
+            {
+              "filename" : "icoClose@2x.png",
+              "idiom" : "universal",
+              "scale" : "2x"
+            },
+            {
+              "filename" : "icoClose@3x.png",
+              "idiom" : "universal",
+              "scale" : "3x"
+            }
+          ],
+          "info" : {
+            "author" : "xcode",
+            "version" : 1
+          }
+        }
+        """.data(using: .utf8)!
+        
         // When
-        let content = try JSONDecoder().decode(ContentRecord.self, from: Seed.imageJSON)
+        let content = try JSONDecoder().decode(ContentRecord.self, from: json)
         
         // Then
         XCTAssertEqual(content.type, .imageSet)
@@ -40,97 +105,35 @@ final class ContentRecordTests: XCTestCase {
     }
     
     func test_initFromDecoder_color() throws {
+        // Given
+        let json = """
+        {
+          "colors" : [
+            {
+              "color" : {
+                "color-space" : "srgb",
+                "components" : {
+                  "alpha" : "0.700",
+                  "blue" : "1.000",
+                  "green" : "1.000",
+                  "red" : "1.000"
+                }
+              },
+              "idiom" : "universal"
+            }
+          ],
+          "info" : {
+            "author" : "xcode",
+            "version" : 1
+          }
+        }
+        """.data(using: .utf8)!
+        
         // When
-        let content = try JSONDecoder().decode(ContentRecord.self, from: Seed.colorJSON)
+        let content = try JSONDecoder().decode(ContentRecord.self, from: json)
         
         // Then
         XCTAssertEqual(content.type, .colorSet)
         XCTAssertNil(content.properties)
     }
-}
-
-private enum Seed {
-    static let folderJSON = """
-    {
-      "info" : {
-        "author" : "xcode",
-        "version" : 1
-      }
-    }
-    """.data(using: .utf8)!
-    
-    static let namespaceFolderJSON = """
-    {
-      "info" : {
-        "author" : "xcode",
-        "version" : 1
-      },
-      "properties" : {
-        "provides-namespace" : true
-      }
-    }
-    """.data(using: .utf8)!
-    
-    static let onDemandFolderJSON = """
-    {
-      "info" : {
-        "author" : "xcode",
-        "version" : 1
-      },
-      "properties" : {
-        "on-demand-resource-tags" : [
-          "customTag"
-        ]
-      }
-    }
-    """.data(using: .utf8)!
-    
-    static let imageJSON = """
-    {
-      "images" : [
-        {
-          "filename" : "icoClose.png",
-          "idiom" : "universal",
-          "scale" : "1x"
-        },
-        {
-          "filename" : "icoClose@2x.png",
-          "idiom" : "universal",
-          "scale" : "2x"
-        },
-        {
-          "filename" : "icoClose@3x.png",
-          "idiom" : "universal",
-          "scale" : "3x"
-        }
-      ],
-      "info" : {
-        "author" : "xcode",
-        "version" : 1
-      }
-    }
-    """.data(using: .utf8)!
-    
-    static let colorJSON = """
-    {
-      "colors" : [
-        {
-          "color" : {
-            "color-space" : "srgb",
-            "components" : {
-              "alpha" : "0.700",
-              "blue" : "1.000",
-              "green" : "1.000",
-              "red" : "1.000"
-            }
-          },
-          "idiom" : "universal"
-        }
-      ],
-      "info" : {
-        "author" : "xcode",
-        "version" : 1
-      }
-    }
-    """.data(using: .utf8)!
 }

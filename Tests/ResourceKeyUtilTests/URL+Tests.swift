@@ -1,5 +1,5 @@
 import XCTest
-@testable import Util
+@testable import ResourceKeyUtil
 
 final class URLTests: XCTestCase {
     func test_initWithFileURLWithExpandingTildeInPath() throws {

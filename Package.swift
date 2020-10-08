@@ -9,12 +9,15 @@ let package = Package(
     platforms: [.macOS(.v10_15)],
     products: [
         .executable(name: "generate-asset-keys", targets: ["generate-asset-keys"]),
+        .executable(name: "generate-keylist", targets: ["generate-keylist"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
+        .library(name: "StaticKeyListGen", targets: ["StaticKeyListGen"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.1"),
+        .package(url: "https://github.com/jpsim/SourceKitten", from: "0.30.1"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -23,7 +26,7 @@ let package = Package(
             name: "generate-asset-keys",
             dependencies: [
                 "AssetKeyGen",
-                "Util",
+                "ResourceKeyUtil",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]),
         .testTarget(
@@ -31,18 +34,35 @@ let package = Package(
             dependencies: ["generate-asset-keys"]),
         
         .target(
+            name: "generate-keylist",
+            dependencies: [
+                "StaticKeyListGen",
+                "ResourceKeyUtil",
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+            ]),
+        
+        .target(
             name: "AssetKeyGen",
-            dependencies: ["Util"]),
+            dependencies: ["ResourceKeyUtil"]),
         .testTarget(
             name: "AssetKeyGenTests",
             dependencies: ["AssetKeyGen", "SampleData"]),
         
         .target(
-            name: "Util",
+            name: "StaticKeyListGen",
+            dependencies: [
+                .product(name: "SourceKittenFramework", package: "SourceKitten"),
+            ]),
+        .testTarget(
+            name: "StaticKeyListGenTests",
+            dependencies: ["StaticKeyListGen", "ResourceKeyUtil"]),
+        
+        .target(
+            name: "ResourceKeyUtil",
             dependencies: []),
         .testTarget(
-            name: "UtilTests",
-            dependencies: ["Util"]),
+            name: "ResourceKeyUtilTests",
+            dependencies: ["ResourceKeyUtil"]),
         
         .target(
             name: "SampleData",
