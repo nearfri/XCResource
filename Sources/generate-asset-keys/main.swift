@@ -70,7 +70,7 @@ struct GenerateAssetKeys: ParsableCommand {
     }
     
     private func writeKeyDeclFile(from codes: AssetKeyGenerator.CodeResult) throws {
-        let tempFileURL = FileManager.default.makeTemporaryFileURL()
+        let tempFileURL = FileManager.default.makeTemporaryItemURL()
         var stream = try TextFileOutputStream(forWritingTo: tempFileURL)
         
         print(headerComment, terminator: "\n\n", to: &stream)
@@ -82,13 +82,13 @@ struct GenerateAssetKeys: ParsableCommand {
         print(codes.keyDeclarations, to: &stream)
         
         try stream.close()
-        try FileManager.default.compareAndMoveFile(from: tempFileURL, to: keyDeclFile)
+        try FileManager.default.compareAndReplaceItem(at: keyDeclFile, withItemAt: tempFileURL)
     }
     
     private func writeKeyListFileIfNeeded(from codes: AssetKeyGenerator.CodeResult) throws {
         guard let keyListFile = keyListFile else { return }
         
-        let tempFileURL = FileManager.default.makeTemporaryFileURL()
+        let tempFileURL = FileManager.default.makeTemporaryItemURL()
         var stream = try TextFileOutputStream(forWritingTo: tempFileURL)
         
         print(headerComment, terminator: "\n\n", to: &stream)
@@ -100,7 +100,7 @@ struct GenerateAssetKeys: ParsableCommand {
         print(codes.keyList, to: &stream)
         
         try stream.close()
-        try FileManager.default.compareAndMoveFile(from: tempFileURL, to: keyListFile)
+        try FileManager.default.compareAndReplaceItem(at: keyListFile, withItemAt: tempFileURL)
     }
 }
 

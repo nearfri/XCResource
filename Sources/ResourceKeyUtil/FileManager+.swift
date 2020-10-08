@@ -1,19 +1,25 @@
 import Foundation
 
 extension FileManager {
-    public func makeTemporaryFileURL() -> URL {
+    public func makeTemporaryItemURL() -> URL {
         return temporaryDirectory.appendingPathComponent(UUID().uuidString)
     }
     
-    public func compareAndMoveFile(from srcURL: URL, to dstPath: String) throws {
-        let dstURL = URL(fileURLWithExpandingTildeInPath: dstPath)
-        try compareAndMoveFile(from: srcURL, to: dstURL)
+    public func compareAndReplaceItem(at originalItemPath: String,
+                                      withItemAt newItemURL: URL) throws {
+        let originalItemURL = URL(fileURLWithExpandingTildeInPath: originalItemPath)
+        try compareAndReplaceItem(at: originalItemURL, withItemAt: newItemURL)
     }
     
-    public func compareAndMoveFile(from srcURL: URL, to dstURL: URL) throws {
-        if !contentsEqual(atPath: srcURL.path, andPath: dstURL.path) {
-            try? removeItem(at: dstURL)
-            try moveItem(at: srcURL, to: dstURL)
+    public func compareAndReplaceItem(at originalItemURL: URL, withItemAt newItemURL: URL) throws {
+        if contentsEqual(atPath: originalItemURL.path, andPath: newItemURL.path) {
+            try removeItem(at: newItemURL)
+        } else {
+            try replaceItem(at: originalItemURL,
+                            withItemAt: newItemURL,
+                            backupItemName: nil,
+                            options: [],
+                            resultingItemURL: nil)
         }
     }
 }

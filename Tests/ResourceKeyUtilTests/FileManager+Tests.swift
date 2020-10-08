@@ -2,56 +2,66 @@ import XCTest
 @testable import ResourceKeyUtil
 
 final class FileManagerTests: XCTestCase {
-    func test_makeTemporaryFileURL() {
+    func test_makeTemporaryItemURL() {
         let fm = FileManager.default
-        XCTAssertNotEqual(fm.makeTemporaryFileURL(), fm.makeTemporaryFileURL())
+        XCTAssertNotEqual(fm.makeTemporaryItemURL(), fm.makeTemporaryItemURL())
     }
     
-    func test_compareAndMoveFile_notEqualFile_move() throws {
+    func test_compareAndReplaceItem_notEqualFile_replaceItem() throws {
         // Given
         let fm = FileManager.default
         
-        let data1 = Data(repeating: 1, count: 1)
-        let data2 = Data(repeating: 2, count: 1)
+        let oriData = Data(repeating: 1, count: 1)
+        let newData = Data(repeating: 2, count: 1)
         
-        let url1 = fm.makeTemporaryFileURL()
-        let url2 = fm.makeTemporaryFileURL()
+        let oriFileURL = fm.makeTemporaryItemURL()
+        let newFileURL = fm.makeTemporaryItemURL()
         
-        try data1.write(to: url1)
-        try data2.write(to: url2)
+        try oriData.write(to: oriFileURL)
+        try newData.write(to: newFileURL)
         
-        let date2 = (try fm.attributesOfItem(atPath: url2.path))[.creationDate] as! Date
+        let attributes = try fm.attributesOfItem(atPath: oriFileURL.path)
+        let creationDate = attributes[.creationDate] as! Date
+        let modificationDate = attributes[.modificationDate] as! Date
         
         // When
-        try fm.compareAndMoveFile(from: url1, to: url2)
+        try fm.compareAndReplaceItem(at: oriFileURL, withItemAt: newFileURL)
         
         // Then
-        XCTAssertEqual(try Data(contentsOf: url2), data1)
-        let newDate2 = (try fm.attributesOfItem(atPath: url2.path))[.creationDate] as! Date
-        XCTAssertNotEqual(newDate2, date2)
+        let updatedAttributes = try fm.attributesOfItem(atPath: oriFileURL.path)
+        
+        XCTAssertFalse(fm.fileExists(atPath: newFileURL.path))
+        XCTAssertEqual(try Data(contentsOf: oriFileURL), newData)
+        XCTAssertEqual(updatedAttributes[.creationDate] as! Date, creationDate)
+        XCTAssertNotEqual(updatedAttributes[.modificationDate] as! Date, modificationDate)
     }
     
-    func test_compareAndMoveFile_equalFile_notMove() throws {
+    func test_compareAndReplaceItem_equalFile_removeNewItemAndKeepOriginal() throws {
         // Given
         let fm = FileManager.default
         
-        let data1 = Data(repeating: 1, count: 1)
-        let data2 = Data(repeating: 1, count: 1)
+        let oriData = Data(repeating: 1, count: 1)
+        let newData = Data(repeating: 1, count: 1)
         
-        let url1 = fm.makeTemporaryFileURL()
-        let url2 = fm.makeTemporaryFileURL()
+        let oriFileURL = fm.makeTemporaryItemURL()
+        let newFileURL = fm.makeTemporaryItemURL()
         
-        try data1.write(to: url1)
-        try data2.write(to: url2)
+        try oriData.write(to: oriFileURL)
+        try newData.write(to: newFileURL)
         
-        let date2 = (try fm.attributesOfItem(atPath: url2.path))[.creationDate] as! Date
+        let attributes = try fm.attributesOfItem(atPath: oriFileURL.path)
+        let creationDate = attributes[.creationDate] as! Date
+        let modificationDate = attributes[.modificationDate] as! Date
         
         // When
-        try fm.compareAndMoveFile(from: url1, to: url2)
+        try fm.compareAndReplaceItem(at: oriFileURL, withItemAt: newFileURL)
         
         // Then
-        XCTAssertEqual(try Data(contentsOf: url2), data1)
-        let newDate2 = (try fm.attributesOfItem(atPath: url2.path))[.creationDate] as! Date
-        XCTAssertEqual(newDate2, date2)
+        let updatedAttributes = try fm.attributesOfItem(atPath: oriFileURL.path)
+        
+        XCTAssertFalse(fm.fileExists(atPath: newFileURL.path))
+        XCTAssertEqual(try Data(contentsOf: oriFileURL), oriData)
+        XCTAssertEqual(updatedAttributes[.creationDate] as! Date, creationDate)
+        XCTAssertEqual(updatedAttributes[.modificationDate] as! Date, modificationDate)
     }
 }
