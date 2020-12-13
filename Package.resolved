@@ -38,12 +38,30 @@
         }
       },
       {
+        "package": "Strix",
+        "repositoryURL": "https://github.com/nearfri/Strix",
+        "state": {
+          "branch": null,
+          "revision": "565ef16e31c432c77f784c5d4be918e095ff54b2",
+          "version": "2.1.0"
+        }
+      },
+      {
         "package": "swift-argument-parser",
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
           "revision": "92646c0cdbaca076c8d3d0207891785b3379cbff",
           "version": "0.3.1"
+        }
+      },
+      {
+        "package": "SwiftSyntax",
+        "repositoryURL": "https://github.com/apple/swift-syntax",
+        "state": {
+          "branch": null,
+          "revision": "844574d683f53d0737a9c6d706c3ef31ed2955eb",
+          "version": "0.50300.0"
         }
       },
       {
@@ -60,8 +78,8 @@
         "repositoryURL": "https://github.com/jpsim/Yams.git",
         "state": {
           "branch": null,
-          "revision": "88caa2e6fffdbef2e91c2022d038576062042907",
-          "version": "4.0.0"
+          "revision": "138cf1b701cf825233b92ceac919152d5aba8a3f",
+          "version": "4.0.1"
         }
       }
     ]
