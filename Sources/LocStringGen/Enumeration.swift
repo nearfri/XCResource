@@ -1,14 +1,14 @@
 import Foundation
 
 extension Enumeration {
-    struct Case: Hashable {
+    struct Case: Equatable {
         var comment: String?
         var identifier: String
         var rawValue: RawValue
     }
 }
 
-struct Enumeration<RawValue: Hashable>: Hashable {
+struct Enumeration<RawValue: Equatable>: Equatable {
     var identifier: String
     var cases: [Case]
 }

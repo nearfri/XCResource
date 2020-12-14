@@ -7,16 +7,16 @@ final class ActualPropertyListGeneratorTests: XCTestCase {
         let sut = ActualPropertyListGenerator()
         
         let items: [LocalizationItem] = [
-            LocalizationItem(comment: "취소", key: "action_cancel", value: "Cancel"),
-            LocalizationItem(comment: "확인", key: "action_confirm", value: "Confirm")
+            LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
+            LocalizationItem(comment: "확인", key: "confirm", value: "Confirm")
         ]
         
         let expectedPlist = """
         /* 취소 */
-        "action_cancel" = "Cancel";
+        "cancel" = "Cancel";
         
         /* 확인 */
-        "action_confirm" = "Confirm";
+        "confirm" = "Confirm";
         """
         
         // When

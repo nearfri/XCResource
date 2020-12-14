@@ -1,1 +1,5 @@
-"Roll" = "Roll";
+/* 취소 */
+"cancel" = "Cancel";
+
+/* 확인 */
+"confirm" = "Confirm";
