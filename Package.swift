@@ -19,7 +19,7 @@ let package = Package(
         // .package(url: /* package url */, from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.1"),
         .package(name: "SwiftSyntax", url: "https://github.com/apple/swift-syntax", .exact("0.50300.0")),
-        .package(url: "https://github.com/nearfri/Strix", from: "2.1.0"),
+        .package(url: "https://github.com/nearfri/Strix", from: "2.1.1"),
         .package(url: "https://github.com/jpsim/SourceKitten", from: "0.30.1"),
     ],
     targets: [
