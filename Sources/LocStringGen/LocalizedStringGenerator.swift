@@ -1,61 +1,89 @@
 import Foundation
 
-protocol LanguageDetector {
-    func detect(at url: URL) -> [LanguageID]
+protocol LanguageDetector: AnyObject {
+    func detect(at url: URL) throws -> [LanguageID]
 }
 
-protocol LocalizedStringFetcher: AnyObject {
-    func fetch(at url: URL) throws -> [LocalizedStringItem]
+protocol LocalizationItemFetcher: AnyObject {
+    func fetch(at url: URL) throws -> [LocalizationItem]
 }
 
 protocol PropertyListGenerator: AnyObject {
-    func generate(from items: [LocalizedStringItem]) -> String
+    func generate(from items: [LocalizationItem]) -> String
 }
 
 extension LocalizedStringGenerator {
     public struct CodeRequest {
         public var sourceCodeURL: URL
         public var resourcesURL: URL
-        public var tableName: String?
+        public var tableName: String
+        public var defaultValueStrategy: ValueStrategy
+        public var valueStrategiesByLanguage: [LanguageID: ValueStrategy]
         
-        public init(sourceCodeURL: URL, resourcesURL: URL, tableName: String? = nil) {
+        public init(sourceCodeURL: URL,
+                    resourcesURL: URL,
+                    tableName: String = "Localizable",
+                    defaultValueStrategy: ValueStrategy = .custom("UNTRANSLATED-STRING"),
+                    valueStrategiesByLanguage: [LanguageID: ValueStrategy] = [:]
+        ) {
             self.sourceCodeURL = sourceCodeURL
             self.resourcesURL = resourcesURL
             self.tableName = tableName
+            self.defaultValueStrategy = defaultValueStrategy
+            self.valueStrategiesByLanguage = valueStrategiesByLanguage
         }
+    }
+    
+    public enum ValueStrategy {
+        case comment
+        case key
+        case custom(String)
     }
 }
 
 public class LocalizedStringGenerator {
     private let languageDetector: LanguageDetector
-    private let baseItemFetcher: LocalizedStringFetcher
-    private let localizedItemFetcher: LocalizedStringFetcher
+    private let localizationSourceFetcher: LocalizationItemFetcher
+    private let localizationTargetFetcher: LocalizationItemFetcher
     private let plistGenerator: PropertyListGenerator
     
     init(languageDetector: LanguageDetector,
-         baseItemFetcher: LocalizedStringFetcher,
-         localizedItemFetcher: LocalizedStringFetcher,
+         localizationSourceFetcher: LocalizationItemFetcher,
+         localizationTargetFetcher: LocalizationItemFetcher,
          plistGenerator: PropertyListGenerator
     ) {
         self.languageDetector = languageDetector
-        self.baseItemFetcher = baseItemFetcher
-        self.localizedItemFetcher = localizedItemFetcher
+        self.localizationSourceFetcher = localizationSourceFetcher
+        self.localizationTargetFetcher = localizationTargetFetcher
         self.plistGenerator = plistGenerator
     }
     
+    public convenience init() {
+        self.init(languageDetector: ActualLanguageDetector(),
+                  localizationSourceFetcher: LocalizationSourceFetcher(),
+                  localizationTargetFetcher: LocalizationTargetFetcher(),
+                  plistGenerator: ActualPropertyListGenerator())
+    }
+    
     public func generate(for request: CodeRequest) throws -> [LanguageID: String] {
-        let baseItems = try baseItemFetcher.fetch(at: request.sourceCodeURL)
-        let languageIDs = languageDetector.detect(at: request.resourcesURL)
-        let stringsFilename = (request.tableName ?? "Localizable") + ".strings"
+        let sourceItems = try localizationSourceFetcher.fetch(at: request.sourceCodeURL)
+        let languages = try languageDetector.detect(at: request.resourcesURL)
         
-        return try languageIDs.reduce(into: [:]) { result, languageID in
-            let stringsFileURL = request.resourcesURL
-                .appendingPathComponent("\(languageID).lproj")
-                .appendingPathComponent(stringsFilename)
+        return try languages.reduce(into: [:]) { result, language in
+            let valueStrategy = request.valueStrategiesByLanguage[language]
+                ?? request.defaultValueStrategy
             
-            let localizedItems = try localizedItemFetcher.fetch(at: stringsFileURL)
-            // merge baseItems and localizedItems
-            result[languageID] = plistGenerator.generate(from: baseItems)
+            let stringsFileURL = request.resourcesURL
+                .appendingPathComponent("\(language).lproj/\(request.tableName).strings")
+            
+            let targetItems = try localizationTargetFetcher.fetch(at: stringsFileURL)
+            
+            let combinedItems = sourceItems
+                .map({ $0.applying(valueStrategy) })
+                .combining(targetItems)
+                .sorted(by: { $0.key < $1.key })
+            
+            result[language] = plistGenerator.generate(from: combinedItems)
         }
     }
 }

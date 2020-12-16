@@ -11,3 +11,7 @@ public struct LanguageID: Hashable, RawRepresentable, ExpressibleByStringLiteral
         self.rawValue = value
     }
 }
+
+extension LanguageID: CustomStringConvertible {
+    public var description: String { rawValue }
+}
