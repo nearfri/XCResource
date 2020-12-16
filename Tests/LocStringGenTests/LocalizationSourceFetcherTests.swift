@@ -5,7 +5,7 @@ import SampleData
 final class LocalizationSourceFetcherTests: XCTestCase {
     func test_fetch() throws {
         // Given
-        let sut = LocalizationSourceFetcher()
+        let sut = LocalizationSourceImporter()
         let sourceCodeURL = SampleData.sourceCodeURL("NewStringKey.swift")
         
         let expectedItems: [LocalizationItem] = [
@@ -24,7 +24,7 @@ final class LocalizationSourceFetcherTests: XCTestCase {
         ]
         
         // When
-        let actualItems = try sut.fetch(at: sourceCodeURL)
+        let actualItems = try sut.import(at: sourceCodeURL)
         
         // Then
         XCTAssertEqual(actualItems, expectedItems)

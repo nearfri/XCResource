@@ -5,7 +5,7 @@ import SampleData
 final class LocalizationTargetFetcherTests: XCTestCase {
     func test_fetch() throws {
         // Given
-        let sut = LocalizationTargetFetcher()
+        let sut = LocalizationTargetImporter()
         let stringsURL = SampleData.resourcesURL()
             .appendingPathComponent("en.lproj/Localizable.strings")
         
@@ -15,7 +15,7 @@ final class LocalizationTargetFetcherTests: XCTestCase {
         ]
         
         // When
-        let actualItems = try sut.fetch(at: stringsURL)
+        let actualItems = try sut.import(at: stringsURL)
         
         // Then
         XCTAssertEqual(actualItems, expectedItems)

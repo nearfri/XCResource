@@ -7,8 +7,8 @@ class StubLanguageDetector: LanguageDetector {
     }
 }
 
-class StubLocalizationSourceFetcher: LocalizationItemFetcher {
-    func fetch(at url: URL) throws -> [LocalizationItem] {
+class StubLocalizationSourceImporter: LocalizationItemImporter {
+    func `import`(at url: URL) throws -> [LocalizationItem] {
         return [
             .init(comment: "취소 주석", key: "cancel", value: ""),
             .init(comment: "확인 주석", key: "confirm", value: ""),
@@ -16,10 +16,10 @@ class StubLocalizationSourceFetcher: LocalizationItemFetcher {
     }
 }
 
-class StubLocalizationTargetFetcher: LocalizationItemFetcher {
+class StubLocalizationTargetImporter: LocalizationItemImporter {
     var fetchParamURLs: [URL] = []
     
-    func fetch(at url: URL) throws -> [LocalizationItem] {
+    func `import`(at url: URL) throws -> [LocalizationItem] {
         fetchParamURLs.append(url)
         
         if url.path.contains("en.lproj") {
@@ -49,13 +49,13 @@ class StubPropertyListGenerator: PropertyListGenerator {
 final class LocalizedStringGeneratorTests: XCTestCase {
     func test_generate() throws {
         // Given
-        let targetFetcher = StubLocalizationTargetFetcher()
+        let targetImporter = StubLocalizationTargetImporter()
         let plistGenerator = StubPropertyListGenerator()
         
         let sut = LocalizedStringGenerator(
             languageDetector: StubLanguageDetector(),
-            localizationSourceFetcher: StubLocalizationSourceFetcher(),
-            localizationTargetFetcher: targetFetcher,
+            localizationSourceImporter: StubLocalizationSourceImporter(),
+            localizationTargetImporter: targetImporter,
             plistGenerator: plistGenerator)
         
         let request = LocalizedStringGenerator.CodeRequest(
@@ -70,7 +70,7 @@ final class LocalizedStringGeneratorTests: XCTestCase {
         XCTAssertNotNil(result["en"])
         XCTAssertNotNil(result["ko"])
         
-        XCTAssertEqual(targetFetcher.fetchParamURLs, [
+        XCTAssertEqual(targetImporter.fetchParamURLs, [
             URL(fileURLWithPath: "Resources/en.lproj/Localizable.strings"),
             URL(fileURLWithPath: "Resources/ko.lproj/Localizable.strings"),
         ])

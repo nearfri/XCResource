@@ -4,8 +4,8 @@ protocol LanguageDetector: AnyObject {
     func detect(at url: URL) throws -> [LanguageID]
 }
 
-protocol LocalizationItemFetcher: AnyObject {
-    func fetch(at url: URL) throws -> [LocalizationItem]
+protocol LocalizationItemImporter: AnyObject {
+    func `import`(at url: URL) throws -> [LocalizationItem]
 }
 
 protocol PropertyListGenerator: AnyObject {
@@ -43,30 +43,30 @@ extension LocalizedStringGenerator {
 
 public class LocalizedStringGenerator {
     private let languageDetector: LanguageDetector
-    private let localizationSourceFetcher: LocalizationItemFetcher
-    private let localizationTargetFetcher: LocalizationItemFetcher
+    private let localizationSourceImporter: LocalizationItemImporter
+    private let localizationTargetImporter: LocalizationItemImporter
     private let plistGenerator: PropertyListGenerator
     
     init(languageDetector: LanguageDetector,
-         localizationSourceFetcher: LocalizationItemFetcher,
-         localizationTargetFetcher: LocalizationItemFetcher,
+         localizationSourceImporter: LocalizationItemImporter,
+         localizationTargetImporter: LocalizationItemImporter,
          plistGenerator: PropertyListGenerator
     ) {
         self.languageDetector = languageDetector
-        self.localizationSourceFetcher = localizationSourceFetcher
-        self.localizationTargetFetcher = localizationTargetFetcher
+        self.localizationSourceImporter = localizationSourceImporter
+        self.localizationTargetImporter = localizationTargetImporter
         self.plistGenerator = plistGenerator
     }
     
     public convenience init() {
         self.init(languageDetector: ActualLanguageDetector(),
-                  localizationSourceFetcher: LocalizationSourceFetcher(),
-                  localizationTargetFetcher: LocalizationTargetFetcher(),
+                  localizationSourceImporter: LocalizationSourceImporter(),
+                  localizationTargetImporter: LocalizationTargetImporter(),
                   plistGenerator: ActualPropertyListGenerator())
     }
     
     public func generate(for request: CodeRequest) throws -> [LanguageID: String] {
-        let sourceItems = try localizationSourceFetcher.fetch(at: request.sourceCodeURL)
+        let sourceItems = try localizationSourceImporter.import(at: request.sourceCodeURL)
         let languages = try languageDetector.detect(at: request.resourcesURL)
         
         return try languages.reduce(into: [:]) { result, language in
@@ -76,7 +76,7 @@ public class LocalizedStringGenerator {
             let stringsFileURL = request.resourcesURL
                 .appendingPathComponent("\(language).lproj/\(request.tableName).strings")
             
-            let targetItems = try localizationTargetFetcher.fetch(at: stringsFileURL)
+            let targetItems = try localizationTargetImporter.import(at: stringsFileURL)
             
             let combinedItems = sourceItems
                 .map({ $0.applying(valueStrategy) })
