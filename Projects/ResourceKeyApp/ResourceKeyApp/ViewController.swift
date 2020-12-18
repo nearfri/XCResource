@@ -10,6 +10,6 @@ class ViewController: UIViewController {
         imageView.image = UIImage(key: .icoSoundPressed)
         
         label.textColor = UIColor(key: .coralPink)
-        label.text = String(key: .editMenu_bgm_placeholder)
+        label.text = String(key: .errorPopup_failToAttach)
     }
 }

@@ -1,51 +1,51 @@
 /* 취소 */
-"common_cancel" = "취소";
+"common_cancel" = "UNTRANSLATED-STRING";
 
 /* 확인 */
-"common_confirm" = "확인";
+"common_confirm" = "UNTRANSLATED-STRING";
 
 /* 완료 */
-"common_done" = "완료";
+"common_done" = "UNTRANSLATED-STRING";
 
 /* 비율 */
-"editMenu_aspectRatio" = "비율";
+"editMenu_aspectRatio" = "UNTRANSLATED-STRING";
 
 /* 동영상을 움직여 위치를 조정해보세요. */
-"editMenu_aspectRatioGuide" = "동영상을 움직여 위치를 조정해보세요.";
+"editMenu_aspectRatioGuide" = "UNTRANSLATED-STRING";
 
 /* 음악 */
-"editMenu_bgm" = "음악";
+"editMenu_bgm" = "UNTRANSLATED-STRING";
 
 /* 음악 추가 */
-"editMenu_bgm_placeholder" = "음악 추가";
+"editMenu_bgm_placeholder" = "UNTRANSLATED-STRING";
 
 /* 서명 */
-"editMenu_copyright" = "서명";
+"editMenu_copyright" = "UNTRANSLATED-STRING";
 
 /* 이미지 추가 */
-"editMenu_copyright_placeholder" = "이미지 추가";
+"editMenu_copyright_placeholder" = "UNTRANSLATED-STRING";
 
 /* 필터 */
-"editMenu_filter" = "필터";
+"editMenu_filter" = "UNTRANSLATED-STRING";
 
 /* 원본 */
-"editMenu_filter_original" = "원본";
+"editMenu_filter_original" = "UNTRANSLATED-STRING";
 
 /* 동영상 편집을 취소하시겠습니까?\n확인 선택 시 모든 변경사항이 사라집니다. */
-"errorPopup_cancelToEditAsset" = "동영상 편집을 취소하시겠습니까?\n확인 선택 시 모든 변경사항이 사라집니다.";
+"errorPopup_cancelToEditAsset" = "UNTRANSLATED-STRING";
 
 /* 동영상을 불러오는 데 실패했습니다.\n다시 시도해주세요. */
-"errorPopup_failToAttach" = "동영상을 불러오는 데 실패했습니다.\n다시 시도해주세요.";
+"errorPopup_failToAttach" = "UNTRANSLATED-STRING";
 
 /* 인코딩 오류입니다.\n다시 시도하시겠습니까? */
-"errorPopup_failToEncoding" = "인코딩 오류입니다.\n다시 시도하시겠습니까?";
+"errorPopup_failToEncoding" = "UNTRANSLATED-STRING";
 
 /* 편집할 수 없는 유형의 영상입니다.\n다른 영상을 첨부해주세요. */
-"errorPopup_failToLoadAsset" = "편집할 수 없는 유형의 영상입니다.\n다른 영상을 첨부해주세요.";
+"errorPopup_failToLoadAsset" = "UNTRANSLATED-STRING";
 
 /* 목록을 불러오는 데 실패했습니다.\n다시 시도해주세요. */
-"errorPopup_failToLoadBGMList" = "목록을 불러오는 데 실패했습니다.\n다시 시도해주세요.";
+"errorPopup_failToLoadBGMList" = "UNTRANSLATED-STRING";
 
 /* 영상은 최대 %@시간, %@까지 가능합니다.\n길이를 수정하세요. */
-"errorPopup_overMaximumSize" = "영상은 최대 %@시간, %@까지 가능합니다.\n길이를 수정하세요.";
+"errorPopup_overMaximumSize" = "UNTRANSLATED-STRING";
 
