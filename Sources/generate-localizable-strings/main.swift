@@ -104,6 +104,7 @@ struct GenerateLocalizableStrings: ParsableCommand {
         var stream = try TextFileOutputStream(forWritingTo: tempFileURL)
         
         print(strings, to: &stream)
+        print("", to: &stream)
         
         try stream.close()
         
