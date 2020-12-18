@@ -64,16 +64,16 @@ struct GenerateLocalizableStrings: ParsableCommand {
     @Option var tableName: String = "Localizable"
     
     @Option(help: ArgumentHelp(valueName: ValueStrategy.allValueStrings.joined(separator: "|")))
-    var defaultStrategy: ValueStrategy = .custom("UNTRANSLATED-STRING")
+    var defaultValueStrategy: ValueStrategy = .custom("UNTRANSLATED-STRING")
     
     @Option(
-        name: .customLong("strategy"),
+        name: .customLong("value-strategy"),
         help: ArgumentHelp(
             valueName: "language:<\(ValueStrategy.allValueStrings.joined(separator: "|"))>"))
-    var strategies: [ValueStrategyEntry] = []
+    var valueStrategies: [ValueStrategyEntry] = []
     
     private var strategiesByLanguage: [LanguageID: ValueStrategy] {
-        return strategies.reduce(into: [:]) { result, entry in
+        return valueStrategies.reduce(into: [:]) { result, entry in
             result[LanguageID(rawValue: entry.language)] = entry.strategy
         }
     }
@@ -93,7 +93,7 @@ struct GenerateLocalizableStrings: ParsableCommand {
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: inputSource),
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resources),
             tableName: tableName,
-            defaultValueStrategy: defaultStrategy,
+            defaultValueStrategy: defaultValueStrategy,
             valueStrategiesByLanguage: strategiesByLanguage)
         
         return try LocalizedStringGenerator().generate(for: request)

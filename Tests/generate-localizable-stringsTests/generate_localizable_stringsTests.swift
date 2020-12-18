@@ -53,9 +53,9 @@ final class generate_localizable_stringsTests: XCTestCase {
         process.arguments = [
             "--input-source", SampleData.sourceCodeURL("NewStringKey.swift").path,
             "--resources", resourcesURL.path,
-            "--default-strategy", "key",
-            "--strategy", "ko:comment",
-            "--strategy", "jp:UNTRANSLATED-STRING",
+            "--default-value-strategy", "key",
+            "--value-strategy", "ko:comment",
+            "--value-strategy", "jp:UNTRANSLATED-STRING",
         ]
         
         let pipe = Pipe()
