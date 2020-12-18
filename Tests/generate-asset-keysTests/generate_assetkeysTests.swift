@@ -3,7 +3,7 @@ import class Foundation.Bundle
 import SampleData
 
 final class generate_assetkeysTests: XCTestCase {
-    func testExample() throws {
+    func test_main() throws {
         let fm = FileManager.default
         
         let keyDeclFileURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)

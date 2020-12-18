@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/nearfri/Strix",
         "state": {
           "branch": null,
-          "revision": "43fdcde47d3bba0fd7c6bfc8242811c4b872e0e4",
-          "version": "2.1.1"
+          "revision": "b16478b44d8b677800e708ae831f0b57a1cf98c3",
+          "version": "2.1.2"
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/jpsim/Yams.git",
         "state": {
           "branch": null,
-          "revision": "138cf1b701cf825233b92ceac919152d5aba8a3f",
-          "version": "4.0.1"
+          "revision": "1bce5b89a11912fb8a8c48bd404bd24979472f27",
+          "version": "4.0.3"
         }
       }
     ]

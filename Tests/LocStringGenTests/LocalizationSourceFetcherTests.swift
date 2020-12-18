@@ -12,7 +12,7 @@ final class LocalizationSourceFetcherTests: XCTestCase {
             .init(comment: "취소",
                   key: "common_cancel",
                   value: ""),
-            .init(comment: "완료",
+            .init(comment: "확인",
                   key: "common_confirm",
                   value: ""),
             .init(comment: "편집을 취소하시겠습니까? 확인 선택 시 모든 변경사항이 사라집니다.",

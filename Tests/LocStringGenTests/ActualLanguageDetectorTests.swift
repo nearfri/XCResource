@@ -6,7 +6,7 @@ final class ActualLanguageDetectorTests: XCTestCase {
     func test_detect() throws {
         // Given
         let sut = ActualLanguageDetector()
-        let resourcesURL = SampleData.resourcesURL()
+        let resourcesURL = SampleData.localizationDirectoryURL()
         
         // When
         let languageIDs = try sut.detect(at: resourcesURL)

@@ -4,7 +4,7 @@ enum StringKey: String, CaseIterable {
     /// 취소
     case common_cancel
     
-    /// 완료
+    /// 확인
     case common_confirm
     
     /// 편집을 취소하시겠습니까?
