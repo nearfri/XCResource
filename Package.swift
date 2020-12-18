@@ -10,10 +10,8 @@ let package = Package(
     products: [
         .executable(name: "generate-asset-keys", targets: ["generate-asset-keys"]),
         .executable(name: "generate-localizable-strings", targets: ["generate-localizable-strings"]),
-        .executable(name: "generate-keylist", targets: ["generate-keylist"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
         .library(name: "LocStringGen", targets: ["LocStringGen"]),
-        .library(name: "StaticKeyListGen", targets: ["StaticKeyListGen"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -21,7 +19,6 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.1"),
         .package(name: "SwiftSyntax", url: "https://github.com/apple/swift-syntax", .exact("0.50300.0")),
         .package(url: "https://github.com/nearfri/Strix", from: "2.1.1"),
-        .package(url: "https://github.com/jpsim/SourceKitten", from: "0.30.1"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -53,19 +50,6 @@ let package = Package(
             name: "generate-localizable-stringsTests",
             dependencies: ["generate-localizable-strings", "SampleData"]),
         
-        // MARK: - generate-keylist
-        
-        .target(
-            name: "generate-keylist",
-            dependencies: [
-                "StaticKeyListGen",
-                "ResourceKeyUtil",
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
-            ]),
-        .testTarget(
-            name: "generate-keylistTests",
-            dependencies: ["generate-keylist", "SampleData"]),
-        
         // MARK: - AssetKeyGen
         
         .target(
@@ -87,17 +71,6 @@ let package = Package(
         .testTarget(
             name: "LocStringGenTests",
             dependencies: ["LocStringGen", "SwiftSyntax", "SampleData"]),
-        
-        // MARK: - StaticKeyListGen
-        
-        .target(
-            name: "StaticKeyListGen",
-            dependencies: [
-                .product(name: "SourceKittenFramework", package: "SourceKitten"),
-            ]),
-        .testTarget(
-            name: "StaticKeyListGenTests",
-            dependencies: ["StaticKeyListGen", "ResourceKeyUtil"]),
         
         // MARK: - ResourceKeyUtil
         
