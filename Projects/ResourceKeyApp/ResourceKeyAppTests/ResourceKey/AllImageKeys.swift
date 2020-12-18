@@ -80,7 +80,6 @@ extension ImageKey {
         .iconCheck,
         .iconCheckOff,
         .numBg1,
-        .numBg2,
         .iconLeftArrow,
         .iconLeftArrowDisable,
         .iconRightArrow,

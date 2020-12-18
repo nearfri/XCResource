@@ -14,7 +14,7 @@ class StringKeyTests: XCTestCase {
     func test_localizedStringsExist() throws {
         let defaultString = "$_LOCALIZED_STRING_NOT_FOUND_$"
         
-        for key in StringKey.allGeneratedKeys {
+        for key in StringKey.allCases {
             let string = NSLocalizedString(key.rawValue,
                                            bundle: .module,
                                            value: defaultString,

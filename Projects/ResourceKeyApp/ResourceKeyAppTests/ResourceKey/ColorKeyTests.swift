@@ -12,7 +12,7 @@ class ColorKeyTests: XCTestCase {
     }
 
     func test_colorsExist() throws {
-        for key in ColorKey.allGeneratedKeys {
+        for key in ColorKey.allGeneratedKeys where key.rawValue != "AccentColor" {
             XCTAssertNotNil(UIColor(named: key.rawValue, in: .module, compatibleWith: nil),
                             "\(key.rawValue) color not found")
         }

@@ -43,7 +43,6 @@
 		08765F422511D5200024D427 /* ResourceKeyAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F412511D5200024D427 /* ResourceKeyAppTests.swift */; };
 		08765F4C2511D7510024D427 /* AllImageKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F4B2511D7510024D427 /* AllImageKeys.swift */; };
 		08765F4E2511D7920024D427 /* AllColorKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F4D2511D7920024D427 /* AllColorKeys.swift */; };
-		08765F502511DC190024D427 /* AllStringKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F4F2511DC190024D427 /* AllStringKeys.swift */; };
 		0893AE5F252F159200CB9473 /* StringKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0893AE5E252F159200CB9473 /* StringKeyTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -95,7 +94,6 @@
 		08765F432511D5200024D427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08765F4B2511D7510024D427 /* AllImageKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllImageKeys.swift; sourceTree = "<group>"; };
 		08765F4D2511D7920024D427 /* AllColorKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllColorKeys.swift; sourceTree = "<group>"; };
-		08765F4F2511DC190024D427 /* AllStringKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStringKeys.swift; sourceTree = "<group>"; };
 		0893AE5E252F159200CB9473 /* StringKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringKeyTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,7 +120,6 @@
 			children = (
 				08765F4B2511D7510024D427 /* AllImageKeys.swift */,
 				08765F4D2511D7920024D427 /* AllColorKeys.swift */,
-				08765F4F2511DC190024D427 /* AllStringKeys.swift */,
 				0826A00C251ECF8600F9A77D /* ImageKeyTests.swift */,
 				0826A012251ED0CC00F9A77D /* ColorKeyTests.swift */,
 				0893AE5E252F159200CB9473 /* StringKeyTests.swift */,
@@ -343,7 +340,6 @@
 				0826A013251ED0CC00F9A77D /* ColorKeyTests.swift in Sources */,
 				08765F4C2511D7510024D427 /* AllImageKeys.swift in Sources */,
 				0893AE5F252F159200CB9473 /* StringKeyTests.swift in Sources */,
-				08765F502511DC190024D427 /* AllStringKeys.swift in Sources */,
 				0826A00D251ECF8600F9A77D /* ImageKeyTests.swift in Sources */,
 				08765F4E2511D7920024D427 /* AllColorKeys.swift in Sources */,
 			);

@@ -136,7 +136,6 @@ extension ImageKey {
     static let iconCheck: ImageKey = "iconCheck"
     static let iconCheckOff: ImageKey = "iconCheckOff"
     static let numBg1: ImageKey = "numBg1"
-    static let numBg2: ImageKey = "numBg2"
     
     // MARK: Scenes/Style
     static let iconLeftArrow: ImageKey = "iconLeftArrow"
