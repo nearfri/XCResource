@@ -1,23 +1,12 @@
 import Foundation
-import StrixParsers
 
 class LocalizationTargetImporter: LocalizationItemImporter {
     func `import`(at url: URL) throws -> [LocalizationItem] {
-        let plistDocument = try String(contentsOf: url)
-        let plist = try ASCIIPlistParser().parse(plistDocument)
-        guard case let .dictionary(entries) = plist else {
-            throw TargetImporterError.invalidPlistType(expected: "dictionary", actual: plist)
-        }
+        let plistData = try Data(contentsOf: url)
+        let plist = try PropertyListDecoder().decode([String: String].self, from: plistData)
         
-        return try entries.map { entry in
-            guard case let .string(value) = entry.value else {
-                throw TargetImporterError.invalidPlistType(expected: "string", actual: entry.value)
-            }
-            return LocalizationItem(comment: entry.comment, key: entry.key, value: value)
+        return plist.map { key, value in
+            LocalizationItem(comment: nil, key: key, value: value)
         }
     }
-}
-
-enum TargetImporterError: Error {
-    case invalidPlistType(expected: String, actual: ASCIIPlist)
 }
