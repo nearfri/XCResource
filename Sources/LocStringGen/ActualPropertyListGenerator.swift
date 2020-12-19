@@ -1,11 +1,19 @@
 import Foundation
-import StrixParsers
 
 class ActualPropertyListGenerator: PropertyListGenerator {
     func generate(from items: [LocalizationItem]) -> String {
-        let plistEntries = items.map({
-            ASCIIPlist.DictionaryEntry(comment: $0.comment, key: $0.key, value: .string($0.value))
-        })
-        return ASCIIPlist.dictionary(plistEntries).description
+        var result = ""
+        
+        for (index, item) in items.enumerated() {
+            if let comment = item.comment {
+                result.write("/* \(comment.addingBackslashEncoding()) */\n")
+            }
+            result.write("\"\(item.key)\" = \"\(item.value.addingBackslashEncoding())\";")
+            
+            let isLastItem = index + 1 == items.count
+            result.write(isLastItem ? "" : "\n\n")
+        }
+        
+        return result
     }
 }
