@@ -16,6 +16,7 @@ private enum Seed {
     /* 영상은 최대 %d분, %fGB까지 가능합니다.\\n길이를 수정하세요. */
     "errorPopup_overMaximumSize" = "errorPopup_overMaximumSize";
     
+    
     """
     
     static let koStrings = """
@@ -30,6 +31,7 @@ private enum Seed {
     
     /* 영상은 최대 %d분, %fGB까지 가능합니다.\\n길이를 수정하세요. */
     "errorPopup_overMaximumSize" = "영상은 최대 %d분, %fGB까지 가능합니다.\\n길이를 수정하세요.";
+    
     
     """
 }
