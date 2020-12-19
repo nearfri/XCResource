@@ -1,5 +1,5 @@
 import XCTest
-@testable import StrixParsers
+@testable import LocStringGen
 
 final class String_Tests: XCTestCase {
     func test_addingBackslashEncoding() {

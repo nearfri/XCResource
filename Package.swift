@@ -18,7 +18,6 @@ let package = Package(
         // .package(url: /* package url */, from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.1"),
         .package(name: "SwiftSyntax", url: "https://github.com/apple/swift-syntax", .exact("0.50300.0")),
-        .package(url: "https://github.com/nearfri/Strix", from: "2.1.1"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -63,11 +62,7 @@ let package = Package(
         
         .target(
             name: "LocStringGen",
-            dependencies: [
-                "ResourceKeyUtil",
-                "SwiftSyntax",
-                .product(name: "StrixParsers", package: "Strix"),
-            ]),
+            dependencies: ["ResourceKeyUtil", "SwiftSyntax"]),
         .testTarget(
             name: "LocStringGenTests",
             dependencies: ["LocStringGen", "SwiftSyntax", "SampleData"]),
