@@ -1,4 +1,5 @@
 import Foundation
+import ResourceKeyUtil
 
 class ActualPropertyListGenerator: PropertyListGenerator {
     func generate(from items: [LocalizationItem]) -> String {

@@ -114,7 +114,7 @@ struct GenerateLocalizableStrings: ParsableCommand {
     
     private func stringsFileURL(for language: LanguageID) -> URL {
         return URL(fileURLWithExpandingTildeInPath: resources)
-            .appendingPathComponent("\(language).lproj/\(tableName).strings")
+            .appendingPathComponents(language: language.rawValue, tableName: tableName)
     }
 }
 

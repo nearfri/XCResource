@@ -1,4 +1,5 @@
 import Foundation
+import ResourceKeyUtil
 
 protocol LanguageDetector: AnyObject {
     func detect(at url: URL) throws -> [LanguageID]
@@ -74,7 +75,7 @@ public class LocalizedStringGenerator {
                 ?? request.defaultValueStrategy
             
             let stringsFileURL = request.resourcesURL
-                .appendingPathComponent("\(language).lproj/\(request.tableName).strings")
+                .appendingPathComponents(language: language.rawValue, tableName: request.tableName)
             
             let targetItems = try localizationTargetImporter.import(at: stringsFileURL)
             
