@@ -14,7 +14,7 @@ protocol PropertyListGenerator: AnyObject {
 }
 
 extension LocalizedStringGenerator {
-    public struct CodeRequest {
+    public struct Request {
         public var sourceCodeURL: URL
         public var resourcesURL: URL
         public var tableName: String
@@ -74,7 +74,7 @@ public class LocalizedStringGenerator {
                   plistGenerator: ActualPropertyListGenerator())
     }
     
-    public func generate(for request: CodeRequest) throws -> [LanguageID: String] {
+    public func generate(for request: Request) throws -> [LanguageID: String] {
         let sourceItems = try localizationSourceImporter.import(at: request.sourceCodeURL)
         let languages = try languageDetector.detect(at: request.resourcesURL)
         

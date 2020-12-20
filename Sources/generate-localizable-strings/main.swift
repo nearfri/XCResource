@@ -85,7 +85,7 @@ struct GenerateLocalizableStrings: ParsableCommand {
     }
     
     private func generateStrings() throws -> [LanguageID: String] {
-        let request = LocalizedStringGenerator.CodeRequest(
+        let request = LocalizedStringGenerator.Request(
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: inputSource),
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resources),
             tableName: tableName,

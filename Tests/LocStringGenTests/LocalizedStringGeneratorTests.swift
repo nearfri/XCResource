@@ -58,7 +58,7 @@ final class LocalizedStringGeneratorTests: XCTestCase {
             localizationTargetImporter: targetImporter,
             plistGenerator: plistGenerator)
         
-        let request = LocalizedStringGenerator.CodeRequest(
+        let request = LocalizedStringGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
             valueStrategiesByLanguage: ["ko": .comment],
