@@ -10,8 +10,8 @@ class StubLanguageDetector: LanguageDetector {
 class StubLocalizationSourceImporter: LocalizationItemImporter {
     func `import`(at url: URL) throws -> [LocalizationItem] {
         return [
-            .init(comment: "취소 주석", key: "cancel", value: ""),
             .init(comment: "확인 주석", key: "confirm", value: ""),
+            .init(comment: "취소 주석", key: "cancel", value: ""),
         ]
     }
 }
@@ -61,7 +61,8 @@ final class LocalizedStringGeneratorTests: XCTestCase {
         let request = LocalizedStringGenerator.CodeRequest(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
-            valueStrategiesByLanguage: ["ko": .comment])
+            valueStrategiesByLanguage: ["ko": .comment],
+            sortOrder: .key)
         
         // When
         let result = try sut.generate(for: request)

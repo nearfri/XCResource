@@ -38,4 +38,42 @@ final class LocalizationItemTests: XCTestCase {
         // Then
         XCTAssertEqual(actualCombinedItems, expectedCombinedItems)
     }
+    
+    func test_sortedBy_occurrence() {
+        // Given
+        let sut: [LocalizationItem] = [
+            .init(comment: nil, key: "confirm", value: ""),
+            .init(comment: nil, key: "cancel", value: ""),
+        ]
+        
+        let expectedSortedItems: [LocalizationItem] = [
+            .init(comment: nil, key: "confirm", value: ""),
+            .init(comment: nil, key: "cancel", value: ""),
+        ]
+        
+        // When
+        let actualSortedItems = sut.sorted(by: .occurrence)
+        
+        // Then
+        XCTAssertEqual(actualSortedItems, expectedSortedItems)
+    }
+    
+    func test_sortedBy_key() {
+        // Given
+        let sut: [LocalizationItem] = [
+            .init(comment: nil, key: "confirm", value: ""),
+            .init(comment: nil, key: "cancel", value: ""),
+        ]
+        
+        let expectedSortedItems: [LocalizationItem] = [
+            .init(comment: nil, key: "cancel", value: ""),
+            .init(comment: nil, key: "confirm", value: ""),
+        ]
+        
+        // When
+        let actualSortedItems = sut.sorted(by: .key)
+        
+        // Then
+        XCTAssertEqual(actualSortedItems, expectedSortedItems)
+    }
 }

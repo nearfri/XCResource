@@ -20,18 +20,21 @@ extension LocalizedStringGenerator {
         public var tableName: String
         public var defaultValueStrategy: ValueStrategy
         public var valueStrategiesByLanguage: [LanguageID: ValueStrategy]
+        public var sortOrder: SortOrder
         
         public init(sourceCodeURL: URL,
                     resourcesURL: URL,
                     tableName: String = "Localizable",
                     defaultValueStrategy: ValueStrategy = .custom("UNTRANSLATED-STRING"),
-                    valueStrategiesByLanguage: [LanguageID: ValueStrategy] = [:]
+                    valueStrategiesByLanguage: [LanguageID: ValueStrategy] = [:],
+                    sortOrder: SortOrder = .occurrence
         ) {
             self.sourceCodeURL = sourceCodeURL
             self.resourcesURL = resourcesURL
             self.tableName = tableName
             self.defaultValueStrategy = defaultValueStrategy
             self.valueStrategiesByLanguage = valueStrategiesByLanguage
+            self.sortOrder = sortOrder
         }
     }
     
@@ -39,6 +42,11 @@ extension LocalizedStringGenerator {
         case comment
         case key
         case custom(String)
+    }
+    
+    public enum SortOrder {
+        case occurrence
+        case key
     }
 }
 
@@ -82,7 +90,7 @@ public class LocalizedStringGenerator {
             let combinedItems = sourceItems
                 .map({ $0.applying(valueStrategy) })
                 .combining(targetItems)
-                .sorted(by: { $0.key < $1.key })
+                .sorted(by: request.sortOrder)
             
             result[language] = plistGenerator.generate(from: combinedItems)
         }

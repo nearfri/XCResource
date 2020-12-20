@@ -37,4 +37,13 @@ extension Array where Element == LocalizationItem {
         
         return result
     }
+    
+    func sorted(by sortOrder: LocalizedStringGenerator.SortOrder) -> [LocalizationItem] {
+        switch sortOrder {
+        case .occurrence:
+            return self
+        case .key:
+            return sorted(by: { $0.key < $1.key })
+        }
+    }
 }

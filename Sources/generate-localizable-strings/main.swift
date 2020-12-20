@@ -72,11 +72,7 @@ struct GenerateLocalizableStrings: ParsableCommand {
             valueName: "language:<\(ValueStrategy.allValueStrings.joined(separator: "|"))>"))
     var valueStrategies: [ValueStrategyEntry] = []
     
-    private var strategiesByLanguage: [LanguageID: ValueStrategy] {
-        return valueStrategies.reduce(into: [:]) { result, entry in
-            result[LanguageID(rawValue: entry.language)] = entry.strategy
-        }
-    }
+    @Flag var sortByKey: Bool = false
     
     // MARK: - Run
     
@@ -94,9 +90,16 @@ struct GenerateLocalizableStrings: ParsableCommand {
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resources),
             tableName: tableName,
             defaultValueStrategy: defaultValueStrategy,
-            valueStrategiesByLanguage: strategiesByLanguage)
+            valueStrategiesByLanguage: strategiesByLanguage,
+            sortOrder: sortByKey ? .key : .occurrence)
         
         return try LocalizedStringGenerator().generate(for: request)
+    }
+    
+    private var strategiesByLanguage: [LanguageID: ValueStrategy] {
+        return valueStrategies.reduce(into: [:]) { result, entry in
+            result[LanguageID(rawValue: entry.language)] = entry.strategy
+        }
     }
     
     private func writeStrings(_ strings: String, for language: LanguageID) throws {
