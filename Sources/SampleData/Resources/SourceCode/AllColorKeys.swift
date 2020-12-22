@@ -1,4 +1,4 @@
-// Generated from generate-asset-keys.
+// Generated from resourcekey.
 // Do Not Edit Directly!
 
 @testable import SampleApp

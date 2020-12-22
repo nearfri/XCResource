@@ -3,7 +3,7 @@ import ArgumentParser
 import AssetKeyGen
 import ResourceKeyUtil
 
-let headerComment = """
+private let headerComment = """
 // Generated from \(ProcessInfo.processInfo.processName).
 // Do Not Edit Directly!
 """
@@ -107,5 +107,3 @@ struct GenerateAssetKeys: ParsableCommand {
         try FileManager.default.compareAndReplaceItem(at: keyListFile, withItemAt: tempFileURL)
     }
 }
-
-GenerateAssetKeys.main()

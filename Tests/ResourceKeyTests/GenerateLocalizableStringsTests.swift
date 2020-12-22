@@ -34,7 +34,7 @@ private enum Seed {
     """
 }
 
-final class generate_localizable_stringsTests: XCTestCase {
+final class GenerateLocalizableStringsTests: XCTestCase {
     func test_main() throws {
         let fm = FileManager.default
         
@@ -45,13 +45,14 @@ final class generate_localizable_stringsTests: XCTestCase {
             try? fm.removeItem(at: resourcesURL)
         }
         
-        let executableURL = productsDirectory.appendingPathComponent("generate-localizable-strings")
+        let executableURL = productsDirectory.appendingPathComponent("resourcekey")
         
         let process = Process()
         process.executableURL = executableURL
         
         process.arguments = [
-            "--input-source", SampleData.sourceCodeURL("NewStringKey.swift").path,
+            "generate-localizable-strings",
+            "--input-source", SampleData.sourceCodeURL("StringKey.swift").path,
             "--resources", resourcesURL.path,
             "--default-value-strategy", "key",
             "--value-strategy", "ko:comment",

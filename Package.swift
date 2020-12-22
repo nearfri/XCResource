@@ -8,8 +8,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [.macOS(.v11), .iOS(.v14)],
     products: [
-        .executable(name: "generate-asset-keys", targets: ["generate-asset-keys"]),
-        .executable(name: "generate-localizable-strings", targets: ["generate-localizable-strings"]),
+        .executable(name: "resourcekey", targets: ["ResourceKey"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
         .library(name: "LocStringGen", targets: ["LocStringGen"]),
     ],
@@ -23,31 +22,19 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         
-        // MARK: - generate-asset-keys
+        // MARK: - ResourceKey
         
         .target(
-            name: "generate-asset-keys",
+            name: "ResourceKey",
             dependencies: [
                 "AssetKeyGen",
-                "ResourceKeyUtil",
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
-            ]),
-        .testTarget(
-            name: "generate-asset-keysTests",
-            dependencies: ["generate-asset-keys", "SampleData"]),
-        
-        // MARK: - generate-localizable-strings
-        
-        .target(
-            name: "generate-localizable-strings",
-            dependencies: [
                 "LocStringGen",
                 "ResourceKeyUtil",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]),
         .testTarget(
-            name: "generate-localizable-stringsTests",
-            dependencies: ["generate-localizable-strings", "SampleData"]),
+            name: "ResourceKeyTests",
+            dependencies: ["ResourceKey", "SampleData"]),
         
         // MARK: - AssetKeyGen
         

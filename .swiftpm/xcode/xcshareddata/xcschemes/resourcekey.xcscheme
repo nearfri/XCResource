@@ -14,9 +14,9 @@
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "generate-localizable-strings"
-                     BuildableName = "generate-localizable-strings"
-                     BlueprintName = "generate-localizable-strings"
+                     BlueprintIdentifier = "resourcekey"
+                     BuildableName = "resourcekey"
+                     BlueprintName = "resourcekey"
                      ReferencedContainer = "container:">
                   </BuildableReference>
                </EnvironmentBuildable>
@@ -32,9 +32,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "generate-localizable-strings"
-               BuildableName = "generate-localizable-strings"
-               BlueprintName = "generate-localizable-strings"
+               BlueprintIdentifier = "resourcekey"
+               BuildableName = "resourcekey"
+               BlueprintName = "resourcekey"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AssetKeyGenTests"
+               BuildableName = "AssetKeyGenTests"
+               BlueprintName = "AssetKeyGenTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -60,9 +74,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ResourceKeyUtilTests"
-               BuildableName = "ResourceKeyUtilTests"
-               BlueprintName = "ResourceKeyUtilTests"
+               BlueprintIdentifier = "ResourceKeyTests"
+               BuildableName = "ResourceKeyTests"
+               BlueprintName = "ResourceKeyTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -74,9 +88,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "generate-localizable-stringsTests"
-               BuildableName = "generate-localizable-stringsTests"
-               BlueprintName = "generate-localizable-stringsTests"
+               BlueprintIdentifier = "ResourceKeyUtilTests"
+               BuildableName = "ResourceKeyUtilTests"
+               BlueprintName = "ResourceKeyUtilTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -92,6 +106,16 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AssetKeyGenTests"
+               BuildableName = "AssetKeyGenTests"
+               BlueprintName = "AssetKeyGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "LocStringGenTests"
                BuildableName = "LocStringGenTests"
                BlueprintName = "LocStringGenTests"
@@ -102,9 +126,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ResourceKeyUtilTests"
-               BuildableName = "ResourceKeyUtilTests"
-               BlueprintName = "ResourceKeyUtilTests"
+               BlueprintIdentifier = "ResourceKeyTests"
+               BuildableName = "ResourceKeyTests"
+               BlueprintName = "ResourceKeyTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -112,9 +136,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "generate-localizable-stringsTests"
-               BuildableName = "generate-localizable-stringsTests"
-               BlueprintName = "generate-localizable-stringsTests"
+               BlueprintIdentifier = "ResourceKeyUtilTests"
+               BuildableName = "ResourceKeyUtilTests"
+               BlueprintName = "ResourceKeyUtilTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -134,9 +158,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "generate-localizable-strings"
-            BuildableName = "generate-localizable-strings"
-            BlueprintName = "generate-localizable-strings"
+            BlueprintIdentifier = "resourcekey"
+            BuildableName = "resourcekey"
+            BlueprintName = "resourcekey"
             ReferencedContainer = "container:">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -151,9 +175,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "generate-localizable-strings"
-            BuildableName = "generate-localizable-strings"
-            BlueprintName = "generate-localizable-strings"
+            BlueprintIdentifier = "resourcekey"
+            BuildableName = "resourcekey"
+            BlueprintName = "resourcekey"
             ReferencedContainer = "container:">
          </BuildableReference>
       </BuildableProductRunnable>

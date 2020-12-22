@@ -6,7 +6,7 @@ final class LocalizationSourceFetcherTests: XCTestCase {
     func test_fetch() throws {
         // Given
         let sut = LocalizationSourceImporter()
-        let sourceCodeURL = SampleData.sourceCodeURL("NewStringKey.swift")
+        let sourceCodeURL = SampleData.sourceCodeURL("StringKey.swift")
         
         let expectedItems: [LocalizationItem] = [
             .init(comment: "취소",

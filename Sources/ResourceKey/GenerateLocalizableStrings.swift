@@ -119,5 +119,3 @@ struct GenerateLocalizableStrings: ParsableCommand {
             .appendingPathComponents(language: language.rawValue, tableName: tableName)
     }
 }
-
-GenerateLocalizableStrings.main()

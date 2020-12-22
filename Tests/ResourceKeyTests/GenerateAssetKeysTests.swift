@@ -2,7 +2,7 @@ import XCTest
 import class Foundation.Bundle
 import SampleData
 
-final class generate_assetkeysTests: XCTestCase {
+final class GenerateAssetKeysTests: XCTestCase {
     func test_main() throws {
         let fm = FileManager.default
         
@@ -14,12 +14,13 @@ final class generate_assetkeysTests: XCTestCase {
             try? fm.removeItem(at: keyListFileURL)
         }
         
-        let executableURL = productsDirectory.appendingPathComponent("generate-asset-keys")
+        let executableURL = productsDirectory.appendingPathComponent("resourcekey")
         
         let process = Process()
         process.executableURL = executableURL
         
         process.arguments = [
+            "generate-asset-keys",
             "--input-xcassets", SampleData.assetURL().path,
             "--asset-type", "color",
             "--key-type-name", "ColorKey",

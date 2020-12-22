@@ -216,6 +216,34 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Command"
+               BuildableName = "Command"
+               BlueprintName = "Command"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "resourcekey"
+               BuildableName = "resourcekey"
+               BlueprintName = "resourcekey"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -294,6 +322,26 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CommandTests"
+               BuildableName = "CommandTests"
+               BlueprintName = "CommandTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ResourceKeyTests"
+               BuildableName = "ResourceKeyTests"
+               BlueprintName = "ResourceKeyTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -310,9 +358,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "generate-localizable-strings"
-            BuildableName = "generate-localizable-strings"
-            BlueprintName = "generate-localizable-strings"
+            BlueprintIdentifier = "resourcekey"
+            BuildableName = "resourcekey"
+            BlueprintName = "resourcekey"
             ReferencedContainer = "container:">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -336,9 +384,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "generate-localizable-strings"
-            BuildableName = "generate-localizable-strings"
-            BlueprintName = "generate-localizable-strings"
+            BlueprintIdentifier = "resourcekey"
+            BuildableName = "resourcekey"
+            BlueprintName = "resourcekey"
             ReferencedContainer = "container:">
          </BuildableReference>
       </BuildableProductRunnable>
