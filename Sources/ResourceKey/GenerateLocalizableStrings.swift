@@ -3,9 +3,9 @@ import ArgumentParser
 import LocStringGen
 import ResourceKeyUtil
 
-typealias ValueStrategy = LocalizableStringGenerator.ValueStrategy
+typealias LocalizableValueStrategy = LocalizableStringGenerator.ValueStrategy
 
-extension ValueStrategy: ExpressibleByArgument {
+extension LocalizableValueStrategy: ExpressibleByArgument {
     public init(argument: String) {
         switch argument {
         case "comment": self = .comment
@@ -25,11 +25,15 @@ extension ValueStrategy: ExpressibleByArgument {
     public static var allValueStrings: [String] {
         return ["comment", "key", "custom-string"]
     }
+    
+    static var joinedArgumentName: String {
+        return allValueStrings.joined(separator: "|")
+    }
 }
 
 struct ValueStrategyEntry: ExpressibleByArgument {
     var language: String
-    var strategy: ValueStrategy
+    var strategy: LocalizableValueStrategy
     
     init?(argument: String) {
         guard let separatorIndex = argument.firstIndex(of: ":") else { return nil }
@@ -39,7 +43,7 @@ struct ValueStrategyEntry: ExpressibleByArgument {
         if language.isEmpty || strategy.isEmpty { return nil }
         
         self.language = String(language)
-        self.strategy = ValueStrategy(argument: String(strategy))
+        self.strategy = LocalizableValueStrategy(argument: String(strategy))
     }
 }
 
@@ -63,13 +67,13 @@ struct GenerateLocalizableStrings: ParsableCommand {
     
     @Option var tableName: String = "Localizable"
     
-    @Option(help: ArgumentHelp(valueName: ValueStrategy.allValueStrings.joined(separator: "|")))
-    var defaultValueStrategy: ValueStrategy = .custom("UNTRANSLATED-STRING")
+    @Option(help: ArgumentHelp(valueName: LocalizableValueStrategy.joinedArgumentName))
+    var defaultValueStrategy: LocalizableValueStrategy = .custom("UNTRANSLATED-STRING")
     
     @Option(
         name: .customLong("value-strategy"),
         help: ArgumentHelp(
-            valueName: "language:<\(ValueStrategy.allValueStrings.joined(separator: "|"))>"))
+            valueName: "language:<\(LocalizableValueStrategy.joinedArgumentName)>"))
     var valueStrategies: [ValueStrategyEntry] = []
     
     @Flag var sortByKey: Bool = false
@@ -96,7 +100,7 @@ struct GenerateLocalizableStrings: ParsableCommand {
         return try LocalizableStringGenerator().generate(for: request)
     }
     
-    private var strategiesByLanguage: [LanguageID: ValueStrategy] {
+    private var strategiesByLanguage: [LanguageID: LocalizableValueStrategy] {
         return valueStrategies.reduce(into: [:]) { result, entry in
             result[LanguageID(rawValue: entry.language)] = entry.strategy
         }
