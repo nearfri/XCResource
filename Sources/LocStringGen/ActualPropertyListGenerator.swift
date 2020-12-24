@@ -7,12 +7,12 @@ class ActualPropertyListGenerator: PropertyListGenerator {
         
         for (index, item) in items.enumerated() {
             if let comment = item.comment {
-                result.write("/* \(comment.addingBackslashEncoding()) */\n")
+                result += "/* \(comment.addingBackslashEncoding()) */\n"
             }
-            result.write("\"\(item.key)\" = \"\(item.value.addingBackslashEncoding())\";")
+            result += "\"\(item.key)\" = \"\(item.value.addingBackslashEncoding())\";"
             
             let isLastItem = index + 1 == items.count
-            result.write(isLastItem ? "" : "\n\n")
+            result += isLastItem ? "" : "\n\n"
         }
         
         return result
