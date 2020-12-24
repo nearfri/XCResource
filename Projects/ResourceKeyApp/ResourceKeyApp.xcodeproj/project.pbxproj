@@ -94,6 +94,8 @@
 		08765F432511D5200024D427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08765F4B2511D7510024D427 /* AllImageKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllImageKeys.swift; sourceTree = "<group>"; };
 		08765F4D2511D7920024D427 /* AllColorKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllColorKeys.swift; sourceTree = "<group>"; };
+		08820ABB2594DD0B00ED6AD6 /* run-generate-localizable-strings.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-generate-localizable-strings.sh"; sourceTree = "<group>"; };
+		08820ABC2594DD0B00ED6AD6 /* run-generate-asset-keys.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-generate-asset-keys.sh"; sourceTree = "<group>"; };
 		0893AE5E252F159200CB9473 /* StringKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringKeyTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,6 +134,7 @@
 			children = (
 				08765F0D2511A5660024D427 /* ResourceKeyApp */,
 				08765F402511D5200024D427 /* ResourceKeyAppTests */,
+				08820ABA2594DD0B00ED6AD6 /* Tools */,
 				08765F0C2511A5660024D427 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -186,6 +189,15 @@
 				08765F432511D5200024D427 /* Info.plist */,
 			);
 			path = ResourceKeyAppTests;
+			sourceTree = "<group>";
+		};
+		08820ABA2594DD0B00ED6AD6 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				08820ABB2594DD0B00ED6AD6 /* run-generate-localizable-strings.sh */,
+				08820ABC2594DD0B00ED6AD6 /* run-generate-asset-keys.sh */,
+			);
+			path = Tools;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
