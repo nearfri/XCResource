@@ -3,7 +3,7 @@ import ArgumentParser
 import LocStringGen
 import ResourceKeyUtil
 
-typealias ValueStrategy = LocalizedStringGenerator.ValueStrategy
+typealias ValueStrategy = LocalizableStringGenerator.ValueStrategy
 
 extension ValueStrategy: ExpressibleByArgument {
     public init(argument: String) {
@@ -85,7 +85,7 @@ struct GenerateLocalizableStrings: ParsableCommand {
     }
     
     private func generateStrings() throws -> [LanguageID: String] {
-        let request = LocalizedStringGenerator.Request(
+        let request = LocalizableStringGenerator.Request(
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: inputSource),
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resources),
             tableName: tableName,
@@ -93,7 +93,7 @@ struct GenerateLocalizableStrings: ParsableCommand {
             valueStrategiesByLanguage: strategiesByLanguage,
             sortOrder: sortByKey ? .key : .occurrence)
         
-        return try LocalizedStringGenerator().generate(for: request)
+        return try LocalizableStringGenerator().generate(for: request)
     }
     
     private var strategiesByLanguage: [LanguageID: ValueStrategy] {
