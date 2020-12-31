@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ResourceKeyApp/ResourceKeyApp.xcodeproj">
+      location = "group:XCResourceApp/XCResourceApp.xcodeproj">
    </FileRef>
 </Workspace>

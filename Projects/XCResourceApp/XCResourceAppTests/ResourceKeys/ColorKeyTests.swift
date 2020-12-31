@@ -1,5 +1,5 @@
 import XCTest
-@testable import ResourceKeyApp
+@testable import XCResourceApp
 
 class ColorKeyTests: XCTestCase {
     

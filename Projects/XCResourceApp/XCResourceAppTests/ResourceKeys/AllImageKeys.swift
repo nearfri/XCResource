@@ -1,7 +1,7 @@
-// Generated from resourcekey.
+// Generated from xcresource.
 // Do Not Edit Directly!
 
-@testable import ResourceKeyApp
+@testable import XCResourceApp
 
 extension ImageKey {
     static let allGeneratedKeys: [ImageKey] = [

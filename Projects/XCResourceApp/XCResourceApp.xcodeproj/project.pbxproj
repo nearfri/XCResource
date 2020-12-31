@@ -40,7 +40,7 @@
 		08765F2E2511B0E30024D427 /* ColorKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F2D2511B0E30024D427 /* ColorKey.swift */; };
 		08765F302511B1110024D427 /* StringKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F2F2511B1110024D427 /* StringKey.swift */; };
 		08765F322511B2CD0024D427 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F312511B2CD0024D427 /* String+Localization.swift */; };
-		08765F422511D5200024D427 /* ResourceKeyAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F412511D5200024D427 /* ResourceKeyAppTests.swift */; };
+		08765F422511D5200024D427 /* XCResourceAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F412511D5200024D427 /* XCResourceAppTests.swift */; };
 		08765F4C2511D7510024D427 /* AllImageKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F4B2511D7510024D427 /* AllImageKeys.swift */; };
 		08765F4E2511D7920024D427 /* AllColorKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F4D2511D7920024D427 /* AllColorKeys.swift */; };
 		0893AE5F252F159200CB9473 /* StringKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0893AE5E252F159200CB9473 /* StringKeyTests.swift */; };
@@ -72,7 +72,7 @@
 		0826A065252008B800F9A77D /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0826A069252008F200F9A77D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0826A06A2520090300F9A77D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		08765F0B2511A5660024D427 /* ResourceKeyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResourceKeyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		08765F0B2511A5660024D427 /* XCResourceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XCResourceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08765F0E2511A5660024D427 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08765F102511A5660024D427 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		08765F122511A5660024D427 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -89,8 +89,8 @@
 		08765F312511B2CD0024D427 /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		08765F392511B74F0024D427 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		08765F3A2511B74F0024D427 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		08765F3F2511D5200024D427 /* ResourceKeyAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResourceKeyAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		08765F412511D5200024D427 /* ResourceKeyAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceKeyAppTests.swift; sourceTree = "<group>"; };
+		08765F3F2511D5200024D427 /* XCResourceAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCResourceAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		08765F412511D5200024D427 /* XCResourceAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCResourceAppTests.swift; sourceTree = "<group>"; };
 		08765F432511D5200024D427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08765F4B2511D7510024D427 /* AllImageKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllImageKeys.swift; sourceTree = "<group>"; };
 		08765F4D2511D7920024D427 /* AllColorKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllColorKeys.swift; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0826A007251E45FA00F9A77D /* ResourceKey */ = {
+		0826A007251E45FA00F9A77D /* ResourceKeys */ = {
 			isa = PBXGroup;
 			children = (
 				08765F4B2511D7510024D427 /* AllImageKeys.swift */,
@@ -126,14 +126,14 @@
 				0826A012251ED0CC00F9A77D /* ColorKeyTests.swift */,
 				0893AE5E252F159200CB9473 /* StringKeyTests.swift */,
 			);
-			path = ResourceKey;
+			path = ResourceKeys;
 			sourceTree = "<group>";
 		};
 		08765F022511A5660024D427 = {
 			isa = PBXGroup;
 			children = (
-				08765F0D2511A5660024D427 /* ResourceKeyApp */,
-				08765F402511D5200024D427 /* ResourceKeyAppTests */,
+				08765F0D2511A5660024D427 /* XCResourceApp */,
+				08765F402511D5200024D427 /* XCResourceAppTests */,
 				08820ABA2594DD0B00ED6AD6 /* Tools */,
 				08765F0C2511A5660024D427 /* Products */,
 			);
@@ -142,13 +142,13 @@
 		08765F0C2511A5660024D427 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				08765F0B2511A5660024D427 /* ResourceKeyApp.app */,
-				08765F3F2511D5200024D427 /* ResourceKeyAppTests.xctest */,
+				08765F0B2511A5660024D427 /* XCResourceApp.app */,
+				08765F3F2511D5200024D427 /* XCResourceAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		08765F0D2511A5660024D427 /* ResourceKeyApp */ = {
+		08765F0D2511A5660024D427 /* XCResourceApp */ = {
 			isa = PBXGroup;
 			children = (
 				08765F0E2511A5660024D427 /* AppDelegate.swift */,
@@ -156,7 +156,7 @@
 				08765F122511A5660024D427 /* ViewController.swift */,
 				0826A059251FA49C00F9A77D /* ComponentType.swift */,
 				08765F272511ACED0024D427 /* Bundle+.swift */,
-				08765F242511A7250024D427 /* ResourceKey */,
+				08765F242511A7250024D427 /* ResourceKeys */,
 				08765F142511A5660024D427 /* Main.storyboard */,
 				08765F172511A5670024D427 /* Assets.xcassets */,
 				08765F192511A5670024D427 /* LaunchScreen.storyboard */,
@@ -164,10 +164,10 @@
 				0826A064252008B800F9A77D /* InfoPlist.strings */,
 				0826A05F2520088C00F9A77D /* Localizable.strings */,
 			);
-			path = ResourceKeyApp;
+			path = XCResourceApp;
 			sourceTree = "<group>";
 		};
-		08765F242511A7250024D427 /* ResourceKey */ = {
+		08765F242511A7250024D427 /* ResourceKeys */ = {
 			isa = PBXGroup;
 			children = (
 				08765F2B2511B0B70024D427 /* ImageKey.swift */,
@@ -178,17 +178,17 @@
 				08765F2F2511B1110024D427 /* StringKey.swift */,
 				08765F312511B2CD0024D427 /* String+Localization.swift */,
 			);
-			path = ResourceKey;
+			path = ResourceKeys;
 			sourceTree = "<group>";
 		};
-		08765F402511D5200024D427 /* ResourceKeyAppTests */ = {
+		08765F402511D5200024D427 /* XCResourceAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				08765F412511D5200024D427 /* ResourceKeyAppTests.swift */,
-				0826A007251E45FA00F9A77D /* ResourceKey */,
+				08765F412511D5200024D427 /* XCResourceAppTests.swift */,
+				0826A007251E45FA00F9A77D /* ResourceKeys */,
 				08765F432511D5200024D427 /* Info.plist */,
 			);
-			path = ResourceKeyAppTests;
+			path = XCResourceAppTests;
 			sourceTree = "<group>";
 		};
 		08820ABA2594DD0B00ED6AD6 /* Tools */ = {
@@ -203,9 +203,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		08765F0A2511A5660024D427 /* ResourceKeyApp */ = {
+		08765F0A2511A5660024D427 /* XCResourceApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 08765F1F2511A5670024D427 /* Build configuration list for PBXNativeTarget "ResourceKeyApp" */;
+			buildConfigurationList = 08765F1F2511A5670024D427 /* Build configuration list for PBXNativeTarget "XCResourceApp" */;
 			buildPhases = (
 				08765F072511A5660024D427 /* Sources */,
 				08765F082511A5660024D427 /* Frameworks */,
@@ -216,14 +216,14 @@
 			dependencies = (
 				0893AE53252EE7FD00CB9473 /* PBXTargetDependency */,
 			);
-			name = ResourceKeyApp;
+			name = XCResourceApp;
 			productName = ResourceSample;
-			productReference = 08765F0B2511A5660024D427 /* ResourceKeyApp.app */;
+			productReference = 08765F0B2511A5660024D427 /* XCResourceApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		08765F3E2511D5200024D427 /* ResourceKeyAppTests */ = {
+		08765F3E2511D5200024D427 /* XCResourceAppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 08765F462511D5200024D427 /* Build configuration list for PBXNativeTarget "ResourceKeyAppTests" */;
+			buildConfigurationList = 08765F462511D5200024D427 /* Build configuration list for PBXNativeTarget "XCResourceAppTests" */;
 			buildPhases = (
 				08765F3B2511D5200024D427 /* Sources */,
 				08765F3C2511D5200024D427 /* Frameworks */,
@@ -234,9 +234,9 @@
 			dependencies = (
 				08765F452511D5200024D427 /* PBXTargetDependency */,
 			);
-			name = ResourceKeyAppTests;
+			name = XCResourceAppTests;
 			productName = ResourceSampleTests;
-			productReference = 08765F3F2511D5200024D427 /* ResourceKeyAppTests.xctest */;
+			productReference = 08765F3F2511D5200024D427 /* XCResourceAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -260,7 +260,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 08765F062511A5660024D427 /* Build configuration list for PBXProject "ResourceKeyApp" */;
+			buildConfigurationList = 08765F062511A5660024D427 /* Build configuration list for PBXProject "XCResourceApp" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -274,8 +274,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				08765F0A2511A5660024D427 /* ResourceKeyApp */,
-				08765F3E2511D5200024D427 /* ResourceKeyAppTests */,
+				08765F0A2511A5660024D427 /* XCResourceApp */,
+				08765F3E2511D5200024D427 /* XCResourceAppTests */,
 				0826A06F252020D100F9A77D /* Generate-ResourceKeys */,
 			);
 		};
@@ -348,7 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08765F422511D5200024D427 /* ResourceKeyAppTests.swift in Sources */,
+				08765F422511D5200024D427 /* XCResourceAppTests.swift in Sources */,
 				0826A013251ED0CC00F9A77D /* ColorKeyTests.swift in Sources */,
 				08765F4C2511D7510024D427 /* AllImageKeys.swift in Sources */,
 				0893AE5F252F159200CB9473 /* StringKeyTests.swift in Sources */,
@@ -362,7 +362,7 @@
 /* Begin PBXTargetDependency section */
 		08765F452511D5200024D427 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 08765F0A2511A5660024D427 /* ResourceKeyApp */;
+			target = 08765F0A2511A5660024D427 /* XCResourceApp */;
 			targetProxy = 08765F442511D5200024D427 /* PBXContainerItemProxy */;
 		};
 		0893AE53252EE7FD00CB9473 /* PBXTargetDependency */ = {
@@ -563,12 +563,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K4WL5WK33A;
-				INFOPLIST_FILE = ResourceKeyApp/Info.plist;
+				INFOPLIST_FILE = XCResourceApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ukjeong.navercorp.ResourceKeyApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ukjeong.navercorp.XCResourceApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -582,12 +582,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K4WL5WK33A;
-				INFOPLIST_FILE = ResourceKeyApp/Info.plist;
+				INFOPLIST_FILE = XCResourceApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ukjeong.navercorp.ResourceKeyApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ukjeong.navercorp.XCResourceApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -600,7 +600,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K4WL5WK33A;
-				INFOPLIST_FILE = ResourceKeyAppTests/Info.plist;
+				INFOPLIST_FILE = XCResourceAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -610,7 +610,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ResourceKeyApp.app/ResourceKeyApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XCResourceApp.app/XCResourceApp";
 			};
 			name = Debug;
 		};
@@ -620,7 +620,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K4WL5WK33A;
-				INFOPLIST_FILE = ResourceKeyAppTests/Info.plist;
+				INFOPLIST_FILE = XCResourceAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -630,7 +630,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ResourceKeyApp.app/ResourceKeyApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XCResourceApp.app/XCResourceApp";
 			};
 			name = Release;
 		};
@@ -646,7 +646,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		08765F062511A5660024D427 /* Build configuration list for PBXProject "ResourceKeyApp" */ = {
+		08765F062511A5660024D427 /* Build configuration list for PBXProject "XCResourceApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				08765F1D2511A5670024D427 /* Debug */,
@@ -655,7 +655,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		08765F1F2511A5670024D427 /* Build configuration list for PBXNativeTarget "ResourceKeyApp" */ = {
+		08765F1F2511A5670024D427 /* Build configuration list for PBXNativeTarget "XCResourceApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				08765F202511A5670024D427 /* Debug */,
@@ -664,7 +664,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		08765F462511D5200024D427 /* Build configuration list for PBXNativeTarget "ResourceKeyAppTests" */ = {
+		08765F462511D5200024D427 /* Build configuration list for PBXNativeTarget "XCResourceAppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				08765F472511D5200024D427 /* Debug */,
