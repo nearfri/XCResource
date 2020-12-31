@@ -1,5 +1,5 @@
 import XCTest
-@testable import ResourceKeyUtil
+@testable import XCResourceUtil
 
 private struct GroceryProduct: Codable {
     var name: String

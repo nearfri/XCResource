@@ -1,5 +1,5 @@
 import XCTest
-@testable import ResourceKeyUtil
+@testable import XCResourceUtil
 
 final class FileManagerTests: XCTestCase {
     func test_makeTemporaryItemURL() {

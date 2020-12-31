@@ -1,5 +1,5 @@
 import Foundation
-import ResourceKeyUtil
+import XCResourceUtil
 
 protocol LanguageDetector: AnyObject {
     func detect(at url: URL) throws -> [LanguageID]

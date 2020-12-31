@@ -1,4 +1,4 @@
-// Generated from resourcekey.
+// Generated from xcresource.
 // Do Not Edit Directly!
 
 @testable import SampleApp

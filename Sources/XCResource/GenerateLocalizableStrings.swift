@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 import LocStringGen
-import ResourceKeyUtil
+import XCResourceUtil
 
 typealias LocalizableValueStrategy = LocalizableStringGenerator.ValueStrategy
 

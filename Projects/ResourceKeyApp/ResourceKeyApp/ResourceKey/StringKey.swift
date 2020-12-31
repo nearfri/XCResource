@@ -55,6 +55,6 @@ enum StringKey: String, CaseIterable {
     /// 인코딩 오류입니다.\n다시 시도하시겠습니까?
     case errorPopup_failToEncoding
     
-    /// 영상은 최대 %@시간, %@까지 가능합니다.\n길이를 수정하세요.
+    /// 영상은 최대 %@{시간}, %@{용량}까지 가능합니다.\n길이를 수정하세요.
     case errorPopup_overMaximumSize
 }

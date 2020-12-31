@@ -4,11 +4,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "ResourceKey",
+    name: "XCResource",
     defaultLocalization: "en",
     platforms: [.macOS(.v11), .iOS(.v14)],
     products: [
-        .executable(name: "resourcekey", targets: ["ResourceKey"]),
+        .executable(name: "xcresource", targets: ["XCResource"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
         .library(name: "LocStringGen", targets: ["LocStringGen"]),
     ],
@@ -22,25 +22,25 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         
-        // MARK: - ResourceKey
+        // MARK: - XCResource
         
         .target(
-            name: "ResourceKey",
+            name: "XCResource",
             dependencies: [
                 "AssetKeyGen",
                 "LocStringGen",
-                "ResourceKeyUtil",
+                "XCResourceUtil",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]),
         .testTarget(
-            name: "ResourceKeyTests",
-            dependencies: ["ResourceKey", "SampleData"]),
+            name: "XCResourceTests",
+            dependencies: ["XCResource", "SampleData"]),
         
         // MARK: - AssetKeyGen
         
         .target(
             name: "AssetKeyGen",
-            dependencies: ["ResourceKeyUtil"]),
+            dependencies: ["XCResourceUtil"]),
         .testTarget(
             name: "AssetKeyGenTests",
             dependencies: ["AssetKeyGen", "SampleData"]),
@@ -49,19 +49,19 @@ let package = Package(
         
         .target(
             name: "LocStringGen",
-            dependencies: ["ResourceKeyUtil", "SwiftSyntax"]),
+            dependencies: ["XCResourceUtil", "SwiftSyntax"]),
         .testTarget(
             name: "LocStringGenTests",
             dependencies: ["LocStringGen", "SwiftSyntax", "SampleData"]),
         
-        // MARK: - ResourceKeyUtil
+        // MARK: - XCResourceUtil
         
         .target(
-            name: "ResourceKeyUtil",
+            name: "XCResourceUtil",
             dependencies: []),
         .testTarget(
-            name: "ResourceKeyUtilTests",
-            dependencies: ["ResourceKeyUtil"]),
+            name: "XCResourceUtilTests",
+            dependencies: ["XCResourceUtil"]),
         
         // MARK: - SampleData
         

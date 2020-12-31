@@ -1,5 +1,5 @@
 import XCTest
-@testable import ResourceKeyUtil
+@testable import XCResourceUtil
 
 final class TextFileOutputStreamTests: XCTestCase {
     let fm: FileManager = .default

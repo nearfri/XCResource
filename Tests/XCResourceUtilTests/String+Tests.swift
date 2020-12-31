@@ -1,5 +1,5 @@
 import XCTest
-@testable import ResourceKeyUtil
+@testable import XCResourceUtil
 
 final class StringTests: XCTestCase {
     func test_addingBackslashEncoding() {

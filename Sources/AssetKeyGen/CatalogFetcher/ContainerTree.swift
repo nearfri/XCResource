@@ -1,5 +1,5 @@
 import Foundation
-import ResourceKeyUtil
+import XCResourceUtil
 
 typealias ContainerTree = Tree<Container>
 

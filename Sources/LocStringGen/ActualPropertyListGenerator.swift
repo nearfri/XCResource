@@ -1,5 +1,5 @@
 import Foundation
-import ResourceKeyUtil
+import XCResourceUtil
 
 class ActualPropertyListGenerator: PropertyListGenerator {
     func generate(from items: [LocalizationItem]) -> String {

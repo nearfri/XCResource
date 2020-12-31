@@ -46,5 +46,5 @@
 /* 목록을 불러오는 데 실패했습니다.\n다시 시도해주세요. */
 "errorPopup_failToLoadBGMList" = "UNTRANSLATED-STRING";
 
-/* 영상은 최대 %@시간, %@까지 가능합니다.\n길이를 수정하세요. */
+/* 영상은 최대 %@{시간}, %@{용량}까지 가능합니다.\n길이를 수정하세요. */
 "errorPopup_overMaximumSize" = "UNTRANSLATED-STRING";

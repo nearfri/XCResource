@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 import AssetKeyGen
-import ResourceKeyUtil
+import XCResourceUtil
 
 private let headerComment = """
 // Generated from \(ProcessInfo.processInfo.processName).

@@ -14,7 +14,7 @@ final class GenerateAssetKeysTests: XCTestCase {
             try? fm.removeItem(at: keyListFileURL)
         }
         
-        let executableURL = productsDirectory.appendingPathComponent("resourcekey")
+        let executableURL = productsDirectory.appendingPathComponent("xcresource")
         
         let process = Process()
         process.executableURL = executableURL

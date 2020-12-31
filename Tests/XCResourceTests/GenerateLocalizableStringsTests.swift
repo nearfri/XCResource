@@ -45,7 +45,7 @@ final class GenerateLocalizableStringsTests: XCTestCase {
             try? fm.removeItem(at: resourcesURL)
         }
         
-        let executableURL = productsDirectory.appendingPathComponent("resourcekey")
+        let executableURL = productsDirectory.appendingPathComponent("xcresource")
         
         let process = Process()
         process.executableURL = executableURL
