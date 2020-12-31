@@ -34,7 +34,7 @@ private enum Seed {
     """
 }
 
-final class GenerateLocalizableStringsTests: XCTestCase {
+final class GenerateStringsTests: XCTestCase {
     func test_main() throws {
         let fm = FileManager.default
         
@@ -51,7 +51,7 @@ final class GenerateLocalizableStringsTests: XCTestCase {
         process.executableURL = executableURL
         
         process.arguments = [
-            "generate-localizable-strings",
+            "generate-strings",
             "--input-source", SampleData.sourceCodeURL("StringKey.swift").path,
             "--resources", resourcesURL.path,
             "--default-value-strategy", "key",

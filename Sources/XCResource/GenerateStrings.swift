@@ -47,7 +47,7 @@ struct ValueStrategyEntry: ExpressibleByArgument {
     }
 }
 
-struct GenerateLocalizableStrings: ParsableCommand {
+struct GenerateStrings: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
         abstract: "소스 코드로부터 Localizable.strings 파일 생성.",
         discussion: """

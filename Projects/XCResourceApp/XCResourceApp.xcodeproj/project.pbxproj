@@ -94,7 +94,7 @@
 		08765F432511D5200024D427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08765F4B2511D7510024D427 /* AllImageKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllImageKeys.swift; sourceTree = "<group>"; };
 		08765F4D2511D7920024D427 /* AllColorKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllColorKeys.swift; sourceTree = "<group>"; };
-		08820ABB2594DD0B00ED6AD6 /* run-generate-localizable-strings.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-generate-localizable-strings.sh"; sourceTree = "<group>"; };
+		08820ABB2594DD0B00ED6AD6 /* run-generate-strings.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-generate-strings.sh"; sourceTree = "<group>"; };
 		08820ABC2594DD0B00ED6AD6 /* run-generate-asset-keys.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-generate-asset-keys.sh"; sourceTree = "<group>"; };
 		0893AE5E252F159200CB9473 /* StringKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringKeyTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,7 +194,7 @@
 		08820ABA2594DD0B00ED6AD6 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				08820ABB2594DD0B00ED6AD6 /* run-generate-localizable-strings.sh */,
+				08820ABB2594DD0B00ED6AD6 /* run-generate-strings.sh */,
 				08820ABC2594DD0B00ED6AD6 /* run-generate-asset-keys.sh */,
 			);
 			path = Tools;
@@ -320,7 +320,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"${SRCROOT}/Tools\"\n./run-generate-asset-keys.sh\n./run-generate-localizable-strings.sh\n";
+			shellScript = "cd \"${SRCROOT}/Tools\"\n./run-generate-asset-keys.sh\n./run-generate-strings.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
