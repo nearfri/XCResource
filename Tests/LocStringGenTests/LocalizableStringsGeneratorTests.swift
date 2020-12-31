@@ -46,19 +46,19 @@ class StubPropertyListGenerator: PropertyListGenerator {
     }
 }
 
-final class LocalizableStringGeneratorTests: XCTestCase {
+final class LocalizableStringsGeneratorTests: XCTestCase {
     func test_generate() throws {
         // Given
         let targetImporter = StubLocalizationTargetImporter()
         let plistGenerator = StubPropertyListGenerator()
         
-        let sut = LocalizableStringGenerator(
+        let sut = LocalizableStringsGenerator(
             languageDetector: StubLanguageDetector(),
             localizationSourceImporter: StubLocalizationSourceImporter(),
             localizationTargetImporter: targetImporter,
             plistGenerator: plistGenerator)
         
-        let request = LocalizableStringGenerator.Request(
+        let request = LocalizableStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
             valueStrategiesByLanguage: ["ko": .comment],

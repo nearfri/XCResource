@@ -7,7 +7,7 @@ struct LocalizationItem: Equatable {
 }
 
 extension LocalizationItem {
-    func applying(_ valueStrategy: LocalizableStringGenerator.ValueStrategy) -> LocalizationItem {
+    func applying(_ valueStrategy: LocalizableStringsGenerator.ValueStrategy) -> LocalizationItem {
         var result = self
         
         switch valueStrategy {
@@ -38,7 +38,7 @@ extension Array where Element == LocalizationItem {
         return result
     }
     
-    func sorted(by sortOrder: LocalizableStringGenerator.SortOrder) -> [LocalizationItem] {
+    func sorted(by sortOrder: LocalizableStringsGenerator.SortOrder) -> [LocalizationItem] {
         switch sortOrder {
         case .occurrence:
             return self

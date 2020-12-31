@@ -13,7 +13,7 @@ protocol PropertyListGenerator: AnyObject {
     func generate(from items: [LocalizationItem]) -> String
 }
 
-extension LocalizableStringGenerator {
+extension LocalizableStringsGenerator {
     public struct Request {
         public var sourceCodeURL: URL
         public var resourcesURL: URL
@@ -50,7 +50,7 @@ extension LocalizableStringGenerator {
     }
 }
 
-public class LocalizableStringGenerator {
+public class LocalizableStringsGenerator {
     private let languageDetector: LanguageDetector
     private let localizationSourceImporter: LocalizationItemImporter
     private let localizationTargetImporter: LocalizationItemImporter

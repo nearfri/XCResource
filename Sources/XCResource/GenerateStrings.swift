@@ -3,7 +3,7 @@ import ArgumentParser
 import LocStringGen
 import XCResourceUtil
 
-typealias LocalizableValueStrategy = LocalizableStringGenerator.ValueStrategy
+typealias LocalizableValueStrategy = LocalizableStringsGenerator.ValueStrategy
 
 extension LocalizableValueStrategy: ExpressibleByArgument {
     public init(argument: String) {
@@ -89,7 +89,7 @@ struct GenerateStrings: ParsableCommand {
     }
     
     private func generateStrings() throws -> [LanguageID: String] {
-        let request = LocalizableStringGenerator.Request(
+        let request = LocalizableStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: inputSource),
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resources),
             tableName: tableName,
@@ -97,7 +97,7 @@ struct GenerateStrings: ParsableCommand {
             valueStrategiesByLanguage: strategiesByLanguage,
             sortOrder: sortByKey ? .key : .occurrence)
         
-        return try LocalizableStringGenerator().generate(for: request)
+        return try LocalizableStringsGenerator().generate(for: request)
     }
     
     private var strategiesByLanguage: [LanguageID: LocalizableValueStrategy] {
