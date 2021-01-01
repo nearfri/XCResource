@@ -2,10 +2,10 @@ import XCTest
 import SampleData
 @testable import LocStringGen
 
-final class LocalizationTargetFetcherTests: XCTestCase {
-    func test_fetch() throws {
+final class ASCIIPlistImporterTests: XCTestCase {
+    func test_import() throws {
         // Given
-        let sut = LocalizationTargetImporter()
+        let sut = ASCIIPlistImporter()
         let stringsURL = SampleData.localizationDirectoryURL()
             .appendingPathComponent("en.lproj/Localizable.strings")
         

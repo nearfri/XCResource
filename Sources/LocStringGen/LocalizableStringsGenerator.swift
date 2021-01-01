@@ -52,30 +52,30 @@ extension LocalizableStringsGenerator {
 
 public class LocalizableStringsGenerator {
     private let languageDetector: LanguageDetector
-    private let localizationSourceImporter: LocalizationItemImporter
-    private let localizationTargetImporter: LocalizationItemImporter
+    private let sourceImporter: LocalizationItemImporter
+    private let targetImporter: LocalizationItemImporter
     private let plistGenerator: PropertyListGenerator
     
     init(languageDetector: LanguageDetector,
-         localizationSourceImporter: LocalizationItemImporter,
-         localizationTargetImporter: LocalizationItemImporter,
+         sourceImporter: LocalizationItemImporter,
+         targetImporter: LocalizationItemImporter,
          plistGenerator: PropertyListGenerator
     ) {
         self.languageDetector = languageDetector
-        self.localizationSourceImporter = localizationSourceImporter
-        self.localizationTargetImporter = localizationTargetImporter
+        self.sourceImporter = sourceImporter
+        self.targetImporter = targetImporter
         self.plistGenerator = plistGenerator
     }
     
     public convenience init() {
         self.init(languageDetector: ActualLanguageDetector(),
-                  localizationSourceImporter: LocalizationSourceImporter(),
-                  localizationTargetImporter: LocalizationTargetImporter(),
-                  plistGenerator: ActualPropertyListGenerator())
+                  sourceImporter: SwiftSourceImporter(),
+                  targetImporter: ASCIIPlistImporter(),
+                  plistGenerator: ASCIIPlistGenerator())
     }
     
     public func generate(for request: Request) throws -> [LanguageID: String] {
-        let sourceItems = try localizationSourceImporter.import(at: request.sourceCodeURL)
+        let sourceItems = try sourceImporter.import(at: request.sourceCodeURL)
         let languages = try languageDetector.detect(at: request.resourcesURL)
         
         return try languages.reduce(into: [:]) { result, language in
@@ -85,7 +85,7 @@ public class LocalizableStringsGenerator {
             let stringsFileURL = request.resourcesURL
                 .appendingPathComponents(language: language.rawValue, tableName: request.tableName)
             
-            let targetItems = try localizationTargetImporter.import(at: stringsFileURL)
+            let targetItems = try targetImporter.import(at: stringsFileURL)
             
             let combinedItems = sourceItems
                 .map({ $0.applying(valueStrategy) })

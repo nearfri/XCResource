@@ -1,6 +1,6 @@
 import Foundation
 
-class LocalizationTargetImporter: LocalizationItemImporter {
+class ASCIIPlistImporter: LocalizationItemImporter {
     func `import`(at url: URL) throws -> [LocalizationItem] {
         let plistData = try Data(contentsOf: url)
         let plist = try PropertyListDecoder().decode([String: String].self, from: plistData)

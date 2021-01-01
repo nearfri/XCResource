@@ -1,7 +1,7 @@
 import Foundation
 import SwiftSyntax
 
-class LocalizationSourceImporter: LocalizationItemImporter {
+class SwiftSourceImporter: LocalizationItemImporter {
     func `import`(at url: URL) throws -> [LocalizationItem] {
         let syntaxTree: SourceFileSyntax = try SyntaxParser.parse(url)
         let enumCollector = StringEnumerationCollector()

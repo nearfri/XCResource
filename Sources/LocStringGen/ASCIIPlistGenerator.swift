@@ -1,7 +1,7 @@
 import Foundation
 import XCResourceUtil
 
-class ActualPropertyListGenerator: PropertyListGenerator {
+class ASCIIPlistGenerator: PropertyListGenerator {
     func generate(from items: [LocalizationItem]) -> String {
         var result = ""
         

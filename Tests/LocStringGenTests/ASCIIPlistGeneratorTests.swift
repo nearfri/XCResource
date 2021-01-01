@@ -1,10 +1,10 @@
 import XCTest
 @testable import LocStringGen
 
-final class ActualPropertyListGeneratorTests: XCTestCase {
+final class ASCIIPlistGeneratorTests: XCTestCase {
     func test_generate() {
         // Given
-        let sut = ActualPropertyListGenerator()
+        let sut = ASCIIPlistGenerator()
         
         let items: [LocalizationItem] = [
             LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),

@@ -1,13 +1,13 @@
 import XCTest
 @testable import LocStringGen
 
-class StubLanguageDetector: LanguageDetector {
+private class StubLanguageDetector: LanguageDetector {
     func detect(at url: URL) throws -> [LanguageID] {
         return ["en", "ko"]
     }
 }
 
-class StubLocalizationSourceImporter: LocalizationItemImporter {
+private class StubSourceImporter: LocalizationItemImporter {
     func `import`(at url: URL) throws -> [LocalizationItem] {
         return [
             .init(comment: "확인 주석", key: "confirm", value: ""),
@@ -16,7 +16,7 @@ class StubLocalizationSourceImporter: LocalizationItemImporter {
     }
 }
 
-class StubLocalizationTargetImporter: LocalizationItemImporter {
+private class StubTargetImporter: LocalizationItemImporter {
     var fetchParamURLs: [URL] = []
     
     func `import`(at url: URL) throws -> [LocalizationItem] {
@@ -36,7 +36,7 @@ class StubLocalizationTargetImporter: LocalizationItemImporter {
     }
 }
 
-class StubPropertyListGenerator: PropertyListGenerator {
+private class StubPropertyListGenerator: PropertyListGenerator {
     var generateParamItemsList: [[LocalizationItem]] = []
     
     func generate(from items: [LocalizationItem]) -> String {
@@ -49,13 +49,13 @@ class StubPropertyListGenerator: PropertyListGenerator {
 final class LocalizableStringsGeneratorTests: XCTestCase {
     func test_generate() throws {
         // Given
-        let targetImporter = StubLocalizationTargetImporter()
+        let targetImporter = StubTargetImporter()
         let plistGenerator = StubPropertyListGenerator()
         
         let sut = LocalizableStringsGenerator(
             languageDetector: StubLanguageDetector(),
-            localizationSourceImporter: StubLocalizationSourceImporter(),
-            localizationTargetImporter: targetImporter,
+            sourceImporter: StubSourceImporter(),
+            targetImporter: targetImporter,
             plistGenerator: plistGenerator)
         
         let request = LocalizableStringsGenerator.Request(
