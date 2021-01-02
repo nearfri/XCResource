@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Strix",
+        "repositoryURL": "https://github.com/nearfri/Strix",
+        "state": {
+          "branch": null,
+          "revision": "3c96d47ce98a8efc70f3c4f110bf7c8f5d1f86f0",
+          "version": "2.2.1"
+        }
+      },
+      {
         "package": "swift-argument-parser",
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {

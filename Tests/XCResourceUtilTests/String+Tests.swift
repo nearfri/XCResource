@@ -13,6 +13,16 @@ final class StringTests: XCTestCase {
         XCTAssertEqual("ab\u{000C}cd".addingBackslashEncoding(), #"ab\fcd"#)
     }
     
+    func test_addingCSVEncoding() {
+        XCTAssertEqual("1997".addingCSVEncoding(), "1997")
+        XCTAssertEqual("Ford".addingCSVEncoding(), "Ford")
+        XCTAssertEqual("luxurious truck".addingCSVEncoding(), "luxurious truck")
+        XCTAssertEqual("luxurious,truck".addingCSVEncoding(), "\"luxurious,truck\"")
+        XCTAssertEqual("luxurious\ntruck".addingCSVEncoding(), "\"luxurious\ntruck\"")
+        XCTAssertEqual(#"Venture "Extended Edition"."#.addingCSVEncoding(),
+                       #""Venture ""Extended Edition"".""#)
+    }
+    
     func test_appendingPathComponent() {
         XCTAssertEqual("/tmp".appendingPathComponent("scratch.tiff"), "/tmp/scratch.tiff")
         XCTAssertEqual("/tmp/".appendingPathComponent("scratch.tiff"), "/tmp/scratch.tiff")

@@ -16,6 +16,12 @@ extension String {
         }
     }
     
+    public func addingCSVEncoding() -> String {
+        let needsEncoding = contains(where: { $0 == "\"" || $0 == "," || $0.isNewline })
+        guard needsEncoding else { return self }
+        return "\"" + replacingOccurrences(of: "\"", with: "\"\"") + "\""
+    }
+    
     public func appendingPathComponent(_ str: String) -> String {
         if isEmpty { return str }
         if str.isEmpty { return self }

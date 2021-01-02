@@ -10,17 +10,15 @@ final class ASCIIPlistImporterTests: XCTestCase {
             .appendingPathComponent("en.lproj/Localizable.strings")
         
         let expectedItems: [LocalizationItem] = [
-            LocalizationItem(comment: nil, key: "common_cancel", value: "Cancel"),
-            LocalizationItem(comment: nil, key: "common_confirm", value: "Confirm")
+            LocalizationItem(comment: "취소", key: "common_cancel", value: "Cancel"),
+            LocalizationItem(comment: "확인", key: "common_confirm", value: "Confirm")
         ]
         
         // When
         let actualItems = try sut.import(at: stringsURL)
         
         // Then
-        XCTAssertEqual(actualItems.count, expectedItems.count)
-        XCTAssertEqual(actualItems.reduce(into: [:], { $0[$1.key] = $1 }),
-                       expectedItems.reduce(into: [:], { $0[$1.key] = $1 }))
+        XCTAssertEqual(actualItems, expectedItems)
     }
 }
 
