@@ -49,9 +49,9 @@ struct ValueStrategyEntry: ExpressibleByArgument {
 
 struct GenerateStrings: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
-        abstract: "소스 코드로부터 Localizable.strings 파일 생성.",
+        abstract: "Swift 소스 코드를 strings로 변환",
         discussion: """
-            enum 타입을 담고 있는 소스 코드에서 case와 주석을 추출해서 Localizable.strings 파일을 생성한다.
+            enum 타입을 담고 있는 소스 코드에서 case와 주석을 추출해 Localizable.strings 파일을 생성한다.
             
             - case의 rawValue를 key로 하고, "UNTRANSLATED-STRING"을 value로 하는데 \
             --strategy 옵션에 따라 key나 주석을 value로 할 수 있다.

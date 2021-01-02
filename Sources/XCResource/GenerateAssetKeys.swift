@@ -29,7 +29,7 @@ extension AssetType: ExpressibleByArgument {
 
 struct GenerateAssetKeys: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
-        abstract: "Asset Catalog로부터 키 파일 생성.",
+        abstract: "Asset Catalog로부터 키 파일 생성",
         discussion: """
             Xcode Asset Catalog(.xcassets)에서 리소스 이름을 추출해서 키 파일을 생성한다.
             추출한 키 파일은 앱에서 리소스 로딩에 사용할 수 있다.
