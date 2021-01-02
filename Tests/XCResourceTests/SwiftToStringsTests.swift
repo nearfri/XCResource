@@ -56,7 +56,7 @@ final class SwiftToStringsTests: XCTestCase {
             "--resources-path", resourcesURL.path,
             "--default-value-strategy", "key",
             "--value-strategy", "ko:comment",
-            "--value-strategy", "jp:UNTRANSLATED-STRING",
+            "--value-strategy", "jp:UNTRANSLATED-TEXT",
         ]
         
         let pipe = Pipe()

@@ -1,50 +1,50 @@
 /* 취소 */
-"common_cancel" = "UNTRANSLATED-STRING";
+"common_cancel" = "UNTRANSLATED-TEXT";
 
 /* 확인 */
-"common_confirm" = "UNTRANSLATED-STRING";
+"common_confirm" = "UNTRANSLATED-TEXT";
 
 /* 완료 */
-"common_done" = "UNTRANSLATED-STRING";
+"common_done" = "UNTRANSLATED-TEXT";
 
 /* 비율 */
-"editMenu_aspectRatio" = "UNTRANSLATED-STRING";
+"editMenu_aspectRatio" = "UNTRANSLATED-TEXT";
 
 /* 동영상을 움직여 위치를 조정해보세요. */
-"editMenu_aspectRatioGuide" = "UNTRANSLATED-STRING";
+"editMenu_aspectRatioGuide" = "UNTRANSLATED-TEXT";
 
 /* 음악 */
-"editMenu_bgm" = "UNTRANSLATED-STRING";
+"editMenu_bgm" = "UNTRANSLATED-TEXT";
 
 /* 음악 추가 */
-"editMenu_bgm_placeholder" = "UNTRANSLATED-STRING";
+"editMenu_bgm_placeholder" = "UNTRANSLATED-TEXT";
 
 /* 서명 */
-"editMenu_copyright" = "UNTRANSLATED-STRING";
+"editMenu_copyright" = "UNTRANSLATED-TEXT";
 
 /* 이미지 추가 */
-"editMenu_copyright_placeholder" = "UNTRANSLATED-STRING";
+"editMenu_copyright_placeholder" = "UNTRANSLATED-TEXT";
 
 /* 필터 */
-"editMenu_filter" = "UNTRANSLATED-STRING";
+"editMenu_filter" = "UNTRANSLATED-TEXT";
 
 /* 원본 */
-"editMenu_filter_original" = "UNTRANSLATED-STRING";
+"editMenu_filter_original" = "UNTRANSLATED-TEXT";
 
 /* 동영상 편집을 취소하시겠습니까?\n확인 선택 시 모든 변경사항이 사라집니다. */
-"errorPopup_cancelToEditAsset" = "UNTRANSLATED-STRING";
+"errorPopup_cancelToEditAsset" = "UNTRANSLATED-TEXT";
 
 /* 동영상을 불러오는 데 실패했습니다.\n다시 시도해주세요. */
-"errorPopup_failToAttach" = "UNTRANSLATED-STRING";
+"errorPopup_failToAttach" = "UNTRANSLATED-TEXT";
 
 /* 인코딩 오류입니다.\n다시 시도하시겠습니까? */
-"errorPopup_failToEncoding" = "UNTRANSLATED-STRING";
+"errorPopup_failToEncoding" = "UNTRANSLATED-TEXT";
 
 /* 편집할 수 없는 유형의 영상입니다.\n다른 영상을 첨부해주세요. */
-"errorPopup_failToLoadAsset" = "UNTRANSLATED-STRING";
+"errorPopup_failToLoadAsset" = "UNTRANSLATED-TEXT";
 
 /* 목록을 불러오는 데 실패했습니다.\n다시 시도해주세요. */
-"errorPopup_failToLoadBGMList" = "UNTRANSLATED-STRING";
+"errorPopup_failToLoadBGMList" = "UNTRANSLATED-TEXT";
 
 /* 영상은 최대 %@{시간}, %@{용량}까지 가능합니다.\n길이를 수정하세요. */
-"errorPopup_overMaximumSize" = "UNTRANSLATED-STRING";
+"errorPopup_overMaximumSize" = "UNTRANSLATED-TEXT";

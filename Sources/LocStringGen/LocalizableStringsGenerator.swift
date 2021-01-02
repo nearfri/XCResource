@@ -25,7 +25,7 @@ extension LocalizableStringsGenerator {
         public init(sourceCodeURL: URL,
                     resourcesURL: URL,
                     tableName: String = "Localizable",
-                    defaultValueStrategy: ValueStrategy = .custom("UNTRANSLATED-STRING"),
+                    defaultValueStrategy: ValueStrategy = .custom("UNTRANSLATED-TEXT"),
                     valueStrategiesByLanguage: [LanguageID: ValueStrategy] = [:],
                     sortOrder: SortOrder = .occurrence
         ) {
