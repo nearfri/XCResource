@@ -47,8 +47,9 @@ struct ValueStrategyEntry: ExpressibleByArgument {
     }
 }
 
-struct GenerateStrings: ParsableCommand {
+struct SwiftToStrings: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
+        commandName: "swift2strings",
         abstract: "Swift 소스 코드를 strings로 변환",
         discussion: """
             enum 타입을 담고 있는 소스 코드에서 case와 주석을 추출해 Localizable.strings 파일을 생성한다.
@@ -61,9 +62,9 @@ struct GenerateStrings: ParsableCommand {
     
     // MARK: - Arguments
     
-    @Option var inputSource: String
+    @Option var sourceCodePath: String
     
-    @Option var resources: String
+    @Option var resourcesPath: String
     
     @Option var tableName: String = "Localizable"
     
@@ -90,8 +91,8 @@ struct GenerateStrings: ParsableCommand {
     
     private func generateStrings() throws -> [LanguageID: String] {
         let request = LocalizableStringsGenerator.Request(
-            sourceCodeURL: URL(fileURLWithExpandingTildeInPath: inputSource),
-            resourcesURL: URL(fileURLWithExpandingTildeInPath: resources),
+            sourceCodeURL: URL(fileURLWithExpandingTildeInPath: sourceCodePath),
+            resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
             defaultValueStrategy: defaultValueStrategy,
             valueStrategiesByLanguage: strategiesByLanguage,
@@ -119,7 +120,7 @@ struct GenerateStrings: ParsableCommand {
     }
     
     private func stringsFileURL(for language: LanguageID) -> URL {
-        return URL(fileURLWithExpandingTildeInPath: resources)
+        return URL(fileURLWithExpandingTildeInPath: resourcesPath)
             .appendingPathComponents(language: language.rawValue, tableName: tableName)
     }
 }

@@ -72,6 +72,7 @@
 		0826A065252008B800F9A77D /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0826A069252008F200F9A77D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0826A06A2520090300F9A77D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		083972B625A086690016413A /* Tools */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Tools; sourceTree = "<group>"; };
 		08765F0B2511A5660024D427 /* XCResourceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XCResourceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08765F0E2511A5660024D427 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08765F102511A5660024D427 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,8 +95,6 @@
 		08765F432511D5200024D427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08765F4B2511D7510024D427 /* AllImageKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllImageKeys.swift; sourceTree = "<group>"; };
 		08765F4D2511D7920024D427 /* AllColorKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllColorKeys.swift; sourceTree = "<group>"; };
-		08820ABB2594DD0B00ED6AD6 /* run-generate-strings.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-generate-strings.sh"; sourceTree = "<group>"; };
-		08820ABC2594DD0B00ED6AD6 /* run-generate-asset-keys.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-generate-asset-keys.sh"; sourceTree = "<group>"; };
 		0893AE5E252F159200CB9473 /* StringKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringKeyTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,8 +133,8 @@
 			children = (
 				08765F0D2511A5660024D427 /* XCResourceApp */,
 				08765F402511D5200024D427 /* XCResourceAppTests */,
-				08820ABA2594DD0B00ED6AD6 /* Tools */,
 				08765F0C2511A5660024D427 /* Products */,
+				083972B625A086690016413A /* Tools */,
 			);
 			sourceTree = "<group>";
 		};
@@ -189,15 +188,6 @@
 				08765F432511D5200024D427 /* Info.plist */,
 			);
 			path = XCResourceAppTests;
-			sourceTree = "<group>";
-		};
-		08820ABA2594DD0B00ED6AD6 /* Tools */ = {
-			isa = PBXGroup;
-			children = (
-				08820ABB2594DD0B00ED6AD6 /* run-generate-strings.sh */,
-				08820ABC2594DD0B00ED6AD6 /* run-generate-asset-keys.sh */,
-			);
-			path = Tools;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -320,7 +310,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"${SRCROOT}/Tools\"\n./run-generate-asset-keys.sh\n./run-generate-strings.sh\n";
+			shellScript = "cd \"${SRCROOT}/Tools\"\n./run-generate-asset-keys.sh\n./run-swift2strings.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

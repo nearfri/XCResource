@@ -43,6 +43,8 @@ final class StringsToCSVTests: XCTestCase {
         try process.run()
         process.waitUntilExit()
         
+        XCTAssertEqual(process.terminationStatus, 0)
+        
         XCTAssertEqual(try String(contentsOf: csvFileURL), Seed.csvString)
     }
     

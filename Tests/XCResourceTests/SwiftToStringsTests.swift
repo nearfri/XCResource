@@ -34,7 +34,7 @@ private enum Seed {
     """
 }
 
-final class GenerateStringsTests: XCTestCase {
+final class SwiftToStringsTests: XCTestCase {
     func test_main() throws {
         let fm = FileManager.default
         
@@ -51,9 +51,9 @@ final class GenerateStringsTests: XCTestCase {
         process.executableURL = executableURL
         
         process.arguments = [
-            "generate-strings",
-            "--input-source", SampleData.sourceCodeURL("StringKey.swift").path,
-            "--resources", resourcesURL.path,
+            "swift2strings",
+            "--source-code-path", SampleData.sourceCodeURL("StringKey.swift").path,
+            "--resources-path", resourcesURL.path,
             "--default-value-strategy", "key",
             "--value-strategy", "ko:comment",
             "--value-strategy", "jp:UNTRANSLATED-STRING",
@@ -64,6 +64,8 @@ final class GenerateStringsTests: XCTestCase {
         
         try process.run()
         process.waitUntilExit()
+        
+        XCTAssertEqual(process.terminationStatus, 0)
         
         let enStringsURL = resourcesURL.appendingPathComponent("en.lproj/Localizable.strings")
         let koStringsURL = resourcesURL.appendingPathComponent("ko.lproj/Localizable.strings")
