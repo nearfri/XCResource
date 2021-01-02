@@ -310,7 +310,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"${SRCROOT}/Tools\"\n./run-generate-asset-keys.sh\n./run-swift2strings.sh\n";
+			shellScript = "set -e\ncd \"${SRCROOT}/Tools\"\n./run-xcassets2swift.sh\n./run-swift2strings.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

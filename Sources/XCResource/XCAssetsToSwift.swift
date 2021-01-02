@@ -27,8 +27,9 @@ extension AssetType: ExpressibleByArgument {
     }
 }
 
-struct GenerateAssetKeys: ParsableCommand {
+struct XCAssetsToSwift: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
+        commandName: "xcassets2swift",
         abstract: "Asset Catalog로부터 키 파일 생성",
         discussion: """
             Xcode Asset Catalog(.xcassets)에서 리소스 이름을 추출해서 키 파일을 생성한다.
@@ -37,8 +38,8 @@ struct GenerateAssetKeys: ParsableCommand {
     
     // MARK: - Arguments
     
-    @Option(name: .customLong("input-xcassets"))
-    var inputXCAssets: [String]
+    @Option(name: .customLong("xcassets-path"))
+    var assetCatalogPaths: [String]
     
     @Option(help: ArgumentHelp(valueName: AssetType.allValueStrings.joined(separator: "|")))
     var assetType: AssetType = .imageSet
@@ -50,9 +51,9 @@ struct GenerateAssetKeys: ParsableCommand {
     
     @Flag var excludeTypeDeclation: Bool = false
     
-    @Option var keyDeclFile: String
+    @Option var keyDeclPath: String
     
-    @Option var keyListFile: String?
+    @Option var keyListPath: String?
     
     // MARK: - Run
     
@@ -66,7 +67,7 @@ struct GenerateAssetKeys: ParsableCommand {
     
     private func generateCodes() throws -> AssetKeyGenerator.CodeResult {
         let request = AssetKeyGenerator.CodeRequest(
-            catalogURLs: inputXCAssets.map({ URL(fileURLWithExpandingTildeInPath: $0) }),
+            assetCatalogURLs: assetCatalogPaths.map({ URL(fileURLWithExpandingTildeInPath: $0) }),
             assetType: assetType,
             keyTypeName: keyTypeName)
         
@@ -86,11 +87,11 @@ struct GenerateAssetKeys: ParsableCommand {
         print(codes.keyDeclarations, to: &stream)
         
         try stream.close()
-        try FileManager.default.compareAndReplaceItem(at: keyDeclFile, withItemAt: tempFileURL)
+        try FileManager.default.compareAndReplaceItem(at: keyDeclPath, withItemAt: tempFileURL)
     }
     
     private func writeKeyListFileIfNeeded(from codes: AssetKeyGenerator.CodeResult) throws {
-        guard let keyListFile = keyListFile else { return }
+        guard let keyListPath = keyListPath else { return }
         
         let tempFileURL = FileManager.default.makeTemporaryItemURL()
         var stream = try TextFileOutputStream(forWritingTo: tempFileURL)
@@ -104,6 +105,6 @@ struct GenerateAssetKeys: ParsableCommand {
         print(codes.keyList, to: &stream)
         
         try stream.close()
-        try FileManager.default.compareAndReplaceItem(at: keyListFile, withItemAt: tempFileURL)
+        try FileManager.default.compareAndReplaceItem(at: keyListPath, withItemAt: tempFileURL)
     }
 }

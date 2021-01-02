@@ -47,7 +47,7 @@ final class AssetKeyGeneratorTests: XCTestCase {
     func test_generate() throws {
         // Given
         let request = AssetKeyGenerator.CodeRequest(
-            catalogURLs: [URL(fileURLWithPath: "a"), URL(fileURLWithPath: "b")],
+            assetCatalogURLs: [URL(fileURLWithPath: "a"), URL(fileURLWithPath: "b")],
             assetType: .imageSet,
             keyTypeName: "ImageKey")
         

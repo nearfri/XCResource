@@ -2,7 +2,7 @@ import XCTest
 import class Foundation.Bundle
 import SampleData
 
-final class GenerateAssetKeysTests: XCTestCase {
+final class XCAssetsToSwiftTests: XCTestCase {
     func test_main() throws {
         let fm = FileManager.default
         
@@ -20,13 +20,13 @@ final class GenerateAssetKeysTests: XCTestCase {
         process.executableURL = executableURL
         
         process.arguments = [
-            "generate-asset-keys",
-            "--input-xcassets", SampleData.assetURL().path,
+            "xcassets2swift",
+            "--xcassets-path", SampleData.assetURL().path,
             "--asset-type", "color",
             "--key-type-name", "ColorKey",
             "--module-name", "SampleApp",
-            "--key-decl-file", keyDeclFileURL.path,
-            "--key-list-file", keyListFileURL.path,
+            "--key-decl-path", keyDeclFileURL.path,
+            "--key-list-path", keyListFileURL.path,
         ]
         
         let pipe = Pipe()
@@ -34,6 +34,8 @@ final class GenerateAssetKeysTests: XCTestCase {
         
         try process.run()
         process.waitUntilExit()
+        
+        XCTAssertEqual(process.terminationStatus, 0)
         
         XCTAssertEqual(try String(contentsOf: keyDeclFileURL),
                        try String(contentsOf: SampleData.sourceCodeURL("ColorKey.swift")))

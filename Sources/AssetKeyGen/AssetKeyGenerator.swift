@@ -18,12 +18,12 @@ protocol KeyListGenerator: AnyObject {
 
 extension AssetKeyGenerator {
     public struct CodeRequest {
-        public var catalogURLs: [URL]
+        public var assetCatalogURLs: [URL]
         public var assetType: AssetType
         public var keyTypeName: String
         
-        public init(catalogURLs: [URL], assetType: AssetType, keyTypeName: String) {
-            self.catalogURLs = catalogURLs
+        public init(assetCatalogURLs: [URL], assetType: AssetType, keyTypeName: String) {
+            self.assetCatalogURLs = assetCatalogURLs
             self.assetType = assetType
             self.keyTypeName = keyTypeName
         }
@@ -67,7 +67,7 @@ public class AssetKeyGenerator {
     }
     
     public func generate(for request: CodeRequest) throws -> CodeResult {
-        let catalogs: [AssetCatalog] = try request.catalogURLs.map { url in
+        let catalogs: [AssetCatalog] = try request.assetCatalogURLs.map { url in
             try catalogFetcher.fetch(at: url, type: request.assetType)
         }
         
