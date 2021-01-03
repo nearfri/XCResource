@@ -1,18 +1,6 @@
 import Foundation
 import XCResourceUtil
 
-protocol LanguageDetector: AnyObject {
-    func detect(at url: URL) throws -> [LanguageID]
-}
-
-protocol LocalizationItemImporter: AnyObject {
-    func `import`(at url: URL) throws -> [LocalizationItem]
-}
-
-protocol PropertyListGenerator: AnyObject {
-    func generate(from items: [LocalizationItem]) -> String
-}
-
 extension LocalizableStringsGenerator {
     public struct Request {
         public var sourceCodeURL: URL
