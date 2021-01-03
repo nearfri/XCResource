@@ -109,13 +109,9 @@ struct SwiftToStrings: ParsableCommand {
     
     private func writeStrings(_ strings: String, for language: LanguageID) throws {
         let tempFileURL = FileManager.default.makeTemporaryItemURL()
-        var stream = try TextFileOutputStream(forWritingTo: tempFileURL)
-        
-        print(strings, to: &stream)
-        
-        try stream.close()
-        
         let outputFileURL = stringsFileURL(for: language)
+        
+        try (strings + "\n").write(to: tempFileURL, atomically: false, encoding: .utf8)
         try FileManager.default.compareAndReplaceItem(at: outputFileURL, withItemAt: tempFileURL)
     }
     

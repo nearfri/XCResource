@@ -6,10 +6,24 @@ protocol LocalizationDocumentDecoder: AnyObject {
 
 extension LocalizationImporter {
     public struct Request {
-        public var documentSource: String
+        public var documentSource: DocumentSource
         
-        public init(documentSource: String) {
+        public init(documentSource: DocumentSource) {
             self.documentSource = documentSource
+        }
+    }
+    
+    public enum DocumentSource {
+        case text(String)
+        case file(URL)
+        
+        public func contents() throws -> String {
+            switch self {
+            case .text(let string):
+                return string
+            case .file(let url):
+                return try String(contentsOf: url)
+            }
         }
     }
 }
@@ -31,7 +45,7 @@ public class LocalizationImporter {
     }
     
     public func generate(for request: Request) throws -> [LanguageID: String] {
-        let document = try documentDecoder.decode(from: request.documentSource)
+        let document = try documentDecoder.decode(from: try request.documentSource.contents())
         let sections = try document.toSections()
         
         return sections.reduce(into: [:]) { result, section in

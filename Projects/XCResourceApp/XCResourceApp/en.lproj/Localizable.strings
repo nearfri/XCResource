@@ -1,11 +1,11 @@
 /* 취소 */
-"common_cancel" = "UNTRANSLATED-TEXT";
+"common_cancel" = "Cancel";
 
 /* 확인 */
-"common_confirm" = "UNTRANSLATED-TEXT";
+"common_confirm" = "Confirm";
 
 /* 완료 */
-"common_done" = "UNTRANSLATED-TEXT";
+"common_done" = "Done";
 
 /* 비율 */
 "editMenu_aspectRatio" = "UNTRANSLATED-TEXT";

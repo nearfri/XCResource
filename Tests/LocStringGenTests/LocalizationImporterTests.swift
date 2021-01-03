@@ -34,8 +34,7 @@ final class LocalizationImporterTests: XCTestCase {
             documentDecoder: documentDecoder,
             plistGenerator: plistGenerator)
         
-        let request = LocalizationImporter.Request(
-            documentSource: documentSource)
+        let request = LocalizationImporter.Request(documentSource: .text(documentSource))
         
         // When
         let result = try sut.generate(for: request)

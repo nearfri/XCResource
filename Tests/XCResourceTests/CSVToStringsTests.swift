@@ -2,7 +2,7 @@ import XCTest
 import class Foundation.Bundle
 import SampleData
 
-final class StringsToCSVTests: XCTestCase {
+final class CSVToStringsTests: XCTestCase {
     func test_main() throws {
         let fm = FileManager.default
         
@@ -10,8 +10,7 @@ final class StringsToCSVTests: XCTestCase {
         let resourcesURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try fm.copyItem(at: localizationURL, to: resourcesURL)
         
-        let urlOfActualCSVFile = resourcesURL.appendingPathComponent(UUID().uuidString)
-        let urlOfExpectedCSVFile = localizationURL.appendingPathComponent("translation.csv")
+        let csvFileURL = localizationURL.appendingPathComponent("translation.csv")
         
         defer {
             try? fm.removeItem(at: resourcesURL)
@@ -23,10 +22,10 @@ final class StringsToCSVTests: XCTestCase {
         process.executableURL = executableURL
         
         process.arguments = [
-            "strings2csv",
+            "csv2strings",
+            "--csv-path", csvFileURL.path,
             "--resources-path", resourcesURL.path,
-            "--development-localization", "ko",
-            "--csv-path", urlOfActualCSVFile.path,
+            "--table-name", "Translated",
         ]
         
         let pipe = Pipe()
@@ -37,8 +36,14 @@ final class StringsToCSVTests: XCTestCase {
         
         XCTAssertEqual(process.terminationStatus, 0)
         
-        XCTAssertEqual(try String(contentsOf: urlOfActualCSVFile),
-                       try String(contentsOf: urlOfExpectedCSVFile))
+        let actualEnURL = resourcesURL.appendingPathComponent("en.lproj/Translated.strings")
+        let actualKoURL = resourcesURL.appendingPathComponent("ko.lproj/Translated.strings")
+        
+        let expectedEnURL = resourcesURL.appendingPathComponent("en.lproj/Localizable.strings")
+        let expectedKoURL = resourcesURL.appendingPathComponent("ko.lproj/Localizable.strings")
+        
+        XCTAssertEqual(try String(contentsOf: actualEnURL), try String(contentsOf: expectedEnURL))
+        XCTAssertEqual(try String(contentsOf: actualKoURL), try String(contentsOf: expectedKoURL))
     }
     
     /// Returns path to the built products directory.
