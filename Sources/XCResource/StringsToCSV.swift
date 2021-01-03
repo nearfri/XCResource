@@ -21,6 +21,8 @@ struct StringsToCSV: ParsableCommand {
     
     @Option var csvPath: String
     
+    @Flag var writeBOM: Bool = false
+    
     // MARK: - Run
     
     mutating func run() throws {
@@ -38,7 +40,11 @@ struct StringsToCSV: ParsableCommand {
     }
     
     private func writeCSV(_ csv: String) throws {
+        let csvAsData = csv.data(using: .utf8)!
+        let csvFileData = writeBOM ? Data([0xEF, 0xBB, 0xBF] + csvAsData) : csvAsData
+        
         let csvURL = URL(fileURLWithExpandingTildeInPath: csvPath)
-        try csv.write(to: csvURL, atomically: true, encoding: .utf8)
+        
+        try csvFileData.write(to: csvURL, options: .atomic)
     }
 }
