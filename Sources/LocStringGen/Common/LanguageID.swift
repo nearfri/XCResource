@@ -3,6 +3,10 @@ import Foundation
 public struct LanguageID: Hashable, RawRepresentable, ExpressibleByStringLiteral {
     public var rawValue: String
     
+    public init(_ rawValue: String) {
+        self.rawValue = rawValue
+    }
+    
     public init(rawValue: String) {
         self.rawValue = rawValue
     }

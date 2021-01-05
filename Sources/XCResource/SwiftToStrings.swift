@@ -31,7 +31,7 @@ extension LocalizableValueStrategy: ExpressibleByArgument {
     }
 }
 
-struct ValueStrategyEntry: ExpressibleByArgument {
+struct ValueStrategyArgument: ExpressibleByArgument {
     var language: String
     var strategy: LocalizableValueStrategy
     
@@ -44,6 +44,14 @@ struct ValueStrategyEntry: ExpressibleByArgument {
         
         self.language = String(language)
         self.strategy = LocalizableValueStrategy(argument: String(strategy))
+    }
+}
+
+extension Array where Element == ValueStrategyArgument {
+    var strategiesByLanguage: [LanguageID: LocalizableValueStrategy] {
+        return reduce(into: [:]) { result, argument in
+            result[LanguageID(argument.language)] = argument.strategy
+        }
     }
 }
 
@@ -68,14 +76,16 @@ struct SwiftToStrings: ParsableCommand {
     
     @Option var tableName: String = "Localizable"
     
+    @Option(name: .customLong("language"))
+    var languages: [String] = []
+    
     @Option(help: ArgumentHelp(valueName: LocalizableValueStrategy.joinedArgumentName))
     var defaultValueStrategy: LocalizableValueStrategy = .custom("UNTRANSLATED-TEXT")
     
     @Option(
         name: .customLong("value-strategy"),
-        help: ArgumentHelp(
-            valueName: "language:<\(LocalizableValueStrategy.joinedArgumentName)>"))
-    var valueStrategies: [ValueStrategyEntry] = []
+        help: ArgumentHelp(valueName: "language:<\(LocalizableValueStrategy.joinedArgumentName)>"))
+    var valueStrategyArguments: [ValueStrategyArgument] = []
     
     @Flag var sortByKey: Bool = false
     
@@ -94,17 +104,12 @@ struct SwiftToStrings: ParsableCommand {
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: sourceCodePath),
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
+            languages: languages.isEmpty ? nil : languages.map({ LanguageID($0) }),
             defaultValueStrategy: defaultValueStrategy,
-            valueStrategiesByLanguage: strategiesByLanguage,
+            valueStrategiesByLanguage: valueStrategyArguments.strategiesByLanguage,
             sortOrder: sortByKey ? .key : .occurrence)
         
         return try LocalizableStringsGenerator().generate(for: request)
-    }
-    
-    private var strategiesByLanguage: [LanguageID: LocalizableValueStrategy] {
-        return valueStrategies.reduce(into: [:]) { result, entry in
-            result[LanguageID(rawValue: entry.language)] = entry.strategy
-        }
     }
     
     private func writeStrings(_ strings: String, for language: LanguageID) throws {

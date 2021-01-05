@@ -6,6 +6,7 @@ extension LocalizableStringsGenerator {
         public var sourceCodeURL: URL
         public var resourcesURL: URL
         public var tableName: String
+        public var languages: [LanguageID]?
         public var defaultValueStrategy: ValueStrategy
         public var valueStrategiesByLanguage: [LanguageID: ValueStrategy]
         public var sortOrder: SortOrder
@@ -13,6 +14,7 @@ extension LocalizableStringsGenerator {
         public init(sourceCodeURL: URL,
                     resourcesURL: URL,
                     tableName: String = "Localizable",
+                    languages: [LanguageID]? = nil,
                     defaultValueStrategy: ValueStrategy = .custom("UNTRANSLATED-TEXT"),
                     valueStrategiesByLanguage: [LanguageID: ValueStrategy] = [:],
                     sortOrder: SortOrder = .occurrence
@@ -20,6 +22,7 @@ extension LocalizableStringsGenerator {
             self.sourceCodeURL = sourceCodeURL
             self.resourcesURL = resourcesURL
             self.tableName = tableName
+            self.languages = languages
             self.defaultValueStrategy = defaultValueStrategy
             self.valueStrategiesByLanguage = valueStrategiesByLanguage
             self.sortOrder = sortOrder
@@ -65,8 +68,9 @@ public class LocalizableStringsGenerator {
     public func generate(for request: Request) throws -> [LanguageID: String] {
         let sourceItems = try sourceImporter.import(at: request.sourceCodeURL)
         let languages = try languageDetector.detect(at: request.resourcesURL)
+        let filteredLanguages = request.languages?.filter({ languages.contains($0) }) ?? languages
         
-        return try languages.reduce(into: [:]) { result, language in
+        return try filteredLanguages.reduce(into: [:]) { result, language in
             let valueStrategy = request.valueStrategiesByLanguage[language]
                 ?? request.defaultValueStrategy
             

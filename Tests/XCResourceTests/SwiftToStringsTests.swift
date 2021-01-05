@@ -13,7 +13,7 @@ private enum Seed {
     /* 편집을 취소하시겠습니까? 확인 선택 시 모든 변경사항이 사라집니다. */
     "errorPopup_cancelEditing" = "errorPopup_cancelEditing";
     
-    /* 영상은 최대 %d분, %fGB까지 가능합니다.\\n길이를 수정하세요. */
+    /* 영상은 최대 %ld분, %fGB까지 가능합니다.\\n길이를 수정하세요. */
     "errorPopup_overMaximumSize" = "errorPopup_overMaximumSize";
     
     """
@@ -28,8 +28,8 @@ private enum Seed {
     /* 편집을 취소하시겠습니까? 확인 선택 시 모든 변경사항이 사라집니다. */
     "errorPopup_cancelEditing" = "편집을 취소하시겠습니까? 확인 선택 시 모든 변경사항이 사라집니다.";
     
-    /* 영상은 최대 %d분, %fGB까지 가능합니다.\\n길이를 수정하세요. */
-    "errorPopup_overMaximumSize" = "영상은 최대 %d분, %fGB까지 가능합니다.\\n길이를 수정하세요.";
+    /* 영상은 최대 %ld분, %fGB까지 가능합니다.\\n길이를 수정하세요. */
+    "errorPopup_overMaximumSize" = "영상은 최대 %ld분, %fGB까지 가능합니다.\\n길이를 수정하세요.";
     
     """
 }

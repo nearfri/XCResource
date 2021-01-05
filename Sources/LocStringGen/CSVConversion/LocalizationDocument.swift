@@ -80,7 +80,7 @@ extension LocalizationDocument {
         guard firstLocalizationColumnIndex < header.count else { return [] }
         
         var sections = header[firstLocalizationColumnIndex...].map { language in
-            LocalizationSection(language: LanguageID(rawValue: language))
+            LocalizationSection(language: LanguageID(language))
         }
         
         for record in records {

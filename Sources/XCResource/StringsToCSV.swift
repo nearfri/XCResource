@@ -34,7 +34,7 @@ struct StringsToCSV: ParsableCommand {
         let request = LocalizationExporter.Request(
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
-            preferredLanguages: [LanguageID(rawValue: developmentLocalization)])
+            preferredLanguages: [LanguageID(developmentLocalization)])
         
         return try LocalizationExporter().generate(for: request)
     }

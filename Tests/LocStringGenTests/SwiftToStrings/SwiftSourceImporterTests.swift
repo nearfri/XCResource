@@ -18,7 +18,7 @@ final class SwiftSourceImporterTests: XCTestCase {
             .init(comment: "편집을 취소하시겠습니까? 확인 선택 시 모든 변경사항이 사라집니다.",
                   key: "errorPopup_cancelEditing",
                   value: ""),
-            .init(comment: "영상은 최대 %d분, %fGB까지 가능합니다.\\n길이를 수정하세요.",
+            .init(comment: "영상은 최대 %ld분, %fGB까지 가능합니다.\\n길이를 수정하세요.",
                   key: "errorPopup_overMaximumSize",
                   value: "")
         ]

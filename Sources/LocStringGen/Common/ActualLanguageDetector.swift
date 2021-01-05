@@ -8,6 +8,6 @@ class ActualLanguageDetector: LanguageDetector {
             .filter({ $0.hasSuffix(pathExtension) })
             .filter({ $0 != "Base" + pathExtension })
             .map({ $0[..<$0.index($0.endIndex, offsetBy: -pathExtension.count)] })
-            .map({ LanguageID(rawValue: String($0)) })
+            .map({ LanguageID(String($0)) })
     }
 }
