@@ -3,58 +3,6 @@ import ArgumentParser
 import LocStringGen
 import XCResourceUtil
 
-typealias LocalizableValueStrategy = LocalizableStringsGenerator.ValueStrategy
-
-extension LocalizableValueStrategy: ExpressibleByArgument {
-    public init(argument: String) {
-        switch argument {
-        case "comment": self = .comment
-        case "key":     self = .key
-        default:        self = .custom(argument)
-        }
-    }
-    
-    public var defaultValueDescription: String {
-        switch self {
-        case .comment:              return "comment"
-        case .key:                  return "key"
-        case .custom(let string):   return string
-        }
-    }
-    
-    public static var allValueStrings: [String] {
-        return ["comment", "key", "custom-string"]
-    }
-    
-    static var joinedArgumentName: String {
-        return allValueStrings.joined(separator: "|")
-    }
-}
-
-struct ValueStrategyArgument: ExpressibleByArgument {
-    var language: String
-    var strategy: LocalizableValueStrategy
-    
-    init?(argument: String) {
-        guard let separatorIndex = argument.firstIndex(of: ":") else { return nil }
-        
-        let language = argument[..<separatorIndex]
-        let strategy = argument[argument.index(after: separatorIndex)...]
-        if language.isEmpty || strategy.isEmpty { return nil }
-        
-        self.language = String(language)
-        self.strategy = LocalizableValueStrategy(argument: String(strategy))
-    }
-}
-
-extension Array where Element == ValueStrategyArgument {
-    var strategiesByLanguage: [LanguageID: LocalizableValueStrategy] {
-        return reduce(into: [:]) { result, argument in
-            result[LanguageID(argument.language)] = argument.strategy
-        }
-    }
-}
-
 struct SwiftToStrings: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
         commandName: "swift2strings",

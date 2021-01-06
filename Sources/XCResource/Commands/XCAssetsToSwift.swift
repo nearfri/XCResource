@@ -8,25 +8,6 @@ private let headerComment = """
 // Do Not Edit Directly!
 """
 
-extension AssetType: ExpressibleByArgument {
-    public init?(argument: String) {
-        switch argument {
-        case "image":   self = .imageSet
-        case "color":   self = .colorSet
-        case "symbol":  self = .symbolSet
-        default:        return nil
-        }
-    }
-    
-    public var defaultValueDescription: String {
-        return "image"
-    }
-    
-    public static var allValueStrings: [String] {
-        return ["image", "color", "symbol"]
-    }
-}
-
 struct XCAssetsToSwift: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
         commandName: "xcassets2swift",
