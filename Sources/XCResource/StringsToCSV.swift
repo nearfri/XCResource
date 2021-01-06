@@ -3,6 +3,45 @@ import ArgumentParser
 import LocStringGen
 import XCResourceUtil
 
+extension LanguageFormatterStyle: ExpressibleByArgument {
+    public init?(argument: String) {
+        if argument == "short" {
+            self = .short
+            return
+        }
+        
+        if argument == "long" {
+            self = .long(Locale.current)
+            return
+        }
+        
+        if argument.hasPrefix("long-") {
+            let localeID = String(argument.dropFirst("long-".count))
+            self = .long(Locale(identifier: localeID))
+            return
+        }
+        
+        return nil
+    }
+    
+    public var defaultValueDescription: String {
+        switch self {
+        case .short:
+            return "short"
+        case .long(let locale):
+            return locale == .current ? "long" : "long-\(locale.identifier)"
+        }
+    }
+    
+    public static var allValueStrings: [String] {
+        return ["short", "long", "long-<language>"]
+    }
+    
+    static var joinedArgumentName: String {
+        return allValueStrings.joined(separator: "|")
+    }
+}
+
 struct StringsToCSV: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
         commandName: "strings2csv",
@@ -17,9 +56,12 @@ struct StringsToCSV: ParsableCommand {
     
     @Option var tableName: String = "Localizable"
     
-    @Option var developmentLocalization: String = "en"
+    @Option var developmentLanguage: String = "en"
     
     @Option var csvPath: String
+    
+    @Option(help: ArgumentHelp(valueName: LanguageFormatterStyle.joinedArgumentName))
+    var headerStyle: LanguageFormatterStyle = .long(Locale.current)
     
     @Flag var writeBOM: Bool = false
     
@@ -34,9 +76,12 @@ struct StringsToCSV: ParsableCommand {
         let request = LocalizationExporter.Request(
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
-            preferredLanguages: [LanguageID(developmentLocalization)])
+            preferredLanguages: [LanguageID(developmentLanguage)])
         
-        return try LocalizationExporter().generate(for: request)
+        let exporter = LocalizationExporter()
+        exporter.headerStyle = headerStyle
+        
+        return try exporter.generate(for: request)
     }
     
     private func writeCSV(_ csv: String) throws {

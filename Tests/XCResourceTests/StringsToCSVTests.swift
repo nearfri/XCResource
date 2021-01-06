@@ -25,8 +25,9 @@ final class StringsToCSVTests: XCTestCase {
         process.arguments = [
             "strings2csv",
             "--resources-path", resourcesURL.path,
-            "--development-localization", "ko",
+            "--development-language", "ko",
             "--csv-path", urlOfActualCSVFile.path,
+            "--header-style", "short",
         ]
         
         let pipe = Pipe()

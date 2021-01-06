@@ -38,8 +38,10 @@ enum LocalizationDocumentError: Error {
 // MARK: - Init with [LocalizationSection]
 
 extension LocalizationDocument {
-    init(sections: [LocalizationSection]) {
-        header = [ColumnName.key, ColumnName.comment] + sections.map(\.language.rawValue)
+    init(sections: [LocalizationSection], formatter: LanguageFormatter) {
+        header = [ColumnName.key, ColumnName.comment] + sections.map({ section in
+            return formatter.string(from: section.language)
+        })
         
         if sections.isEmpty { return }
         

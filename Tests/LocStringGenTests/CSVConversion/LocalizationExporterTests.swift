@@ -27,6 +27,18 @@ private class StubItemImporter: LocalizationItemImporter {
     }
 }
 
+private class StubLanguageFormatter: LanguageFormatter {
+    var style: LanguageFormatterStyle = .short
+    
+    func string(from language: LanguageID) -> String {
+        return language.rawValue
+    }
+    
+    func language(from string: String) -> LanguageID? {
+        return LanguageID(string)
+    }
+}
+
 private class StubDocumentEncoder: LocalizationDocumentEncoder {
     static let encodedDocument: String = "Stub-Document"
     
@@ -48,6 +60,7 @@ final class LocalizationExporterTests: XCTestCase {
         let sut = LocalizationExporter(
             languageDetector: StubLanguageDetector(),
             itemImporter: itemImporter,
+            languageFormatter: StubLanguageFormatter(),
             documentEncoder: documentEncoder)
         
         let request = LocalizationExporter.Request(
@@ -64,6 +77,8 @@ final class LocalizationExporterTests: XCTestCase {
             URL(fileURLWithPath: "Resources/ko.lproj/Localizable.strings"),
         ])
         
+        XCTAssert(documentEncoder.encodeParamDocument.header.contains("en"))
+        XCTAssert(documentEncoder.encodeParamDocument.header.contains("ko"))
         XCTAssert(documentEncoder.encodeParamDocument.records[0].contains("Cancel"))
         XCTAssert(documentEncoder.encodeParamDocument.records[0].contains("취소"))
     }

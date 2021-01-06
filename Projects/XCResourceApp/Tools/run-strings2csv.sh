@@ -5,6 +5,7 @@ set -e
 
 swift run --package-path ../../../ xcresource strings2csv \
     --resources-path ../XCResourceApp \
-    --development-localization ko \
+    --development-language ko \
     --csv-path ./SampleApp-translation.csv \
+    --header-style long-ko \
     --write-bom

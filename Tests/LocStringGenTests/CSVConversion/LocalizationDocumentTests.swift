@@ -1,6 +1,18 @@
 import XCTest
 @testable import LocStringGen
 
+private class StubLanguageFormatter: LanguageFormatter {
+    var style: LanguageFormatterStyle = .short
+    
+    func string(from language: LanguageID) -> String {
+        return language.rawValue
+    }
+    
+    func language(from string: String) -> LanguageID? {
+        return LanguageID(string)
+    }
+}
+
 private enum Seed {
     static let commentedSections: [LocalizationSection] = [
         LocalizationSection(language: "ko", items: [
@@ -66,10 +78,11 @@ final class LocalizationDocumentTests: XCTestCase {
     func test_initWithSections() {
         // Given
         let sections = Seed.commentedSections
+        let formatter = StubLanguageFormatter()
         let expectedDocument = Seed.commentedDocument
         
         // When
-        let actualDocument = LocalizationDocument(sections: sections)
+        let actualDocument = LocalizationDocument(sections: sections, formatter: formatter)
         
         // Then
         XCTAssertEqual(actualDocument, expectedDocument)
