@@ -15,6 +15,9 @@ struct CSVToStrings: ParsableCommand {
     
     @Option var csvPath: String
     
+    @Option(help: ArgumentHelp(valueName: LanguageFormatterStyle.joinedArgumentName))
+    var headerStyle: LanguageFormatterStyle = .long(Locale.current)
+    
     @Option var resourcesPath: String
     
     @Option var tableName: String = "Localizable"
@@ -33,7 +36,10 @@ struct CSVToStrings: ParsableCommand {
         let request = LocalizationImporter.Request(
             documentSource: .file(URL(fileURLWithExpandingTildeInPath: csvPath)))
         
-        return try LocalizationImporter().generate(for: request)
+        let importer = LocalizationImporter()
+        importer.headerStyle = headerStyle
+        
+        return try importer.generate(for: request)
     }
     
     private func writeStrings(_ strings: String, for language: LanguageID) throws {

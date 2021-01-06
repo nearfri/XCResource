@@ -13,6 +13,18 @@ private class StubDocumentDecoder: LocalizationDocumentDecoder {
     }
 }
 
+private class StubLanguageFormatter: LanguageFormatter {
+    var style: LanguageFormatterStyle = .short
+    
+    func string(from language: LanguageID) -> String {
+        return language.rawValue
+    }
+    
+    func language(from string: String) -> LanguageID? {
+        return LanguageID(string)
+    }
+}
+
 private class StubPropertyListGenerator: PropertyListGenerator {
     var generateParamItemsList: [[LocalizationItem]] = []
     
@@ -32,6 +44,7 @@ final class LocalizationImporterTests: XCTestCase {
         // Given
         let sut = LocalizationImporter(
             documentDecoder: documentDecoder,
+            languageFormatter: StubLanguageFormatter(),
             plistGenerator: plistGenerator)
         
         let request = LocalizationImporter.Request(documentSource: .text(documentSource))

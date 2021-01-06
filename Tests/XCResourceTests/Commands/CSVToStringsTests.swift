@@ -24,6 +24,7 @@ final class CSVToStringsTests: XCTestCase {
         process.arguments = [
             "csv2strings",
             "--csv-path", csvFileURL.path,
+            "--header-style", "short",
             "--resources-path", resourcesURL.path,
             "--table-name", "Translated",
         ]

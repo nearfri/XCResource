@@ -78,11 +78,12 @@ final class LocalizationDocumentTests: XCTestCase {
     func test_initWithSections() {
         // Given
         let sections = Seed.commentedSections
-        let formatter = StubLanguageFormatter()
+        let languageFormatter = StubLanguageFormatter()
         let expectedDocument = Seed.commentedDocument
         
         // When
-        let actualDocument = LocalizationDocument(sections: sections, formatter: formatter)
+        let actualDocument = LocalizationDocument(sections: sections,
+                                                  languageFormatter: languageFormatter)
         
         // Then
         XCTAssertEqual(actualDocument, expectedDocument)
@@ -91,10 +92,11 @@ final class LocalizationDocumentTests: XCTestCase {
     func test_toSections_withComment() throws {
         // Given
         let document = Seed.commentedDocument
+        let languageFormatter = StubLanguageFormatter()
         let expectedSections = Seed.commentedSections
         
         // When
-        let actualSections = try document.toSections()
+        let actualSections = try document.toSections(languageFormatter: languageFormatter)
         
         // Then
         XCTAssertEqual(actualSections, expectedSections)
@@ -103,10 +105,11 @@ final class LocalizationDocumentTests: XCTestCase {
     func test_toSections_withoutComment() throws {
         // Given
         let document = Seed.nonCommentedDocument
+        let languageFormatter = StubLanguageFormatter()
         let expectedSections = Seed.nonCommentedSections
         
         // When
-        let actualSections = try document.toSections()
+        let actualSections = try document.toSections(languageFormatter: languageFormatter)
         
         // Then
         XCTAssertEqual(actualSections, expectedSections)

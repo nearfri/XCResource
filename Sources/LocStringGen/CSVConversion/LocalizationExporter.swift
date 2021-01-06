@@ -52,7 +52,8 @@ public class LocalizationExporter {
     
     public func generate(for request: Request) throws -> String {
         let sections = try importSections(with: request)
-        let document = LocalizationDocument(sections: sections, formatter: languageFormatter)
+        let document = LocalizationDocument(sections: sections,
+                                            languageFormatter: languageFormatter)
         return try documentEncoder.encode(document)
     }
     

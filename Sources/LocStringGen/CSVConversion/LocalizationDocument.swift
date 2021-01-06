@@ -33,14 +33,15 @@ extension LocalizationDocument {
 enum LocalizationDocumentError: Error {
     case keyColumnDoesNotExist
     case inconsistentColumnCount
+    case invalidLanguageString(String)
 }
 
 // MARK: - Init with [LocalizationSection]
 
 extension LocalizationDocument {
-    init(sections: [LocalizationSection], formatter: LanguageFormatter) {
+    init(sections: [LocalizationSection], languageFormatter: LanguageFormatter) {
         header = [ColumnName.key, ColumnName.comment] + sections.map({ section in
-            return formatter.string(from: section.language)
+            return languageFormatter.string(from: section.language)
         })
         
         if sections.isEmpty { return }
@@ -74,21 +75,24 @@ private struct FastAccessibleSection {
 // MARK: - Convert to [LocalizationSection]
 
 extension LocalizationDocument {
-    func toSections() throws -> [LocalizationSection] {
+    func toSections(languageFormatter: LanguageFormatter) throws -> [LocalizationSection] {
         try validate()
         
         let commentColumnIndex = self.commentColumnIndex
-        let firstLocalizationColumnIndex = (commentColumnIndex ?? keyColumnIndex) + 1
-        guard firstLocalizationColumnIndex < header.count else { return [] }
+        let firstValueColumnIndex = (commentColumnIndex ?? keyColumnIndex) + 1
+        guard firstValueColumnIndex < header.count else { return [] }
         
-        var sections = header[firstLocalizationColumnIndex...].map { language in
-            LocalizationSection(language: LanguageID(language))
+        var sections: [LocalizationSection] = try header[firstValueColumnIndex...].map { string in
+            guard let language = languageFormatter.language(from: string) else {
+                throw LocalizationDocumentError.invalidLanguageString(string)
+            }
+            return LocalizationSection(language: language)
         }
         
         for record in records {
             let key = record[keyColumnIndex]
             let comment = commentColumnIndex.map({ record[$0] })
-            for (i, value) in record[firstLocalizationColumnIndex...].enumerated() {
+            for (i, value) in record[firstValueColumnIndex...].enumerated() {
                 let item = LocalizationItem(comment: comment, key: key, value: value)
                 sections[i].items.append(item)
             }
