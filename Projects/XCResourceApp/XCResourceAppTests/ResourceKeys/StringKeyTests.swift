@@ -2,9 +2,11 @@ import XCTest
 @testable import XCResourceApp
 
 class StringKeyTests: XCTestCase {
+    private var bundle: Bundle!
     
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        let bundleURL = Bundle.main.url(forResource: "ko", withExtension: "lproj")!
+        bundle = Bundle(url: bundleURL)!
     }
     
     override func tearDownWithError() throws {
@@ -15,10 +17,9 @@ class StringKeyTests: XCTestCase {
         let defaultString = "$_LOCALIZED_STRING_NOT_FOUND_$"
         
         for key in StringKey.allCases {
-            let string = NSLocalizedString(key.rawValue,
-                                           bundle: .module,
-                                           value: defaultString,
-                                           comment: "")
+            let string = bundle.localizedString(forKey: key.rawValue,
+                                                value: defaultString,
+                                                table: nil)
             XCTAssert(string != defaultString, "\(key.rawValue) localized string not found")
         }
     }

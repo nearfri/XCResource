@@ -2,23 +2,23 @@
 common_cancel,취소,취소,Cancel
 common_confirm,확인,확인,Confirm
 common_done,완료,완료,Done
-editMenu_aspectRatio,비율,비율,UNTRANSLATED-TEXT
-editMenu_aspectRatioGuide,동영상을 움직여 위치를 조정해보세요.,동영상을 움직여 위치를 조정해보세요.,UNTRANSLATED-TEXT
-editMenu_bgm,음악,음악,UNTRANSLATED-TEXT
-editMenu_bgm_placeholder,음악 추가,음악 추가,UNTRANSLATED-TEXT
-editMenu_copyright,서명,서명,UNTRANSLATED-TEXT
-editMenu_copyright_placeholder,이미지 추가,이미지 추가,UNTRANSLATED-TEXT
-editMenu_filter,필터,필터,UNTRANSLATED-TEXT
-editMenu_filter_original,원본,원본,UNTRANSLATED-TEXT
+editMenu_aspectRatio,비율,비율,
+editMenu_aspectRatioGuide,동영상을 움직여 위치를 조정해보세요.,동영상을 움직여 위치를 조정해보세요.,
+editMenu_bgm,음악,음악,
+editMenu_bgm_placeholder,음악 추가,음악 추가,
+editMenu_copyright,서명,서명,
+editMenu_copyright_placeholder,이미지 추가,이미지 추가,
+editMenu_filter,필터,필터,
+editMenu_filter_original,원본,원본,
 errorPopup_cancelToEditAsset,동영상 편집을 취소하시겠습니까?\n확인 선택 시 모든 변경사항이 사라집니다.,"동영상 편집을 취소하시겠습니까?
-확인 선택 시 모든 변경사항이 사라집니다.",UNTRANSLATED-TEXT
+확인 선택 시 모든 변경사항이 사라집니다.",
 errorPopup_failToAttach,동영상을 불러오는 데 실패했습니다.\n다시 시도해주세요.,"동영상을 불러오는 데 실패했습니다.
-다시 시도해주세요.",UNTRANSLATED-TEXT
+다시 시도해주세요.",
 errorPopup_failToEncoding,인코딩 오류입니다.\n다시 시도하시겠습니까?,"인코딩 오류입니다.
-다시 시도하시겠습니까?",UNTRANSLATED-TEXT
+다시 시도하시겠습니까?",
 errorPopup_failToLoadAsset,편집할 수 없는 유형의 영상입니다.\n다른 영상을 첨부해주세요.,"편집할 수 없는 유형의 영상입니다.
-다른 영상을 첨부해주세요.",UNTRANSLATED-TEXT
+다른 영상을 첨부해주세요.",
 errorPopup_failToLoadBGMList,목록을 불러오는 데 실패했습니다.\n다시 시도해주세요.,"목록을 불러오는 데 실패했습니다.
-다시 시도해주세요.",UNTRANSLATED-TEXT
+다시 시도해주세요.",
 errorPopup_overMaximumSize,"영상은 최대 %@{시간}, %@{용량}까지 가능합니다.\n길이를 수정하세요.","영상은 최대 %@, %@까지 가능합니다.
-길이를 수정하세요.",UNTRANSLATED-TEXT
+길이를 수정하세요.",
