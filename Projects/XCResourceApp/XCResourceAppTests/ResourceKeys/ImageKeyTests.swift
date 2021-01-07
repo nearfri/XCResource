@@ -12,7 +12,12 @@ class ImageKeyTests: XCTestCase {
     }
 
     func test_imagesExist() throws {
-        for key in ImageKey.allGeneratedKeys where key.rawValue != "AppIcon" {
+        let keys: [ImageKey] = [
+            .icoMusic, .icon_check_normal, .component_icoDelete,
+            .se_nt_ico_on_1, .detailEdit_color_icoAdjustment, .icoClear12
+        ]
+        
+        for key in keys {
             XCTAssertNotNil(UIImage(named: key.rawValue, in: .module, compatibleWith: nil),
                             "\(key.rawValue) image not found")
         }

@@ -23,14 +23,6 @@ class StubKeyDeclarationGenerator: KeyDeclarationGenerator {
     }
 }
 
-class StubKeyListGenerator: KeyListGenerator {
-    static let keyListString = "{ Key List }"
-    
-    func generate(from catalogs: [AssetCatalog], keyTypeName: String) -> String {
-        return Self.keyListString
-    }
-}
-
 final class AssetKeyGeneratorTests: XCTestCase {
     var sut: AssetKeyGenerator!
     
@@ -40,8 +32,7 @@ final class AssetKeyGeneratorTests: XCTestCase {
         sut = AssetKeyGenerator(
             catalogFetcher: StubAssetCatalogFetcher(),
             typeDeclarationGenerator: StubTypeDeclarationGenerator(),
-            keyDeclarationGenerator: StubKeyDeclarationGenerator(),
-            keyListGenerator: StubKeyListGenerator())
+            keyDeclarationGenerator: StubKeyDeclarationGenerator())
     }
     
     func test_generate() throws {
@@ -65,7 +56,5 @@ final class AssetKeyGeneratorTests: XCTestCase {
             \(StubKeyDeclarationGenerator.declarationsString)
             """
         )
-        
-        XCTAssertEqual(result.keyList, StubKeyListGenerator.keyListString)
     }
 }

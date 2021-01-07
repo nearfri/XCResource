@@ -6,15 +6,11 @@ set -e
 swift run --package-path ../../../ xcresource xcassets2swift \
     --xcassets-path ../XCResourceApp/Assets.xcassets \
     --asset-type image \
-    --key-type-name ImageKey \
-    --module-name XCResourceApp \
-    --key-decl-path ../XCResourceApp/ResourceKeys/ImageKey.swift \
-    --key-list-path ../XCResourceAppTests/ResourceKeys/AllImageKeys.swift
+    --swift-path ../XCResourceApp/ResourceKeys/ImageKey.swift \
+    --swift-type-name ImageKey
 
 swift run --package-path ../../../ xcresource xcassets2swift \
     --xcassets-path ../XCResourceApp/Assets.xcassets \
     --asset-type color \
-    --key-type-name ColorKey \
-    --module-name XCResourceApp \
-    --key-decl-path ../XCResourceApp/ResourceKeys/ColorKey.swift \
-    --key-list-path ../XCResourceAppTests/ResourceKeys/AllColorKeys.swift
+    --swift-path ../XCResourceApp/ResourceKeys/ColorKey.swift \
+    --swift-type-name ColorKey

@@ -6,12 +6,10 @@ final class XCAssetsToSwiftTests: XCTestCase {
     func test_main() throws {
         let fm = FileManager.default
         
-        let keyDeclFileURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-        let keyListFileURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let swiftFileURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         
         defer {
-            try? fm.removeItem(at: keyDeclFileURL)
-            try? fm.removeItem(at: keyListFileURL)
+            try? fm.removeItem(at: swiftFileURL)
         }
         
         let executableURL = productsDirectory.appendingPathComponent("xcresource")
@@ -23,10 +21,8 @@ final class XCAssetsToSwiftTests: XCTestCase {
             "xcassets2swift",
             "--xcassets-path", SampleData.assetURL().path,
             "--asset-type", "color",
-            "--key-type-name", "ColorKey",
-            "--module-name", "SampleApp",
-            "--key-decl-path", keyDeclFileURL.path,
-            "--key-list-path", keyListFileURL.path,
+            "--swift-path", swiftFileURL.path,
+            "--swift-type-name", "ColorKey",
         ]
         
         let pipe = Pipe()
@@ -37,11 +33,8 @@ final class XCAssetsToSwiftTests: XCTestCase {
         
         XCTAssertEqual(process.terminationStatus, 0)
         
-        XCTAssertEqual(try String(contentsOf: keyDeclFileURL),
+        XCTAssertEqual(try String(contentsOf: swiftFileURL),
                        try String(contentsOf: SampleData.sourceCodeURL("ColorKey.swift")))
-        
-        XCTAssertEqual(try String(contentsOf: keyListFileURL),
-                       try String(contentsOf: SampleData.sourceCodeURL("AllColorKeys.swift")))
     }
     
     /// Returns path to the built products directory.

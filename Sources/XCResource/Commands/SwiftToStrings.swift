@@ -18,7 +18,7 @@ struct SwiftToStrings: ParsableCommand {
     
     // MARK: - Arguments
     
-    @Option var sourceCodePath: String
+    @Option var swiftPath: String
     
     @Option var resourcesPath: String
     
@@ -49,7 +49,7 @@ struct SwiftToStrings: ParsableCommand {
     
     private func generateStrings() throws -> [LanguageID: String] {
         let request = LocalizableStringsGenerator.Request(
-            sourceCodeURL: URL(fileURLWithExpandingTildeInPath: sourceCodePath),
+            sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftPath),
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
             languages: languages.isEmpty ? nil : languages.map({ LanguageID($0) }),

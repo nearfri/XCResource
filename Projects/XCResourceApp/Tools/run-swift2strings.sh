@@ -4,7 +4,7 @@
 set -e
 
 swift run --package-path ../../../ xcresource swift2strings \
-    --source-code-path ../XCResourceApp/ResourceKeys/StringKey.swift \
+    --swift-path ../XCResourceApp/ResourceKeys/StringKey.swift \
     --resources-path ../XCResourceApp \
     --value-strategy ko:comment \
     --sort-by-key

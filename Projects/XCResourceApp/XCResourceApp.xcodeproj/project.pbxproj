@@ -40,8 +40,6 @@
 		08765F302511B1110024D427 /* StringKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F2F2511B1110024D427 /* StringKey.swift */; };
 		08765F322511B2CD0024D427 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F312511B2CD0024D427 /* String+Localization.swift */; };
 		08765F422511D5200024D427 /* XCResourceAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F412511D5200024D427 /* XCResourceAppTests.swift */; };
-		08765F4C2511D7510024D427 /* AllImageKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F4B2511D7510024D427 /* AllImageKeys.swift */; };
-		08765F4E2511D7920024D427 /* AllColorKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F4D2511D7920024D427 /* AllColorKeys.swift */; };
 		0893AE5F252F159200CB9473 /* StringKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0893AE5E252F159200CB9473 /* StringKeyTests.swift */; };
 		08F6B18D25A3FED100992B09 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08F6B18C25A3FED100992B09 /* Main.storyboard */; };
 /* End PBXBuildFile section */
@@ -93,8 +91,6 @@
 		08765F3F2511D5200024D427 /* XCResourceAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCResourceAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08765F412511D5200024D427 /* XCResourceAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCResourceAppTests.swift; sourceTree = "<group>"; };
 		08765F432511D5200024D427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		08765F4B2511D7510024D427 /* AllImageKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllImageKeys.swift; sourceTree = "<group>"; };
-		08765F4D2511D7920024D427 /* AllColorKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllColorKeys.swift; sourceTree = "<group>"; };
 		0893AE5E252F159200CB9473 /* StringKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringKeyTests.swift; sourceTree = "<group>"; };
 		08F6B18C25A3FED100992B09 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,8 +116,6 @@
 		0826A007251E45FA00F9A77D /* ResourceKeys */ = {
 			isa = PBXGroup;
 			children = (
-				08765F4B2511D7510024D427 /* AllImageKeys.swift */,
-				08765F4D2511D7920024D427 /* AllColorKeys.swift */,
 				0826A00C251ECF8600F9A77D /* ImageKeyTests.swift */,
 				0826A012251ED0CC00F9A77D /* ColorKeyTests.swift */,
 				0893AE5E252F159200CB9473 /* StringKeyTests.swift */,
@@ -352,10 +346,8 @@
 			files = (
 				08765F422511D5200024D427 /* XCResourceAppTests.swift in Sources */,
 				0826A013251ED0CC00F9A77D /* ColorKeyTests.swift in Sources */,
-				08765F4C2511D7510024D427 /* AllImageKeys.swift in Sources */,
 				0893AE5F252F159200CB9473 /* StringKeyTests.swift in Sources */,
 				0826A00D251ECF8600F9A77D /* ImageKeyTests.swift in Sources */,
-				08765F4E2511D7920024D427 /* AllColorKeys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,10 +12,6 @@ protocol KeyDeclarationGenerator: AnyObject {
     func generate(from catalog: AssetCatalog, keyTypeName: String) -> String
 }
 
-protocol KeyListGenerator: AnyObject {
-    func generate(from catalogs: [AssetCatalog], keyTypeName: String) -> String
-}
-
 extension AssetKeyGenerator {
     public struct CodeRequest {
         public var assetCatalogURLs: [URL]
@@ -32,12 +28,10 @@ extension AssetKeyGenerator {
     public struct CodeResult {
         public var typeDeclaration: String
         public var keyDeclarations: String
-        public var keyList: String
         
-        public init(typeDeclaration: String, keyDeclarations: String, keyList: String) {
+        public init(typeDeclaration: String, keyDeclarations: String) {
             self.typeDeclaration = typeDeclaration
             self.keyDeclarations = keyDeclarations
-            self.keyList = keyList
         }
     }
 }
@@ -46,24 +40,20 @@ public class AssetKeyGenerator {
     private let catalogFetcher: AssetCatalogFetcher
     private let typeDeclarationGenerator: TypeDeclarationGenerator
     private let keyDeclarationGenerator: KeyDeclarationGenerator
-    private let keyListGenerator: KeyListGenerator
     
     init(catalogFetcher: AssetCatalogFetcher,
          typeDeclarationGenerator: TypeDeclarationGenerator,
-         keyDeclarationGenerator: KeyDeclarationGenerator,
-         keyListGenerator: KeyListGenerator
+         keyDeclarationGenerator: KeyDeclarationGenerator
     ) {
         self.catalogFetcher = catalogFetcher
         self.typeDeclarationGenerator = typeDeclarationGenerator
         self.keyDeclarationGenerator = keyDeclarationGenerator
-        self.keyListGenerator = keyListGenerator
     }
     
     public convenience init() {
         self.init(catalogFetcher: ActualAssetCatalogFetcher(),
                   typeDeclarationGenerator: ActualTypeDeclarationGenerator(),
-                  keyDeclarationGenerator: ActualKeyDeclarationGenerator(),
-                  keyListGenerator: ActualKeyListGenerator())
+                  keyDeclarationGenerator: ActualKeyDeclarationGenerator())
     }
     
     public func generate(for request: CodeRequest) throws -> CodeResult {
@@ -77,10 +67,6 @@ public class AssetKeyGenerator {
             .map({ keyDeclarationGenerator.generate(from: $0, keyTypeName: request.keyTypeName) })
             .joined(separator: "\n\n")
         
-        let keyList = keyListGenerator.generate(from: catalogs, keyTypeName: request.keyTypeName)
-        
-        return CodeResult(typeDeclaration: typeDeclaration,
-                          keyDeclarations: keyDeclarations,
-                          keyList: keyList)
+        return CodeResult(typeDeclaration: typeDeclaration, keyDeclarations: keyDeclarations)
     }
 }

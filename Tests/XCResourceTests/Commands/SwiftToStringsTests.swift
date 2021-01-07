@@ -52,7 +52,7 @@ final class SwiftToStringsTests: XCTestCase {
         
         process.arguments = [
             "swift2strings",
-            "--source-code-path", SampleData.sourceCodeURL("StringKey.swift").path,
+            "--swift-path", SampleData.sourceCodeURL("StringKey.swift").path,
             "--resources-path", resourcesURL.path,
             "--default-value-strategy", "key",
             "--value-strategy", "ko:comment",
