@@ -1,10 +1,10 @@
 import XCTest
 @testable import LocStringGen
 
-final class CSVDocumentEncoderTests: XCTestCase {
+final class CSVTableEncoderTests: XCTestCase {
     func test_encode() throws {
         // Given
-        let document = LocalizationDocument(
+        let table = LocalizationTable(
             header: ["Key", "Comment", "ko", "en"],
             records: [
                 ["cancel", "취소", "취소", "Cancel"],
@@ -19,7 +19,7 @@ final class CSVDocumentEncoderTests: XCTestCase {
         """
         
         // When
-        let actualCSVString = try CSVDocumentEncoder().encode(document)
+        let actualCSVString = try CSVTableEncoder().encode(table)
         
         // Then
         XCTAssertEqual(actualCSVString, expectedCSVString)

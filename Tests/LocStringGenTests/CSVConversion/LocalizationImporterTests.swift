@@ -1,13 +1,13 @@
 import XCTest
 @testable import LocStringGen
 
-private class StubDocumentDecoder: LocalizationDocumentDecoder {
+private class StubTableDecoder: LocalizationTableDecoder {
     var decodeParamString: String!
     
-    func decode(from string: String) throws -> LocalizationDocument {
+    func decode(from string: String) throws -> LocalizationTable {
         decodeParamString = string
         
-        return LocalizationDocument(
+        return LocalizationTable(
             header: ["Key", "Comment", "ko", "en"],
             records: [["cancel", "취소", "취소", "Cancel"]])
     }
@@ -37,17 +37,17 @@ private class StubPropertyListGenerator: PropertyListGenerator {
 
 final class LocalizationImporterTests: XCTestCase {
     func test_generate() throws {
-        let documentDecoder = StubDocumentDecoder()
+        let tableDecoder = StubTableDecoder()
         let plistGenerator = StubPropertyListGenerator()
-        let documentSource = "Stub-Document-String"
+        let tableString = "Stub-Table-String"
         
         // Given
         let sut = LocalizationImporter(
-            documentDecoder: documentDecoder,
+            tableDecoder: tableDecoder,
             languageFormatter: StubLanguageFormatter(),
             plistGenerator: plistGenerator)
         
-        let request = LocalizationImporter.Request(documentSource: .text(documentSource))
+        let request = LocalizationImporter.Request(tableSource: .text(tableString))
         
         // When
         let result = try sut.generate(for: request)
@@ -56,7 +56,7 @@ final class LocalizationImporterTests: XCTestCase {
         XCTAssertNotNil(result["en"])
         XCTAssertNotNil(result["ko"])
         
-        XCTAssertEqual(documentDecoder.decodeParamString, documentSource)
+        XCTAssertEqual(tableDecoder.decodeParamString, tableString)
         
         XCTAssertEqual(plistGenerator.generateParamItemsList[0], [
             .init(comment: "취소", key: "cancel", value: "취소")

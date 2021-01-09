@@ -39,15 +39,15 @@ private class StubLanguageFormatter: LanguageFormatter {
     }
 }
 
-private class StubDocumentEncoder: LocalizationDocumentEncoder {
-    static let encodedDocument: String = "Stub-Document"
+private class StubTableEncoder: LocalizationTableEncoder {
+    static let encodedTable: String = "Stub-Table"
     
-    var encodeParamDocument: LocalizationDocument!
+    var encodeParamTable: LocalizationTable!
     
-    func encode(_ document: LocalizationDocument) throws -> String {
-        encodeParamDocument = document
+    func encode(_ table: LocalizationTable) throws -> String {
+        encodeParamTable = table
         
-        return Self.encodedDocument
+        return Self.encodedTable
     }
 }
 
@@ -55,13 +55,13 @@ final class LocalizationExporterTests: XCTestCase {
     func test_generate() throws {
         // Given
         let itemImporter = StubItemImporter()
-        let documentEncoder = StubDocumentEncoder()
+        let tableEncoder = StubTableEncoder()
         
         let sut = LocalizationExporter(
             languageDetector: StubLanguageDetector(),
             itemImporter: itemImporter,
             languageFormatter: StubLanguageFormatter(),
-            documentEncoder: documentEncoder)
+            tableEncoder: tableEncoder)
         
         let request = LocalizationExporter.Request(
             resourcesURL: URL(fileURLWithPath: "Resources"))
@@ -70,16 +70,16 @@ final class LocalizationExporterTests: XCTestCase {
         let result = try sut.generate(for: request)
         
         // Then
-        XCTAssertEqual(result, StubDocumentEncoder.encodedDocument)
+        XCTAssertEqual(result, StubTableEncoder.encodedTable)
         
         XCTAssertEqual(itemImporter.fetchParamURLs, [
             URL(fileURLWithPath: "Resources/en.lproj/Localizable.strings"),
             URL(fileURLWithPath: "Resources/ko.lproj/Localizable.strings"),
         ])
         
-        XCTAssert(documentEncoder.encodeParamDocument.header.contains("en"))
-        XCTAssert(documentEncoder.encodeParamDocument.header.contains("ko"))
-        XCTAssert(documentEncoder.encodeParamDocument.records[0].contains("Cancel"))
-        XCTAssert(documentEncoder.encodeParamDocument.records[0].contains("취소"))
+        XCTAssert(tableEncoder.encodeParamTable.header.contains("en"))
+        XCTAssert(tableEncoder.encodeParamTable.header.contains("ko"))
+        XCTAssert(tableEncoder.encodeParamTable.records[0].contains("Cancel"))
+        XCTAssert(tableEncoder.encodeParamTable.records[0].contains("취소"))
     }
 }

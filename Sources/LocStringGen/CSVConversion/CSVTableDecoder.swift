@@ -1,13 +1,13 @@
 import Foundation
 import StrixParsers
 
-class CSVDocumentDecoder: LocalizationDocumentDecoder {
-    func decode(from string: String) throws -> LocalizationDocument {
+class CSVTableDecoder: LocalizationTableDecoder {
+    func decode(from string: String) throws -> LocalizationTable {
         let csv = try CSVParser().parse(string)
         let header = csv.first ?? []
         let records = Array(csv.dropFirst())
         
-        let result = LocalizationDocument(header: header, records: records)
+        let result = LocalizationTable(header: header, records: records)
         try result.validate()
         
         return result

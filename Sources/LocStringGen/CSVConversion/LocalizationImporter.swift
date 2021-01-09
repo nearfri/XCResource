@@ -1,21 +1,21 @@
 import Foundation
 
-protocol LocalizationDocumentDecoder: AnyObject {
-    func decode(from string: String) throws -> LocalizationDocument
+protocol LocalizationTableDecoder: AnyObject {
+    func decode(from string: String) throws -> LocalizationTable
 }
 
 extension LocalizationImporter {
     public struct Request {
-        public var documentSource: DocumentSource
+        public var tableSource: TableSource
         public var includesEmptyFields: Bool
         
-        public init(documentSource: DocumentSource, includesEmptyFields: Bool = false) {
-            self.documentSource = documentSource
+        public init(tableSource: TableSource, includesEmptyFields: Bool = false) {
+            self.tableSource = tableSource
             self.includesEmptyFields = includesEmptyFields
         }
     }
     
-    public enum DocumentSource {
+    public enum TableSource {
         case text(String)
         case file(URL)
         
@@ -31,21 +31,21 @@ extension LocalizationImporter {
 }
 
 public class LocalizationImporter {
-    private let documentDecoder: LocalizationDocumentDecoder
+    private let tableDecoder: LocalizationTableDecoder
     private let languageFormatter: LanguageFormatter
     private let plistGenerator: PropertyListGenerator
     
-    init(documentDecoder: LocalizationDocumentDecoder,
+    init(tableDecoder: LocalizationTableDecoder,
          languageFormatter: LanguageFormatter,
          plistGenerator: PropertyListGenerator
     ) {
-        self.documentDecoder = documentDecoder
+        self.tableDecoder = tableDecoder
         self.languageFormatter = languageFormatter
         self.plistGenerator = plistGenerator
     }
     
     public convenience init() {
-        self.init(documentDecoder: CSVDocumentDecoder(),
+        self.init(tableDecoder: CSVTableDecoder(),
                   languageFormatter: ActualLanguageFormatter(),
                   plistGenerator: ASCIIPlistGenerator())
     }
@@ -56,9 +56,9 @@ public class LocalizationImporter {
     }
     
     public func generate(for request: Request) throws -> [LanguageID: String] {
-        let document = try documentDecoder.decode(from: try request.documentSource.contents())
-        let sections = try document.toSections(languageFormatter: languageFormatter,
-                                               includeEmptyFields: request.includesEmptyFields)
+        let table = try tableDecoder.decode(from: try request.tableSource.contents())
+        let sections = try table.toSections(languageFormatter: languageFormatter,
+                                            includeEmptyFields: request.includesEmptyFields)
         
         return sections.reduce(into: [:]) { result, section in
             result[section.language] = plistGenerator.generate(from: section.items)

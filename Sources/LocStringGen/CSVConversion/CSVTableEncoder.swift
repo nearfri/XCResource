@@ -1,13 +1,13 @@
 import Foundation
 import XCResourceUtil
 
-class CSVDocumentEncoder: LocalizationDocumentEncoder {
-    func encode(_ document: LocalizationDocument) throws -> String {
+class CSVTableEncoder: LocalizationTableEncoder {
+    func encode(_ table: LocalizationTable) throws -> String {
         var result = ""
         
-        writeRow(document.header, to: &result)
+        writeRow(table.header, to: &result)
         
-        for record in document.records {
+        for record in table.records {
             writeRow(record, to: &result)
         }
         

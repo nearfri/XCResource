@@ -3,8 +3,8 @@ import StrixParsers
 
 class ASCIIPlistImporter: LocalizationItemImporter {
     func `import`(at url: URL) throws -> [LocalizationItem] {
-        let plistDocument = try String(contentsOf: url)
-        let plist = try ASCIIPlistParser().parse(plistDocument)
+        let plistString = try String(contentsOf: url)
+        let plist = try ASCIIPlistParser().parse(plistString)
         guard case let .dictionary(entries) = plist else {
             throw ASCIIPlistError.invalidPlistType(expected: "dictionary", actual: plist)
         }

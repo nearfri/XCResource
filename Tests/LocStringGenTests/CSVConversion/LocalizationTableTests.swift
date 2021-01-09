@@ -25,7 +25,7 @@ private enum Seed {
         ]),
     ]
     
-    static let commentedDocument: LocalizationDocument = .init(
+    static let commentedTable: LocalizationTable = .init(
         header: ["Key", "Comment", "ko", "en"],
         records: [
             ["cancel", "취소", "취소", "Cancel"],
@@ -43,7 +43,7 @@ private enum Seed {
         ]),
     ]
     
-    static let nonCommentedDocument: LocalizationDocument = .init(
+    static let nonCommentedTable: LocalizationTable = .init(
         header: ["Key", "ko", "en"],
         records: [
             ["cancel", "취소", "Cancel"],
@@ -51,52 +51,52 @@ private enum Seed {
         ])
 }
 
-final class LocalizationDocumentTests: XCTestCase {
-    func test_validate_goodDocument_noThrow() {
-        let document = Seed.commentedDocument
-        XCTAssertNoThrow(try document.validate())
+final class LocalizationTableTests: XCTestCase {
+    func test_validate_goodTable_noThrow() {
+        let table = Seed.commentedTable
+        XCTAssertNoThrow(try table.validate())
     }
     
     func test_validate_noKeyColumn_throw() {
-        let document = LocalizationDocument(
+        let table = LocalizationTable(
             header: ["Comment", "ko", "en"],
             records: [
                 ["취소", "취소", "Cancel"],
             ])
-        XCTAssertThrowsError(try document.validate())
+        XCTAssertThrowsError(try table.validate())
     }
     
     func test_validate_inconsistentColumnCount_throw() {
-        let document = LocalizationDocument(
+        let table = LocalizationTable(
             header: ["Key", "Comment", "ko"],
             records: [
                 ["cancel", "취소", "취소", "Cancel"],
             ])
-        XCTAssertThrowsError(try document.validate())
+        XCTAssertThrowsError(try table.validate())
     }
     
     func test_initWithSections() {
         // Given
         let sections = Seed.commentedSections
         let languageFormatter = StubLanguageFormatter()
-        let expectedDocument = Seed.commentedDocument
+        let expectedTable = Seed.commentedTable
         
         // When
-        let actualDocument = LocalizationDocument(sections: sections,
-                                                  languageFormatter: languageFormatter)
+        let actualTable = LocalizationTable(sections: sections,
+                                            languageFormatter: languageFormatter)
         
         // Then
-        XCTAssertEqual(actualDocument, expectedDocument)
+        XCTAssertEqual(actualTable, expectedTable)
     }
     
     func test_toSections_withComment() throws {
         // Given
-        let document = Seed.commentedDocument
+        let table = Seed.commentedTable
         let languageFormatter = StubLanguageFormatter()
         let expectedSections = Seed.commentedSections
         
         // When
-        let actualSections = try document.toSections(languageFormatter: languageFormatter)
+        let actualSections = try table.toSections(languageFormatter: languageFormatter)
         
         // Then
         XCTAssertEqual(actualSections, expectedSections)
@@ -104,12 +104,12 @@ final class LocalizationDocumentTests: XCTestCase {
     
     func test_toSections_withoutComment() throws {
         // Given
-        let document = Seed.nonCommentedDocument
+        let table = Seed.nonCommentedTable
         let languageFormatter = StubLanguageFormatter()
         let expectedSections = Seed.nonCommentedSections
         
         // When
-        let actualSections = try document.toSections(languageFormatter: languageFormatter)
+        let actualSections = try table.toSections(languageFormatter: languageFormatter)
         
         // Then
         XCTAssertEqual(actualSections, expectedSections)
@@ -117,7 +117,7 @@ final class LocalizationDocumentTests: XCTestCase {
     
     func test_toSections_notIncludeEmptyFields() throws {
         // Given
-        let document = LocalizationDocument(
+        let table = LocalizationTable(
             header: ["Key", "Comment", "ko", "en"],
             records: [
                 ["cancel", "취소", "", "Cancel"],
@@ -135,8 +135,8 @@ final class LocalizationDocumentTests: XCTestCase {
         ]
         
         // When
-        let actualSections = try document.toSections(languageFormatter: languageFormatter,
-                                                     includeEmptyFields: false)
+        let actualSections = try table.toSections(languageFormatter: languageFormatter,
+                                                  includeEmptyFields: false)
         
         // Then
         XCTAssertEqual(actualSections, expectedSections)
@@ -144,7 +144,7 @@ final class LocalizationDocumentTests: XCTestCase {
     
     func test_toSections_includeEmptyFields() throws {
         // Given
-        let document = LocalizationDocument(
+        let table = LocalizationTable(
             header: ["Key", "Comment", "ko", "en"],
             records: [
                 ["cancel", "취소", "", "Cancel"],
@@ -163,8 +163,8 @@ final class LocalizationDocumentTests: XCTestCase {
         ]
         
         // When
-        let actualSections = try document.toSections(languageFormatter: languageFormatter,
-                                                     includeEmptyFields: true)
+        let actualSections = try table.toSections(languageFormatter: languageFormatter,
+                                                  includeEmptyFields: true)
         
         // Then
         XCTAssertEqual(actualSections, expectedSections)

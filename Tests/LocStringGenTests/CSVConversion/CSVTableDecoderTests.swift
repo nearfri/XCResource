@@ -1,7 +1,7 @@
 import XCTest
 @testable import LocStringGen
 
-final class CSVDocumentDecoderTests: XCTestCase {
+final class CSVTableDecoderTests: XCTestCase {
     func test_decode() throws {
         // Given
         let csvString = """
@@ -11,7 +11,7 @@ final class CSVDocumentDecoderTests: XCTestCase {
         
         """
         
-        let expectedDocument = LocalizationDocument(
+        let expectedTable = LocalizationTable(
             header: ["Key", "Comment", "ko", "en"],
             records: [
                 ["cancel", "취소", "취소", "Cancel"],
@@ -19,9 +19,9 @@ final class CSVDocumentDecoderTests: XCTestCase {
             ])
         
         // When
-        let actualDocument = try CSVDocumentDecoder().decode(from: csvString)
+        let actualTable = try CSVTableDecoder().decode(from: csvString)
         
         // Then
-        XCTAssertEqual(actualDocument, expectedDocument)
+        XCTAssertEqual(actualTable, expectedTable)
     }
 }

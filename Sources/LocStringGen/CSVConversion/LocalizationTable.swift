@@ -1,6 +1,6 @@
 import Foundation
 
-struct LocalizationDocument: Equatable {
+struct LocalizationTable: Equatable {
     var header: [String] = []
     var records: [[String]] = []
 }
@@ -10,14 +10,14 @@ private enum ColumnName {
     static let comment = "Comment"
 }
 
-extension LocalizationDocument {
+extension LocalizationTable {
     func validate() throws {
         if keyColumnIndex > header.count || header[keyColumnIndex] != ColumnName.key {
-            throw LocalizationDocumentError.keyColumnDoesNotExist
+            throw LocalizationTableError.keyColumnDoesNotExist
         }
         
         if !records.allSatisfy({ $0.count == header.count }) {
-            throw LocalizationDocumentError.inconsistentColumnCount
+            throw LocalizationTableError.inconsistentColumnCount
         }
     }
     
@@ -30,7 +30,7 @@ extension LocalizationDocument {
     }
 }
 
-enum LocalizationDocumentError: Error {
+enum LocalizationTableError: Error {
     case keyColumnDoesNotExist
     case inconsistentColumnCount
     case invalidLanguageString(String)
@@ -38,7 +38,7 @@ enum LocalizationDocumentError: Error {
 
 // MARK: - Init with [LocalizationSection]
 
-extension LocalizationDocument {
+extension LocalizationTable {
     init(sections: [LocalizationSection], languageFormatter: LanguageFormatter) {
         header = [ColumnName.key, ColumnName.comment] + sections.map({ section in
             return languageFormatter.string(from: section.language)
@@ -74,7 +74,7 @@ private struct FastAccessibleSection {
 
 // MARK: - Convert to [LocalizationSection]
 
-extension LocalizationDocument {
+extension LocalizationTable {
     func toSections(languageFormatter: LanguageFormatter,
                     includeEmptyFields: Bool = false
     ) throws -> [LocalizationSection] {
@@ -86,7 +86,7 @@ extension LocalizationDocument {
         
         var sections: [LocalizationSection] = try header[firstValueColumnIndex...].map { string in
             guard let language = languageFormatter.language(from: string) else {
-                throw LocalizationDocumentError.invalidLanguageString(string)
+                throw LocalizationTableError.invalidLanguageString(string)
             }
             return LocalizationSection(language: language)
         }

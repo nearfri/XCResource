@@ -28,7 +28,7 @@ struct CSVToStrings: ParsableCommand {
     
     mutating func run() throws {
         let stringsByLanguage = try generateStrings()
-
+        
         for (language, strings) in stringsByLanguage {
             try writeStrings(strings, for: language)
         }
@@ -36,7 +36,7 @@ struct CSVToStrings: ParsableCommand {
     
     private func generateStrings() throws -> [LanguageID: String] {
         let request = LocalizationImporter.Request(
-            documentSource: .file(URL(fileURLWithExpandingTildeInPath: csvPath)),
+            tableSource: .file(URL(fileURLWithExpandingTildeInPath: csvPath)),
             includesEmptyFields: includeEmptyFields)
         
         let importer = LocalizationImporter()

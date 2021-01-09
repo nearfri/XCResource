@@ -1,7 +1,7 @@
 import Foundation
 
-protocol LocalizationDocumentEncoder: AnyObject {
-    func encode(_ document: LocalizationDocument) throws -> String
+protocol LocalizationTableEncoder: AnyObject {
+    func encode(_ table: LocalizationTable) throws -> String
 }
 
 extension LocalizationExporter {
@@ -25,24 +25,24 @@ public class LocalizationExporter {
     private let languageDetector: LanguageDetector
     private let itemImporter: LocalizationItemImporter
     private let languageFormatter: LanguageFormatter
-    private let documentEncoder: LocalizationDocumentEncoder
+    private let tableEncoder: LocalizationTableEncoder
     
     init(languageDetector: LanguageDetector,
          itemImporter: LocalizationItemImporter,
          languageFormatter: LanguageFormatter,
-         documentEncoder: LocalizationDocumentEncoder
+         tableEncoder: LocalizationTableEncoder
     ) {
         self.languageDetector = languageDetector
         self.itemImporter = itemImporter
         self.languageFormatter = languageFormatter
-        self.documentEncoder = documentEncoder
+        self.tableEncoder = tableEncoder
     }
     
     public convenience init() {
         self.init(languageDetector: ActualLanguageDetector(),
                   itemImporter: ASCIIPlistImporter(),
                   languageFormatter: ActualLanguageFormatter(),
-                  documentEncoder: CSVDocumentEncoder())
+                  tableEncoder: CSVTableEncoder())
     }
     
     public var headerStyle: LanguageFormatterStyle {
@@ -52,9 +52,8 @@ public class LocalizationExporter {
     
     public func generate(for request: Request) throws -> String {
         let sections = try importSections(with: request)
-        let document = LocalizationDocument(sections: sections,
-                                            languageFormatter: languageFormatter)
-        return try documentEncoder.encode(document)
+        let table = LocalizationTable(sections: sections, languageFormatter: languageFormatter)
+        return try tableEncoder.encode(table)
     }
     
     private func importSections(with request: Request) throws -> [LocalizationSection] {
