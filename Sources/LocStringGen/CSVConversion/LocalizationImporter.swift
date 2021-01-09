@@ -7,9 +7,11 @@ protocol LocalizationDocumentDecoder: AnyObject {
 extension LocalizationImporter {
     public struct Request {
         public var documentSource: DocumentSource
+        public var includesEmptyFields: Bool
         
-        public init(documentSource: DocumentSource) {
+        public init(documentSource: DocumentSource, includesEmptyFields: Bool = false) {
             self.documentSource = documentSource
+            self.includesEmptyFields = includesEmptyFields
         }
     }
     
@@ -55,7 +57,8 @@ public class LocalizationImporter {
     
     public func generate(for request: Request) throws -> [LanguageID: String] {
         let document = try documentDecoder.decode(from: try request.documentSource.contents())
-        let sections = try document.toSections(languageFormatter: languageFormatter)
+        let sections = try document.toSections(languageFormatter: languageFormatter,
+                                               includeEmptyFields: request.includesEmptyFields)
         
         return sections.reduce(into: [:]) { result, section in
             result[section.language] = plistGenerator.generate(from: section.items)

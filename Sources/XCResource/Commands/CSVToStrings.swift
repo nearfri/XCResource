@@ -22,6 +22,8 @@ struct CSVToStrings: ParsableCommand {
     
     @Option var tableName: String = "Localizable"
     
+    @Flag var includeEmptyFields: Bool = false
+    
     // MARK: - Run
     
     mutating func run() throws {
@@ -34,7 +36,8 @@ struct CSVToStrings: ParsableCommand {
     
     private func generateStrings() throws -> [LanguageID: String] {
         let request = LocalizationImporter.Request(
-            documentSource: .file(URL(fileURLWithExpandingTildeInPath: csvPath)))
+            documentSource: .file(URL(fileURLWithExpandingTildeInPath: csvPath)),
+            includesEmptyFields: includeEmptyFields)
         
         let importer = LocalizationImporter()
         importer.headerStyle = headerStyle

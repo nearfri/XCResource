@@ -114,4 +114,59 @@ final class LocalizationDocumentTests: XCTestCase {
         // Then
         XCTAssertEqual(actualSections, expectedSections)
     }
+    
+    func test_toSections_notIncludeEmptyFields() throws {
+        // Given
+        let document = LocalizationDocument(
+            header: ["Key", "Comment", "ko", "en"],
+            records: [
+                ["cancel", "취소", "", "Cancel"],
+                ["confirm", "확인", "확인", "Confirm"],
+            ])
+        let languageFormatter = StubLanguageFormatter()
+        let expectedSections: [LocalizationSection] = [
+            LocalizationSection(language: "ko", items: [
+                LocalizationItem(comment: "확인", key: "confirm", value: "확인"),
+            ]),
+            LocalizationSection(language: "en", items: [
+                LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
+                LocalizationItem(comment: "확인", key: "confirm", value: "Confirm"),
+            ]),
+        ]
+        
+        // When
+        let actualSections = try document.toSections(languageFormatter: languageFormatter,
+                                                     includeEmptyFields: false)
+        
+        // Then
+        XCTAssertEqual(actualSections, expectedSections)
+    }
+    
+    func test_toSections_includeEmptyFields() throws {
+        // Given
+        let document = LocalizationDocument(
+            header: ["Key", "Comment", "ko", "en"],
+            records: [
+                ["cancel", "취소", "", "Cancel"],
+                ["confirm", "확인", "확인", "Confirm"],
+            ])
+        let languageFormatter = StubLanguageFormatter()
+        let expectedSections: [LocalizationSection] = [
+            LocalizationSection(language: "ko", items: [
+                LocalizationItem(comment: "취소", key: "cancel", value: ""),
+                LocalizationItem(comment: "확인", key: "confirm", value: "확인"),
+            ]),
+            LocalizationSection(language: "en", items: [
+                LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
+                LocalizationItem(comment: "확인", key: "confirm", value: "Confirm"),
+            ]),
+        ]
+        
+        // When
+        let actualSections = try document.toSections(languageFormatter: languageFormatter,
+                                                     includeEmptyFields: true)
+        
+        // Then
+        XCTAssertEqual(actualSections, expectedSections)
+    }
 }

@@ -75,7 +75,9 @@ private struct FastAccessibleSection {
 // MARK: - Convert to [LocalizationSection]
 
 extension LocalizationDocument {
-    func toSections(languageFormatter: LanguageFormatter) throws -> [LocalizationSection] {
+    func toSections(languageFormatter: LanguageFormatter,
+                    includeEmptyFields: Bool = false
+    ) throws -> [LocalizationSection] {
         try validate()
         
         let commentColumnIndex = self.commentColumnIndex
@@ -93,6 +95,7 @@ extension LocalizationDocument {
             let key = record[keyColumnIndex]
             let comment = commentColumnIndex.map({ record[$0] })
             for (i, value) in record[firstValueColumnIndex...].enumerated() {
+                if value.isEmpty && !includeEmptyFields { continue }
                 let item = LocalizationItem(comment: comment, key: key, value: value)
                 sections[i].items.append(item)
             }
