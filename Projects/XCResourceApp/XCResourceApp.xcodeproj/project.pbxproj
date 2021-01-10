@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		0826A06F252020D100F9A77D /* Generate-ResourceKeys */ = {
+		0826A06F252020D100F9A77D /* Run-XCResource */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 0826A072252020D100F9A77D /* Build configuration list for PBXAggregateTarget "Generate-ResourceKeys" */;
+			buildConfigurationList = 0826A072252020D100F9A77D /* Build configuration list for PBXAggregateTarget "Run-XCResource" */;
 			buildPhases = (
-				0826A087252022C700F9A77D /* Generate ResourceKeys */,
+				0826A087252022C700F9A77D /* Run XCResource */,
 			);
 			dependencies = (
 			);
-			name = "Generate-ResourceKeys";
+			name = "Run-XCResource";
 			productName = "Generate-AssetKeys";
 		};
 /* End PBXAggregateTarget section */
@@ -272,7 +272,7 @@
 			targets = (
 				08765F0A2511A5660024D427 /* XCResourceApp */,
 				08765F3E2511D5200024D427 /* XCResourceAppTests */,
-				0826A06F252020D100F9A77D /* Generate-ResourceKeys */,
+				0826A06F252020D100F9A77D /* Run-XCResource */,
 			);
 		};
 /* End PBXProject section */
@@ -300,7 +300,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0826A087252022C700F9A77D /* Generate ResourceKeys */ = {
+		0826A087252022C700F9A77D /* Run XCResource */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -309,7 +309,7 @@
 			);
 			inputPaths = (
 			);
-			name = "Generate ResourceKeys";
+			name = "Run XCResource";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -361,7 +361,7 @@
 		};
 		0893AE53252EE7FD00CB9473 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0826A06F252020D100F9A77D /* Generate-ResourceKeys */;
+			target = 0826A06F252020D100F9A77D /* Run-XCResource */;
 			targetProxy = 0893AE52252EE7FD00CB9473 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -621,7 +621,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0826A072252020D100F9A77D /* Build configuration list for PBXAggregateTarget "Generate-ResourceKeys" */ = {
+		0826A072252020D100F9A77D /* Build configuration list for PBXAggregateTarget "Run-XCResource" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0826A070252020D100F9A77D /* Debug */,
