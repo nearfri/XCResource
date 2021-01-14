@@ -6,20 +6,6 @@
 	objectVersion = 50;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		0826A06F252020D100F9A77D /* Run-XCResource */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 0826A072252020D100F9A77D /* Build configuration list for PBXAggregateTarget "Run-XCResource" */;
-			buildPhases = (
-				0826A087252022C700F9A77D /* Run XCResource */,
-			);
-			dependencies = (
-			);
-			name = "Run-XCResource";
-			productName = "Generate-AssetKeys";
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		0826A00D251ECF8600F9A77D /* ImageKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0826A00C251ECF8600F9A77D /* ImageKeyTests.swift */; };
 		0826A013251ED0CC00F9A77D /* ColorKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0826A012251ED0CC00F9A77D /* ColorKeyTests.swift */; };
@@ -51,13 +37,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 08765F0A2511A5660024D427;
 			remoteInfo = ResourceSample;
-		};
-		0893AE52252EE7FD00CB9473 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 08765F032511A5660024D427 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0826A06F252020D100F9A77D;
-			remoteInfo = "Generate-ResourceKeys";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -203,6 +182,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 08765F1F2511A5670024D427 /* Build configuration list for PBXNativeTarget "XCResourceApp" */;
 			buildPhases = (
+				08D4CF6725ADEBEF0056F29F /* Run XCResource */,
 				08765F072511A5660024D427 /* Sources */,
 				08765F082511A5660024D427 /* Frameworks */,
 				08765F092511A5660024D427 /* Resources */,
@@ -210,7 +190,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				0893AE53252EE7FD00CB9473 /* PBXTargetDependency */,
 			);
 			name = XCResourceApp;
 			productName = ResourceSample;
@@ -244,9 +223,6 @@
 				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
-					0826A06F252020D100F9A77D = {
-						CreatedOnToolsVersion = 12.0.1;
-					};
 					08765F0A2511A5660024D427 = {
 						CreatedOnToolsVersion = 12.0;
 					};
@@ -272,7 +248,6 @@
 			targets = (
 				08765F0A2511A5660024D427 /* XCResourceApp */,
 				08765F3E2511D5200024D427 /* XCResourceAppTests */,
-				0826A06F252020D100F9A77D /* Run-XCResource */,
 			);
 		};
 /* End PBXProject section */
@@ -300,7 +275,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0826A087252022C700F9A77D /* Run XCResource */ = {
+		08D4CF6725ADEBEF0056F29F /* Run XCResource */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -359,11 +334,6 @@
 			target = 08765F0A2511A5660024D427 /* XCResourceApp */;
 			targetProxy = 08765F442511D5200024D427 /* PBXContainerItemProxy */;
 		};
-		0893AE53252EE7FD00CB9473 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0826A06F252020D100F9A77D /* Run-XCResource */;
-			targetProxy = 0893AE52252EE7FD00CB9473 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -396,24 +366,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		0826A070252020D100F9A77D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-			};
-			name = Debug;
-		};
-		0826A071252020D100F9A77D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-			};
-			name = Release;
-		};
 		08765F1D2511A5670024D427 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -621,15 +573,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0826A072252020D100F9A77D /* Build configuration list for PBXAggregateTarget "Run-XCResource" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0826A070252020D100F9A77D /* Debug */,
-				0826A071252020D100F9A77D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		08765F062511A5660024D427 /* Build configuration list for PBXProject "XCResourceApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
