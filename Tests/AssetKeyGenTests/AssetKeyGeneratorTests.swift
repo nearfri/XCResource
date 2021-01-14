@@ -2,8 +2,12 @@ import XCTest
 @testable import AssetKeyGen
 
 class StubAssetCatalogFetcher: AssetCatalogFetcher {
-    func fetch(at url: URL, type: AssetType) throws -> AssetCatalog {
-        return AssetCatalog(name: "", assets: [])
+    func fetch(at url: URL) throws -> [AssetType: AssetCatalog] {
+        return [
+            .colorSet: AssetCatalog(name: "", assets: []),
+            .imageSet: AssetCatalog(name: "", assets: []),
+            .symbolSet: AssetCatalog(name: "", assets: []),
+        ]
     }
 }
 

@@ -10,6 +10,15 @@ enum ContainerType {
         case .symbolSet:    self = .symbolSet
         }
     }
+    
+    func toAssetType() -> AssetType? {
+        switch self {
+        case .folder:       return nil
+        case .imageSet:     return .imageSet
+        case .colorSet:     return .colorSet
+        case .symbolSet:    return .symbolSet
+        }
+    }
 }
 
 struct Container {

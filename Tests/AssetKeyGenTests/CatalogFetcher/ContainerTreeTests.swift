@@ -136,4 +136,67 @@ final class ContainerTreeTests: XCTestCase {
         XCTAssertEqual(child.relativePath, "child")
         XCTAssertEqual(grandchild.relativePath, "child/grandchild.imageset")
     }
+    
+    func test_groupsByType() {
+        // Given
+        let root = ContainerTree(
+            Container(
+                url: URL(fileURLWithPath: "root"),
+                type: .folder,
+                providesNamespace: false))
+        let image = ContainerTree(
+            Container(
+                url: URL(fileURLWithPath: "child1.imageset"),
+                type: .imageSet,
+                providesNamespace: false))
+        let color = ContainerTree(
+            Container(
+                url: URL(fileURLWithPath: "child2.imageset"),
+                type: .colorSet,
+                providesNamespace: false))
+        
+        root.addChild(image)
+        root.addChild(color)
+        
+        // When
+        let groupsByType = root.makePreOrderSequence().groupsByType()
+        
+        // Then
+        XCTAssertEqual(groupsByType.count, 3)
+        XCTAssertEqual(groupsByType[.folder]?.count, 1)
+        XCTAssertEqual(groupsByType[.imageSet]?.count, 1)
+        XCTAssertEqual(groupsByType[.colorSet]?.count, 1)
+        XCTAssertNil(groupsByType[.symbolSet])
+    }
+    
+    func test_assetGroupsByType() {
+        // Given
+        let root = ContainerTree(
+            Container(
+                url: URL(fileURLWithPath: "root"),
+                type: .folder,
+                providesNamespace: false))
+        let image = ContainerTree(
+            Container(
+                url: URL(fileURLWithPath: "child1.imageset"),
+                type: .imageSet,
+                providesNamespace: false))
+        let color = ContainerTree(
+            Container(
+                url: URL(fileURLWithPath: "child2.imageset"),
+                type: .colorSet,
+                providesNamespace: false))
+        
+        root.addChild(image)
+        root.addChild(color)
+        
+        // When
+        let assetGroupsByType = root.makePreOrderSequence().assetGroupsByType()
+        
+        // Then
+        XCTAssertEqual(assetGroupsByType.count, 2)
+        XCTAssertEqual(assetGroupsByType[.imageSet]?.count, 1)
+        XCTAssertEqual(assetGroupsByType[.colorSet]?.count, 1)
+        XCTAssertNil(assetGroupsByType[.symbolSet])
+    }
 }

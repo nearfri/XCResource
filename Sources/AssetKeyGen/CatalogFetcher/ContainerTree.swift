@@ -29,3 +29,16 @@ extension ContainerTree {
         return Asset(name: fullName, path: relativePath)
     }
 }
+
+extension Sequence where Element == ContainerTree {
+    func groupsByType() -> [ContainerType: [ContainerTree]] {
+        return Dictionary(grouping: self, by: \.element.type)
+    }
+    
+    func assetGroupsByType() -> [AssetType: [Asset]] {
+        return groupsByType().reduce(into: [:]) { result, each in
+            guard let assetType = each.key.toAssetType() else { return }
+            result[assetType] = each.value.map({ $0.toAsset() })
+        }
+    }
+}
