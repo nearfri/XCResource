@@ -10,6 +10,6 @@ class ViewController: UIViewController {
         imageView.image = UIImage(key: .icoSoundPressed)
         
         label.textColor = UIColor(key: .coralPink)
-        label.text = String(key: .errorPopup_failToAttach)
+        label.text = String(key: .alert_failedToLoadImage)
     }
 }

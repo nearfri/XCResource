@@ -1,7 +1,7 @@
 import Foundation
 
 enum StringKey: String, CaseIterable {
-    // MARK: - 일반
+    // MARK: - Common
     
     /// 취소
     case common_cancel
@@ -12,49 +12,31 @@ enum StringKey: String, CaseIterable {
     /// 완료
     case common_done
     
-    // MARK: - 편집 메뉴
+    // MARK: - Edit Menu
     
-    /// 비율
-    case editMenu_aspectRatio
+    /// 실행 취소
+    case editMenu_undo
     
-    /// 동영상을 움직여 위치를 조정해보세요.
-    case editMenu_aspectRatioGuide
+    /// 실행 복귀
+    case editMenu_redo
     
-    /// 음악
-    case editMenu_bgm
+    /// 오려두기
+    case editMenu_cut
     
-    /// 음악 추가
-    case editMenu_bgm_placeholder
+    /// 복사
+    case editMenu_copy
     
-    /// 서명
-    case editMenu_copyright
+    /// 붙여넣기
+    case editMenu_paste
     
-    /// 이미지 추가
-    case editMenu_copyright_placeholder
+    // MARK: - Alert
     
-    /// 필터
-    case editMenu_filter
+    /// 이미지를 불러오는 데 실패했습니다.\n다른 이미지를 선택해주세요.
+    case alert_failedToLoadImage
     
-    /// 원본
-    case editMenu_filter_original
+    /// 이 새로운 문서('%@{title}')를 유지하겠습니까?\n변경 사항을 저장하거나 이 문서를 즉시 삭제할 수도 있습니다. 이 동작은 취소할 수 없습니다.
+    case alert_saveBeforeClose
     
-    // MARK: - 에러 팝업
-    
-    /// 동영상 편집을 취소하시겠습니까?\n확인 선택 시 모든 변경사항이 사라집니다.
-    case errorPopup_cancelToEditAsset
-    
-    /// 동영상을 불러오는 데 실패했습니다.\n다시 시도해주세요.
-    case errorPopup_failToAttach
-    
-    /// 편집할 수 없는 유형의 영상입니다.\n다른 영상을 첨부해주세요.
-    case errorPopup_failToLoadAsset
-    
-    /// 목록을 불러오는 데 실패했습니다.\n다시 시도해주세요.
-    case errorPopup_failToLoadBGMList
-    
-    /// 인코딩 오류입니다.\n다시 시도하시겠습니까?
-    case errorPopup_failToEncoding
-    
-    /// 영상은 최대 %@{시간}, %@{용량}까지 가능합니다.\n길이를 수정하세요.
-    case errorPopup_overMaximumSize
+    /// 동영상 첨부는 최대 %ld{minutes}분, %@{fileSize}까지 가능합니다.\n다른 파일을 선택해주세요.
+    case alert_attachTooLargeVideo
 }

@@ -7,44 +7,26 @@
 /* 완료 */
 "common_done" = "완료";
 
-/* 비율 */
-"editMenu_aspectRatio" = "비율";
+/* 실행 취소 */
+"editMenu_undo" = "실행 취소";
 
-/* 동영상을 움직여 위치를 조정해보세요. */
-"editMenu_aspectRatioGuide" = "동영상을 움직여 위치를 조정해보세요.";
+/* 실행 복귀 */
+"editMenu_redo" = "실행 복귀";
 
-/* 음악 */
-"editMenu_bgm" = "음악";
+/* 오려두기 */
+"editMenu_cut" = "오려두기";
 
-/* 음악 추가 */
-"editMenu_bgm_placeholder" = "음악 추가";
+/* 복사 */
+"editMenu_copy" = "복사";
 
-/* 서명 */
-"editMenu_copyright" = "서명";
+/* 붙여넣기 */
+"editMenu_paste" = "붙여넣기";
 
-/* 이미지 추가 */
-"editMenu_copyright_placeholder" = "이미지 추가";
+/* 이미지를 불러오는 데 실패했습니다.\n다른 이미지를 선택해주세요. */
+"alert_failedToLoadImage" = "이미지를 불러오는 데 실패했습니다.\n다른 이미지를 선택해주세요.";
 
-/* 필터 */
-"editMenu_filter" = "필터";
+/* 이 새로운 문서('%@{title}')를 유지하겠습니까?\n변경 사항을 저장하거나 이 문서를 즉시 삭제할 수도 있습니다. 이 동작은 취소할 수 없습니다. */
+"alert_saveBeforeClose" = "이 새로운 문서('%@')를 유지하겠습니까?\n변경 사항을 저장하거나 이 문서를 즉시 삭제할 수도 있습니다. 이 동작은 취소할 수 없습니다.";
 
-/* 원본 */
-"editMenu_filter_original" = "원본";
-
-/* 동영상 편집을 취소하시겠습니까?\n확인 선택 시 모든 변경사항이 사라집니다. */
-"errorPopup_cancelToEditAsset" = "동영상 편집을 취소하시겠습니까?\n확인 선택 시 모든 변경사항이 사라집니다.";
-
-/* 동영상을 불러오는 데 실패했습니다.\n다시 시도해주세요. */
-"errorPopup_failToAttach" = "동영상을 불러오는 데 실패했습니다.\n다시 시도해주세요.";
-
-/* 인코딩 오류입니다.\n다시 시도하시겠습니까? */
-"errorPopup_failToEncoding" = "인코딩 오류입니다.\n다시 시도하시겠습니까?";
-
-/* 편집할 수 없는 유형의 영상입니다.\n다른 영상을 첨부해주세요. */
-"errorPopup_failToLoadAsset" = "편집할 수 없는 유형의 영상입니다.\n다른 영상을 첨부해주세요.";
-
-/* 목록을 불러오는 데 실패했습니다.\n다시 시도해주세요. */
-"errorPopup_failToLoadBGMList" = "목록을 불러오는 데 실패했습니다.\n다시 시도해주세요.";
-
-/* 영상은 최대 %@{시간}, %@{용량}까지 가능합니다.\n길이를 수정하세요. */
-"errorPopup_overMaximumSize" = "영상은 최대 %@, %@까지 가능합니다.\n길이를 수정하세요.";
+/* 동영상 첨부는 최대 %ld{minutes}분, %@{fileSize}까지 가능합니다.\n다른 파일을 선택해주세요. */
+"alert_attachTooLargeVideo" = "동영상 첨부는 최대 %ld분, %@까지 가능합니다.\n다른 파일을 선택해주세요.";
