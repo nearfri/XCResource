@@ -1,8 +1,8 @@
 # XCResource
-XCResource는 xcassets 리소스 로딩과 다국어 처리를 도와주는 커맨드라인 툴입니다.
+XCResource는 xcassets 리소스 로딩과 다국어 지원을 도와주는 커맨드라인 툴입니다.
 
 `xcresource`는 다음의 하위 커맨드를 가지고 있습니다:
-- `xcassets2swift`: xcassets으로 Swift 코드를 생성합니다. 이 코드를 이용해 리소스를 로딩할 수 있습니다.
+- `xcassets2swift`: xcassets을 위한 Swift 코드를 생성합니다.
 - `swift2strings`: Swift 코드를 strings 파일로 변환합니다.
 - `strings2csv`: strings 파일을 CSV 파일로 변환합니다.
 - `csv2strings`: CSV 파일을 strings 파일로 변환합니다.
