@@ -1,23 +1,26 @@
-# ResourceKey
+# XCResource
+XCResource는 xcassets 리소스 로딩과 다국어 처리를 도와주는 커맨드라인 툴입니다.
 
-## generate-asset-keys
-Xcode Asset Catalog (.xcassets 폴더) 에서 리소스 이름을 추출해서 키 파일을 생성해주는 툴입니다.
+`xcresource`는 다음의 하위 커맨드를 갖고 있습니다:
+- `xcassets2swift`: xcassets으로 Swift 코드를 생성합니다. 이 코드를 이용해 리소스를 로딩할 수 있습니다.
+- `swift2strings`: Swift 코드를 strings 파일로 변환합니다.
+- `strings2csv`: strings 파일을 CSV 파일로 변환합니다.
+- `csv2strings`: CSV 파일을 strings 파일로 변환합니다.
 
-### Usage
-아래의 커맨드는 `<Assets.xcassets>`과 `<Media.xcassets>`가 포함한 모든 이미지들의 이름을 `ImageKey.swift`에 저장합니다.
+## 사용 예제
 
+### xcassets 이미지 로딩하기
+`xcresource xcassets2swift`를 실행합니다:
 ```sh
-swift run --package-path <path/to/ResourceKey> generate-asset-keys \
-    --input-xcassets <path/to/Assets.xcassets> \
-    --input-xcassets <path/to/Media.xcassets> \
+xcrun --sdk macosx mint run xcresource xcassets2swift \
+    --xcassets-path ../SampleApp/Assets.xcassets \
     --asset-type image \
-    --key-type-name <ImageKey> \
-    --key-decl-file <path/to/ImageKey.swift>
+    --swift-path ../SampleApp/ResourceKeys/ImageKey.swift \
+    --swift-type-name ImageKey
 ```
 
+아래와 같은 코드가 생성됩니다:
 ```swift
-// ImageKey.swift
-
 struct ImageKey: ExpressibleByStringLiteral, Hashable {
     var rawValue: String
     
@@ -35,69 +38,109 @@ struct ImageKey: ExpressibleByStringLiteral, Hashable {
 extension ImageKey {
     static let appIcon: ImageKey = "AppIcon"
     
-    // MARK: Common/BGMNavigationBar
-    static let icoFold: ImageKey = "icoFold"
-    static let icoFoldPressed: ImageKey = "icoFoldPressed"
+    // MARK: Common/NavigationBar
     static let icoMusic: ImageKey = "icoMusic"
     static let icoMusicPressed: ImageKey = "icoMusicPressed"
+    
+    // MARK: Common
+    static let btnSelect: ImageKey = "btnSelect"
     ...
 ```
 
-`--key-list-file <key-list-file>` 옵션을 추가하면 키 리스트를 `<key-list-file>`에 저장합니다.
-
-```sh
-swift run --package-path <path/to/ResourceKey> generate-asset-keys \
-    --input-xcassets <path/to/Assets.xcassets> \
-    --asset-type image \
-    --key-type-name <ImageKey> \
-    --module-name <MyAppName> \
-    --key-decl-file <path/to/ImageKey.swift> \
-    --key-list-file <path/to/AllImageKeys.swift>
-```
-
+`UIImage`에 생성자를 추가해줍니다:
 ```swift
-// AllImageKeys.swift
-
-@testable import ResourceKeyApp
-
-extension ImageKey {
-    static let allGeneratedKeys: [ImageKey] = [
-        // MARK: Assets.xcassets
-        .appIcon,
-        .icoFold,
-        .icoFoldPressed,
-        .icoMusic,
-        .icoMusicPressed,
-        ...
-```
-
-위에서 생성한 파일을 프로젝트에 추가한 후 `UIImage`와 `Image`에 `extension`을 추가합니다.
-
-```swift
-import UIKit
-import SwiftUI
-
 extension UIImage {
     convenience init(key: ImageKey) {
         self.init(named: key.rawValue, in: .module, compatibleWith: nil)!
     }
 }
-
-extension Image {
-    init(key: ImageKey) {
-        self.init(key.rawValue, bundle: .module)
-    }
-    
-    init(key: ImageKey, label: Text) {
-        self.init(key.rawValue, bundle: .module, label: label)
-    }
-}
 ```
 
-이제 자동완성과 함께 오타 걱정없이 이미지를 로딩할 수 있습니다.
-
+이제 자동완성과 함께 이미지를 생성할 수 있습니다:
 ```swift
 imageView.image = UIImage(key: .icoMusic)
 ```
 
-`ResourceKeySample.xcworkspace`에서 적용 예제를 볼 수 있습니다.
+### Swift 코드를 strings 파일로 변환하기
+`enum` 타입의 `StringKey`를 만들어줍니다:
+```swift
+enum StringKey: String, CaseIterable {
+    /// 취소
+    case cancel
+    
+    /// 확인
+    case confirm
+}
+```
+
+`String`에 생성자를 추가해줍니다:
+```swift
+extension String {
+    init(key: StringKey) {
+        self = NSLocalizedString(key.rawValue, bundle: .module, comment: "")
+    }
+}
+```
+
+`xcresource swift2strings`를 실행합니다:
+```sh
+xcrun --sdk macosx mint run xcresource xcresource swift2strings \
+    --swift-path ../SampleApp/ResourceKeys/StringKey.swift \
+    --resources-path ../SampleApp \
+    --value-strategy ko:comment \
+    --sort-by-key
+```
+
+아래와 같이 strings 파일이 업데이트 됩니다:
+```
+/* 취소 */
+"cancel" = "취소";
+
+/* 확인 */
+"confirm" = "확인";
+```
+
+이제 자동완성과 함께 지역화된 문자열을 생성할 수 있습니다:
+```swift
+label.text = String(key: .cancel)
+```
+
+### strings 파일을 CSV 파일로 변환하기
+`xcresource strings2csv`를 실행합니다:
+```sh
+mint run xcresource strings2csv \
+    --resources-path ../SampleApp \
+    --development-language ko \
+    --csv-path ./translation.csv \
+    --header-style long-ko \
+    --write-bom
+```
+
+아래와 같은 csv 파일이 만들어집니다:
+| Key | Comment | 한국어 (ko) | 영어 (en) |
+| --- | ------- | --------- | -------- |
+| cancel | 취소 | 취소 | |
+| confirm | 확인 | 확인 | |
+
+### CSV 파일을 strings 파일로 변환하기
+`xcresource csv2strings`를 실행합니다:
+```sh
+mint run xcresource csv2strings \
+    --csv-path ./translation.csv \
+    --header-style long-ko \
+    --resources-path ../SampleApp
+```
+
+아래와 같은 strings 파일이 만들어집니다:
+```
+/* 취소 */
+"cancel" = "취소";
+
+/* 확인 */
+"confirm" = "확인";
+```
+
+`XCResourceSample.xcworkspace`에서 적용 예제를 볼 수 있습니다.
+
+## 라이선스
+XCResource는 MIT 라이선스에 따라 배포됩니다. 자세한 내용은 LICENSE를 참조하십시오.
