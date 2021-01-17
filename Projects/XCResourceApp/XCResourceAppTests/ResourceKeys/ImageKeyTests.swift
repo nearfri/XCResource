@@ -13,8 +13,8 @@ class ImageKeyTests: XCTestCase {
 
     func test_imagesExist() throws {
         let keys: [ImageKey] = [
-            .icoMusic, .icon_check_normal, .component_icoDelete,
-            .se_nt_ico_on_1, .detailEdit_color_icoAdjustment, .icoClear12
+            .settings, .settingsFAQ, .textFormattingLink, .textFormattingBold,
+            .places_authArrow, .places_filterSaved, .places_dot_medium, .places_dot_outlineMedium
         ]
         
         for key in keys {

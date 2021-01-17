@@ -6,6 +6,7 @@ final class ActualAssetCatalogFetcherTests: XCTestCase {
     func test_fetch() throws {
         // Given
         let sut = ActualAssetCatalogFetcher()
+        let imagePath = "Settings/settingsRate.imageset"
         
         // When
         let catalogsByType: [AssetType: AssetCatalog] = try sut.fetch(at: SampleData.assetURL())
@@ -13,6 +14,6 @@ final class ActualAssetCatalogFetcherTests: XCTestCase {
         // Then
         let imageCatalog = try XCTUnwrap(catalogsByType[.imageSet])
         XCTAssertEqual(imageCatalog.name, "Media.xcassets")
-        XCTAssert(imageCatalog.assets.contains(where: { $0.path == "Common/btnSelect.imageset" }))
+        XCTAssert(imageCatalog.assets.contains(where: { $0.path == imagePath }))
     }
 }

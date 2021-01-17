@@ -1,22 +1,16 @@
 import Foundation
 
 extension ImageKey {
-    static func componentIcon(for type: ComponentType) -> ImageKey {
+    static func textStyleIcon(for type: TextStyleType) -> ImageKey {
         switch type {
-        case .blog:
-            return .component_blog
-        case .book:
-            return .component_book
-        case .date:
-            return .component_date
-        case .link:
-            return .component_link
-        case .movie:
-            return .component_movie
-        case .news:
-            return .component_news
-        case .place:
-            return .component_place
+        case .bold:
+            return .textFormattingBold
+        case .italic:
+            return .textFormattingItalics
+        case .strikethrough:
+            return .textFormattingStrikethrough
+        case .undeline:
+            return .textFormattingUnderline
         }
     }
 }

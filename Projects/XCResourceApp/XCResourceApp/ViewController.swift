@@ -7,7 +7,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageView.image = UIImage(key: .icoSoundPressed)
+        imageView.image = UIImage(key: .places_authArrow)
         
         label.textColor = UIColor(key: .coralPink)
         label.text = String(key: .alert_failedToLoadImage)

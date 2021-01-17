@@ -16,8 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="component.icoDelete" translatesAutoresizingMaskIntoConstraints="NO" id="4LB-EQ-sAL">
-                                <rect key="frame" x="195" y="354" width="24" height="24"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Places/filterSaved" translatesAutoresizingMaskIntoConstraints="NO" id="4LB-EQ-sAL">
+                                <rect key="frame" x="192" y="348" width="30" height="30"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8pC-si-stZ">
                                 <rect key="frame" x="186.5" y="438" width="41.5" height="20.5"/>
@@ -46,7 +46,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="component.icoDelete" width="24" height="24"/>
+        <image name="Places/filterSaved" width="30" height="30"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

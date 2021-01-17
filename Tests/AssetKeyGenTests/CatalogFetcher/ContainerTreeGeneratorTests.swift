@@ -24,8 +24,8 @@ final class ContainerTreeGeneratorTests: XCTestCase {
         
         // When
         let root = try ContainerTreeGenerator().load(contentsOf: url)
-        let c1 = try XCTUnwrap(root.children.first(where: { $0.element.name == "Common" }))
-        let c2 = try XCTUnwrap(c1.children.first(where: { $0.element.name == "ClipListView" }))
+        let c1 = try XCTUnwrap(root.children.first(where: { $0.element.name == "Places" }))
+        let c2 = try XCTUnwrap(c1.children.first(where: { $0.element.name == "Dot" }))
         
         // Then
         XCTAssertFalse(c1.isRoot)
@@ -34,8 +34,8 @@ final class ContainerTreeGeneratorTests: XCTestCase {
         XCTAssert(c1.hasChildren)
         XCTAssert(c2.hasChildren)
         
-        XCTAssertEqual(c2.element.name, "ClipListView")
-        XCTAssertEqual(c2.element.name, "ClipListView")
+        XCTAssertEqual(c1.element.name, "Places")
+        XCTAssertEqual(c2.element.name, "Dot")
         
         XCTAssertEqual(c1.element.type, .folder)
         XCTAssertEqual(c2.element.type, .folder)
@@ -50,12 +50,12 @@ final class ContainerTreeGeneratorTests: XCTestCase {
         
         // When
         let root = try ContainerTreeGenerator().load(contentsOf: url)
-        let folder = try XCTUnwrap(root.children.first(where: { $0.element.name == "Common" }))
-        let image = try XCTUnwrap(folder.children.first(where: { $0.element.name == "btnSelect" }))
+        let folder = try XCTUnwrap(root.children.first(where: { $0.element.name == "Settings" }))
+        let image = try XCTUnwrap(folder.children.first(where: { $0.element.name == "settings" }))
         
         // Then
         XCTAssertFalse(image.hasChildren)
-        XCTAssertEqual(image.element.name, "btnSelect")
+        XCTAssertEqual(image.element.name, "settings")
         XCTAssertEqual(image.element.type, .imageSet)
         XCTAssertEqual(image.element.providesNamespace, false)
     }

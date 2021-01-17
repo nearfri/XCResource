@@ -10,7 +10,7 @@
 		0826A00D251ECF8600F9A77D /* ImageKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0826A00C251ECF8600F9A77D /* ImageKeyTests.swift */; };
 		0826A013251ED0CC00F9A77D /* ColorKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0826A012251ED0CC00F9A77D /* ColorKeyTests.swift */; };
 		0826A052251F9E4200F9A77D /* ImageKey+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0826A051251F9E4200F9A77D /* ImageKey+.swift */; };
-		0826A05A251FA49C00F9A77D /* ComponentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0826A059251FA49C00F9A77D /* ComponentType.swift */; };
+		0826A05A251FA49C00F9A77D /* TextStyleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0826A059251FA49C00F9A77D /* TextStyleType.swift */; };
 		0826A0612520088C00F9A77D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0826A05F2520088C00F9A77D /* Localizable.strings */; };
 		0826A066252008B800F9A77D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0826A064252008B800F9A77D /* InfoPlist.strings */; };
 		08765F0F2511A5660024D427 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08765F0E2511A5660024D427 /* AppDelegate.swift */; };
@@ -45,7 +45,7 @@
 		0826A00C251ECF8600F9A77D /* ImageKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageKeyTests.swift; sourceTree = "<group>"; };
 		0826A012251ED0CC00F9A77D /* ColorKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorKeyTests.swift; sourceTree = "<group>"; };
 		0826A051251F9E4200F9A77D /* ImageKey+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageKey+.swift"; sourceTree = "<group>"; };
-		0826A059251FA49C00F9A77D /* ComponentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentType.swift; sourceTree = "<group>"; };
+		0826A059251FA49C00F9A77D /* TextStyleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyleType.swift; sourceTree = "<group>"; };
 		0826A0602520088C00F9A77D /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0826A065252008B800F9A77D /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0826A069252008F200F9A77D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 				08765F0E2511A5660024D427 /* AppDelegate.swift */,
 				08765F102511A5660024D427 /* SceneDelegate.swift */,
 				08765F122511A5660024D427 /* ViewController.swift */,
-				0826A059251FA49C00F9A77D /* ComponentType.swift */,
+				0826A059251FA49C00F9A77D /* TextStyleType.swift */,
 				08765F272511ACED0024D427 /* Bundle+.swift */,
 				08765F242511A7250024D427 /* ResourceKeys */,
 				08F6B18C25A3FED100992B09 /* Main.storyboard */,
@@ -308,7 +308,7 @@
 				08765F2A2511AF230024D427 /* Color+XCAsset.swift in Sources */,
 				08765F262511A74C0024D427 /* Image+XCAsset.swift in Sources */,
 				088AC4DB25B4826000C1F625 /* StringTemplate.swift in Sources */,
-				0826A05A251FA49C00F9A77D /* ComponentType.swift in Sources */,
+				0826A05A251FA49C00F9A77D /* TextStyleType.swift in Sources */,
 				08765F282511ACED0024D427 /* Bundle+.swift in Sources */,
 				08765F322511B2CD0024D427 /* String+Localization.swift in Sources */,
 				08765F2E2511B0E30024D427 /* ColorKey.swift in Sources */,

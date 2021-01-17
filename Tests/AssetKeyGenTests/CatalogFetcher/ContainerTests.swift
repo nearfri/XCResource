@@ -5,7 +5,7 @@ import SampleData
 final class ContainerRecordTests: XCTestCase {
     func test_initContentsOf_folder() throws {
         // Given
-        let url = SampleData.assetURL("Common")
+        let url = SampleData.assetURL("Settings")
         
         // When
         let container = try Container(contentsOf: url)
@@ -13,12 +13,12 @@ final class ContainerRecordTests: XCTestCase {
         // Then
         XCTAssertEqual(container.type, .folder)
         XCTAssertEqual(container.providesNamespace, false)
-        XCTAssertEqual(container.name, "Common")
+        XCTAssertEqual(container.name, "Settings")
     }
     
     func test_initContentsOf_namespaceFolder() throws {
         // Given
-        let url = SampleData.assetURL("Common/ClipListView")
+        let url = SampleData.assetURL("Places/Dot")
         
         // When
         let container = try Container(contentsOf: url)
@@ -26,12 +26,12 @@ final class ContainerRecordTests: XCTestCase {
         // Then
         XCTAssertEqual(container.type, .folder)
         XCTAssertEqual(container.providesNamespace, true)
-        XCTAssertEqual(container.name, "ClipListView")
+        XCTAssertEqual(container.name, "Dot")
     }
     
     func test_initContentsOf_imageSet() throws {
         // Given
-        let url = SampleData.assetURL("Common/btnSelect.imageset")
+        let url = SampleData.assetURL("Settings/settingsRate.imageset")
         
         // When
         let container = try Container(contentsOf: url)
@@ -39,7 +39,7 @@ final class ContainerRecordTests: XCTestCase {
         // Then
         XCTAssertEqual(container.type, .imageSet)
         XCTAssertEqual(container.providesNamespace, false)
-        XCTAssertEqual(container.name, "btnSelect")
+        XCTAssertEqual(container.name, "settingsRate")
     }
     
     func test_initContentsOf_colorSet() throws {
