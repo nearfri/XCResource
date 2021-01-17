@@ -137,7 +137,7 @@ mint run xcresource csv2strings \
     --resources-path ../SampleApp
 ```
 
-아래와 같은 strings 파일이 만들어집니다:
+아래와 같이 strings 파일이 만들어집니다:
 ```
 /* 취소 */
 "cancel" = "취소";
