@@ -1,13 +1,14 @@
 # XCResource
 XCResource는 xcassets 리소스 로딩과 다국어 지원을 도와주는 커맨드라인 툴입니다.
 
-이를 이용해 이미지, 컬러, 다국어 문자열을 간편하게 생성할 수 있습니다:
+이를 이용해 이미지, 컬러, 다국어 문자열을 쉽게 생성할 수 있습니다:
 ```swift
 let image = UIImage(key: .settings)
 let color = UIColor(key: .coralPink)
 let string = String(key: .done)
 ```
 
+## 제공기능
 `xcresource`는 다음의 하위 커맨드를 가지고 있습니다:
 - `xcassets2swift`: xcassets을 위한 Swift 코드를 생성합니다.
 - `swift2strings`: Swift 코드를 strings 파일로 변환합니다.
