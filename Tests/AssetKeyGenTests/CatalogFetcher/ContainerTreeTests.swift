@@ -7,17 +7,17 @@ final class ContainerTreeTests: XCTestCase {
         let root = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "root"),
-                type: .folder,
+                type: .group,
                 providesNamespace: false))
         let child = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "child"),
-                type: .folder,
+                type: .group,
                 providesNamespace: false))
         let grandchild = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "grandchild.imageset"),
-                type: .imageSet,
+                type: .asset(.imageSet),
                 providesNamespace: false))
         
         root.addChild(child)
@@ -34,17 +34,17 @@ final class ContainerTreeTests: XCTestCase {
         let root = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "root"),
-                type: .folder,
+                type: .group,
                 providesNamespace: true))
         let child = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "child"),
-                type: .folder,
+                type: .group,
                 providesNamespace: false))
         let grandchild = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "grandchild.imageset"),
-                type: .imageSet,
+                type: .asset(.imageSet),
                 providesNamespace: false))
         
         root.addChild(child)
@@ -61,17 +61,17 @@ final class ContainerTreeTests: XCTestCase {
         let root = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "root"),
-                type: .folder,
+                type: .group,
                 providesNamespace: false))
         let child = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "child"),
-                type: .folder,
+                type: .group,
                 providesNamespace: true))
         let grandchild = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "grandchild.imageset"),
-                type: .imageSet,
+                type: .asset(.imageSet),
                 providesNamespace: false))
         
         root.addChild(child)
@@ -88,17 +88,17 @@ final class ContainerTreeTests: XCTestCase {
         let root = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "root"),
-                type: .folder,
+                type: .group,
                 providesNamespace: true))
         let child = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "child"),
-                type: .folder,
+                type: .group,
                 providesNamespace: true))
         let grandchild = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "grandchild.imageset"),
-                type: .imageSet,
+                type: .asset(.imageSet),
                 providesNamespace: false))
         
         root.addChild(child)
@@ -115,17 +115,17 @@ final class ContainerTreeTests: XCTestCase {
         let root = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "root"),
-                type: .folder,
+                type: .group,
                 providesNamespace: false))
         let child = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "child"),
-                type: .folder,
+                type: .group,
                 providesNamespace: false))
         let grandchild = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "grandchild.imageset"),
-                type: .imageSet,
+                type: .asset(.imageSet),
                 providesNamespace: false))
         
         root.addChild(child)
@@ -142,17 +142,17 @@ final class ContainerTreeTests: XCTestCase {
         let root = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "root"),
-                type: .folder,
+                type: .group,
                 providesNamespace: false))
         let image = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "child1.imageset"),
-                type: .imageSet,
+                type: .asset(.imageSet),
                 providesNamespace: false))
         let color = ContainerTree(
             Container(
-                url: URL(fileURLWithPath: "child2.imageset"),
-                type: .colorSet,
+                url: URL(fileURLWithPath: "child2.colorset"),
+                type: .asset(.colorSet),
                 providesNamespace: false))
         
         root.addChild(image)
@@ -163,10 +163,10 @@ final class ContainerTreeTests: XCTestCase {
         
         // Then
         XCTAssertEqual(groupsByType.count, 3)
-        XCTAssertEqual(groupsByType[.folder]?.count, 1)
-        XCTAssertEqual(groupsByType[.imageSet]?.count, 1)
-        XCTAssertEqual(groupsByType[.colorSet]?.count, 1)
-        XCTAssertNil(groupsByType[.symbolSet])
+        XCTAssertEqual(groupsByType[.group]?.count, 1)
+        XCTAssertEqual(groupsByType[.asset(.imageSet)]?.count, 1)
+        XCTAssertEqual(groupsByType[.asset(.colorSet)]?.count, 1)
+        XCTAssertNil(groupsByType[.asset(.symbolSet)])
     }
     
     func test_assetGroupsByType() {
@@ -174,17 +174,17 @@ final class ContainerTreeTests: XCTestCase {
         let root = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "root"),
-                type: .folder,
+                type: .group,
                 providesNamespace: false))
         let image = ContainerTree(
             Container(
                 url: URL(fileURLWithPath: "child1.imageset"),
-                type: .imageSet,
+                type: .asset(.imageSet),
                 providesNamespace: false))
         let color = ContainerTree(
             Container(
-                url: URL(fileURLWithPath: "child2.imageset"),
-                type: .colorSet,
+                url: URL(fileURLWithPath: "child2.colorset"),
+                type: .asset(.colorSet),
                 providesNamespace: false))
         
         root.addChild(image)

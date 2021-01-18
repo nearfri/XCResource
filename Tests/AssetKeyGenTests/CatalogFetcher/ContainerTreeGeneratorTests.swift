@@ -14,7 +14,7 @@ final class ContainerTreeGeneratorTests: XCTestCase {
         XCTAssert(root.isRoot)
         XCTAssert(root.hasChildren)
         XCTAssertEqual(root.element.name, url.lastPathComponent)
-        XCTAssertEqual(root.element.type, .folder)
+        XCTAssertEqual(root.element.type, .group)
         XCTAssertEqual(root.element.providesNamespace, false)
     }
     
@@ -37,8 +37,8 @@ final class ContainerTreeGeneratorTests: XCTestCase {
         XCTAssertEqual(c1.element.name, "Places")
         XCTAssertEqual(c2.element.name, "Dot")
         
-        XCTAssertEqual(c1.element.type, .folder)
-        XCTAssertEqual(c2.element.type, .folder)
+        XCTAssertEqual(c1.element.type, .group)
+        XCTAssertEqual(c2.element.type, .group)
         
         XCTAssertEqual(c1.element.providesNamespace, false)
         XCTAssertEqual(c2.element.providesNamespace, true)
@@ -56,7 +56,7 @@ final class ContainerTreeGeneratorTests: XCTestCase {
         // Then
         XCTAssertFalse(image.hasChildren)
         XCTAssertEqual(image.element.name, "settings")
-        XCTAssertEqual(image.element.type, .imageSet)
+        XCTAssertEqual(image.element.type, .asset(.imageSet))
         XCTAssertEqual(image.element.providesNamespace, false)
     }
     
@@ -72,7 +72,7 @@ final class ContainerTreeGeneratorTests: XCTestCase {
         // Then
         XCTAssertFalse(color.hasChildren)
         XCTAssertEqual(color.element.name, "blush")
-        XCTAssertEqual(color.element.type, .colorSet)
+        XCTAssertEqual(color.element.type, .asset(.colorSet))
         XCTAssertEqual(color.element.providesNamespace, false)
     }
 }

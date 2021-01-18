@@ -11,7 +11,7 @@ final class ContainerRecordTests: XCTestCase {
         let container = try Container(contentsOf: url)
         
         // Then
-        XCTAssertEqual(container.type, .folder)
+        XCTAssertEqual(container.type, .group)
         XCTAssertEqual(container.providesNamespace, false)
         XCTAssertEqual(container.name, "Settings")
     }
@@ -24,7 +24,7 @@ final class ContainerRecordTests: XCTestCase {
         let container = try Container(contentsOf: url)
         
         // Then
-        XCTAssertEqual(container.type, .folder)
+        XCTAssertEqual(container.type, .group)
         XCTAssertEqual(container.providesNamespace, true)
         XCTAssertEqual(container.name, "Dot")
     }
@@ -37,7 +37,7 @@ final class ContainerRecordTests: XCTestCase {
         let container = try Container(contentsOf: url)
         
         // Then
-        XCTAssertEqual(container.type, .imageSet)
+        XCTAssertEqual(container.type, .asset(.imageSet))
         XCTAssertEqual(container.providesNamespace, false)
         XCTAssertEqual(container.name, "settingsRate")
     }
@@ -50,7 +50,7 @@ final class ContainerRecordTests: XCTestCase {
         let container = try Container(contentsOf: url)
         
         // Then
-        XCTAssertEqual(container.type, .colorSet)
+        XCTAssertEqual(container.type, .asset(.colorSet))
         XCTAssertEqual(container.providesNamespace, false)
         XCTAssertEqual(container.name, "battleshipGrey8")
     }

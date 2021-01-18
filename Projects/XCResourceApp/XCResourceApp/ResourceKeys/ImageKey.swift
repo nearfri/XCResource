@@ -16,8 +16,6 @@ struct ImageKey: ExpressibleByStringLiteral, Hashable {
 // MARK: - Assets.xcassets
 
 extension ImageKey {
-    static let appIcon: ImageKey = "AppIcon"
-    
     // MARK: Places
     static let places_authArrow: ImageKey = "Places/authArrow"
     static let places_authClose: ImageKey = "Places/authClose"

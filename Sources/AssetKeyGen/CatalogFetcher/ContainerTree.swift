@@ -37,7 +37,7 @@ extension Sequence where Element == ContainerTree {
     
     func assetGroupsByType() -> [AssetType: [Asset]] {
         return groupsByType().reduce(into: [:]) { result, each in
-            guard let assetType = each.key.toAssetType() else { return }
+            guard case let .asset(assetType) = each.key else { return }
             result[assetType] = each.value.map({ $0.toAsset() })
         }
     }

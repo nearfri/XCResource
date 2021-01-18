@@ -1,22 +1,29 @@
 import Foundation
 
-enum ContainerType {
-    case folder, imageSet, colorSet, symbolSet
+enum ContainerType: Hashable {
+    case group
+    case asset(AssetType)
     
-    init(_ assetType: AssetType) {
-        switch assetType {
-        case .imageSet:     self = .imageSet
-        case .colorSet:     self = .colorSet
-        case .symbolSet:    self = .symbolSet
+    init(url: URL) {
+        let pathExtension = url.pathExtension
+        if pathExtension.isEmpty {
+            self = .group
+        } else {
+            let allAssetTypes = AssetType.allCases
+            if let assetType = allAssetTypes.first(where: { $0.pathExtension == pathExtension }) {
+                self = .asset(assetType)
+            } else {
+                self = .group
+            }
         }
     }
     
-    func toAssetType() -> AssetType? {
+    var requiresAttributesLoading: Bool {
         switch self {
-        case .folder:       return nil
-        case .imageSet:     return .imageSet
-        case .colorSet:     return .colorSet
-        case .symbolSet:    return .symbolSet
+        case .group:
+            return true
+        case .asset(let assetType):
+            return assetType.requiresAttributesLoading
         }
     }
 }
@@ -24,10 +31,10 @@ enum ContainerType {
 struct Container {
     var url: URL
     var type: ContainerType
-    var providesNamespace: Bool
+    var providesNamespace: Bool = false
     
     var name: String {
-        if type == .folder {
+        if type == .group {
             return url.lastPathComponent
         } else {
             return url.deletingPathExtension().lastPathComponent
@@ -38,10 +45,12 @@ struct Container {
 extension Container {
     init(contentsOf url: URL) throws {
         self.url = url
+        self.type = ContainerType(url: url)
         
-        let data = try Data(contentsOf: url.appendingPathComponent("Contents.json"))
-        let content = try JSONDecoder().decode(ContentRecord.self, from: data)
-        self.type = content.type?.toContainerType() ?? .folder
-        self.providesNamespace = content.properties?.providesNamespace ?? false
+        let jsonURL = url.appendingPathComponent("Contents.json")
+        if type.requiresAttributesLoading, let data = try? Data(contentsOf: jsonURL) {
+            let record = try JSONDecoder().decode(ContentRecord.self, from: data)
+            providesNamespace = record.properties?.providesNamespace ?? false
+        }
     }
 }
