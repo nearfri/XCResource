@@ -9,12 +9,6 @@ public enum AssetType: String, CaseIterable {
          colorSet, spriteAtlas, sticker, stickerPack, stickerSequence,
          textureSet, complicationSet, symbolSet
     
-    private static let typesByPathExtension: [String: AssetType] = {
-        let allTypes = AssetType.allCases
-        let allExtensions = allTypes.map(\.pathExtension)
-        return Dictionary(uniqueKeysWithValues: zip(allExtensions, allTypes))
-    }()
-    
     public init?(pathExtension: String) {
         guard let type = AssetType.typesByPathExtension[pathExtension] else { return nil }
         self = type
@@ -23,6 +17,12 @@ public enum AssetType: String, CaseIterable {
     public var pathExtension: String {
         return rawValue.lowercased()
     }
+    
+    private static let typesByPathExtension: [String: AssetType] = {
+        let allTypes = AssetType.allCases
+        let allExtensions = allTypes.map(\.pathExtension)
+        return Dictionary(uniqueKeysWithValues: zip(allExtensions, allTypes))
+    }()
     
     public var requiresAttributesLoading: Bool {
         return self == .spriteAtlas

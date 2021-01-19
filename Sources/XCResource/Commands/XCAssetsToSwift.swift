@@ -30,9 +30,12 @@ struct XCAssetsToSwift: ParsableCommand {
     @Option(
         name: .customLong("asset-type"),
         parsing: .upToNextOption,
-        help: ArgumentHelp(discussion: "For more details, see \(catalogDocumentURLString)",
-                           valueName: AssetTypeArgument.someValueStrings.joined(separator: "|")))
-    var assetTypeArguments: [AssetTypeArgument] = [.one(.imageSet)]
+        help: ArgumentHelp(
+            "Asset type to export.",
+            discussion: "If not specified, all asset types are exported. For more information "
+                + "about possible types, see \(catalogDocumentURLString)",
+            valueName: AssetType.someValueStrings.joined(separator: "|")))
+    var assetTypes: [AssetType] = []
     
     @Option var swiftPath: String
     
@@ -51,7 +54,7 @@ struct XCAssetsToSwift: ParsableCommand {
     private func generateCodes() throws -> AssetKeyGenerator.CodeResult {
         let request = AssetKeyGenerator.CodeRequest(
             assetCatalogURLs: assetCatalogPaths.map({ URL(fileURLWithExpandingTildeInPath: $0) }),
-            assetTypes: assetTypeArguments.assetTypes,
+            assetTypes: Set(assetTypes.isEmpty ? AssetType.allCases : assetTypes),
             keyTypeName: swiftTypeName)
         
         return try AssetKeyGenerator().generate(for: request)

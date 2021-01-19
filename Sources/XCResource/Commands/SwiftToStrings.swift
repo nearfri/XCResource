@@ -24,7 +24,11 @@ struct SwiftToStrings: ParsableCommand {
     
     @Option var tableName: String = "Localizable"
     
-    @Option(name: .customLong("language"), parsing: .upToNextOption)
+    @Option(name: .customLong("language"),
+            parsing: .upToNextOption,
+            help: ArgumentHelp(
+                "Language to convert.",
+                discussion: "If not specified, all languages are converted."))
     var languages: [String] = []
     
     @Option(help: ArgumentHelp(valueName: LocalizableValueStrategy.joinedArgumentName))
@@ -33,7 +37,10 @@ struct SwiftToStrings: ParsableCommand {
     @Option(
         name: .customLong("value-strategy"),
         parsing: .upToNextOption,
-        help: ArgumentHelp(valueName: "language:<\(LocalizableValueStrategy.joinedArgumentName)>"))
+        help: ArgumentHelp(
+            "Value strategy by language.",
+            discussion: "If not specified, default-value-strategy is used.",
+            valueName: "language:<\(LocalizableValueStrategy.joinedArgumentName)>"))
     var valueStrategyArguments: [ValueStrategyArgument] = []
     
     @Flag var sortByKey: Bool = false
