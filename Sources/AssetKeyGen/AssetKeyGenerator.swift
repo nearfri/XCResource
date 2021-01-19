@@ -1,7 +1,7 @@
 import Foundation
 
 protocol AssetCatalogFetcher: AnyObject {
-    func fetch(at url: URL) throws -> [AssetType: AssetCatalog]
+    func fetch(at url: URL) throws -> AssetCatalog
 }
 
 protocol TypeDeclarationGenerator: AnyObject {
@@ -57,8 +57,10 @@ public class AssetKeyGenerator {
     }
     
     public func generate(for request: CodeRequest) throws -> CodeResult {
-        let catalogs: [AssetCatalog] = try request.assetCatalogURLs.compactMap { url in
-            try catalogFetcher.fetch(at: url)[request.assetType]
+        let catalogs: [AssetCatalog] = try request.assetCatalogURLs.map { url in
+            var catalog = try catalogFetcher.fetch(at: url)
+            catalog.assets.removeAll(where: { $0.type != request.assetType })
+            return catalog
         }
         
         let typeDeclaration = typeDeclarationGenerator.generate(keyTypeName: request.keyTypeName)

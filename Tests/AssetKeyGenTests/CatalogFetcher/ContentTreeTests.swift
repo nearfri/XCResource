@@ -137,66 +137,43 @@ final class ContentTreeTests: XCTestCase {
         XCTAssertEqual(grandchild.relativePath, "child/grandchild.imageset")
     }
     
-    func test_groupsByType() {
+    func test_toAsset_whenGroup_returnNil() {
         // Given
-        let root = ContentTree(
+        let contentTree = ContentTree(
             Content(
                 url: URL(fileURLWithPath: "root"),
                 type: .group,
                 providesNamespace: false))
-        let image = ContentTree(
-            Content(
-                url: URL(fileURLWithPath: "child1.imageset"),
-                type: .asset(.imageSet),
-                providesNamespace: false))
-        let color = ContentTree(
-            Content(
-                url: URL(fileURLWithPath: "child2.colorset"),
-                type: .asset(.colorSet),
-                providesNamespace: false))
-        
-        root.addChild(image)
-        root.addChild(color)
         
         // When
-        let groupsByType = root.makePreOrderSequence().groupsByType()
+        let asset = contentTree.toAsset()
         
         // Then
-        XCTAssertEqual(groupsByType.count, 3)
-        XCTAssertEqual(groupsByType[.group]?.count, 1)
-        XCTAssertEqual(groupsByType[.asset(.imageSet)]?.count, 1)
-        XCTAssertEqual(groupsByType[.asset(.colorSet)]?.count, 1)
-        XCTAssertNil(groupsByType[.asset(.symbolSet)])
+        XCTAssertNil(asset)
     }
     
-    func test_assetGroupsByType() {
+    func test_toAsset_whenAsset_returnAsset() throws {
         // Given
         let root = ContentTree(
             Content(
                 url: URL(fileURLWithPath: "root"),
                 type: .group,
                 providesNamespace: false))
-        let image = ContentTree(
+        let child = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "child1.imageset"),
+                url: URL(fileURLWithPath: "child.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
-        let color = ContentTree(
-            Content(
-                url: URL(fileURLWithPath: "child2.colorset"),
-                type: .asset(.colorSet),
-                providesNamespace: false))
         
-        root.addChild(image)
-        root.addChild(color)
+        root.addChild(child)
         
         // When
-        let assetGroupsByType = root.makePreOrderSequence().assetGroupsByType()
+        let asset = child.toAsset()
         
         // Then
-        XCTAssertEqual(assetGroupsByType.count, 2)
-        XCTAssertEqual(assetGroupsByType[.imageSet]?.count, 1)
-        XCTAssertEqual(assetGroupsByType[.colorSet]?.count, 1)
-        XCTAssertNil(assetGroupsByType[.symbolSet])
+        let unwrappedAsset = try XCTUnwrap(asset)
+        XCTAssertEqual(unwrappedAsset.name, "child")
+        XCTAssertEqual(unwrappedAsset.path, "child.imageset")
+        XCTAssertEqual(unwrappedAsset.type, .imageSet)
     }
 }

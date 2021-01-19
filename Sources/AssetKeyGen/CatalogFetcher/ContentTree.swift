@@ -25,20 +25,8 @@ extension ContentTree {
 }
 
 extension ContentTree {
-    func toAsset() -> Asset {
-        return Asset(name: fullName, path: relativePath)
-    }
-}
-
-extension Sequence where Element == ContentTree {
-    func groupsByType() -> [ContentType: [ContentTree]] {
-        return Dictionary(grouping: self, by: \.element.type)
-    }
-    
-    func assetGroupsByType() -> [AssetType: [Asset]] {
-        return groupsByType().reduce(into: [:]) { result, each in
-            guard case let .asset(assetType) = each.key else { return }
-            result[assetType] = each.value.map({ $0.toAsset() })
-        }
+    func toAsset() -> Asset? {
+        guard case .asset(let assetType) = element.type else { return nil }
+        return Asset(name: fullName, path: relativePath, type: assetType)
     }
 }

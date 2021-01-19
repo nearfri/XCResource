@@ -8,7 +8,7 @@ final class AssetTests: XCTestCase {
     
     func checkComputedKey(name: String, key: String,
                           file: StaticString = #filePath, line: UInt = #line) {
-        let asset = Asset(name: name, path: "")
+        let asset = Asset(name: name, path: "", type: .imageSet)
         XCTAssertEqual(asset.key, key, file: file, line: line)
     }
     
