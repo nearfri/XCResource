@@ -3,15 +3,28 @@ import Foundation
 // https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_ref-Asset_Catalog_Format/AssetTypes.html
 
 public enum AssetType: String, CaseIterable {
-    case imageSet = "imageset"
-    case colorSet = "colorset"
-    case symbolSet = "symbolset"
+    case appIconSet, arImageSet, arResourceGroup, brandAssets, cubeTextureSet,
+         dataSet, gcDashboardImage, gcLeaderboard, gcLeaderboardSet, iconSet,
+         imageSet, imageStack, imageStackLayer, launchImage, mipmapSet,
+         colorSet, spriteAtlas, sticker, stickerPack, stickerSequence,
+         textureSet, complicationSet, symbolSet
+    
+    private static let typesByPathExtension: [String: AssetType] = {
+        let allTypes = AssetType.allCases
+        let allExtensions = allTypes.map(\.pathExtension)
+        return Dictionary(uniqueKeysWithValues: zip(allExtensions, allTypes))
+    }()
+    
+    public init?(pathExtension: String) {
+        guard let type = AssetType.typesByPathExtension[pathExtension] else { return nil }
+        self = type
+    }
     
     public var pathExtension: String {
-        return rawValue
+        return rawValue.lowercased()
     }
     
     public var requiresAttributesLoading: Bool {
-        return false
+        return self == .spriteAtlas
     }
 }

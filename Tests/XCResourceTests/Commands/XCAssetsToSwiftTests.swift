@@ -20,7 +20,7 @@ final class XCAssetsToSwiftTests: XCTestCase {
         process.arguments = [
             "xcassets2swift",
             "--xcassets-path", SampleData.assetURL().path,
-            "--asset-type", "color",
+            "--asset-type", "colorset",
             "--swift-path", swiftFileURL.path,
             "--swift-type-name", "ColorKey",
         ]

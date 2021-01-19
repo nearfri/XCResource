@@ -43,7 +43,7 @@ final class AssetKeyGeneratorTests: XCTestCase {
         
         let request = AssetKeyGenerator.CodeRequest(
             assetCatalogURLs: [URL(fileURLWithPath: "a"), URL(fileURLWithPath: "b")],
-            assetType: .imageSet,
+            assetTypes: [.imageSet],
             keyTypeName: "ImageKey")
         
         // When
@@ -65,7 +65,7 @@ final class AssetKeyGeneratorTests: XCTestCase {
         
         let request = AssetKeyGenerator.CodeRequest(
             assetCatalogURLs: [URL(fileURLWithPath: "a"), URL(fileURLWithPath: "b")],
-            assetType: .imageSet,
+            assetTypes: [.imageSet],
             keyTypeName: "ImageKey")
         
         // When

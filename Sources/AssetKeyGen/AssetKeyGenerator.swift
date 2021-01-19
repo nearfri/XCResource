@@ -15,12 +15,12 @@ protocol KeyDeclarationGenerator: AnyObject {
 extension AssetKeyGenerator {
     public struct CodeRequest {
         public var assetCatalogURLs: [URL]
-        public var assetType: AssetType
+        public var assetTypes: Set<AssetType>
         public var keyTypeName: String
         
-        public init(assetCatalogURLs: [URL], assetType: AssetType, keyTypeName: String) {
+        public init(assetCatalogURLs: [URL], assetTypes: Set<AssetType>, keyTypeName: String) {
             self.assetCatalogURLs = assetCatalogURLs
-            self.assetType = assetType
+            self.assetTypes = assetTypes
             self.keyTypeName = keyTypeName
         }
     }
@@ -59,7 +59,7 @@ public class AssetKeyGenerator {
     public func generate(for request: CodeRequest) throws -> CodeResult {
         let catalogs: [AssetCatalog] = try request.assetCatalogURLs.map { url in
             var catalog = try catalogFetcher.fetch(at: url)
-            catalog.assets.removeAll(where: { $0.type != request.assetType })
+            catalog.assets.removeAll(where: { !request.assetTypes.contains($0.type) })
             return catalog
         }
         

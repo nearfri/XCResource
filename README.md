@@ -28,7 +28,7 @@ mint install nearfri/XCResource
 ```sh
 xcrun --sdk macosx mint run xcresource xcassets2swift \
     --xcassets-path ../SampleApp/Assets.xcassets \
-    --asset-type image \
+    --asset-type imageset \
     --swift-path ../SampleApp/ResourceKeys/ImageKey.swift \
     --swift-type-name ImageKey
 ```
@@ -50,8 +50,6 @@ struct ImageKey: ExpressibleByStringLiteral, Hashable {
 // MARK: - Assets.xcassets
 
 extension ImageKey {
-    static let appIcon: ImageKey = "AppIcon"
-    
     // MARK: Places
     static let places_authArrow: ImageKey = "Places/authArrow"
     static let places_authClose: ImageKey = "Places/authClose"

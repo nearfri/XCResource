@@ -5,16 +5,10 @@ enum ContentType: Hashable {
     case asset(AssetType)
     
     init(url: URL) {
-        let pathExtension = url.pathExtension
-        if pathExtension.isEmpty {
-            self = .group
+        if let assetType = AssetType(pathExtension: url.pathExtension) {
+            self = .asset(assetType)
         } else {
-            let allAssetTypes = AssetType.allCases
-            if let assetType = allAssetTypes.first(where: { $0.pathExtension == pathExtension }) {
-                self = .asset(assetType)
-            } else {
-                self = .group
-            }
+            self = .group
         }
     }
     

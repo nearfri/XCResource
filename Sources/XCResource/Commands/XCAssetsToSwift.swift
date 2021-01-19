@@ -8,6 +8,11 @@ private let headerComment = """
 // Do Not Edit Directly!
 """
 
+private let catalogDocumentURLString = """
+https://developer.apple.com/library/archive/documentation/Xcode/Reference/\
+xcode_ref-Asset_Catalog_Format/AssetTypes.html
+"""
+
 struct XCAssetsToSwift: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
         commandName: "xcassets2swift",
@@ -22,8 +27,12 @@ struct XCAssetsToSwift: ParsableCommand {
     @Option(name: .customLong("xcassets-path"))
     var assetCatalogPaths: [String]
     
-    @Option(help: ArgumentHelp(valueName: AssetType.allValueStrings.joined(separator: "|")))
-    var assetType: AssetType = .imageSet
+    @Option(
+        name: .customLong("asset-type"),
+        parsing: .upToNextOption,
+        help: ArgumentHelp(discussion: "For more details, see \(catalogDocumentURLString)",
+                           valueName: AssetTypeArgument.someValueStrings.joined(separator: "|")))
+    var assetTypeArguments: [AssetTypeArgument] = [.one(.imageSet)]
     
     @Option var swiftPath: String
     
@@ -42,7 +51,7 @@ struct XCAssetsToSwift: ParsableCommand {
     private func generateCodes() throws -> AssetKeyGenerator.CodeResult {
         let request = AssetKeyGenerator.CodeRequest(
             assetCatalogURLs: assetCatalogPaths.map({ URL(fileURLWithExpandingTildeInPath: $0) }),
-            assetType: assetType,
+            assetTypes: assetTypeArguments.assetTypes,
             keyTypeName: swiftTypeName)
         
         return try AssetKeyGenerator().generate(for: request)
