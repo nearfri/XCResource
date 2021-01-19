@@ -24,7 +24,7 @@ struct SwiftToStrings: ParsableCommand {
     
     @Option var tableName: String = "Localizable"
     
-    @Option(name: .customLong("language"))
+    @Option(name: .customLong("language"), parsing: .upToNextOption)
     var languages: [String] = []
     
     @Option(help: ArgumentHelp(valueName: LocalizableValueStrategy.joinedArgumentName))
@@ -32,6 +32,7 @@ struct SwiftToStrings: ParsableCommand {
     
     @Option(
         name: .customLong("value-strategy"),
+        parsing: .upToNextOption,
         help: ArgumentHelp(valueName: "language:<\(LocalizableValueStrategy.joinedArgumentName)>"))
     var valueStrategyArguments: [ValueStrategyArgument] = []
     
