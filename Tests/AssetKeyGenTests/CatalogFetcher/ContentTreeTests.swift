@@ -1,21 +1,21 @@
 import XCTest
 @testable import AssetKeyGen
 
-final class ContainerTreeTests: XCTestCase {
+final class ContentTreeTests: XCTestCase {
     func test_fullName_noNamespace() {
         // Given
-        let root = ContainerTree(
-            Container(
+        let root = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "root"),
                 type: .group,
                 providesNamespace: false))
-        let child = ContainerTree(
-            Container(
+        let child = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "child"),
                 type: .group,
                 providesNamespace: false))
-        let grandchild = ContainerTree(
-            Container(
+        let grandchild = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "grandchild.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
@@ -31,18 +31,18 @@ final class ContainerTreeTests: XCTestCase {
     
     func test_fullName_rootNamespace() {
         // Given
-        let root = ContainerTree(
-            Container(
+        let root = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "root"),
                 type: .group,
                 providesNamespace: true))
-        let child = ContainerTree(
-            Container(
+        let child = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "child"),
                 type: .group,
                 providesNamespace: false))
-        let grandchild = ContainerTree(
-            Container(
+        let grandchild = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "grandchild.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
@@ -58,18 +58,18 @@ final class ContainerTreeTests: XCTestCase {
     
     func test_fullName_childNamespace() {
         // Given
-        let root = ContainerTree(
-            Container(
+        let root = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "root"),
                 type: .group,
                 providesNamespace: false))
-        let child = ContainerTree(
-            Container(
+        let child = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "child"),
                 type: .group,
                 providesNamespace: true))
-        let grandchild = ContainerTree(
-            Container(
+        let grandchild = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "grandchild.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
@@ -85,18 +85,18 @@ final class ContainerTreeTests: XCTestCase {
     
     func test_fullName_rootAndChildNamespace() {
         // Given
-        let root = ContainerTree(
-            Container(
+        let root = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "root"),
                 type: .group,
                 providesNamespace: true))
-        let child = ContainerTree(
-            Container(
+        let child = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "child"),
                 type: .group,
                 providesNamespace: true))
-        let grandchild = ContainerTree(
-            Container(
+        let grandchild = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "grandchild.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
@@ -112,18 +112,18 @@ final class ContainerTreeTests: XCTestCase {
     
     func test_relativePath() {
         // Given
-        let root = ContainerTree(
-            Container(
+        let root = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "root"),
                 type: .group,
                 providesNamespace: false))
-        let child = ContainerTree(
-            Container(
+        let child = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "child"),
                 type: .group,
                 providesNamespace: false))
-        let grandchild = ContainerTree(
-            Container(
+        let grandchild = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "grandchild.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
@@ -139,18 +139,18 @@ final class ContainerTreeTests: XCTestCase {
     
     func test_groupsByType() {
         // Given
-        let root = ContainerTree(
-            Container(
+        let root = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "root"),
                 type: .group,
                 providesNamespace: false))
-        let image = ContainerTree(
-            Container(
+        let image = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "child1.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
-        let color = ContainerTree(
-            Container(
+        let color = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "child2.colorset"),
                 type: .asset(.colorSet),
                 providesNamespace: false))
@@ -171,18 +171,18 @@ final class ContainerTreeTests: XCTestCase {
     
     func test_assetGroupsByType() {
         // Given
-        let root = ContainerTree(
-            Container(
+        let root = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "root"),
                 type: .group,
                 providesNamespace: false))
-        let image = ContainerTree(
-            Container(
+        let image = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "child1.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
-        let color = ContainerTree(
-            Container(
+        let color = ContentTree(
+            Content(
                 url: URL(fileURLWithPath: "child2.colorset"),
                 type: .asset(.colorSet),
                 providesNamespace: false))

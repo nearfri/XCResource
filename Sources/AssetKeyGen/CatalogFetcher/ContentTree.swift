@@ -1,9 +1,9 @@
 import Foundation
 import XCResourceUtil
 
-typealias ContainerTree = Tree<Container>
+typealias ContentTree = Tree<Content>
 
-extension ContainerTree {
+extension ContentTree {
     var fullName: String {
         return namespace.appendingPathComponent(element.name)
     }
@@ -24,14 +24,14 @@ extension ContainerTree {
     }
 }
 
-extension ContainerTree {
+extension ContentTree {
     func toAsset() -> Asset {
         return Asset(name: fullName, path: relativePath)
     }
 }
 
-extension Sequence where Element == ContainerTree {
-    func groupsByType() -> [ContainerType: [ContainerTree]] {
+extension Sequence where Element == ContentTree {
+    func groupsByType() -> [ContentType: [ContentTree]] {
         return Dictionary(grouping: self, by: \.element.type)
     }
     

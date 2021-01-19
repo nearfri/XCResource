@@ -2,10 +2,10 @@ import Foundation
 
 class ActualAssetCatalogFetcher: AssetCatalogFetcher {
     func fetch(at url: URL) throws -> [AssetType: AssetCatalog] {
-        let rootContainer = try ContainerTreeGenerator().load(contentsOf: url)
-        return rootContainer
+        let rootContent = try ContentTreeGenerator().load(at: url)
+        return rootContent
             .makePreOrderSequence()
             .assetGroupsByType()
-            .mapValues({ AssetCatalog(name: rootContainer.fullName, assets: $0) })
+            .mapValues({ AssetCatalog(name: rootContent.fullName, assets: $0) })
     }
 }

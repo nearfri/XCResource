@@ -1,7 +1,7 @@
 import XCTest
 @testable import AssetKeyGen
 
-final class ContentRecordTests: XCTestCase {
+final class ContentAttributesRecordTests: XCTestCase {
     func test_initFromDecoder_folder() throws {
         // Given
         let json = """
@@ -14,7 +14,7 @@ final class ContentRecordTests: XCTestCase {
         """.data(using: .utf8)!
         
         // When
-        let content = try JSONDecoder().decode(ContentRecord.self, from: json)
+        let content = try JSONDecoder().decode(ContentAttributesRecord.self, from: json)
         
         // Then
         XCTAssertNil(content.properties)
@@ -35,7 +35,7 @@ final class ContentRecordTests: XCTestCase {
         """.data(using: .utf8)!
         
         // When
-        let content = try JSONDecoder().decode(ContentRecord.self, from: json)
+        let content = try JSONDecoder().decode(ContentAttributesRecord.self, from: json)
         
         // Then
         XCTAssertEqual(content.properties?.providesNamespace, true)

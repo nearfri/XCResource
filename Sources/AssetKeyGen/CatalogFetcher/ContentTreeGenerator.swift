@@ -1,7 +1,7 @@
 import Foundation
 
-class ContainerTreeGenerator {
-    func load(contentsOf url: URL) throws -> ContainerTree {
+class ContentTreeGenerator {
+    func load(at url: URL) throws -> ContentTree {
         return try GeneratorInternal(url: url).load()
     }
 }
@@ -9,8 +9,8 @@ class ContainerTreeGenerator {
 private struct GeneratorInternal {
     let url: URL
     
-    func load() throws -> ContainerTree {
-        let tree = ContainerTree(try Container(contentsOf: url))
+    func load() throws -> ContentTree {
+        let tree = ContentTree(try Content(url: url))
         
         for childURL in try childURLs() {
             guard let resourceValues = try? childURL.resourceValues(forKeys: [.isDirectoryKey]),

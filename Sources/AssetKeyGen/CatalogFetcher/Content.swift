@@ -1,6 +1,6 @@
 import Foundation
 
-enum ContainerType: Hashable {
+enum ContentType: Hashable {
     case group
     case asset(AssetType)
     
@@ -28,9 +28,9 @@ enum ContainerType: Hashable {
     }
 }
 
-struct Container {
+struct Content {
     var url: URL
-    var type: ContainerType
+    var type: ContentType
     var providesNamespace: Bool = false
     
     var name: String {
@@ -42,14 +42,14 @@ struct Container {
     }
 }
 
-extension Container {
-    init(contentsOf url: URL) throws {
+extension Content {
+    init(url: URL) throws {
         self.url = url
-        self.type = ContainerType(url: url)
+        self.type = ContentType(url: url)
         
         let jsonURL = url.appendingPathComponent("Contents.json")
         if type.requiresAttributesLoading, let data = try? Data(contentsOf: jsonURL) {
-            let record = try JSONDecoder().decode(ContentRecord.self, from: data)
+            let record = try JSONDecoder().decode(ContentAttributesRecord.self, from: data)
             providesNamespace = record.properties?.providesNamespace ?? false
         }
     }

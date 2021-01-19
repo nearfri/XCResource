@@ -2,13 +2,13 @@ import XCTest
 import SampleData
 @testable import AssetKeyGen
 
-final class ContainerTreeGeneratorTests: XCTestCase {
+final class ContentTreeGeneratorTests: XCTestCase {
     func test_load_root() throws {
         // Given
         let url = SampleData.assetURL()
         
         // When
-        let root = try ContainerTreeGenerator().load(contentsOf: url)
+        let root = try ContentTreeGenerator().load(at: url)
         
         // Then
         XCTAssert(root.isRoot)
@@ -23,7 +23,7 @@ final class ContainerTreeGeneratorTests: XCTestCase {
         let url = SampleData.assetURL()
         
         // When
-        let root = try ContainerTreeGenerator().load(contentsOf: url)
+        let root = try ContentTreeGenerator().load(at: url)
         let c1 = try XCTUnwrap(root.children.first(where: { $0.element.name == "Places" }))
         let c2 = try XCTUnwrap(c1.children.first(where: { $0.element.name == "Dot" }))
         
@@ -49,7 +49,7 @@ final class ContainerTreeGeneratorTests: XCTestCase {
         let url = SampleData.assetURL()
         
         // When
-        let root = try ContainerTreeGenerator().load(contentsOf: url)
+        let root = try ContentTreeGenerator().load(at: url)
         let folder = try XCTUnwrap(root.children.first(where: { $0.element.name == "Settings" }))
         let image = try XCTUnwrap(folder.children.first(where: { $0.element.name == "settings" }))
         
@@ -65,7 +65,7 @@ final class ContainerTreeGeneratorTests: XCTestCase {
         let url = SampleData.assetURL()
         
         // When
-        let root = try ContainerTreeGenerator().load(contentsOf: url)
+        let root = try ContentTreeGenerator().load(at: url)
         let folder = try XCTUnwrap(root.children.first(where: { $0.element.name == "Color" }))
         let color = try XCTUnwrap(folder.children.first(where: { $0.element.name == "blush" }))
         
