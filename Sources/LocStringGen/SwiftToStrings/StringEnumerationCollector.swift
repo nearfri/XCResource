@@ -14,40 +14,52 @@ class StringEnumerationCollector: SyntaxVisitor {
     }
     
     override func visitPost(_ node: EnumCaseDeclSyntax) {
-        let comment = caseComment(in: node)
+        let comments = caseComments(in: node)
         let identifier = caseIdentifier(in: node)
         let rawValue = caseRawValue(in: node) ?? identifier
         
         currentEnumeraion.cases.append(
-            .init(comment: comment, identifier: identifier, rawValue: rawValue)
+            .init(comments: comments, identifier: identifier, rawValue: rawValue)
         )
     }
     
-    private func caseComment(in node: EnumCaseDeclSyntax) -> String? {
+    private func caseComments(in node: EnumCaseDeclSyntax) -> [Comment] {
         let caseKeyword: TokenSyntax = node.caseKeyword
         let leadingTrivia: Trivia = caseKeyword.leadingTrivia
         
-        let comments: [String] = leadingTrivia.reduce(into: []) { comments, piece in
+        func adjustLineCommentText<S: StringProtocol>(_ text: S) -> String {
+            return text.trimmingCharacters(in: .whitespaces)
+        }
+        
+        func adjustBlockCommentText(_ text: String) -> String {
+            return text
+                .split(separator: "\n")
+                .map(adjustLineCommentText(_:))
+                .joined(separator: "\n")
+                .trimmingCharacters(in: .newlines)
+        }
+        
+        return leadingTrivia.reduce(into: []) { comments, piece in
             switch piece {
-            case .docLineComment(var comment):
-                comment.removeFirst("///".count)
-                comments.append(comment)
-            case .docBlockComment(var comment):
-                comment.removeFirst("/**".count)
-                comment.removeLast("*/".count)
-                let lines = comment.split(separator: "\n").map(String.init)
-                comments.append(contentsOf: lines)
+            case .lineComment(var text):
+                text.removeFirst("//".count)
+                comments.append(.line(adjustLineCommentText(text)))
+            case .blockComment(var text):
+                text.removeFirst("/*".count)
+                text.removeLast("*/".count)
+                comments.append(.block(adjustBlockCommentText(text)))
+            case .docLineComment(var text):
+                text.removeFirst("///".count)
+                comments.append(.documentLine(adjustLineCommentText(text)))
+            case .docBlockComment(var text):
+                text.removeFirst("/**".count)
+                text.removeLast("*/".count)
+                comments.append(.documentBlock(adjustBlockCommentText(text)))
             default:
                 break
             }
         }
-        
-        let comment = comments
-            .map({ $0.trimmingCharacters(in: .whitespaces) })
-            .filter({ !$0.isEmpty })
-            .joined(separator: " ")
-        
-        return !comment.isEmpty ? comment : nil
+        .filter({ !$0.text.isEmpty })
     }
     
     private func caseIdentifier(in node: EnumCaseDeclSyntax) -> String {

@@ -12,7 +12,8 @@ class SwiftSourceImporter: LocalizationItemImporter {
         }
         
         return enumeration.cases.map { enumCase in
-            .init(comment: enumCase.comment, key: enumCase.rawValue, value: "")
+            let comment = enumCase.comments.joinedDocumentText
+            return LocalizationItem(comment: comment, key: enumCase.rawValue, value: "")
         }
     }
 }

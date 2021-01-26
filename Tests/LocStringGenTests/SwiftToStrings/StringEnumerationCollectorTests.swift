@@ -5,6 +5,8 @@ import SwiftSyntax
 private enum Seed {
     static let stringKeyEnum = """
     enum StringKey: String, CaseIterable {
+        // MARK: - Common
+        
         /// 취소
         case common_cancel
         
@@ -13,12 +15,16 @@ private enum Seed {
          */
         case common_confirm
         
+        /*
+         MARK: - Alert
+         */
+        
         /// 편집을 취소하시겠습니까?
         /// 확인 선택 시 모든 변경사항이 사라집니다.
-        case errorPopup_cancel_editing = "errorPopup_cancelEditing"
+        case alert_cancel_editing = "alert_cancelEditing"
         
         /// 영상은 최대 %ld분, %fGB까지 가능합니다.\\n길이를 수정하세요.
-        case errorPopup_overMaximumSize
+        case alert_overMaximumSize
     }
     """
 }
@@ -30,18 +36,20 @@ final class StringEnumerationCollectorTests: XCTestCase {
         let syntaxTree: SourceFileSyntax = try SyntaxParser.parse(source: Seed.stringKeyEnum)
         
         let expectedEnum = Enumeration<String>(identifier: "StringKey", cases: [
-            .init(comment: "취소",
+            .init(comments: [.line("MARK: - Common"), .documentLine("취소")],
                   identifier: "common_cancel",
                   rawValue: "common_cancel"),
-            .init(comment: "완료",
+            .init(comments: [.documentBlock("완료")],
                   identifier: "common_confirm",
                   rawValue: "common_confirm"),
-            .init(comment: "편집을 취소하시겠습니까? 확인 선택 시 모든 변경사항이 사라집니다.",
-                  identifier: "errorPopup_cancel_editing",
-                  rawValue: "errorPopup_cancelEditing"),
-            .init(comment: "영상은 최대 %ld분, %fGB까지 가능합니다.\\n길이를 수정하세요.",
-                  identifier: "errorPopup_overMaximumSize",
-                  rawValue: "errorPopup_overMaximumSize")
+            .init(comments: [.block("MARK: - Alert"),
+                             .documentLine("편집을 취소하시겠습니까?"),
+                             .documentLine("확인 선택 시 모든 변경사항이 사라집니다.")],
+                  identifier: "alert_cancel_editing",
+                  rawValue: "alert_cancelEditing"),
+            .init(comments: [.documentLine("영상은 최대 %ld분, %fGB까지 가능합니다.\\n길이를 수정하세요.")],
+                  identifier: "alert_overMaximumSize",
+                  rawValue: "alert_overMaximumSize")
         ])
         
         // When
