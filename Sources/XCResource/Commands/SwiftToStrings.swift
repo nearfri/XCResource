@@ -34,13 +34,12 @@ struct SwiftToStrings: ParsableCommand {
     @Option(help: ArgumentHelp(valueName: LocalizableValueStrategy.joinedArgumentName))
     var defaultValueStrategy: LocalizableValueStrategy = .custom("UNTRANSLATED-TEXT")
     
-    @Option(
-        name: .customLong("value-strategy"),
-        parsing: .upToNextOption,
-        help: ArgumentHelp(
-            "Value strategy by language.",
-            discussion: "If not specified, default-value-strategy is used.",
-            valueName: "language:<\(LocalizableValueStrategy.joinedArgumentName)>"))
+    @Option(name: .customLong("value-strategy"),
+            parsing: .upToNextOption,
+            help: ArgumentHelp(
+                "Value strategy by language.",
+                discussion: "If not specified, default-value-strategy is used.",
+                valueName: "language:<\(LocalizableValueStrategy.joinedArgumentName)>"))
     var valueStrategyArguments: [ValueStrategyArgument] = []
     
     @Flag var sortByKey: Bool = false

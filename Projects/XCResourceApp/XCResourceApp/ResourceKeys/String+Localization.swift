@@ -6,17 +6,17 @@ extension String {
         self = NSLocalizedString(key.rawValue, bundle: .module, comment: "")
     }
     
-    init(template: StringTemplate) {
-        let format = NSLocalizedString(template.key, bundle: .module, comment: "")
-        self.init(format: format, locale: .current, arguments: template.arguments)
+    init(form: StringForm) {
+        let format = NSLocalizedString(form.key, bundle: .module, comment: "")
+        self.init(format: format, locale: .current, arguments: form.arguments)
     }
     
     init(key: StringKey, _ arguments: CVarArg...) {
-        self.init(template: .init(key: key.rawValue, arguments: arguments))
+        self.init(form: .init(key: key.rawValue, arguments: arguments))
     }
     
     init(key: StringKey, arguments: [CVarArg]) {
-        self.init(template: .init(key: key.rawValue, arguments: arguments))
+        self.init(form: .init(key: key.rawValue, arguments: arguments))
     }
 }
 
@@ -25,7 +25,7 @@ extension Text {
         self.init(LocalizedStringKey(key.rawValue), bundle: .module)
     }
     
-    init(template: StringTemplate) {
-        self.init(String(template: template))
+    init(form: StringForm) {
+        self.init(String(form: form))
     }
 }

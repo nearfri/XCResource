@@ -27,14 +27,13 @@ struct XCAssetsToSwift: ParsableCommand {
     @Option(name: .customLong("xcassets-path"))
     var assetCatalogPaths: [String]
     
-    @Option(
-        name: .customLong("asset-type"),
-        parsing: .upToNextOption,
-        help: ArgumentHelp(
-            "Asset type to export.",
-            discussion: "If not specified, all asset types are exported. For more information "
-                + "about possible types, see \(catalogDocumentURLString)",
-            valueName: AssetType.someValueStrings.joined(separator: "|")))
+    @Option(name: .customLong("asset-type"),
+            parsing: .upToNextOption,
+            help: ArgumentHelp(
+                "Asset type to export.",
+                discussion: "If not specified, all asset types are exported. For more "
+                    + "information about possible types, see \(catalogDocumentURLString)",
+                valueName: AssetType.someValueStrings.joined(separator: "|")))
     var assetTypes: [AssetType] = []
     
     @Option var swiftPath: String
