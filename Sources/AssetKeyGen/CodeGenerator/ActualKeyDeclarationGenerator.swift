@@ -1,7 +1,7 @@
 import Foundation
 
 class ActualKeyDeclarationGenerator: KeyDeclarationGenerator {
-    func generate(from catalog: AssetCatalog, keyTypeName: String) -> String {
+    func generate(catalog: AssetCatalog, keyTypeName: String) -> String {
         var result = ""
         
         print("// MARK: - \(catalog.name)", to: &result)

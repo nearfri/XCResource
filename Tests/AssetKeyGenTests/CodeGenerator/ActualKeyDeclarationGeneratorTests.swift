@@ -31,7 +31,7 @@ final class ActualKeyDeclarationGeneratorTests: XCTestCase {
         let sut = ActualKeyDeclarationGenerator()
         
         // When
-        let actualDeclations = sut.generate(from: catalog, keyTypeName: keyTypeName)
+        let actualDeclations = sut.generate(catalog: catalog, keyTypeName: keyTypeName)
         
         // Then
         XCTAssertEqual(actualDeclations, expectedDeclations)

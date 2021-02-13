@@ -3,7 +3,7 @@ import SampleData
 @testable import LocStringGen
 
 final class SwiftSourceImporterTests: XCTestCase {
-    func test_import() throws {
+    func test_importLocalizationItems() throws {
         // Given
         let sut = SwiftSourceImporter()
         let sourceCodeURL = SampleData.sourceCodeURL("StringKey.swift")
@@ -24,7 +24,7 @@ final class SwiftSourceImporterTests: XCTestCase {
         ]
         
         // When
-        let actualItems = try sut.import(at: sourceCodeURL)
+        let actualItems: [LocalizationItem] = try sut.import(at: sourceCodeURL)
         
         // Then
         XCTAssertEqual(actualItems, expectedItems)

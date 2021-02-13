@@ -6,7 +6,8 @@ struct XCResource: ParsableCommand {
         commandName: "xcresource",
         abstract: "리소스 코드 생성 유틸리티",
         subcommands: [
-            XCAssetsToSwift.self, SwiftToStrings.self, StringsToCSV.self, CSVToStrings.self
+            XCAssetsToSwift.self, KeyToForm.self,
+            SwiftToStrings.self, StringsToCSV.self, CSVToStrings.self
         ])
 }
 

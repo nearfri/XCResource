@@ -9,11 +9,11 @@ protocol TypeDeclarationGenerator: AnyObject {
 }
 
 protocol KeyDeclarationGenerator: AnyObject {
-    func generate(from catalog: AssetCatalog, keyTypeName: String) -> String
+    func generate(catalog: AssetCatalog, keyTypeName: String) -> String
 }
 
 extension AssetKeyGenerator {
-    public struct CodeRequest {
+    public struct Request {
         public var assetCatalogURLs: [URL]
         public var assetTypes: Set<AssetType>
         public var keyTypeName: String
@@ -25,7 +25,7 @@ extension AssetKeyGenerator {
         }
     }
     
-    public struct CodeResult {
+    public struct Result {
         public var typeDeclaration: String
         public var keyDeclarations: String
         
@@ -56,19 +56,27 @@ public class AssetKeyGenerator {
                   keyDeclarationGenerator: ActualKeyDeclarationGenerator())
     }
     
-    public func generate(for request: CodeRequest) throws -> CodeResult {
+    public func generate(for request: Request) throws -> Result {
+        let typeDeclaration = generateTypeDeclation(for: request)
+        
+        let keyDeclarations = try generateKeyDeclations(for: request).joined(separator: "\n\n")
+        
+        return Result(typeDeclaration: typeDeclaration, keyDeclarations: keyDeclarations)
+    }
+    
+    private func generateTypeDeclation(for request: Request) -> String {
+        return typeDeclarationGenerator.generate(keyTypeName: request.keyTypeName)
+    }
+    
+    private func generateKeyDeclations(for request: Request) throws -> [String] {
         let catalogs: [AssetCatalog] = try request.assetCatalogURLs.map { url in
             var catalog = try catalogFetcher.fetch(at: url)
             catalog.assets.removeAll(where: { !request.assetTypes.contains($0.type) })
             return catalog
         }
         
-        let typeDeclaration = typeDeclarationGenerator.generate(keyTypeName: request.keyTypeName)
-        
-        let keyDeclarations = catalogs
-            .map({ keyDeclarationGenerator.generate(from: $0, keyTypeName: request.keyTypeName) })
-            .joined(separator: "\n\n")
-        
-        return CodeResult(typeDeclaration: typeDeclaration, keyDeclarations: keyDeclarations)
+        return catalogs.map {
+            return keyDeclarationGenerator.generate(catalog: $0, keyTypeName: request.keyTypeName)
+        }
     }
 }

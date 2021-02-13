@@ -33,6 +33,7 @@
                             <constraint firstItem="4LB-EQ-sAL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ey5-4E-C9v"/>
                             <constraint firstItem="8pC-si-stZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="IgG-CE-DV1"/>
                             <constraint firstItem="8pC-si-stZ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="YaI-gI-mOO"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8pC-si-stZ" secondAttribute="trailing" id="xq6-iJ-ewv"/>
                         </constraints>
                     </view>
                     <connections>

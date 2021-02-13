@@ -11,5 +11,6 @@ class ViewController: UIViewController {
         
         label.textColor = UIColor(key: .coralPink)
         label.text = String(key: .alert_failedToLoadImage)
+        label.text = String(form: .alert_saveBeforeClose(documentTitle: "document.txt"))
     }
 }

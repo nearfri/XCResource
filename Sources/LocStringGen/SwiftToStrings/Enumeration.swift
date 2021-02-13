@@ -10,5 +10,9 @@ extension Enumeration {
         var comments: [Comment] = []
         var identifier: String
         var rawValue: RawValue
+        
+        var joinedDocumentComment: String? {
+            return comments.joinedDocumentText
+        }
     }
 }

@@ -1,4 +1,6 @@
 # XCResource
+[![Swift](https://github.com/nearfri/XCResource/workflows/Swift/badge.svg)](https://github.com/nearfri/XCResource/actions?query=workflow%3ASwift)
+
 XCResource는 xcassets 리소스 로딩과 다국어 지원을 도와주는 커맨드라인 툴입니다.
 
 이를 이용해 이미지, 컬러, 다국어 문자열을 쉽게 생성할 수 있습니다:

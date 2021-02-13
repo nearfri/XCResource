@@ -73,6 +73,7 @@
 		08765F432511D5200024D427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		088AC4DA25B4826000C1F625 /* StringForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringForm.swift; sourceTree = "<group>"; };
 		0893AE5E252F159200CB9473 /* StringKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringKeyTests.swift; sourceTree = "<group>"; };
+		08AEEF3425DA8C3400E735DA /* run-key2form.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-key2form.sh"; sourceTree = "<group>"; };
 		08F6B18C25A3FED100992B09 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				083972E725A180E50016413A /* run-csv2strings.sh */,
+				08AEEF3425DA8C3400E735DA /* run-key2form.sh */,
 				083972E825A180E50016413A /* run-strings2csv.sh */,
 				083972E425A180E50016413A /* run-swift2strings.sh */,
 				083972E625A180E50016413A /* run-xcassets2swift.sh */,
@@ -294,7 +296,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\ncd \"${SRCROOT}/Tools\"\n./run-xcassets2swift.sh\n./run-swift2strings.sh\n";
+			shellScript = "set -e\ncd \"${SRCROOT}/Tools\"\n./run-xcassets2swift.sh\n./run-key2form.sh\n./run-swift2strings.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
