@@ -33,7 +33,9 @@ struct Issue {
     var lineNumber: Int
     var columnNumber: Int
     var content: String
-    
+}
+
+extension Issue {
     init?(fileURL: URL, error: IssueReportError) {
         self.fileURL = fileURL
         self.content = error.failureDescription
