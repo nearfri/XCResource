@@ -29,6 +29,10 @@ struct KeyToForm: ParsableCommand {
     
     @Flag var excludeTypeDeclation: Bool = false
     
+    @Option(name: .customLong("issue-reporter"),
+            help: ArgumentHelp(valueName: IssueReporterType.joinedArgumentName))
+    var issueReporterType: IssueReporterType = .none
+    
     // MARK: - Run
     
     mutating func run() throws {
@@ -42,7 +46,10 @@ struct KeyToForm: ParsableCommand {
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: keyFilePath),
             formTypeName: formTypeName)
         
-        return try StringFormGenerator().generate(for: request)
+        let generator = StringFormGenerator()
+        generator.issueReporterType = issueReporterType
+        
+        return try generator.generate(for: request)
     }
     
     private func writeCodes(_ codes: StringFormGenerator.Result) throws {

@@ -36,6 +36,18 @@ extension StringFormGenerator {
             self.methodDeclarations = methodDeclarations
         }
     }
+    
+    public enum IssueReporterType: String, CaseIterable {
+        case none
+        case xcode
+        
+        func makeIssueReporter() -> IssueReporter? {
+            switch self {
+            case .none:     return nil
+            case .xcode:    return XcodeIssueReporter()
+            }
+        }
+    }
 }
 
 public class StringFormGenerator {
@@ -43,6 +55,13 @@ public class StringFormGenerator {
     private let placeholderImporter: FormatPlaceholderImporter
     private let typeDeclationGenerator: TypeDeclarationGenerator
     private let methodDeclationGenerator: MethodDeclationGenerator
+    private var issueReporter: IssueReporter?
+    
+    public var issueReporterType: IssueReporterType = .none {
+        didSet {
+            issueReporter = issueReporterType.makeIssueReporter()
+        }
+    }
     
     init(enumerationImporter: StringEnumerationImporter,
          placeholderImporter: FormatPlaceholderImporter,
@@ -63,11 +82,16 @@ public class StringFormGenerator {
     }
     
     public func generate(for request: Request) throws -> Result {
-        let typeDeclation = generateTypeDeclation(for: request)
-        
-        let methodDeclations = try generateMethodDeclations(for: request)
-        
-        return Result(typeDeclaration: typeDeclation, methodDeclarations: methodDeclations)
+        do {
+            let typeDeclation = generateTypeDeclation(for: request)
+            
+            let methodDeclations = try generateMethodDeclations(for: request)
+            
+            return Result(typeDeclaration: typeDeclation, methodDeclarations: methodDeclations)
+        } catch let error as IssueReportError {
+            reportIssue(fileURL: request.sourceCodeURL, error: error)
+            throw error
+        }
     }
     
     private func generateTypeDeclation(for request: Request) -> String {
@@ -82,8 +106,8 @@ public class StringFormGenerator {
                 .comments
                 .filter(\.isForDocument)
                 .map(\.text)
-                .map({ try placeholderImporter.import(from: $0) })
-                .flatMap({ try $0.toFunctionParameters() })
+                .map({ ($0, try placeholderImporter.import(from: $0)) })
+                .flatMap({ try makeFunctionParameters(text: $0, formatPlaceholders: $1) })
             
             return params.isEmpty ? nil : FunctionItem(enumCase: enumCase, parameters: params)
         }
@@ -92,5 +116,23 @@ public class StringFormGenerator {
             formTypeName: request.formTypeName,
             keyTypeName: enumeration.identifier,
             items: functionItems)
+    }
+    
+    private func makeFunctionParameters(
+        text: String,
+        formatPlaceholders: [FormatPlaceholder]
+    ) throws -> [FunctionParameter] {
+        do {
+            return try formatPlaceholders.toFunctionParameters()
+        } catch {
+            throw IssueReportError(text: text, failureDescription: error.localizedDescription)
+        }
+    }
+    
+    private func reportIssue(fileURL: URL, error: IssueReportError) {
+        guard let reporter = issueReporter, let issue = Issue(fileURL: fileURL, error: error) else {
+            return
+        }
+        reporter.report(issue)
     }
 }

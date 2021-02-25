@@ -6,11 +6,19 @@ class ActualFormatPlaceholderImporter: FormatPlaceholderImporter {
     private let parser: Parser<[FormatElement]> = ParserGenerator().formatElements
     
     func `import`(from string: String) throws -> [FormatPlaceholder] {
-        let formatElements = try parser.run(string)
-        
-        return formatElements.compactMap {
-            guard case let .placeholder(placeholder) = $0 else { return nil }
-            return placeholder
+        do {
+            let formatElements = try parser.run(string)
+            
+            return formatElements.compactMap {
+                guard case let .placeholder(placeholder) = $0 else { return nil }
+                return placeholder
+            }
+        } catch let error as Strix.RunError {
+            let failureDescription = (error.failureReason ?? error.localizedDescription)
+            
+            throw IssueReportError(text: string,
+                                   positionInText: error.position,
+                                   failureDescription: failureDescription)
         }
     }
 }
