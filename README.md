@@ -120,7 +120,7 @@ extension String {
 label.text = String(key: .cancel)
 ```
 
-### Swift case 주석으로 Format string 헬퍼 만들기
+### Enum case 주석으로 format string 헬퍼 만들기
 `StringKey`의 `case`에 format string 형식의 주석을 추가합니다:
 ```swift
 enum StringKey: String, CaseIterable {
