@@ -14,10 +14,10 @@ let text = String(form: .alert_attachTooLargeVideo(maxMinutes: maxMinutes))
 ## 제공기능
 `xcresource`는 다음의 하위 커맨드를 가지고 있습니다:
 - `xcassets2swift`: xcassets을 위한 Swift 코드를 생성합니다.
-- `swift2strings`: Swift enum으로 strings 파일을 만들어줍니다.
-- `key2form`: Swift enum으로 format string 코드를 만들어줍니다.
-- `strings2csv`: strings 파일로 CSV 파일을 만들어줍니다.
-- `csv2strings`: CSV 파일로 strings 파일을 만들어줍니다.
+- `swift2strings`: Swift enum으로 strings 파일을 생성합니다.
+- `key2form`: Swift enum으로 format string 코드를 생성합니다.
+- `strings2csv`: strings 파일로 CSV 파일을 생성합니다.
+- `csv2strings`: CSV 파일로 strings 파일을 생성합니다.
 
 ## 설치
 [Mint](https://github.com/yonaskolb/Mint)로 XCResource를 설치합니다:

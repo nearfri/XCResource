@@ -15,13 +15,13 @@ final class XcodeIssueReporterTests: XCTestCase {
                           content: "Expecting: any character in [diuf@]")
         
         let stdOutSniffer = StandardOutputSniffer()
-        stdOutSniffer.begin()
+        stdOutSniffer.start()
         
         // When
         sut.report(issue)
-        stdOutSniffer.end()
         
         // Then
+        stdOutSniffer.stop()
         XCTAssertEqual(stdOutSniffer.stringFromData(),
                        "/code.swift:53:21: error: Expecting: any character in [diuf@]\n")
     }

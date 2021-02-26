@@ -9,12 +9,12 @@ final class StandardOutputSnifferTests: XCTestCase {
         
         let sniffer = StandardOutputSniffer()
         
-        sniffer.begin()
+        sniffer.start()
         
         print("hello1")
         print("world1")
         
-        sniffer.end()
+        sniffer.stop()
         
         XCTAssertEqual(sniffer.stringFromData(), "hello1\nworld1\n")
         
@@ -22,11 +22,11 @@ final class StandardOutputSnifferTests: XCTestCase {
         
         XCTAssertEqual(sniffer.stringFromData(), "hello1\nworld1\n")
         
-        sniffer.begin()
+        sniffer.start()
         
         print("world2")
         
-        sniffer.end()
+        sniffer.stop()
         
         XCTAssertEqual(sniffer.stringFromData(), "hello1\nworld1\nworld2\n")
     }

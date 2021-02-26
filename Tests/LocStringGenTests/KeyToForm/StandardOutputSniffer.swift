@@ -14,11 +14,7 @@ class StandardOutputSniffer {
         dup2(STDOUT_FILENO, originalPipe.fileHandleForWriting.fileDescriptor)
     }
     
-    deinit {
-        rollback()
-    }
-    
-    func begin() {
+    func start() {
         // stdout을 replacement write handle로 연결. 이제 stdout에 쓰는건 이 handle로 전달된다.
         dup2(replacementPipe.fileHandleForWriting.fileDescriptor, STDOUT_FILENO)
         
@@ -33,7 +29,7 @@ class StandardOutputSniffer {
         try? originalPipe.fileHandleForWriting.write(contentsOf: newData)
     }
     
-    func end() {
+    func stop() {
         synchronize()
         rollback()
     }
