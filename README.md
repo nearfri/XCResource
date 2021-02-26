@@ -8,14 +8,16 @@ XCResource는 xcassets 리소스 로딩과 다국어 지원을 도와주는 커�
 let image = UIImage(key: .settings)
 let color = UIColor(key: .coralPink)
 let string = String(key: .done)
+let text = String(form: .alert_attachTooLargeVideo(maxMinutes: maxMinutes))
 ```
 
 ## 제공기능
 `xcresource`는 다음의 하위 커맨드를 가지고 있습니다:
 - `xcassets2swift`: xcassets을 위한 Swift 코드를 생성합니다.
-- `swift2strings`: Swift 코드를 strings 파일로 변환합니다.
-- `strings2csv`: strings 파일을 CSV 파일로 변환합니다.
-- `csv2strings`: CSV 파일을 strings 파일로 변환합니다.
+- `swift2strings`: Swift enum으로 strings 파일을 만들어줍니다.
+- `key2form`: Swift enum으로 format string 코드를 만들어줍니다.
+- `strings2csv`: strings 파일로 CSV 파일을 만들어줍니다.
+- `csv2strings`: CSV 파일로 strings 파일을 만들어줍니다.
 
 ## 설치
 [Mint](https://github.com/yonaskolb/Mint)로 XCResource를 설치합니다:
@@ -76,7 +78,7 @@ extension UIImage {
 imageView.image = UIImage(key: .settings)
 ```
 
-### Swift 코드로 strings 파일 만들기
+### Swift enum으로 strings 파일 만들기
 `enum` 타입의 `StringKey`를 만들어줍니다:
 ```swift
 enum StringKey: String, CaseIterable {
@@ -120,7 +122,7 @@ extension String {
 label.text = String(key: .cancel)
 ```
 
-### Enum case 주석으로 format string 헬퍼 만들기
+### Swift enum으로 format string 코드 만들기
 `StringKey`의 `case`에 format string 형식의 주석을 추가합니다:
 ```swift
 enum StringKey: String, CaseIterable {
