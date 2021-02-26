@@ -164,8 +164,8 @@
 				08765F2D2511B0E30024D427 /* ColorKey.swift */,
 				08765F292511AF230024D427 /* Color+XCAsset.swift */,
 				08765F2F2511B1110024D427 /* StringKey.swift */,
-				08765F312511B2CD0024D427 /* String+Localization.swift */,
 				088AC4DA25B4826000C1F625 /* StringForm.swift */,
+				08765F312511B2CD0024D427 /* String+Localization.swift */,
 			);
 			path = ResourceKeys;
 			sourceTree = "<group>";

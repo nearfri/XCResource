@@ -76,7 +76,7 @@ extension UIImage {
 imageView.image = UIImage(key: .settings)
 ```
 
-### Swift 코드를 strings 파일로 변환하기
+### Swift 코드로 strings 파일 만들기
 `enum` 타입의 `StringKey`를 만들어줍니다:
 ```swift
 enum StringKey: String, CaseIterable {
@@ -88,18 +88,9 @@ enum StringKey: String, CaseIterable {
 }
 ```
 
-`String`에 생성자를 추가해줍니다:
-```swift
-extension String {
-    init(key: StringKey) {
-        self = NSLocalizedString(key.rawValue, bundle: .module, comment: "")
-    }
-}
-```
-
 `xcresource swift2strings`를 실행합니다:
 ```sh
-xcrun --sdk macosx mint run xcresource xcresource swift2strings \
+xcrun --sdk macosx mint run xcresource swift2strings \
     --swift-path ../SampleApp/ResourceKeys/StringKey.swift \
     --resources-path ../SampleApp \
     --value-strategy ko:comment \
@@ -115,12 +106,71 @@ xcrun --sdk macosx mint run xcresource xcresource swift2strings \
 "confirm" = "확인";
 ```
 
+`String`에 생성자를 추가해줍니다:
+```swift
+extension String {
+    init(key: StringKey) {
+        self = NSLocalizedString(key.rawValue, bundle: .module, comment: "")
+    }
+}
+```
+
 이제 자동완성과 함께 지역화된 문자열을 생성할 수 있습니다:
 ```swift
 label.text = String(key: .cancel)
 ```
 
-### strings 파일을 CSV 파일로 변환하기
+### Swift case 주석으로 Format string 헬퍼 만들기
+`StringKey`의 `case`에 format string 형식의 주석을 추가합니다:
+```swift
+enum StringKey: String, CaseIterable {
+    /// 동영상 첨부는 최대 %ld{maxMinutes}분까지 가능합니다.\n다른 파일을 선택해주세요.
+    case alert_attachTooLargeVideo
+}
+```
+
+`xcresource key2form`을 실행합니다:
+```sh
+xcrun --sdk macosx mint run xcresource key2form \
+    --key-path ../SampleApp/ResourceKeys/StringKey.swift \
+    --form-path ../SampleApp/ResourceKeys/StringForm.swift \
+    --form-type-name StringForm \
+    --issue-reporter xcode
+```
+
+아래와 같은 코드가 생성됩니다:
+```swift
+struct StringForm {
+    var key: String
+    var arguments: [CVarArg]
+}
+
+extension StringForm {
+    /// 동영상 첨부는 최대 %ld{maxMinutes}분까지 가능합니다.\n다른 파일을 선택해주세요.
+    static func alert_attachTooLargeVideo(maxMinutes: Int) -> StringForm {
+        return StringForm(
+            key: StringKey.alert_attachTooLargeVideo.rawValue,
+            arguments: [maxMinutes])
+    }
+}
+```
+
+`String`에 생성자를 추가해줍니다:
+```swift
+extension String {
+    init(form: StringForm) {
+        let format = NSLocalizedString(form.key, bundle: .module, comment: "")
+        self.init(format: format, locale: .current, arguments: form.arguments)
+    }
+}
+```
+
+이제 자동완성과 함께 지역화된 문자열을 생성할 수 있습니다:
+```swift
+label.text = String(form: .alert_attachTooLargeVideo(maxMinutes: maxMinutes))
+```
+
+### strings 파일로 CSV 파일 만들기
 `xcresource strings2csv`를 실행합니다:
 ```sh
 mint run xcresource strings2csv \
@@ -137,7 +187,7 @@ mint run xcresource strings2csv \
 | cancel | 취소 | 취소 | |
 | confirm | 확인 | 확인 | |
 
-### CSV 파일을 strings 파일로 변환하기
+### CSV 파일로 strings 파일 만들기
 `xcresource csv2strings`를 실행합니다:
 ```sh
 mint run xcresource csv2strings \
