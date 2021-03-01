@@ -12,6 +12,14 @@ final class LocalizationItemTests: XCTestCase {
         XCTAssertEqual(sut.applying(.custom("Custom String")).value, "Custom String")
     }
     
+    func test_applyingValueStrategy_formattedComment() {
+        let sut = LocalizationItem(comment: "Comment %ld{count} %ld{{bracket} String",
+                                   key: "Key String",
+                                   value: "")
+        
+        XCTAssertEqual(sut.applying(.comment).value, "Comment %ld %ld{bracket} String")
+    }
+    
     func test_combiningOther() {
         // Given
         let sut: [LocalizationItem] = [

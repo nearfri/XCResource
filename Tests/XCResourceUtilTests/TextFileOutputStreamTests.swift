@@ -128,7 +128,7 @@ final class TextFileOutputStreamTests: XCTestCase {
         // When
         print(text, terminator: "", to: &TextFileOutputStream.standardOutput)
         fflush(stdout)
-        stdReadHandle.waitForDataInBackgroundAndNotify(forModes: [.default])
+        stdReadHandle.waitForDataInBackgroundAndNotify(forModes: [.common])
         
         // Then
         let dataString = try XCTUnwrap(String(data: data, encoding: .utf8))

@@ -1,4 +1,5 @@
 import Foundation
+import Strix
 
 struct LocalizationItem: Equatable {
     var comment: String?
@@ -12,7 +13,7 @@ extension LocalizationItem {
         
         switch valueStrategy {
         case .comment:
-            result.value = result.comment ?? ""
+            result.value = result.comment?.removingFormatLabels() ?? ""
         case .key:
             result.value = result.key
         case .custom(let string):
@@ -20,6 +21,14 @@ extension LocalizationItem {
         }
         
         return result
+    }
+}
+
+private extension String {
+    func removingFormatLabels() -> String {
+        if !contains("%") { return self }
+        
+        return (try? Parser.formatLabelRemoval.run(self)) ?? self
     }
 }
 

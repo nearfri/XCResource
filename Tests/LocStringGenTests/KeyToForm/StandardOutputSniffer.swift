@@ -37,7 +37,7 @@ class StandardOutputSniffer {
     private func synchronize() {
         // fflush(stdout) 해도 됨
         try? replacementPipe.fileHandleForWriting.synchronize()
-        replacementPipe.fileHandleForReading.waitForDataInBackgroundAndNotify(forModes: [.default])
+        replacementPipe.fileHandleForReading.waitForDataInBackgroundAndNotify(forModes: [.common])
     }
     
     private func rollback() {
