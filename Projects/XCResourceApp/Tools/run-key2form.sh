@@ -4,7 +4,7 @@
 set -e
 
 xcrun --sdk macosx swift run --package-path ../../../ xcresource key2form \
-    --key-path ../XCResourceApp/ResourceKeys/StringKey.swift \
-    --form-path ../XCResourceApp/ResourceKeys/StringForm.swift \
+    --key-file-path ../XCResourceApp/ResourceKeys/StringKey.swift \
+    --form-file-path ../XCResourceApp/ResourceKeys/StringForm.swift \
     --form-type-name StringForm \
     --issue-reporter xcode

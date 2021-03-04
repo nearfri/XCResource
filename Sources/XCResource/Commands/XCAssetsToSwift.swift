@@ -22,6 +22,13 @@ struct XCAssetsToSwift: ParsableCommand {
             추출한 키 파일은 앱에서 리소스 로딩에 사용할 수 있다.
             """)
     
+    // MARK: - Default values
+    
+    enum Default {
+        static let assetTypes: [AssetType] = []
+        static let excludesTypeDeclation: Bool = false
+    }
+    
     // MARK: - Arguments
     
     @Option(name: .customLong("xcassets-path"))
@@ -33,14 +40,15 @@ struct XCAssetsToSwift: ParsableCommand {
                 "Asset type to export.",
                 discussion: "If not specified, all asset types are exported. For more "
                     + "information about possible types, see \(catalogDocumentURLString)",
-                valueName: AssetType.someValueStrings.joined(separator: "|")))
-    var assetTypes: [AssetType] = []
+                valueName: AssetType.joinedValueStrings))
+    var assetTypes: [AssetType] = Default.assetTypes
     
     @Option var swiftPath: String
     
     @Option var swiftTypeName: String
     
-    @Flag var excludeTypeDeclation: Bool = false
+    @Flag(name: .customLong("exclude-type-declation"))
+    var excludesTypeDeclation: Bool = Default.excludesTypeDeclation
     
     // MARK: - Run
     
@@ -65,7 +73,7 @@ struct XCAssetsToSwift: ParsableCommand {
         
         print(headerComment, terminator: "\n\n", to: &stream)
         
-        if !excludeTypeDeclation {
+        if !excludesTypeDeclation {
             print(codes.typeDeclaration, terminator: "\n\n", to: &stream)
         }
         

@@ -71,6 +71,8 @@
 		08765F3F2511D5200024D427 /* XCResourceAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCResourceAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08765F412511D5200024D427 /* XCResourceAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCResourceAppTests.swift; sourceTree = "<group>"; };
 		08765F432511D5200024D427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		08872BDA25F11346003F008E /* xcresource.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = xcresource.json; sourceTree = "<group>"; };
+		08872BDB25F1137E003F008E /* run-xcresource.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-xcresource.sh"; sourceTree = "<group>"; };
 		088AC4DA25B4826000C1F625 /* StringForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringForm.swift; sourceTree = "<group>"; };
 		0893AE5E252F159200CB9473 /* StringKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringKeyTests.swift; sourceTree = "<group>"; };
 		08AEEF3425DA8C3400E735DA /* run-key2form.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-key2form.sh"; sourceTree = "<group>"; };
@@ -108,6 +110,8 @@
 		083972E325A180E50016413A /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				08872BDA25F11346003F008E /* xcresource.json */,
+				08872BDB25F1137E003F008E /* run-xcresource.sh */,
 				083972E725A180E50016413A /* run-csv2strings.sh */,
 				08AEEF3425DA8C3400E735DA /* run-key2form.sh */,
 				083972E825A180E50016413A /* run-strings2csv.sh */,
@@ -296,7 +300,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\ncd \"${SRCROOT}/Tools\"\n./run-xcassets2swift.sh\n./run-key2form.sh\n./run-swift2strings.sh\n";
+			shellScript = "set -e\ncd \"${SRCROOT}/Tools\"\n./run-xcresource.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

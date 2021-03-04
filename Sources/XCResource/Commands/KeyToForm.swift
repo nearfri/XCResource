@@ -17,21 +17,27 @@ struct KeyToForm: ParsableCommand {
             StringForm은 String.init(format: String, _ arguments: CVarArg...)에 사용할 수 있다.
             """)
     
+    // MARK: - Default values
+    
+    enum Default {
+        static let excludesTypeDeclation: Bool = false
+        static let issueReporterType: IssueReporterType = .none
+    }
+    
     // MARK: - Arguments
     
-    @Option(name: .customLong("key-path"))
-    var keyFilePath: String
+    @Option var keyFilePath: String
     
-    @Option(name: .customLong("form-path"))
-    var formFilePath: String
+    @Option var formFilePath: String
     
     @Option var formTypeName: String
     
-    @Flag var excludeTypeDeclation: Bool = false
+    @Flag(name: .customLong("exclude-type-declation"))
+    var excludesTypeDeclation: Bool = Default.excludesTypeDeclation
     
     @Option(name: .customLong("issue-reporter"),
-            help: ArgumentHelp(valueName: IssueReporterType.joinedArgumentName))
-    var issueReporterType: IssueReporterType = .none
+            help: ArgumentHelp(valueName: IssueReporterType.joinedValueStrings))
+    var issueReporterType: IssueReporterType = Default.issueReporterType
     
     // MARK: - Run
     
@@ -58,7 +64,7 @@ struct KeyToForm: ParsableCommand {
         
         print(headerComment, terminator: "\n\n", to: &stream)
         
-        if !excludeTypeDeclation {
+        if !excludesTypeDeclation {
             print(codes.typeDeclaration, terminator: "\n\n", to: &stream)
         }
         

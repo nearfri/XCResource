@@ -11,20 +11,30 @@ struct StringsToCSV: ParsableCommand {
             Localizable.strings 파일을 CSV 파일로 변환한다.
             """)
     
+    // MARK: - Default values
+    
+    enum Default {
+        static let tableName: String = "Localizable"
+        static let developmentLanguage: String = "en"
+        static let headerStyle: LanguageFormatterStyle = .long(Locale.current)
+        static let writesBOM: Bool = false
+    }
+    
     // MARK: - Arguments
     
     @Option var resourcesPath: String
     
-    @Option var tableName: String = "Localizable"
+    @Option var tableName: String = Default.tableName
     
-    @Option var developmentLanguage: String = "en"
+    @Option var developmentLanguage: String = Default.developmentLanguage
     
     @Option var csvPath: String
     
-    @Option(help: ArgumentHelp(valueName: LanguageFormatterStyle.joinedArgumentName))
-    var headerStyle: LanguageFormatterStyle = .long(Locale.current)
+    @Option(help: ArgumentHelp(valueName: LanguageFormatterStyle.joinedValueStrings))
+    var headerStyle: LanguageFormatterStyle = Default.headerStyle
     
-    @Flag var writeBOM: Bool = false
+    @Flag(name: .customLong("write-bom"))
+    var writesBOM: Bool = Default.writesBOM
     
     // MARK: - Run
     
@@ -47,7 +57,7 @@ struct StringsToCSV: ParsableCommand {
     
     private func writeCSV(_ csv: String) throws {
         let csvAsData = csv.data(using: .utf8)!
-        let csvFileData = writeBOM ? Data([0xEF, 0xBB, 0xBF] + csvAsData) : csvAsData
+        let csvFileData = writesBOM ? Data([0xEF, 0xBB, 0xBF] + csvAsData) : csvAsData
         
         let csvURL = URL(fileURLWithExpandingTildeInPath: csvPath)
         

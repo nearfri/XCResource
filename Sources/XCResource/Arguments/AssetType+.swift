@@ -19,4 +19,8 @@ extension AssetType: ExpressibleByArgument {
         let someTypes: [AssetType] = [.imageSet, .colorSet, .symbolSet, .dataSet]
         return someTypes.map(\.pathExtension) + ["..."]
     }
+    
+    static var joinedValueStrings: String {
+        return someValueStrings.joined(separator: "|")
+    }
 }

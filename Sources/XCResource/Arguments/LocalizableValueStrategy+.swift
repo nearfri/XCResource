@@ -25,7 +25,7 @@ extension LocalizableValueStrategy: ExpressibleByArgument {
         return ["comment", "key", "custom-string"]
     }
     
-    static var joinedArgumentName: String {
+    static var joinedValueStrings: String {
         return allValueStrings.joined(separator: "|")
     }
 }

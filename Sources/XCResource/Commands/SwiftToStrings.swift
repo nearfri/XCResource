@@ -16,33 +16,44 @@ struct SwiftToStrings: ParsableCommand {
             - 소스 코드에 없는 key는 strings 파일에서 제거한다.
             """)
     
+    // MARK: - Default values
+    
+    enum Default {
+        static let tableName: String = "Localizable"
+        static let languages: [String] = []
+        static let defaultValueStrategy: LocalizableValueStrategy = .custom("UNTRANSLATED-TEXT")
+        static let valueStrategyArguments: [ValueStrategyArgument] = []
+        static let sortsByKey: Bool = false
+    }
+    
     // MARK: - Arguments
     
     @Option var swiftPath: String
     
     @Option var resourcesPath: String
     
-    @Option var tableName: String = "Localizable"
+    @Option var tableName: String = Default.tableName
     
     @Option(name: .customLong("language"),
             parsing: .upToNextOption,
             help: ArgumentHelp(
                 "Language to convert.",
                 discussion: "If not specified, all languages are converted."))
-    var languages: [String] = []
+    var languages: [String] = Default.languages
     
-    @Option(help: ArgumentHelp(valueName: LocalizableValueStrategy.joinedArgumentName))
-    var defaultValueStrategy: LocalizableValueStrategy = .custom("UNTRANSLATED-TEXT")
+    @Option(help: ArgumentHelp(valueName: LocalizableValueStrategy.joinedValueStrings))
+    var defaultValueStrategy: LocalizableValueStrategy = Default.defaultValueStrategy
     
     @Option(name: .customLong("value-strategy"),
             parsing: .upToNextOption,
             help: ArgumentHelp(
                 "Value strategy by language.",
                 discussion: "If not specified, default-value-strategy is used.",
-                valueName: "language:<\(LocalizableValueStrategy.joinedArgumentName)>"))
-    var valueStrategyArguments: [ValueStrategyArgument] = []
+                valueName: "language:<\(LocalizableValueStrategy.joinedValueStrings)>"))
+    var valueStrategyArguments: [ValueStrategyArgument] = Default.valueStrategyArguments
     
-    @Flag var sortByKey: Bool = false
+    @Flag(name: .customLong("sort-by-key"))
+    var sortsByKey: Bool = Default.sortsByKey
     
     // MARK: - Run
     
@@ -62,7 +73,7 @@ struct SwiftToStrings: ParsableCommand {
             languages: languages.isEmpty ? nil : languages.map({ LanguageID($0) }),
             defaultValueStrategy: defaultValueStrategy,
             valueStrategiesByLanguage: valueStrategyArguments.strategiesByLanguage,
-            sortOrder: sortByKey ? .key : .occurrence)
+            sortOrder: sortsByKey ? .key : .occurrence)
         
         return try LocalizableStringsGenerator().generate(for: request)
     }

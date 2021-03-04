@@ -6,6 +6,11 @@ struct ValueStrategyArgument: ExpressibleByArgument {
     var language: String
     var strategy: LocalizableValueStrategy
     
+    init(language: String, strategy: LocalizableValueStrategy) {
+        self.language = language
+        self.strategy = strategy
+    }
+    
     init?(argument: String) {
         guard let separatorIndex = argument.firstIndex(of: ":") else { return nil }
         

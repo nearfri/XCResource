@@ -19,8 +19,8 @@ final class KeyToFormTests: XCTestCase {
         
         process.arguments = [
             "key2form",
-            "--key-path", SampleData.sourceCodeURL("StringKey.swift").path,
-            "--form-path", formFileURL.path,
+            "--key-file-path", SampleData.sourceCodeURL("StringKey.swift").path,
+            "--form-file-path", formFileURL.path,
             "--form-type-name", "StringForm",
         ]
         

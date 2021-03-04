@@ -11,18 +11,27 @@ struct CSVToStrings: ParsableCommand {
             CSV 파일을 Localizable.strings 파일로 변환한다.
             """)
     
+    // MARK: - Default values
+    
+    enum Default {
+        static let headerStyle: LanguageFormatterStyle = .long(Locale.current)
+        static let tableName: String = "Localizable"
+        static let includesEmptyFields: Bool = false
+    }
+    
     // MARK: - Arguments
     
     @Option var csvPath: String
     
-    @Option(help: ArgumentHelp(valueName: LanguageFormatterStyle.joinedArgumentName))
-    var headerStyle: LanguageFormatterStyle = .long(Locale.current)
+    @Option(help: ArgumentHelp(valueName: LanguageFormatterStyle.joinedValueStrings))
+    var headerStyle: LanguageFormatterStyle = Default.headerStyle
     
     @Option var resourcesPath: String
     
-    @Option var tableName: String = "Localizable"
+    @Option var tableName: String = Default.tableName
     
-    @Flag var includeEmptyFields: Bool = false
+    @Flag(name: .customLong("include-empty-fields"))
+    var includesEmptyFields: Bool = Default.includesEmptyFields
     
     // MARK: - Run
     
@@ -37,7 +46,7 @@ struct CSVToStrings: ParsableCommand {
     private func generateStrings() throws -> [LanguageID: String] {
         let request = LocalizationImporter.Request(
             tableSource: .file(URL(fileURLWithExpandingTildeInPath: csvPath)),
-            includesEmptyFields: includeEmptyFields)
+            includesEmptyFields: includesEmptyFields)
         
         let importer = LocalizationImporter()
         importer.headerStyle = headerStyle
