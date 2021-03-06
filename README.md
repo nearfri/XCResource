@@ -134,8 +134,8 @@ enum StringKey: String, CaseIterable {
 `xcresource key2form`을 실행합니다:
 ```sh
 xcrun --sdk macosx mint run xcresource key2form \
-    --key-path ../SampleApp/ResourceKeys/StringKey.swift \
-    --form-path ../SampleApp/ResourceKeys/StringForm.swift \
+    --key-file-path ../SampleApp/ResourceKeys/StringKey.swift \
+    --form-file-path ../SampleApp/ResourceKeys/StringForm.swift \
     --form-type-name StringForm \
     --issue-reporter xcode
 ```
