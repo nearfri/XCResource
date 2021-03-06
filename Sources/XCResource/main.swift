@@ -6,11 +6,11 @@ struct XCResource: ParsableCommand {
         commandName: "xcresource",
         abstract: "리소스 코드 생성 유틸리티",
         subcommands: [
-            InitManifest.self, RunCommands.self,
+            InitManifest.self, RunManifest.self,
             XCAssetsToSwift.self, KeyToForm.self,
             SwiftToStrings.self, StringsToCSV.self, CSVToStrings.self
         ],
-        defaultSubcommand: RunCommands.self)
+        defaultSubcommand: RunManifest.self)
 }
 
 XCResource.main()

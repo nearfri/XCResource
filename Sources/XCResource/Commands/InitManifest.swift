@@ -9,7 +9,9 @@ struct InitManifest: ParsableCommand {
     // MARK: - Run
     
     mutating func run() throws {
-        let fileURL = URL(fileURLWithPath: RunCommands.Default.manifestPath)
+        let fileURL = URL(fileURLWithPath: RunManifest.Default.manifestPath)
+        
+        print("Creating manifest file: \(fileURL.lastPathComponent)")
         
         if FileManager.default.fileExists(atPath: fileURL.path) {
             throw InitError.manifestAlreadyExists
@@ -25,7 +27,7 @@ private enum InitError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .manifestAlreadyExists:
-            return "a manifest file already exists in this directory"
+            return "A manifest file already exists in this directory"
         }
     }
 }
@@ -59,9 +61,7 @@ private let manifestTemplate = """
             "swiftPath": "<#swift file path#>",
             "resourcesPath": "<#resources path#>",
             "tableName": "Localizable",
-            "languages": [
-                "<#language to convert. If not specified, all languages are converted.#>"
-            ],
+            "languages": ["<#language to convert. If not specified, all languages are converted.#>"],
             "defaultValueStrategy": "<#comment|key|custom-string#>",
             "valueStrategies": [
                 {

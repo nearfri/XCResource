@@ -2,7 +2,7 @@ import Foundation
 import ArgumentParser
 import XCResourceUtil
 
-struct RunCommands: ParsableCommand {
+struct RunManifest: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
         commandName: "run",
         abstract: "Run commands listed in the manifest file")
