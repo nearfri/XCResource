@@ -6,15 +6,12 @@ final class StringsToCSVTests: XCTestCase {
     func test_main() throws {
         let fm = FileManager.default
         
-        let localizationURL = SampleData.localizationDirectoryURL()
-        let resourcesURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-        try fm.copyItem(at: localizationURL, to: resourcesURL)
-        
-        let urlOfActualCSVFile = resourcesURL.appendingPathComponent(UUID().uuidString)
-        let urlOfExpectedCSVFile = localizationURL.appendingPathComponent("translation.csv")
+        let resourcesURL = SampleData.localizationDirectoryURL()
+        let urlOfActualCSVFile = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let urlOfExpectedCSVFile = resourcesURL.appendingPathComponent("translation.csv")
         
         defer {
-            try? fm.removeItem(at: resourcesURL)
+            try? fm.removeItem(at: urlOfActualCSVFile)
         }
         
         let executableURL = productsDirectory.appendingPathComponent("xcresource")

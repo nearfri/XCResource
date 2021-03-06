@@ -10,7 +10,7 @@ final class CSVToStringsTests: XCTestCase {
         let resourcesURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try fm.copyItem(at: localizationURL, to: resourcesURL)
         
-        let csvFileURL = localizationURL.appendingPathComponent("translation.csv")
+        let csvFileURL = resourcesURL.appendingPathComponent("translation.csv")
         
         defer {
             try? fm.removeItem(at: resourcesURL)

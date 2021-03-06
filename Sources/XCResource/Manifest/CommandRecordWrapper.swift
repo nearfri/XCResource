@@ -1,5 +1,10 @@
 import Foundation
 
+private let allRecordTypes: [CommandRecord.Type] = [
+    KeyToFormRecord.self, SwiftToStringsRecord.self, XCAssetsToSwiftRecord.self,
+    StringsToCSVRecord.self, CSVToStringsRecord.self,
+]
+
 struct CommandRecordWrapper: Codable {
     private enum CodingKeys: String, CodingKey {
         case commandName
@@ -12,10 +17,6 @@ struct CommandRecordWrapper: Codable {
     }
     
     init(from decoder: Decoder) throws {
-        let allRecordTypes: [CommandRecord.Type] = [
-            KeyToFormRecord.self, SwiftToStringsRecord.self, XCAssetsToSwiftRecord.self
-        ]
-        
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let commandName = try container.decode(String.self, forKey: .commandName)
         
