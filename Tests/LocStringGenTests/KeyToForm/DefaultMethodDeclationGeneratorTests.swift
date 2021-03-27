@@ -1,7 +1,7 @@
 import XCTest
 @testable import LocStringGen
 
-final class ActualMethodDeclationGeneratorTests: XCTestCase {
+final class DefaultMethodDeclationGeneratorTests: XCTestCase {
     private let formTypeName: String = "StringForm"
     private let keyTypeName: String = "StringKey"
     
@@ -25,7 +25,7 @@ final class ActualMethodDeclationGeneratorTests: XCTestCase {
         }
         """
         
-        let sut = ActualMethodDeclationGenerator()
+        let sut = DefaultMethodDeclationGenerator()
         
         // When
         let actualDeclation = sut.generate(formTypeName: formTypeName,
@@ -63,7 +63,7 @@ final class ActualMethodDeclationGeneratorTests: XCTestCase {
         }
         """
         
-        let sut = ActualMethodDeclationGenerator()
+        let sut = DefaultMethodDeclationGenerator()
         
         // When
         let actualDeclation = sut.generate(formTypeName: formTypeName,
@@ -97,7 +97,7 @@ final class ActualMethodDeclationGeneratorTests: XCTestCase {
         }
         """
         
-        let sut = ActualMethodDeclationGenerator()
+        let sut = DefaultMethodDeclationGenerator()
         
         // When
         let actualDeclation = sut.generate(formTypeName: formTypeName,
@@ -156,7 +156,7 @@ final class ActualMethodDeclationGeneratorTests: XCTestCase {
         }
         """
         
-        let sut = ActualMethodDeclationGenerator()
+        let sut = DefaultMethodDeclationGenerator()
         
         // When
         let actualDeclation = sut.generate(formTypeName: formTypeName,
@@ -196,7 +196,7 @@ final class ActualMethodDeclationGeneratorTests: XCTestCase {
         }
         """
         
-        let sut = ActualMethodDeclationGenerator()
+        let sut = DefaultMethodDeclationGenerator()
         
         // When
         let actualDeclation = sut.generate(formTypeName: formTypeName,
@@ -252,7 +252,7 @@ final class ActualMethodDeclationGeneratorTests: XCTestCase {
         }
         """
         
-        let sut = ActualMethodDeclationGenerator()
+        let sut = DefaultMethodDeclationGenerator()
         
         // When
         let actualDeclations = sut.generate(formTypeName: formTypeName,

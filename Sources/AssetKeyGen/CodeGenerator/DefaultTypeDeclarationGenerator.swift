@@ -1,6 +1,6 @@
 import Foundation
 
-class ActualTypeDeclarationGenerator: TypeDeclarationGenerator {
+class DefaultTypeDeclarationGenerator: TypeDeclarationGenerator {
     func generate(keyTypeName: String) -> String {
         return """
             struct \(keyTypeName): ExpressibleByStringLiteral, Hashable {

@@ -1,6 +1,6 @@
 import Foundation
 
-class ActualAssetCatalogFetcher: AssetCatalogFetcher {
+class DefaultAssetCatalogFetcher: AssetCatalogFetcher {
     func fetch(at url: URL) throws -> AssetCatalog {
         let rootContent = try ContentTreeGenerator().load(at: url)
         let assets = rootContent

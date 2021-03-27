@@ -2,7 +2,7 @@ import XCTest
 @testable import LocStringGen
 
 final class ActualFormatPlaceholderImporterTests: XCTestCase {
-    private let sut: ActualFormatPlaceholderImporter = .init()
+    private let sut: DefaultFormatPlaceholderImporter = .init()
     
     func test_import_withoutLabel() throws {
         // Given

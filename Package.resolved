@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/nearfri/Strix",
         "state": {
           "branch": null,
-          "revision": "4cca8f46f5a48a436cab437ebd1e03a52809f482",
-          "version": "2.3.2"
+          "revision": "b90154ed22e45c62903d8fb369f7b28590617a46",
+          "version": "2.3.3"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
-          "revision": "69ddee8c323ed468539e3b05e8c01e3d5a37bf6a",
-          "version": "0.4.0"
+          "revision": "831ed5e860a70e745bc1337830af4786b2576881",
+          "version": "0.4.1"
         }
       },
       {

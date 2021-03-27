@@ -1,6 +1,6 @@
 import Foundation
 
-class ActualLanguageFormatter: LanguageFormatter {
+class DefaultLanguageFormatter: LanguageFormatter {
     var style: LanguageFormatterStyle = .short
     
     private let longStyleRegex: NSRegularExpression = try! .init(pattern: #".+ \((.+)\)$"#)

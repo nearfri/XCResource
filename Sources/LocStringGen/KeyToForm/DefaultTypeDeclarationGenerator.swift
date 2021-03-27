@@ -1,6 +1,6 @@
 import Foundation
 
-class ActualTypeDeclarationGenerator: TypeDeclarationGenerator {
+class DefaultTypeDeclarationGenerator: TypeDeclarationGenerator {
     func generate(formTypeName: String) -> String {
         return """
             struct \(formTypeName) {

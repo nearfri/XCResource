@@ -51,9 +51,9 @@ public class AssetKeyGenerator {
     }
     
     public convenience init() {
-        self.init(catalogFetcher: ActualAssetCatalogFetcher(),
-                  typeDeclarationGenerator: ActualTypeDeclarationGenerator(),
-                  keyDeclarationGenerator: ActualKeyDeclarationGenerator())
+        self.init(catalogFetcher: DefaultAssetCatalogFetcher(),
+                  typeDeclarationGenerator: DefaultTypeDeclarationGenerator(),
+                  keyDeclarationGenerator: DefaultKeyDeclarationGenerator())
     }
     
     public func generate(for request: Request) throws -> Result {

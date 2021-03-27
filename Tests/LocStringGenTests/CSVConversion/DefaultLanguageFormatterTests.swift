@@ -5,8 +5,8 @@ private enum Seed {
     static let language: LanguageID = "ko"
 }
 
-final class ActualLanguageFormatterTests: XCTestCase {
-    private let sut: ActualLanguageFormatter = .init()
+final class DefaultLanguageFormatterTests: XCTestCase {
+    private let sut: DefaultLanguageFormatter = .init()
     
     func test_stringFromLanguage_shortStyle() {
         // Given

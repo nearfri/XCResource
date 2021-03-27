@@ -46,7 +46,7 @@ public class LocalizationImporter {
     
     public convenience init() {
         self.init(tableDecoder: CSVTableDecoder(),
-                  languageFormatter: ActualLanguageFormatter(),
+                  languageFormatter: DefaultLanguageFormatter(),
                   plistGenerator: ASCIIPlistGenerator())
     }
     

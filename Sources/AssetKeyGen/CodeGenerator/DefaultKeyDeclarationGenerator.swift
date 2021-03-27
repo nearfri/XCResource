@@ -1,6 +1,6 @@
 import Foundation
 
-class ActualKeyDeclarationGenerator: KeyDeclarationGenerator {
+class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
     func generate(catalog: AssetCatalog, keyTypeName: String) -> String {
         var result = ""
         

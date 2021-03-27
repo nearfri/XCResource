@@ -2,10 +2,10 @@ import XCTest
 import SampleData
 @testable import AssetKeyGen
 
-final class ActualAssetCatalogFetcherTests: XCTestCase {
+final class DefaultAssetCatalogFetcherTests: XCTestCase {
     func test_fetch() throws {
         // Given
-        let sut = ActualAssetCatalogFetcher()
+        let sut = DefaultAssetCatalogFetcher()
         let imagePath = "Settings/settingsRate.imageset"
         
         // When

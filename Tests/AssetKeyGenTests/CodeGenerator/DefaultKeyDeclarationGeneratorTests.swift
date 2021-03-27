@@ -1,7 +1,7 @@
 import XCTest
 @testable import AssetKeyGen
 
-final class ActualKeyDeclarationGeneratorTests: XCTestCase {
+final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
     func test_generate() {
         // Given
         let catalog = AssetCatalog(
@@ -28,7 +28,7 @@ final class ActualKeyDeclarationGeneratorTests: XCTestCase {
         }
         """
         
-        let sut = ActualKeyDeclarationGenerator()
+        let sut = DefaultKeyDeclarationGenerator()
         
         // When
         let actualDeclations = sut.generate(catalog: catalog, keyTypeName: keyTypeName)

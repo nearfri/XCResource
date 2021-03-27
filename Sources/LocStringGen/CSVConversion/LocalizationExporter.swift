@@ -39,9 +39,9 @@ public class LocalizationExporter {
     }
     
     public convenience init() {
-        self.init(languageDetector: ActualLanguageDetector(),
+        self.init(languageDetector: DefaultLanguageDetector(),
                   itemImporter: ASCIIPlistImporter(),
-                  languageFormatter: ActualLanguageFormatter(),
+                  languageFormatter: DefaultLanguageFormatter(),
                   tableEncoder: CSVTableEncoder())
     }
     

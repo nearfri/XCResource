@@ -2,10 +2,10 @@ import XCTest
 import SampleData
 @testable import LocStringGen
 
-final class ActualLanguageDetectorTests: XCTestCase {
+final class DefaultLanguageDetectorTests: XCTestCase {
     func test_detect() throws {
         // Given
-        let sut = ActualLanguageDetector()
+        let sut = DefaultLanguageDetector()
         let resourcesURL = SampleData.localizationDirectoryURL()
         
         // When

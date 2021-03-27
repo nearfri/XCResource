@@ -1,6 +1,6 @@
 import Foundation
 
-class ActualLanguageDetector: LanguageDetector {
+class DefaultLanguageDetector: LanguageDetector {
     func detect(at url: URL) throws -> [LanguageID] {
         let pathExtension = ".lproj"
         return try FileManager.default

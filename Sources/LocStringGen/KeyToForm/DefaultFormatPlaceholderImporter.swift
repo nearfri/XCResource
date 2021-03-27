@@ -2,7 +2,7 @@ import Foundation
 import Strix
 import StrixParsers
 
-class ActualFormatPlaceholderImporter: FormatPlaceholderImporter {
+class DefaultFormatPlaceholderImporter: FormatPlaceholderImporter {
     private let parser: Parser<[FormatElement]> = Parser.formatElements
     
     func `import`(from string: String) throws -> [FormatPlaceholder] {

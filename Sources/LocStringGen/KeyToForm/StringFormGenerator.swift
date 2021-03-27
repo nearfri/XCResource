@@ -76,9 +76,9 @@ public class StringFormGenerator {
     
     public convenience init() {
         self.init(enumerationImporter: SwiftSourceImporter(),
-                  placeholderImporter: ActualFormatPlaceholderImporter(),
-                  typeDeclationGenerator: ActualTypeDeclarationGenerator(),
-                  methodDeclationGenerator: ActualMethodDeclationGenerator())
+                  placeholderImporter: DefaultFormatPlaceholderImporter(),
+                  typeDeclationGenerator: DefaultTypeDeclarationGenerator(),
+                  methodDeclationGenerator: DefaultMethodDeclationGenerator())
     }
     
     public func generate(for request: Request) throws -> Result {
