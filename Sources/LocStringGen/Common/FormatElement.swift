@@ -36,7 +36,7 @@ private struct ParserGenerator {
     // `%ld{duration}` 같이 format specifier와 그 뒤에 `{}`로 감싼 레이블을 파싱한다.
     // 레이블을 파싱하지 않으려면 `%ld{{duration}` 같이 `{`을 두 번 쓴다.
     private var placeholder: Parser<FormatElement> {
-        return Parser.formatSpecifier.flatMap { formatSpecifier in
+        return Parser.formatSpecifier.flatMap { [labelsOrEmptyArray] formatSpecifier in
             switch formatSpecifier {
             case .percentSign:
                 return .just(.character("%"))
@@ -47,7 +47,7 @@ private struct ParserGenerator {
     }
     
     private var labelsOrEmptyArray: Parser<[String]> {
-        (emptyLabelsIfDoubleBracket <|> labels <|> .just([]))
+        return emptyLabelsIfDoubleBracket <|> labels <|> .just([])
     }
     
     private let emptyLabelsIfDoubleBracket: Parser<[String]> = {
