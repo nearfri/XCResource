@@ -5,10 +5,10 @@ XCResource는 xcassets 리소스 로딩과 다국어 지원을 도와주는 커�
 
 이를 이용해 이미지, 컬러, 다국어 문자열을 쉽게 생성할 수 있습니다:
 ```swift
-let image = UIImage(key: .settings)
-let color = UIColor(key: .coralPink)
-let string = String(key: .done)
-let text = String(form: .alert_attachTooLargeVideo(maxMinutes: maxMinutes))
+let image = UIImage.named(.settings)
+let color = UIColor.named(.coralPink)
+let string = String.localized(.done)
+let text = String.formatted(.alert_attachTooLargeVideo(maxMinutes: maxMinutes))
 ```
 
 ## 제공기능
