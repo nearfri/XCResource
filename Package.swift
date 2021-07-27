@@ -16,7 +16,7 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.1"),
-        .package(name: "SwiftSyntax", url: "https://github.com/apple/swift-syntax", .exact("0.50300.0")),
+        .package(name: "SwiftSyntax", url: "https://github.com/apple/swift-syntax", .exact("0.50400.0")),
         .package(url: "https://github.com/nearfri/Strix", from: "2.2.1"),
     ],
     targets: [

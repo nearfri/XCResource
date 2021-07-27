@@ -3,8 +3,8 @@ import UIKit
 import SwiftUI
 
 extension UIImage {
-    convenience init(key: ImageKey) {
-        self.init(named: key.rawValue, in: .module, compatibleWith: nil)!
+    static func named(_ key: ImageKey) -> UIImage {
+        return UIImage(named: key.rawValue, in: .module, compatibleWith: nil)!
     }
 }
 

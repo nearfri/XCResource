@@ -7,10 +7,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageView.image = UIImage(key: .places_authArrow)
+        imageView.image = .named(.places_authArrow)
         
-        label.textColor = UIColor(key: .coralPink)
-        label.text = String(key: .alert_failedToLoadImage)
-        label.text = String(form: .alert_saveBeforeClose(documentTitle: "document.txt"))
+        label.textColor = .named(.coralPink)
+        label.text = .localized(.alert_failedToLoadImage)
+        label.text = .formatted(.alert_saveBeforeClose(documentTitle: "document.txt"))
     }
 }

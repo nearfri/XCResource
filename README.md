@@ -67,15 +67,15 @@ extension ImageKey {
 `UIImage`에 생성자를 추가해줍니다:
 ```swift
 extension UIImage {
-    convenience init(key: ImageKey) {
-        self.init(named: key.rawValue, in: .module, compatibleWith: nil)!
+    static func named(_ key: ImageKey) -> UIImage {
+        return UIImage(named: key.rawValue, in: .module, compatibleWith: nil)!
     }
 }
 ```
 
 이제 자동완성과 함께 이미지를 생성할 수 있습니다:
 ```swift
-imageView.image = UIImage(key: .settings)
+imageView.image = .named(.settings)
 ```
 
 ### Swift enum으로 strings 파일 만들기
@@ -111,15 +111,15 @@ xcrun --sdk macosx mint run xcresource swift2strings \
 `String`에 생성자를 추가해줍니다:
 ```swift
 extension String {
-    init(key: StringKey) {
-        self = NSLocalizedString(key.rawValue, bundle: .module, comment: "")
+    static func localized(_ key: StringKey) -> String {
+        return NSLocalizedString(key.rawValue, bundle: .module, comment: "")
     }
 }
 ```
 
 이제 자동완성과 함께 지역화된 문자열을 생성할 수 있습니다:
 ```swift
-label.text = String(key: .cancel)
+label.text = .localized(.cancel)
 ```
 
 ### Swift enum으로 format string 코드 만들기
@@ -160,16 +160,16 @@ extension StringForm {
 `String`에 생성자를 추가해줍니다:
 ```swift
 extension String {
-    init(form: StringForm) {
+    static func formatted(_ form: StringForm) -> String {
         let format = NSLocalizedString(form.key, bundle: .module, comment: "")
-        self.init(format: format, locale: .current, arguments: form.arguments)
+        return String(format: format, locale: .current, arguments: form.arguments)
     }
 }
 ```
 
 이제 자동완성과 함께 지역화된 문자열을 생성할 수 있습니다:
 ```swift
-label.text = String(form: .alert_attachTooLargeVideo(maxMinutes: maxMinutes))
+label.text = .formatted(.alert_attachTooLargeVideo(maxMinutes: maxMinutes))
 ```
 
 ### strings 파일로 CSV 파일 만들기

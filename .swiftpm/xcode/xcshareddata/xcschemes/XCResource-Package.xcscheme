@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1230"
-   version = "1.3">
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "# &quot;Library not loaded: @rpath/lib_InternalSwiftSyntaxParser.dylib&quot; &#xbb38;&#xc81c; &#xd574;&#xacb0;&#10;TOOLCHAIN_DIR=&quot;${DEVELOPER_DIR}/Toolchains/XcodeDefault.xctoolchain&quot;&#10;ln -s &quot;${TOOLCHAIN_DIR}/usr/lib/swift/macosx/lib_InternalSwiftSyntaxParser.dylib&quot; \&#10;  &quot;${BUILT_PRODUCTS_DIR}&quot;&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "LocStringGen"
+                     BuildableName = "LocStringGen"
+                     BlueprintName = "LocStringGen"
+                     ReferencedContainer = "container:">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
