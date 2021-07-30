@@ -43,8 +43,8 @@ extension Content {
         
         let jsonURL = url.appendingPathComponent("Contents.json")
         if type.requiresAttributesLoading, let data = try? Data(contentsOf: jsonURL) {
-            let record = try JSONDecoder().decode(ContentAttributesRecord.self, from: data)
-            providesNamespace = record.properties?.providesNamespace ?? false
+            let attributes = try JSONDecoder().decode(ContentAttributesDTO.self, from: data)
+            providesNamespace = attributes.properties?.providesNamespace ?? false
         }
     }
 }

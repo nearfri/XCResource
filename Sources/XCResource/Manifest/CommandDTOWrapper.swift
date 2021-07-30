@@ -1,39 +1,40 @@
 import Foundation
 
-private let allRecordTypes: [CommandRecord.Type] = [
-    KeyToFormRecord.self, SwiftToStringsRecord.self, XCAssetsToSwiftRecord.self,
-    StringsToCSVRecord.self, CSVToStringsRecord.self,
+private let allCommandDTOTypes: [CommandDTO.Type] = [
+    KeyToFormDTO.self, SwiftToStringsDTO.self, XCAssetsToSwiftDTO.self,
+    StringsToCSVDTO.self, CSVToStringsDTO.self,
 ]
 
-struct CommandRecordWrapper: Codable {
+struct CommandDTOWrapper: Codable {
     private enum CodingKeys: String, CodingKey {
         case commandName
     }
     
-    var record: CommandRecord
+    var command: CommandDTO
     
-    init(record: CommandRecord) {
-        self.record = record
+    init(command: CommandDTO) {
+        self.command = command
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let commandName = try container.decode(String.self, forKey: .commandName)
         
-        guard let recordType = allRecordTypes.first(where: { $0.commandName == commandName }) else {
+        guard let commandType = allCommandDTOTypes.first(where: { $0.commandName == commandName })
+        else {
             throw DecodingError.dataCorruptedError(
                 forKey: .commandName,
                 in: container,
                 debugDescription: "Unknown command '\(commandName)'")
         }
         
-        record = try recordType.init(from: decoder)
+        command = try commandType.init(from: decoder)
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        let commandName = type(of: record).commandName
+        let commandName = type(of: command).commandName
         try container.encode(commandName, forKey: .commandName)
-        try record.encode(to: encoder)
+        try command.encode(to: encoder)
     }
 }

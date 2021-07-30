@@ -2,7 +2,7 @@ import Foundation
 import ArgumentParser
 import LocStringGen
 
-struct StringsToCSVRecord: CommandRecord {
+struct StringsToCSVDTO: CommandDTO {
     static let command: ParsableCommand.Type = StringsToCSV.self
     
     var resourcesPath: String

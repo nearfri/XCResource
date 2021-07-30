@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-struct ValueStrategyRecord: Codable {
+struct ValueStrategyDTO: Codable {
     var language: String
     var strategy: String
     
@@ -11,7 +11,7 @@ struct ValueStrategyRecord: Codable {
     }
 }
 
-struct SwiftToStringsRecord: CommandRecord {
+struct SwiftToStringsDTO: CommandDTO {
     static let command: ParsableCommand.Type = SwiftToStrings.self
     
     var swiftPath: String
@@ -19,7 +19,7 @@ struct SwiftToStringsRecord: CommandRecord {
     var tableName: String?
     var languages: [String]?
     var defaultValueStrategy: String?
-    var valueStrategies: [ValueStrategyRecord]?
+    var valueStrategies: [ValueStrategyDTO]?
     var sortsByKey: Bool?
     
     func toCommand() throws -> ParsableCommand {

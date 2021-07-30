@@ -21,10 +21,10 @@ struct RunManifest: ParsableCommand {
     
     mutating func run() throws {
         let manifestData = try Data(contentsOf: URL(fileURLWithExpandingTildeInPath: manifestPath))
-        let manifestRecord = try JSONDecoder().decode(ManifestRecord.self, from: manifestData)
+        let manifestDTO = try JSONDecoder().decode(ManifestDTO.self, from: manifestData)
         
-        for commandRecord in manifestRecord.commands.map(\.record) {
-            var command = try commandRecord.toCommand()
+        for commandDTO in manifestDTO.commands.map(\.command) {
+            var command = try commandDTO.toCommand()
             try command.run()
         }
     }

@@ -1,6 +1,6 @@
 import Foundation
 
-struct ContentAttributesRecord: Decodable {
+struct ContentAttributesDTO: Decodable {
     struct Properties: Decodable {
         private enum CodingKeys: String, CodingKey {
             case providesNamespace = "provides-namespace"

@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-struct KeyToFormRecord: CommandRecord {
+struct KeyToFormDTO: CommandDTO {
     static let command: ParsableCommand.Type = KeyToForm.self
     
     var keyFilePath: String
