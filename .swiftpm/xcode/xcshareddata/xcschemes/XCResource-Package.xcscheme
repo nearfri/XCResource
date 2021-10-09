@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# &quot;Library not loaded: @rpath/lib_InternalSwiftSyntaxParser.dylib&quot; &#xbb38;&#xc81c; &#xd574;&#xacb0;&#10;TOOLCHAIN_DIR=&quot;${DEVELOPER_DIR}/Toolchains/XcodeDefault.xctoolchain&quot;&#10;ln -s &quot;${TOOLCHAIN_DIR}/usr/lib/swift/macosx/lib_InternalSwiftSyntaxParser.dylib&quot; \&#10;  &quot;${BUILT_PRODUCTS_DIR}&quot;&#10;">
+               scriptText = "# &quot;Library not loaded: @rpath/lib_InternalSwiftSyntaxParser.dylib&quot; &#xbb38;&#xc81c; &#xd574;&#xacb0;&#10;TOOLCHAIN_DIR=&quot;${DEVELOPER_DIR}/Toolchains/XcodeDefault.xctoolchain&quot;&#10;ln -fs &quot;${TOOLCHAIN_DIR}/usr/lib/swift/macosx/lib_InternalSwiftSyntaxParser.dylib&quot; \&#10;  &quot;${BUILT_PRODUCTS_DIR}&quot;&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
