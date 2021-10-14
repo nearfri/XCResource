@@ -40,7 +40,12 @@ extension Array where Element == Comment {
             .filter(\.isForDocument)
             .map(\.text)
             .map({ $0.replacingOccurrences(of: "\n", with: " ") })
-            .joined(separator: " ")
+            .reduce(into: "") { result, text in
+                if !result.isEmpty && !result.hasSuffix("\\n") {
+                    result += " "
+                }
+                result += text
+            }
         
         return result.isEmpty ? nil : result
     }
