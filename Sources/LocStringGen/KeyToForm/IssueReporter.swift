@@ -32,6 +32,7 @@ struct Issue {
     var fileURL: URL
     var lineNumber: Int
     var columnNumber: Int
+    var isAtEndOfLine: Bool
     var content: String
 }
 
@@ -45,12 +46,13 @@ extension Issue {
         
         self.lineNumber = errorPosition.lineNumber
         self.columnNumber = errorPosition.columnNumber
+        self.isAtEndOfLine = errorPosition.isAtEndOfLine
     }
     
     private static func calculateErrorPosition(
         fileURL: URL,
         error: IssueReportError
-    ) -> (lineNumber: Int, columnNumber: Int)? {
+    ) -> (lineNumber: Int, columnNumber: Int, isAtEndOfLine: Bool)? {
         guard let document = try? String(contentsOf: fileURL),
               let textRange = document.range(of: error.text)
         else { return nil }
@@ -59,8 +61,11 @@ extension Issue {
         let distance = error.text.distance(from: error.text.startIndex, to: positionInText)
         let errorIndex = document.index(textRange.lowerBound, offsetBy: distance)
         let errorPosition = TextPosition(string: document, index: errorIndex)
+        let isAtEndOfLine = errorIndex == document.endIndex || document[errorIndex].isNewline
         
-        return (lineNumber: errorPosition.line, columnNumber: errorPosition.column)
+        return (lineNumber: errorPosition.line,
+                columnNumber: errorPosition.column,
+                isAtEndOfLine: isAtEndOfLine)
     }
 }
 

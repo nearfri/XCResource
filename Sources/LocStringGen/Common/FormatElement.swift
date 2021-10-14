@@ -2,7 +2,7 @@ import Foundation
 import Strix
 import StrixParsers
 
-enum FormatElement {
+enum FormatElement: Equatable {
     case character(Character)
     case placeholder(StrixParsers.FormatPlaceholder, labels: [String])
 }
@@ -54,15 +54,25 @@ private struct ParserGenerator {
         return .lookAhead(.string("{{")) *> .character("{") *> .just([])
     }()
     
-    private let labels: Parser<[String]> = {
-        let labelCharacter = Parser.satisfy({ $0 != "," && $0 != "}" }, label: "label character")
+    private var labels: Parser<[String]> {
+        let id = identifier
+        let ws = Parser.many(.whitespace)
+        let ws1 = Parser.many(.whitespace, minCount: 1)
         
-        let label = Parser
-            .many(labelCharacter)
-            .map({ String($0).trimmingCharacters(in: .whitespaces) })
+        let label = Parser.many(id, separatedBy: ws1, allowEndBySeparator: true, minCount: 1)
+            .map({ $0.joined(separator: " ") })
         
-        let labels = Parser.many(label, separatedBy: Parser.character(","))
+        let labels = Parser.many(ws *> label, separatedBy: .character(","))
         
-        return Parser.character("{") *> labels <* Parser.character("}")
+        return Parser.character("{") *> labels <* .character("}")
+    }
+    
+    private let identifier: Parser<String> = {
+        let backtick = Parser.character("`")
+        let first = Parser.letter <|> .character("_")
+        let repeating = first <|> .decimalDigit
+        let id = Parser.skipped(by: .many(first: first, repeating: repeating, minCount: 1))
+        let idWithBacktick = Parser.skipped(by: .tuple(backtick, id, backtick))
+        return idWithBacktick <|> id
     }()
 }

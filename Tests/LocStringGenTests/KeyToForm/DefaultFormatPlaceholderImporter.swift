@@ -70,21 +70,6 @@ final class ActualFormatPlaceholderImporterTests: XCTestCase {
         ])
     }
     
-    func test_import_doubleCurlyBracket_ignoreFollowingLabel() throws {
-        // Given
-        let comment = "%ld{{count} %f{{%d"
-        
-        // When
-        let placeholders = try sut.import(from: comment)
-        
-        // Then
-        XCTAssertEqual(placeholders, [
-            FormatPlaceholder(valueType: Int.self),
-            FormatPlaceholder(valueType: Double.self),
-            FormatPlaceholder(valueType: Int32.self),
-        ])
-    }
-    
     func test_import_variableName() throws {
         // Given
         let comment = "My dog %@ ate %#@carrotsCount@ and %#@applesCount@ today!"

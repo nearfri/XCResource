@@ -9,8 +9,14 @@ class XcodeIssueReporter: IssueReporter {
         let path = issue.fileURL.path
         let line = issue.lineNumber
         let column = issue.columnNumber
-        let content = issue.content
         
-        return "\(path):\(line):\(column): error: \(content)"
+        let message: String = {
+            if issue.isAtEndOfLine {
+                return "\(issue.content); error occurred at the end of the line"
+            }
+            return issue.content
+        }()
+        
+        return "\(path):\(line):\(column): error: \(message)"
     }
 }
