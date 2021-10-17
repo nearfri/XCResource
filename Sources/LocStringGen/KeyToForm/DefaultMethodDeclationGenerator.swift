@@ -10,10 +10,10 @@ class DefaultMethodDeclationGenerator: MethodDeclationGenerator {
         result += "extension \(formTypeName) {\n"
         
         for (i, item) in items.enumerated() {
-            result += i == 0 ? tab(1) : "\n\(tab(1))\n\(tab(1))"
+            result += i == 0 ? tab1 : "\n\(tab1)\n\(tab1)"
             
             result += generate(formTypeName: formTypeName, keyTypeName: keyTypeName, item: item)
-                .replacingOccurrences(of: "\n", with: "\n\(tab(1))")
+                .replacingOccurrences(of: "\n", with: "\n\(tab1)")
         }
         
         result += "\n}"
@@ -33,6 +33,10 @@ class DefaultMethodDeclationGenerator: MethodDeclationGenerator {
 }
 
 private let tabWidth: Int = 4
+
+private let tab1: String = tab(1)
+private let tab2: String = tab(2)
+private let tab3: String = tab(3)
 
 private func tab(_ count: Int) -> String {
     return String(repeating: " ", count: count * tabWidth)
@@ -87,9 +91,9 @@ private struct MethodGenerator {
         if headerLength <= maxColumns {
             target += frontPart + paramPartsInSingleLine + backPart
         } else {
-            let paramPartsInMultiline = paramParts.joined(separator: ",\n\(tab(1))")
+            let paramPartsInMultiline = paramParts.joined(separator: ",\n\(tab1)")
             target += "\(frontPart)\n"
-            target += "\(tab(1))\(paramPartsInMultiline)\n"
+            target += "\(tab1)\(paramPartsInMultiline)\n"
             target += backPart
         }
     }
@@ -97,7 +101,7 @@ private struct MethodGenerator {
     private func writeBody(to target: inout String) {
         target += " {\n"
         
-        let frontPart = "\(tab(1))return \(formTypeName)"
+        let frontPart = "\(tab1)return \(formTypeName)"
         let keyPart = "key: \(keyTypeName).\(item.enumCase.identifier).rawValue"
         
         let argParts = item.parameters.enumerated().map { index, parameter in
@@ -110,15 +114,15 @@ private struct MethodGenerator {
             target += "\(statementInSingleLine)\n"
         } else {
             target += "\(frontPart)(\n"
-            target += "\(tab(2))\(keyPart),\n"
+            target += "\(tab2)\(keyPart),\n"
             
-            let backPart = "\(tab(2))\(argPartsInSingleLine))"
+            let backPart = "\(tab2)\(argPartsInSingleLine))"
             if backPart.count <= maxColumns {
                 target += "\(backPart)\n"
             } else {
-                target += "\(tab(2))arguments: [\n"
+                target += "\(tab2)arguments: [\n"
                 writeMultilineArguments(argParts, to: &target)
-                target += "\(tab(2))])\n"
+                target += "\(tab2)])\n"
             }
         }
         
@@ -130,12 +134,12 @@ private struct MethodGenerator {
         
         for argument in arguments {
             if currentLine.isEmpty {
-                currentLine += "\(tab(3))\(argument)"
+                currentLine += "\(tab3)\(argument)"
             } else if "\(currentLine), \(argument)".count < maxColumns {
                 currentLine += ", \(argument)"
             } else {
                 target += "\(currentLine),\n"
-                currentLine = "\(tab(3))\(argument)"
+                currentLine = "\(tab3)\(argument)"
             }
         }
         

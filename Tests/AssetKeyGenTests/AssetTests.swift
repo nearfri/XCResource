@@ -20,6 +20,10 @@ final class AssetTests: XCTestCase {
         checkComputedKey(name: "hello2", key: "hello2")
     }
     
+    func test_key_hangul() {
+        checkComputedKey(name: "hello월드", key: "hello월드")
+    }
+    
     func test_key_punctuation() {
         checkComputedKey(name: "hello world", key: "hello_world")
         checkComputedKey(name: "hello/world", key: "hello_world")
