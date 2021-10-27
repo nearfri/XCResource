@@ -14,20 +14,22 @@ struct InitManifest: ParsableCommand {
         print("Creating manifest file: \(fileURL.lastPathComponent)")
         
         if FileManager.default.fileExists(atPath: fileURL.path) {
-            throw InitError.manifestAlreadyExists
+            throw Error.manifestAlreadyExists
         }
         
         try manifestTemplate.write(to: fileURL, atomically: true, encoding: .utf8)
     }
 }
 
-private enum InitError: LocalizedError {
-    case manifestAlreadyExists
-    
-    var errorDescription: String? {
-        switch self {
-        case .manifestAlreadyExists:
-            return "A manifest file already exists in this directory"
+extension InitManifest {
+    private enum Error: LocalizedError {
+        case manifestAlreadyExists
+        
+        var errorDescription: String? {
+            switch self {
+            case .manifestAlreadyExists:
+                return "A manifest file already exists in this directory"
+            }
         }
     }
 }
