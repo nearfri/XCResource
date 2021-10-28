@@ -29,7 +29,7 @@ extension LocalizableStringsGenerator {
         }
     }
     
-    public enum ValueStrategy {
+    public enum ValueStrategy: Equatable {
         case comment
         case key
         case custom(String)
