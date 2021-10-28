@@ -18,6 +18,8 @@ let text = String.formatted(.alert_attachTooLargeVideo(maxMinutes: maxMinutes))
 - `key2form`: Swift enum으로 format string 코드를 생성합니다.
 - `strings2csv`: strings 파일로 CSV 파일을 생성합니다.
 - `csv2strings`: CSV 파일로 strings 파일을 생성합니다.
+- `init`: Manifest 파일을 생성합니다. 
+- `run (default)`: Manifest 파일에 나열된 하위 커맨드들을 실행합니다.
 
 ## 설치
 [Mint](https://github.com/yonaskolb/Mint)로 XCResource를 설치합니다:
