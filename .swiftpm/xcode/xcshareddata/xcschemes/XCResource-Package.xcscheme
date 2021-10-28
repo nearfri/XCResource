@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1230"
+   LastUpgradeVersion = "1300"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -24,20 +24,6 @@
          </ExecutionAction>
       </PreActions>
       <BuildActionEntries>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "XCResource_SampleData"
-               BuildableName = "XCResource_SampleData"
-               BlueprintName = "XCResource_SampleData"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
@@ -116,9 +102,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "XCResourceTests"
-               BuildableName = "XCResourceTests"
-               BlueprintName = "XCResourceTests"
+               BlueprintIdentifier = "XCResourceCommandTests"
+               BuildableName = "XCResourceCommandTests"
+               BlueprintName = "XCResourceCommandTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -147,6 +133,20 @@
                BlueprintIdentifier = "SampleData"
                BuildableName = "SampleData"
                BlueprintName = "SampleData"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "XCResourceCommand"
+               BuildableName = "XCResourceCommand"
+               BlueprintName = "XCResourceCommand"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -196,9 +196,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "XCResourceTests"
-               BuildableName = "XCResourceTests"
-               BlueprintName = "XCResourceTests"
+               BlueprintIdentifier = "XCResourceCommandTests"
+               BuildableName = "XCResourceCommandTests"
+               BlueprintName = "XCResourceCommandTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -209,6 +209,16 @@
                BlueprintIdentifier = "XCResourceUtilTests"
                BuildableName = "XCResourceUtilTests"
                BlueprintName = "XCResourceUtilTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "XCResourceCLITests"
+               BuildableName = "XCResourceCLITests"
+               BlueprintName = "XCResourceCLITests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
