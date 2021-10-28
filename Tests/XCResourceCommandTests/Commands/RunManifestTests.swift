@@ -1,9 +1,9 @@
 import XCTest
-import class Foundation.Bundle
+@testable import XCResourceCommand
 import SampleData
 
 private enum Seed {
-    static let defaultManifestFormat = """
+    static let generalManifestFormat = """
     {
         "commands": [
             {
@@ -73,7 +73,8 @@ private enum Seed {
 }
 
 final class RunManifestTests: XCTestCase {
-    func test_main() throws {
+    func test_runAsRoot_generalManifest() throws {
+        // Given
         let fm = FileManager.default
         
         func makeUniqueURL() -> URL {
@@ -92,7 +93,7 @@ final class RunManifestTests: XCTestCase {
         let oldStrings = try String(contentsOf: stringsURL)
         
         let manifest = String(
-            format: Seed.defaultManifestFormat,
+            format: Seed.generalManifestFormat,
             resourcesURL.appendingPathComponent("Media.xcassets").path,
             imageKeyFileURL.path,
             stringKeyFileURL.path,
@@ -110,24 +111,12 @@ final class RunManifestTests: XCTestCase {
             try? fm.removeItem(at: manifestFileURL)
         }
         
-        let executableURL = productsDirectory.appendingPathComponent("xcresource")
+        // When
+        try RunManifest.runAsRoot(arguments: [
+            "--manifest-path", manifestFileURL.path,
+        ])
         
-        let process = Process()
-        process.executableURL = executableURL
-        
-        process.arguments = [
-            "run",
-            "--manifest-path", manifestFileURL.path
-        ]
-        
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        
-        try process.run()
-        process.waitUntilExit()
-        
-        XCTAssertEqual(process.terminationStatus, 0)
-        
+        // Then
         XCTAssert(fm.fileExists(atPath: imageKeyFileURL.path))
         XCTAssert(fm.fileExists(atPath: stringFormFileURL.path))
         
@@ -135,7 +124,8 @@ final class RunManifestTests: XCTestCase {
         XCTAssertNotEqual(newStrings, oldStrings)
     }
     
-    func test_stringsToCSV() throws {
+    func test_runAsRoot_stringsToCSVManifest() throws {
+        // Given
         let fm = FileManager.default
         
         let resourcesURL = SampleData.localizationDirectoryURL()
@@ -154,28 +144,17 @@ final class RunManifestTests: XCTestCase {
             try? fm.removeItem(at: manifestFileURL)
         }
         
-        let executableURL = productsDirectory.appendingPathComponent("xcresource")
+        // When
+        try RunManifest.runAsRoot(arguments: [
+            "--manifest-path", manifestFileURL.path,
+        ])
         
-        let process = Process()
-        process.executableURL = executableURL
-        
-        process.arguments = [
-            "run",
-            "--manifest-path", manifestFileURL.path
-        ]
-        
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        
-        try process.run()
-        process.waitUntilExit()
-        
-        XCTAssertEqual(process.terminationStatus, 0)
-        
+        // Then
         XCTAssert(fm.fileExists(atPath: csvFileURL.path))
     }
     
-    func test_csvToStrings() throws {
+    func test_runAsRoot_csvToStringsManifest() throws {
+        // Given
         let fm = FileManager.default
         
         let localizationURL = SampleData.localizationDirectoryURL()
@@ -199,36 +178,12 @@ final class RunManifestTests: XCTestCase {
             try? fm.removeItem(at: manifestFileURL)
         }
         
-        let executableURL = productsDirectory.appendingPathComponent("xcresource")
+        // When
+        try RunManifest.runAsRoot(arguments: [
+            "--manifest-path", manifestFileURL.path,
+        ])
         
-        let process = Process()
-        process.executableURL = executableURL
-        
-        process.arguments = [
-            "run",
-            "--manifest-path", manifestFileURL.path
-        ]
-        
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        
-        try process.run()
-        process.waitUntilExit()
-        
-        XCTAssertEqual(process.terminationStatus, 0)
-        
+        // Then
         XCTAssert(fm.fileExists(atPath: stringsURL.path))
-    }
-    
-    /// Returns path to the built products directory.
-    var productsDirectory: URL {
-        #if os(macOS)
-        for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
-            return bundle.bundleURL.deletingLastPathComponent()
-        }
-        fatalError("couldn't find the products directory")
-        #else
-        return Bundle.main.bundleURL
-        #endif
     }
 }

@@ -1,9 +1,10 @@
 import XCTest
-import class Foundation.Bundle
+@testable import XCResourceCommand
 import SampleData
 
 final class CSVToStringsTests: XCTestCase {
-    func test_main() throws {
+    func test_runAsRoot() throws {
+        // Given
         let fm = FileManager.default
         
         let localizationURL = SampleData.localizationDirectoryURL()
@@ -16,27 +17,15 @@ final class CSVToStringsTests: XCTestCase {
             try? fm.removeItem(at: resourcesURL)
         }
         
-        let executableURL = productsDirectory.appendingPathComponent("xcresource")
-        
-        let process = Process()
-        process.executableURL = executableURL
-        
-        process.arguments = [
-            "csv2strings",
+        // When
+        try CSVToStrings.runAsRoot(arguments: [
             "--csv-path", csvFileURL.path,
             "--header-style", "short",
             "--resources-path", resourcesURL.path,
             "--table-name", "Translated",
-        ]
+        ])
         
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        
-        try process.run()
-        process.waitUntilExit()
-        
-        XCTAssertEqual(process.terminationStatus, 0)
-        
+        // Then
         let actualEnURL = resourcesURL.appendingPathComponent("en.lproj/Translated.strings")
         let actualKoURL = resourcesURL.appendingPathComponent("ko.lproj/Translated.strings")
         
@@ -45,17 +34,5 @@ final class CSVToStringsTests: XCTestCase {
         
         XCTAssertEqual(try String(contentsOf: actualEnURL), try String(contentsOf: expectedEnURL))
         XCTAssertEqual(try String(contentsOf: actualKoURL), try String(contentsOf: expectedKoURL))
-    }
-    
-    /// Returns path to the built products directory.
-    var productsDirectory: URL {
-        #if os(macOS)
-        for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
-            return bundle.bundleURL.deletingLastPathComponent()
-        }
-        fatalError("couldn't find the products directory")
-        #else
-        return Bundle.main.bundleURL
-        #endif
     }
 }

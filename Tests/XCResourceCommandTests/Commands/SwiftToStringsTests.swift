@@ -1,5 +1,5 @@
 import XCTest
-import class Foundation.Bundle
+@testable import XCResourceCommand
 import SampleData
 
 private enum Seed {
@@ -35,7 +35,8 @@ private enum Seed {
 }
 
 final class SwiftToStringsTests: XCTestCase {
-    func test_main() throws {
+    func test_runAsRoot() throws {
+        // Given
         let fm = FileManager.default
         
         let resourcesURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
@@ -45,43 +46,19 @@ final class SwiftToStringsTests: XCTestCase {
             try? fm.removeItem(at: resourcesURL)
         }
         
-        let executableURL = productsDirectory.appendingPathComponent("xcresource")
-        
-        let process = Process()
-        process.executableURL = executableURL
-        
-        process.arguments = [
-            "swift2strings",
+        // When
+        try SwiftToStrings.runAsRoot(arguments: [
             "--swift-path", SampleData.sourceCodeURL("StringKey.swift").path,
             "--resources-path", resourcesURL.path,
             "--default-value-strategy", "key",
             "--value-strategy", "ko:comment", "jp:UNTRANSLATED-TEXT",
-        ]
+        ])
         
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        
-        try process.run()
-        process.waitUntilExit()
-        
-        XCTAssertEqual(process.terminationStatus, 0)
-        
+        // Then
         let enStringsURL = resourcesURL.appendingPathComponent("en.lproj/Localizable.strings")
         let koStringsURL = resourcesURL.appendingPathComponent("ko.lproj/Localizable.strings")
         
         XCTAssertEqual(try String(contentsOf: enStringsURL), Seed.enStrings)
         XCTAssertEqual(try String(contentsOf: koStringsURL), Seed.koStrings)
-    }
-    
-    /// Returns path to the built products directory.
-    var productsDirectory: URL {
-        #if os(macOS)
-        for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
-            return bundle.bundleURL.deletingLastPathComponent()
-        }
-        fatalError("couldn't find the products directory")
-        #else
-        return Bundle.main.bundleURL
-        #endif
     }
 }
