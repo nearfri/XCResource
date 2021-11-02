@@ -1,7 +1,7 @@
 import Foundation
 
-class DefaultAssetCatalogFetcher: AssetCatalogFetcher {
-    func fetch(at url: URL) throws -> AssetCatalog {
+class DefaultAssetCatalogImporter: AssetCatalogImporter {
+    func `import`(at url: URL) throws -> AssetCatalog {
         let rootContent = try ContentTreeGenerator().load(at: url)
         let assets = rootContent
             .makePreOrderSequence()

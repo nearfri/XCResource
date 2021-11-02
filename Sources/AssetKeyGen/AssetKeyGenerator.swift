@@ -1,7 +1,7 @@
 import Foundation
 
-protocol AssetCatalogFetcher: AnyObject {
-    func fetch(at url: URL) throws -> AssetCatalog
+protocol AssetCatalogImporter: AnyObject {
+    func `import`(at url: URL) throws -> AssetCatalog
 }
 
 protocol TypeDeclarationGenerator: AnyObject {
@@ -37,21 +37,21 @@ extension AssetKeyGenerator {
 }
 
 public class AssetKeyGenerator {
-    private let catalogFetcher: AssetCatalogFetcher
+    private let catalogImporter: AssetCatalogImporter
     private let typeDeclarationGenerator: TypeDeclarationGenerator
     private let keyDeclarationGenerator: KeyDeclarationGenerator
     
-    init(catalogFetcher: AssetCatalogFetcher,
+    init(catalogImporter: AssetCatalogImporter,
          typeDeclarationGenerator: TypeDeclarationGenerator,
          keyDeclarationGenerator: KeyDeclarationGenerator
     ) {
-        self.catalogFetcher = catalogFetcher
+        self.catalogImporter = catalogImporter
         self.typeDeclarationGenerator = typeDeclarationGenerator
         self.keyDeclarationGenerator = keyDeclarationGenerator
     }
     
     public convenience init() {
-        self.init(catalogFetcher: DefaultAssetCatalogFetcher(),
+        self.init(catalogImporter: DefaultAssetCatalogImporter(),
                   typeDeclarationGenerator: DefaultTypeDeclarationGenerator(),
                   keyDeclarationGenerator: DefaultKeyDeclarationGenerator())
     }
@@ -70,7 +70,7 @@ public class AssetKeyGenerator {
     
     private func generateKeyDeclations(for request: Request) throws -> [String] {
         let catalogs: [AssetCatalog] = try request.assetCatalogURLs.map { url in
-            var catalog = try catalogFetcher.fetch(at: url)
+            var catalog = try catalogImporter.import(at: url)
             catalog.assets.removeAll(where: { !request.assetTypes.contains($0.type) })
             return catalog
         }

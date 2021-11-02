@@ -2,14 +2,14 @@ import XCTest
 import SampleData
 @testable import AssetKeyGen
 
-final class DefaultAssetCatalogFetcherTests: XCTestCase {
-    func test_fetch() throws {
+final class DefaultAssetCatalogImporterTests: XCTestCase {
+    func test_import() throws {
         // Given
-        let sut = DefaultAssetCatalogFetcher()
+        let sut = DefaultAssetCatalogImporter()
         let imagePath = "Settings/settingsRate.imageset"
         
         // When
-        let catalog: AssetCatalog = try sut.fetch(at: SampleData.assetURL())
+        let catalog: AssetCatalog = try sut.import(at: SampleData.assetURL())
         
         // Then
         XCTAssertEqual(catalog.name, "Media.xcassets")

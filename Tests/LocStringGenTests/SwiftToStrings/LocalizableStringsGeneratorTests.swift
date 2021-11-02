@@ -17,10 +17,10 @@ private class StubSourceImporter: LocalizationItemImporter {
 }
 
 private class StubTargetImporter: LocalizationItemImporter {
-    var fetchParamURLs: [URL] = []
+    var importParamURLs: [URL] = []
     
     func `import`(at url: URL) throws -> [LocalizationItem] {
-        fetchParamURLs.append(url)
+        importParamURLs.append(url)
         
         if url.path.contains("en.lproj") {
             return [
@@ -71,7 +71,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         XCTAssertNotNil(result["en"])
         XCTAssertNotNil(result["ko"])
         
-        XCTAssertEqual(targetImporter.fetchParamURLs, [
+        XCTAssertEqual(targetImporter.importParamURLs, [
             URL(fileURLWithPath: "Resources/en.lproj/Localizable.strings"),
             URL(fileURLWithPath: "Resources/ko.lproj/Localizable.strings"),
         ])
@@ -112,7 +112,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         XCTAssertNil(result["en"])
         XCTAssertNotNil(result["ko"])
         
-        XCTAssertEqual(targetImporter.fetchParamURLs, [
+        XCTAssertEqual(targetImporter.importParamURLs, [
             URL(fileURLWithPath: "Resources/ko.lproj/Localizable.strings"),
         ])
         

@@ -1,8 +1,8 @@
 import XCTest
 @testable import AssetKeyGen
 
-private class StubAssetCatalogFetcher: AssetCatalogFetcher {
-    func fetch(at url: URL) throws -> AssetCatalog {
+private class StubAssetCatalogImporter: AssetCatalogImporter {
+    func `import`(at url: URL) throws -> AssetCatalog {
         return AssetCatalog(name: "", assets: [
             Asset(name: "image", path: "Images", type: .imageSet),
             Asset(name: "color", path: "Colors", type: .colorSet),
@@ -47,7 +47,7 @@ final class AssetKeyGeneratorTests: XCTestCase {
             keyTypeName: "ImageKey")
         
         sut = AssetKeyGenerator(
-            catalogFetcher: StubAssetCatalogFetcher(),
+            catalogImporter: StubAssetCatalogImporter(),
             typeDeclarationGenerator: StubTypeDeclarationGenerator(),
             keyDeclarationGenerator: keyDeclationGenerator)
     }

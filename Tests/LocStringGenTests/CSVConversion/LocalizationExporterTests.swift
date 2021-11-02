@@ -8,10 +8,10 @@ private class StubLanguageDetector: LanguageDetector {
 }
 
 private class StubItemImporter: LocalizationItemImporter {
-    var fetchParamURLs: [URL] = []
+    var importParamURLs: [URL] = []
     
     func `import`(at url: URL) throws -> [LocalizationItem] {
-        fetchParamURLs.append(url)
+        importParamURLs.append(url)
         
         if url.path.contains("en.lproj") {
             return [
@@ -72,7 +72,7 @@ final class LocalizationExporterTests: XCTestCase {
         // Then
         XCTAssertEqual(result, StubTableEncoder.encodedTable)
         
-        XCTAssertEqual(itemImporter.fetchParamURLs, [
+        XCTAssertEqual(itemImporter.importParamURLs, [
             URL(fileURLWithPath: "Resources/en.lproj/Localizable.strings"),
             URL(fileURLWithPath: "Resources/ko.lproj/Localizable.strings"),
         ])
