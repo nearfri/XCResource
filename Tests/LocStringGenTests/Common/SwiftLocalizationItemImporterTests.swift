@@ -2,10 +2,10 @@ import XCTest
 import SampleData
 @testable import LocStringGen
 
-final class SwiftSourceImporterTests: XCTestCase {
-    func test_importLocalizationItems() throws {
+final class SwiftLocalizationItemImporterTests: XCTestCase {
+    func test_import() throws {
         // Given
-        let sut = SwiftSourceImporter()
+        let sut = SwiftLocalizationItemImporter()
         let sourceCodeURL = SampleData.sourceCodeURL("StringKey.swift")
         
         let expectedItems: [LocalizationItem] = [

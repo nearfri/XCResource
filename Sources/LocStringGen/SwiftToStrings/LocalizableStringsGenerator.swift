@@ -60,7 +60,7 @@ public class LocalizableStringsGenerator {
     
     public convenience init() {
         self.init(languageDetector: DefaultLanguageDetector(),
-                  sourceImporter: SwiftSourceImporter(),
+                  sourceImporter: SwiftLocalizationItemImporter(),
                   targetImporter: ASCIIPlistImporter(),
                   plistGenerator: ASCIIPlistGenerator())
     }

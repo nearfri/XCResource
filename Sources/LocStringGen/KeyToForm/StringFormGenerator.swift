@@ -75,7 +75,7 @@ public class StringFormGenerator {
     }
     
     public convenience init() {
-        self.init(enumerationImporter: SwiftSourceImporter(),
+        self.init(enumerationImporter: DefaultStringEnumerationImporter(),
                   placeholderImporter: DefaultFormatPlaceholderImporter(),
                   typeDeclationGenerator: DefaultTypeDeclarationGenerator(),
                   methodDeclationGenerator: DefaultMethodDeclationGenerator())
