@@ -102,20 +102,24 @@ public class StringFormGenerator {
         let enumeration = try enumerationImporter.import(at: request.sourceCodeURL)
         
         let functionItems: [FunctionItem] = try enumeration.cases.compactMap { enumCase in
-            let params = try enumCase
-                .comments
-                .filter(\.isForDocument)
-                .map(\.text)
-                .map({ ($0, try placeholderImporter.import(from: $0)) })
-                .flatMap({ try makeFunctionParameters(text: $0, formatPlaceholders: $1) })
-            
-            return params.isEmpty ? nil : FunctionItem(enumCase: enumCase, parameters: params)
+            return try makeFunctionItem(enumCase: enumCase)
         }
         
         return methodDeclationGenerator.generate(
             formTypeName: request.formTypeName,
             keyTypeName: enumeration.identifier,
             items: functionItems)
+    }
+    
+    private func makeFunctionItem(enumCase: Enumeration<String>.Case) throws -> FunctionItem? {
+        let params = try enumCase
+            .comments
+            .filter(\.isForDocument)
+            .map(\.text)
+            .map({ ($0, try placeholderImporter.import(from: $0)) })
+            .flatMap({ try makeFunctionParameters(text: $0, formatPlaceholders: $1) })
+        
+        return params.isEmpty ? nil : FunctionItem(enumCase: enumCase, parameters: params)
     }
     
     private func makeFunctionParameters(
