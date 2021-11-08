@@ -40,4 +40,15 @@ enum StringKey: String, CaseIterable {
     
     /// 동영상 첨부는 최대 %ld{maxMinutes}분, %@{maxFileSize}까지 가능합니다.\n다른 파일을 선택해주세요.
     case alert_attachTooLargeVideo
+    
+    // MARK: - etc.
+    
+    // xcresource:key2form:exclude - StringForm에서 제외
+    /// 100% 성공
+    case success100
+    
+    // xcresource:stringsdict - plural로 처리하기 위해 .strings 파일에서 제외.
+    // .stringsdict 파일은 직접 수정해야 함.
+    /// My dog %@{dogName} ate %#@appleCount@ today!
+    case dogEatingApples
 }

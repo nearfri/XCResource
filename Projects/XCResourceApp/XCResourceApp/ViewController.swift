@@ -12,5 +12,7 @@ class ViewController: UIViewController {
         label.textColor = .named(.coralPink)
         label.text = .localized(.alert_failedToLoadImage)
         label.text = .formatted(.alert_saveBeforeClose(documentTitle: "document.txt"))
+        label.text = .localized(.success100)
+        label.text = .formatted(.dogEatingApples(dogName: "Charlie", appleCount: 0))
     }
 }

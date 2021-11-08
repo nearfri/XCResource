@@ -17,6 +17,14 @@ protocol MethodDeclationGenerator: AnyObject {
 }
 
 extension StringFormGenerator {
+    public struct CommandNameSet {
+        public var exclude: String
+        
+        public init(exclude: String) {
+            self.exclude = exclude
+        }
+    }
+    
     public struct Request {
         public var sourceCodeURL: URL
         public var formTypeName: String
@@ -74,11 +82,14 @@ public class StringFormGenerator {
         self.methodDeclationGenerator = methodDeclationGenerator
     }
     
-    public convenience init() {
-        self.init(enumerationImporter: DefaultStringEnumerationImporter(),
-                  placeholderImporter: DefaultFormatPlaceholderImporter(),
-                  typeDeclationGenerator: DefaultTypeDeclarationGenerator(),
-                  methodDeclationGenerator: DefaultMethodDeclationGenerator())
+    public convenience init(commandNameSet: CommandNameSet) {
+        self.init(
+            enumerationImporter: FilterableStringEnumerationImporter(
+                importer: SwiftStringEnumerationImporter(),
+                commandNameOfExclusion: commandNameSet.exclude),
+            placeholderImporter: DefaultFormatPlaceholderImporter(),
+            typeDeclationGenerator: DefaultTypeDeclarationGenerator(),
+            methodDeclationGenerator: DefaultMethodDeclationGenerator())
     }
     
     public func generate(for request: Request) throws -> Result {

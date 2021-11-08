@@ -1,7 +1,7 @@
 import Foundation
 import SwiftSyntax
 
-class DefaultStringEnumerationImporter: StringEnumerationImporter {
+class SwiftStringEnumerationImporter: StringEnumerationImporter {
     func `import`(at url: URL) throws -> Enumeration<String> {
         let syntaxTree: SourceFileSyntax = try SyntaxParser.parse(url)
         let enumCollector = StringEnumerationCollector()

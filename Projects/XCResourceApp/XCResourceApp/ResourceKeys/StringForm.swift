@@ -21,4 +21,9 @@ extension StringForm {
             key: StringKey.alert_attachTooLargeVideo.rawValue,
             arguments: [maxMinutes, maxFileSize])
     }
+    
+    /// My dog %@{dogName} ate %#@appleCount@ today!
+    static func dogEatingApples(dogName: String, appleCount: Int) -> StringForm {
+        return StringForm(key: StringKey.dogEatingApples.rawValue, arguments: [dogName, appleCount])
+    }
 }

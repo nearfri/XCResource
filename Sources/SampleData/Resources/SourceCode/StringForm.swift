@@ -15,4 +15,9 @@ extension StringForm {
             key: StringKey.alert_attachTooLargeVideo.rawValue,
             arguments: [param1, param2])
     }
+    
+    /// He ate %#@appleCount@ today!
+    static func eatingApples(appleCount: Int) -> StringForm {
+        return StringForm(key: StringKey.eatingApples.rawValue, arguments: [appleCount])
+    }
 }

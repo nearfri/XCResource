@@ -2,9 +2,14 @@ import Foundation
 import SwiftSyntax
 
 class SwiftLocalizationItemImporter: LocalizationItemImporter {
+    private let enumerationImporter: StringEnumerationImporter
+    
+    init(enumerationImporter: StringEnumerationImporter) {
+        self.enumerationImporter = enumerationImporter
+    }
+    
     func `import`(at url: URL) throws -> [LocalizationItem] {
-        let enumImporter = DefaultStringEnumerationImporter()
-        let enumeration: Enumeration<String> = try enumImporter.import(at: url)
+        let enumeration: Enumeration<String> = try enumerationImporter.import(at: url)
         
         return enumeration.cases.map { enumCase in
             let comment = enumCase.joinedDocumentComment

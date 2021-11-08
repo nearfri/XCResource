@@ -16,6 +16,9 @@ private enum Seed {
     /* 동영상 첨부는 최대 %ld분, %@까지 가능합니다.\\n다른 파일을 선택해주세요. */
     "alert_attachTooLargeVideo" = "alert_attachTooLargeVideo";
     
+    /* 100% 성공 */
+    "success100" = "success100";
+    
     """
     
     static let koStrings = """
@@ -30,6 +33,9 @@ private enum Seed {
     
     /* 동영상 첨부는 최대 %ld분, %@까지 가능합니다.\\n다른 파일을 선택해주세요. */
     "alert_attachTooLargeVideo" = "동영상 첨부는 최대 %ld분, %@까지 가능합니다.\\n다른 파일을 선택해주세요.";
+    
+    /* 100% 성공 */
+    "success100" = "100% 성공";
     
     """
 }

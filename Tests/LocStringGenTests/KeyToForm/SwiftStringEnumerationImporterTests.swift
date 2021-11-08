@@ -4,18 +4,18 @@ import XCTest
 private enum Seed {
     static let sourceCode = """
     enum StringKey: String, CaseIterable {
-        /// 취소
+        /// Cancel
         case common_cancel
     }
     
     enum IgnoredEnum: String, CaseIterable {
-        /// 취소
+        /// Cancel
         case common_cancel
     }
     """
 }
 
-final class DefaultStringEnumerationImporterTests: XCTestCase {
+final class SwiftStringEnumerationImporterTests: XCTestCase {
     func test_import() throws {
         // Given
         let fm = FileManager.default
@@ -24,12 +24,12 @@ final class DefaultStringEnumerationImporterTests: XCTestCase {
         try Seed.sourceCode.write(to: sourceURL, atomically: true, encoding: .utf8)
         defer { try? fm.removeItem(at: sourceURL) }
         
-        let sut = DefaultStringEnumerationImporter()
+        let sut = SwiftStringEnumerationImporter()
         
         let expectedEnum = Enumeration<String>(
             identifier: "StringKey",
             cases: [
-                .init(comments: [.documentLine("취소")],
+                .init(comments: [.documentLine("Cancel")],
                       identifier: "common_cancel",
                       rawValue: "common_cancel"),
             ])

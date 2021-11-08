@@ -22,8 +22,7 @@ final class KeyToFormTests: XCTestCase {
         
         // Then
         XCTAssertEqual(
-            try String(contentsOf: formFileURL)
-                .replacingOccurrences(of: "xctest", with: "xcresource"),
+            try String(contentsOf: formFileURL),
             try String(contentsOf: SampleData.sourceCodeURL("StringForm.swift"))
         )
     }

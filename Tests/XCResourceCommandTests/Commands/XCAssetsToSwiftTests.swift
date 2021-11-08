@@ -23,8 +23,7 @@ final class XCAssetsToSwiftTests: XCTestCase {
         
         // Then
         XCTAssertEqual(
-            try String(contentsOf: swiftFileURL)
-                .replacingOccurrences(of: "xctest", with: "xcresource"),
+            try String(contentsOf: swiftFileURL),
             try String(contentsOf: SampleData.sourceCodeURL("ColorKey.swift"))
         )
     }

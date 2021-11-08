@@ -17,4 +17,14 @@ enum StringKey: String, CaseIterable {
     
     /// 동영상 첨부는 최대 %ld분, %@까지 가능합니다.\n다른 파일을 선택해주세요.
     case alert_attachTooLargeVideo
+    
+    // MARK: - etc.
+    
+    // xcresource:key2form:exclude
+    /// 100% 성공
+    case success100
+    
+    // xcresource:stringsdict
+    /// He ate %#@appleCount@ today!
+    case eatingApples
 }

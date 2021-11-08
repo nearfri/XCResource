@@ -75,7 +75,10 @@ struct SwiftToStrings: ParsableCommand {
             valueStrategiesByLanguage: valueStrategyArguments.strategiesByLanguage,
             sortOrder: sortsByKey ? .key : .occurrence)
         
-        return try LocalizableStringsGenerator().generate(for: request)
+        let generator = LocalizableStringsGenerator(
+            commandNameSet: .init(exclude: "xcresource:stringsdict"))
+        
+        return try generator.generate(for: request)
     }
     
     private func writeStrings(_ strings: String, for language: LanguageID) throws {

@@ -2,29 +2,48 @@ import XCTest
 import SampleData
 @testable import LocStringGen
 
+private class StubStringEnumerationImporter: StringEnumerationImporter {
+    func `import`(at url: URL) throws -> Enumeration<String> {
+        return .init(identifier: "StringKey", cases: [
+            .init(
+                comments: [
+                    .line("line - cancel 1."),
+                    .line("line - cancel 2."),
+                    .documentLine("document line - cancel 1."),
+                    .documentLine("document line - cancel 2."),
+                ],
+                identifier: "common_cancel",
+                rawValue: "common_cancel"),
+            .init(
+                comments: [
+                    .block("block - confirm 1."),
+                    .block("block - confirm 2."),
+                    .documentBlock("document block - confirm 1."),
+                    .documentBlock("document block - confirm 2."),
+                ],
+                identifier: "common_confirm",
+                rawValue: "common_confirm"),
+        ])
+    }
+}
+
 final class SwiftLocalizationItemImporterTests: XCTestCase {
     func test_import() throws {
         // Given
-        let sut = SwiftLocalizationItemImporter()
-        let sourceCodeURL = SampleData.sourceCodeURL("StringKey.swift")
+        let sut = SwiftLocalizationItemImporter(
+            enumerationImporter: StubStringEnumerationImporter())
         
         let expectedItems: [LocalizationItem] = [
-            .init(comment: "취소",
+            .init(comment: "document line - cancel 1. document line - cancel 2.",
                   key: "common_cancel",
                   value: ""),
-            .init(comment: "확인",
+            .init(comment: "document block - confirm 1. document block - confirm 2.",
                   key: "common_confirm",
                   value: ""),
-            .init(comment: "이미지를 불러오는 데 실패했습니다. 다른 이미지를 선택해주세요.",
-                  key: "alert_failed_to_load_image",
-                  value: ""),
-            .init(comment: "동영상 첨부는 최대 %ld분, %@까지 가능합니다.\\n다른 파일을 선택해주세요.",
-                  key: "alert_attachTooLargeVideo",
-                  value: "")
         ]
         
         // When
-        let actualItems: [LocalizationItem] = try sut.import(at: sourceCodeURL)
+        let actualItems: [LocalizationItem] = try sut.import(at: URL(fileURLWithPath: ""))
         
         // Then
         XCTAssertEqual(actualItems, expectedItems)
