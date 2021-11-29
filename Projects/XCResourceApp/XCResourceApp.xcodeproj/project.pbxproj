@@ -53,10 +53,6 @@
 		08326BAB2738F6D8008BBC26 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		08326BAC2738FB65008BBC26 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ko; path = ko.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		08326BAD2738FB71008BBC26 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
-		083972E425A180E50016413A /* run-swift2strings.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-swift2strings.sh"; sourceTree = "<group>"; };
-		083972E625A180E50016413A /* run-xcassets2swift.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-xcassets2swift.sh"; sourceTree = "<group>"; };
-		083972E725A180E50016413A /* run-csv2strings.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-csv2strings.sh"; sourceTree = "<group>"; };
-		083972E825A180E50016413A /* run-strings2csv.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-strings2csv.sh"; sourceTree = "<group>"; };
 		08765F0B2511A5660024D427 /* XCResourceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XCResourceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08765F0E2511A5660024D427 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08765F102511A5660024D427 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,11 +70,9 @@
 		08765F3F2511D5200024D427 /* XCResourceAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCResourceAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08765F412511D5200024D427 /* XCResourceAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCResourceAppTests.swift; sourceTree = "<group>"; };
 		08765F432511D5200024D427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		08872BDA25F11346003F008E /* xcresource.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = xcresource.json; sourceTree = "<group>"; };
-		08872BDB25F1137E003F008E /* run-xcresource.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-xcresource.sh"; sourceTree = "<group>"; };
+		0882BCF3275517D90042B74C /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
 		088AC4DA25B4826000C1F625 /* StringForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringForm.swift; sourceTree = "<group>"; };
 		0893AE5E252F159200CB9473 /* StringKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringKeyTests.swift; sourceTree = "<group>"; };
-		08AEEF3425DA8C3400E735DA /* run-key2form.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "run-key2form.sh"; sourceTree = "<group>"; };
 		08F6B18C25A3FED100992B09 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,27 +104,13 @@
 			path = ResourceKeys;
 			sourceTree = "<group>";
 		};
-		083972E325A180E50016413A /* Tools */ = {
-			isa = PBXGroup;
-			children = (
-				08872BDA25F11346003F008E /* xcresource.json */,
-				08872BDB25F1137E003F008E /* run-xcresource.sh */,
-				083972E725A180E50016413A /* run-csv2strings.sh */,
-				08AEEF3425DA8C3400E735DA /* run-key2form.sh */,
-				083972E825A180E50016413A /* run-strings2csv.sh */,
-				083972E425A180E50016413A /* run-swift2strings.sh */,
-				083972E625A180E50016413A /* run-xcassets2swift.sh */,
-			);
-			path = Tools;
-			sourceTree = "<group>";
-		};
 		08765F022511A5660024D427 = {
 			isa = PBXGroup;
 			children = (
 				08765F0D2511A5660024D427 /* XCResourceApp */,
 				08765F402511D5200024D427 /* XCResourceAppTests */,
 				08765F0C2511A5660024D427 /* Products */,
-				083972E325A180E50016413A /* Tools */,
+				0882BCF3275517D90042B74C /* Scripts */,
 			);
 			sourceTree = "<group>";
 		};
@@ -305,7 +285,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\ncd \"${SRCROOT}/Tools\"\n./run-xcresource.sh\n";
+			shellScript = "set -e\ncd \"${SRCROOT}/Scripts\"\nmake\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
