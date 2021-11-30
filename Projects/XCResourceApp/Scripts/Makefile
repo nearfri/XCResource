@@ -18,7 +18,7 @@ STRINGKEY_NAME = StringKey
 STRINGFORM_NAME = StringForm
 
 ASSETS_DIR = $(RESOURCES_DIR)/Assets.xcassets
-ASSET_FILES = $(wildcard $(ASSETS_DIR)/**)
+ASSET_FILES = $(shell find $(ASSETS_DIR) -name 'Contents.json' | sed 's/ /\\ /g')
 
 SWIFT2STRINGS_LANGUAGES = ko
 SWIFT2STRINGS_STRATEGIES = ko:comment
@@ -29,6 +29,8 @@ LOCALIZABLE_STRINGS_FILES = $(wildcard $(RESOURCES_DIR)/*.lproj/Localizable.stri
 TRANSLATION_CSV_FILE = ./SampleApp-translation.csv
 TRANSLATION_DEV_LANGUAGE = ko
 TRANSLATION_CSV_STYLE = long-ko
+
+.SUFFIXES:
 
 .PHONY: default
 default: xcassets2swift swift2strings key2form strings2csv

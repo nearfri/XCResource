@@ -285,7 +285,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\ncd \"${SRCROOT}/Scripts\"\nmake\n";
+			shellScript = "cd \"${SRCROOT}/Scripts\"\nmake\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
