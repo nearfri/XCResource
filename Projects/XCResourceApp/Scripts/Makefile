@@ -18,7 +18,8 @@ STRINGKEY_NAME = StringKey
 STRINGFORM_NAME = StringForm
 
 ASSETS_DIR = $(RESOURCES_DIR)/Assets.xcassets
-ASSET_FILES = $(shell find $(ASSETS_DIR) -name 'Contents.json' | sed 's/ /\\ /g')
+ASSET_CONTENTS_FILES := $(shell find $(ASSETS_DIR) -type d -print0 | xargs -0 dirname \
+	| sort | uniq | sed '1d; s/ /\\ /g; s/$$/\/Contents.json/')
 
 SWIFT2STRINGS_LANGUAGES = ko
 SWIFT2STRINGS_STRATEGIES = ko:comment
@@ -33,7 +34,7 @@ TRANSLATION_CSV_STYLE = long-ko
 .SUFFIXES:
 
 .PHONY: default
-default: xcassets2swift swift2strings key2form strings2csv
+default: xcassets2swift swift2strings key2form
 
 .PHONY: xcassets2swift
 xcassets2swift: images2swift colors2swift
@@ -41,7 +42,7 @@ xcassets2swift: images2swift colors2swift
 .PHONY: images2swift
 images2swift: $(IMAGEKEY_FILE)
 
-$(IMAGEKEY_FILE): $(ASSET_FILES)
+$(IMAGEKEY_FILE): $(ASSET_CONTENTS_FILES)
 	$(XCRESOURCE) xcassets2swift \
 	--xcassets-path $(ASSETS_DIR) \
 	--asset-type imageset \
@@ -53,7 +54,7 @@ $(IMAGEKEY_FILE): $(ASSET_FILES)
 .PHONY: colors2swift
 colors2swift: $(COLORKEY_FILE)
 
-$(COLORKEY_FILE): $(ASSET_FILES)
+$(COLORKEY_FILE): $(ASSET_CONTENTS_FILES)
 	$(XCRESOURCE) xcassets2swift \
 	--xcassets-path $(ASSETS_DIR) \
 	--asset-type colorset \
@@ -83,8 +84,10 @@ $(STRINGFORM_FILE): $(STRINGKEY_FILE)
 	--form-file-path $@ \
 	--form-type-name $(STRINGFORM_NAME) \
 	--issue-reporter xcode
-
+	
 	@touch $@
+
+# Non-default targets
 
 .PHONY: strings2csv
 strings2csv: $(TRANSLATION_CSV_FILE)
@@ -96,8 +99,6 @@ $(TRANSLATION_CSV_FILE): $(LOCALIZABLE_STRINGS_FILES)
 	--csv-path $(TRANSLATION_CSV_FILE) \
 	--header-style $(TRANSLATION_CSV_STYLE) \
 	--write-bom
-
-# Non-default targets
 
 .PHONY: csv2strings
 csv2strings:
