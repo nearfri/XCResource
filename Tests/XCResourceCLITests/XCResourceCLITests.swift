@@ -2,9 +2,55 @@ import XCTest
 import class Foundation.Bundle
 import SampleData
 
+private func toolchainPath() throws -> String {
+    let developerPath = try Bash.execute(command: "xcode-select", arguments: ["-p"]).trimmed
+    return "\(developerPath)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx"
+}
+
+private extension String {
+    var trimmed: String { trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) }
+}
+
+private enum Bash {
+    @discardableResult
+    static func execute(command: String, arguments: [String] = []) throws -> String {
+        let path = try execute(path: "/bin/bash", arguments: ["-lc", "which \(command)"]).trimmed
+        return try execute(path: path, arguments: arguments)
+    }
+    
+    @discardableResult
+    static func execute(path: String, arguments: [String] = []) throws -> String {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: path)
+        process.arguments = arguments
+        
+        let outputPipe = Pipe()
+        process.standardOutput = outputPipe
+        
+        try process.run()
+        process.waitUntilExit()
+        
+        let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
+        let output = String(decoding: outputData, as: UTF8.self)
+        return output
+    }
+}
+
 final class XCResourceCLITests: XCTestCase {
+    let shouldTestMain: Bool = false // 너무 오래 걸리므로 생략
+    
     func test_main() throws {
+        guard shouldTestMain else { return }
+        
+        let toolchainPath = try toolchainPath()
         let executableURL = productsDirectory.appendingPathComponent("xcresource")
+        
+        try Bash.execute(command: "install_name_tool",
+                         arguments: ["-add_rpath", toolchainPath, executableURL.path])
+        defer {
+            try! Bash.execute(command: "install_name_tool",
+                              arguments: ["-delete_rpath", toolchainPath, executableURL.path])
+        }
         
         let process = Process()
         process.executableURL = executableURL
@@ -14,7 +60,7 @@ final class XCResourceCLITests: XCTestCase {
         process.standardOutput = outputPipe
         
         try process.run()
-        process.waitUntilExit()
+        process.waitUntilExit() // Bottleneck
         
         XCTAssertEqual(process.terminationStatus, 0)
         

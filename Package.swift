@@ -2,6 +2,7 @@
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
+import Foundation
 
 let package = Package(
     name: "XCResource",
@@ -88,3 +89,59 @@ let package = Package(
             ]),
     ]
 )
+
+fixRPathProblem()
+
+func fixRPathProblem() {
+    let bundleID = ProcessInfo.processInfo.environment["__CFBundleIdentifier"]
+    if bundleID == "com.apple.dt.Xcode" {
+        addToolchainPathToRPath()
+    }
+}
+
+func addToolchainPathToRPath() {
+    do {
+        let linkerSetting = LinkerSetting.unsafeFlags(["-rpath", try toolchainPath()])
+        
+        package
+            .targets
+            .filter(\.isTest)
+            .forEach({ $0.linkerSettings = [linkerSetting] })
+    } catch {
+        preconditionFailure("\(error.localizedDescription)")
+    }
+}
+
+func toolchainPath() throws -> String {
+    let developerPath = try Bash.execute(command: "xcode-select", arguments: ["-p"]).trimmed
+    return "\(developerPath)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx"
+}
+
+extension String {
+    var trimmed: String { trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) }
+}
+
+enum Bash {
+    @discardableResult
+    static func execute(command: String, arguments: [String] = []) throws -> String {
+        let path = try execute(path: "/bin/bash", arguments: ["-lc", "which \(command)"]).trimmed
+        return try execute(path: path, arguments: arguments)
+    }
+    
+    @discardableResult
+    static func execute(path: String, arguments: [String] = []) throws -> String {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: path)
+        process.arguments = arguments
+        
+        let outputPipe = Pipe()
+        process.standardOutput = outputPipe
+        
+        try process.run()
+        process.waitUntilExit()
+        
+        let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
+        let output = String(decoding: outputData, as: UTF8.self)
+        return output
+    }
+}
