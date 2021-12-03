@@ -94,6 +94,10 @@ final class TextFileOutputStreamTests: XCTestCase {
     // print(text, to: &TextFileOutputStream.standardOutput)가 print(text)와 동일한지 테스트하기 위해
     // stdout을 리다이렉트(?)해서 데이터를 캡쳐한다.
     func test_standardOutput() throws {
+        if ProcessInfo.processInfo.environment["GITHUB_ACTIONS"] != nil {
+            return
+        }
+        
         // Given
         let stdPipe = Pipe()
         let stdWriteHandle = stdPipe.fileHandleForWriting
@@ -126,6 +130,8 @@ final class TextFileOutputStreamTests: XCTestCase {
         
         try? stdWriteHandle.synchronize()
         try? stdReadHandle.synchronize()
+        
+        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.005))
         
         // stdout을 /dev/stdout으로 되돌린다.
         dup2(actualStdWriteHandle.fileDescriptor, STDOUT_FILENO)

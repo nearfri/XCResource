@@ -3,6 +3,10 @@ import XCTest
 
 final class StandardOutputSnifferTests: XCTestCase {
     func test_data() {
+        if ProcessInfo.processInfo.environment["GITHUB_ACTIONS"] != nil {
+            return
+        }
+        
         let sniffer = StandardOutputSniffer()
         
         sniffer.start()

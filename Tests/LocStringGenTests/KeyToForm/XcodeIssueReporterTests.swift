@@ -3,6 +3,10 @@ import XCTest
 
 final class XcodeIssueReporterTests: XCTestCase {
     func test_report() {
+        if ProcessInfo.processInfo.environment["GITHUB_ACTIONS"] != nil {
+            return
+        }
+        
         // Given
         let sut = XcodeIssueReporter()
         let issue = Issue(fileURL: URL(fileURLWithPath: "/code.swift"),
@@ -24,6 +28,10 @@ final class XcodeIssueReporterTests: XCTestCase {
     }
     
     func test_report_atEndOfLine() {
+        if ProcessInfo.processInfo.environment["GITHUB_ACTIONS"] != nil {
+            return
+        }
+        
         // Given
         let sut = XcodeIssueReporter()
         let issue = Issue(fileURL: URL(fileURLWithPath: "/code.swift"),
