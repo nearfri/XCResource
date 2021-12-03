@@ -1,5 +1,6 @@
 EXECUTABLE_NAME = xcresource
-EXECUTABLE_PATH = "$(shell swift build $(SWIFT_BUILD_FLAGS) --show-bin-path)/$(EXECUTABLE_NAME)"
+EXECUTABLE_DIR = $(shell swift build $(SWIFT_BUILD_FLAGS) --show-bin-path)
+EXECUTABLE_PATH = $(EXECUTABLE_DIR)/$(EXECUTABLE_NAME)
 
 INSTALL_DIR = /usr/local/bin
 INSTALL_PATH = $(INSTALL_DIR)/$(EXECUTABLE_NAME)
@@ -20,7 +21,7 @@ test:
 
 .PHONY: install
 install:
-	install $(EXECUTABLE_PATH) $(INSTALL_PATH)
+	install "$(EXECUTABLE_PATH)" $(INSTALL_PATH)
 
 .PHONY: uninstall
 uninstall:
