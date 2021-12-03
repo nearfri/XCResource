@@ -133,6 +133,10 @@ final class TextFileOutputStreamTests: XCTestCase {
         
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.005))
         
+        // stdout을 /dev/stdout으로 되돌린다.
+        dup2(actualStdWriteHandle.fileDescriptor, STDOUT_FILENO)
+        stdReadHandle.readabilityHandler = nil
+        
         // Then
         let dataString = try XCTUnwrap(String(data: data, encoding: .utf8))
         XCTAssertEqual(dataString, text)
