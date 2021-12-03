@@ -7,7 +7,7 @@ final class StandardOutputSnifferTests: XCTestCase {
             return
         }
         
-        let sniffer = StandardOutputSniffer()
+        let sniffer = StandardOutputSniffer(dropsStandardOutput: true)
         
         sniffer.start()
         

@@ -5,10 +5,13 @@ class StandardOutputSniffer {
     private let replacementPipe: Pipe
     private(set) var data: Data
     
-    init() {
-        originalPipe = Pipe()
-        replacementPipe = Pipe()
-        data = Data()
+    var dropsStandardOutput: Bool
+    
+    init(dropsStandardOutput: Bool = false) {
+        self.originalPipe = Pipe()
+        self.replacementPipe = Pipe()
+        self.data = Data()
+        self.dropsStandardOutput = dropsStandardOutput
         
         // original write handle을 /dev/stdout으로 연결
         dup2(STDOUT_FILENO, originalPipe.fileHandleForWriting.fileDescriptor)
@@ -26,7 +29,10 @@ class StandardOutputSniffer {
     private func readAvailableData(from handle: FileHandle) {
         let newData = handle.availableData
         data += newData
-        try? originalPipe.fileHandleForWriting.write(contentsOf: newData)
+        
+        if !dropsStandardOutput {
+            try? originalPipe.fileHandleForWriting.write(contentsOf: newData)
+        }
     }
     
     func stop() {

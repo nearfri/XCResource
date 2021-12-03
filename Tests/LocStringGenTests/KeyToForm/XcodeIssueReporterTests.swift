@@ -15,7 +15,7 @@ final class XcodeIssueReporterTests: XCTestCase {
                           isAtEndOfLine: false,
                           content: "Expecting: any character in [diuf@]")
         
-        let stdOutSniffer = StandardOutputSniffer()
+        let stdOutSniffer = StandardOutputSniffer(dropsStandardOutput: true)
         stdOutSniffer.start()
         
         // When
@@ -40,7 +40,7 @@ final class XcodeIssueReporterTests: XCTestCase {
                           isAtEndOfLine: true,
                           content: "Expecting: any character in [diuf@]")
         
-        let stdOutSniffer = StandardOutputSniffer()
+        let stdOutSniffer = StandardOutputSniffer(dropsStandardOutput: true)
         stdOutSniffer.start()
         
         // When
