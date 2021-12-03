@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.4
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "XCResource",
     defaultLocalization: "en",
-    platforms: [.macOS(.v11), .iOS(.v14)],
+    platforms: [.macOS(.v11)],
     products: [
         .executable(name: "xcresource", targets: ["XCResourceCLI"]),
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
@@ -26,7 +26,7 @@ let package = Package(
         
         // MARK: - XCResourceCLI
         
-        .target(
+        .executableTarget(
             name: "XCResourceCLI",
             dependencies: ["XCResourceCommand"]),
         .testTarget(
