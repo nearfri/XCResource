@@ -37,6 +37,8 @@ class StandardOutputSniffer {
     private func synchronize() {
         try? replacementPipe.fileHandleForWriting.synchronize()
         try? replacementPipe.fileHandleForReading.synchronize()
+        
+        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.005))
     }
     
     private func rollback() {
