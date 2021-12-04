@@ -19,8 +19,8 @@ STRINGKEY_NAME = StringKey
 STRINGFORM_NAME = StringForm
 
 ASSETS_DIR = $(RESOURCES_DIR)/Assets.xcassets
-ASSET_CONTENTS_FILES := $(shell find $(ASSETS_DIR) -type d -print0 | xargs -0 dirname \
-	| sort | uniq | sed '1d; s/ /\\ /g; s/$$/\/Contents.json/')
+asset_contents_files = $(shell find -E $(ASSETS_DIR) -type d -regex $(1) -print0 \
+	| xargs -0 dirname | sort | uniq | sed 's/ /\\ /g; s/$$/\/Contents.json/')
 
 SWIFT2STRINGS_LANGUAGES = ko
 SWIFT2STRINGS_STRATEGIES = ko:comment
@@ -43,7 +43,7 @@ xcassets2swift: images2swift colors2swift
 .PHONY: images2swift
 images2swift: $(IMAGEKEY_FILE)
 
-$(IMAGEKEY_FILE): $(ASSET_CONTENTS_FILES)
+$(IMAGEKEY_FILE): $(call asset_contents_files,'.+\.imageset$$')
 	$(XCRESOURCE) xcassets2swift \
 	--xcassets-path $(ASSETS_DIR) \
 	--asset-type imageset \
@@ -55,7 +55,7 @@ $(IMAGEKEY_FILE): $(ASSET_CONTENTS_FILES)
 .PHONY: colors2swift
 colors2swift: $(COLORKEY_FILE)
 
-$(COLORKEY_FILE): $(ASSET_CONTENTS_FILES)
+$(COLORKEY_FILE): $(call asset_contents_files,'.+\.colorset$$')
 	$(XCRESOURCE) xcassets2swift \
 	--xcassets-path $(ASSETS_DIR) \
 	--asset-type colorset \
