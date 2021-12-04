@@ -4,7 +4,8 @@ XCRESOURCE_MINT = xcrun --sdk macosx mint run xcresource
 
 XCRESOURCE = $(XCRESOURCE_RELEASE)
 
-PROJECT_DIR = ../XCResourceApp
+PROJECT_NAME = XCResourceApp
+PROJECT_DIR = ../$(PROJECT_NAME)
 RESOURCES_DIR = $(PROJECT_DIR)
 RESOURCEKEYS_DIR = $(PROJECT_DIR)/ResourceKeys
 
@@ -28,9 +29,9 @@ SWIFT2STRINGS_LASTRUN_FILE = ./swift2strings-lastrun
 
 LOCALIZABLE_STRINGS_FILES = $(wildcard $(RESOURCES_DIR)/*.lproj/Localizable.strings)
 
-TRANSLATION_CSV_FILE = ./SampleApp-translation.csv
-TRANSLATION_DEV_LANGUAGE = ko
-TRANSLATION_CSV_STYLE = long-ko
+LOCALIZATION_CSV_FILE = ./$(PROJECT_NAME)-localization.csv
+LOCALIZATION_DEV_LANGUAGE = ko
+LOCALIZATION_CSV_STYLE = long-ko
 
 .SUFFIXES:
 
@@ -91,25 +92,25 @@ $(STRINGFORM_FILE): $(STRINGKEY_FILE)
 # Non-default targets
 
 .PHONY: strings2csv
-strings2csv: $(TRANSLATION_CSV_FILE)
+strings2csv: $(LOCALIZATION_CSV_FILE)
 
-$(TRANSLATION_CSV_FILE): $(LOCALIZABLE_STRINGS_FILES)
+$(LOCALIZATION_CSV_FILE): $(LOCALIZABLE_STRINGS_FILES)
 	$(XCRESOURCE) strings2csv \
 	--resources-path $(RESOURCES_DIR) \
-	--development-language $(TRANSLATION_DEV_LANGUAGE) \
-	--csv-path $(TRANSLATION_CSV_FILE) \
-	--header-style $(TRANSLATION_CSV_STYLE) \
+	--development-language $(LOCALIZATION_DEV_LANGUAGE) \
+	--csv-path $(LOCALIZATION_CSV_FILE) \
+	--header-style $(LOCALIZATION_CSV_STYLE) \
 	--write-bom
 
 .PHONY: csv2strings
 csv2strings:
 #	Remove "\r" characters
-	@if grep -q '\r' $(TRANSLATION_CSV_FILE); then \
-		echo "sed -i '' 's/\\\r//g' $(TRANSLATION_CSV_FILE)"; \
-		sed -i '' 's/\r//g' $(TRANSLATION_CSV_FILE); \
+	@if grep -q '\r' $(LOCALIZATION_CSV_FILE); then \
+		echo "sed -i '' 's/\\\r//g' $(LOCALIZATION_CSV_FILE)"; \
+		sed -i '' 's/\r//g' $(LOCALIZATION_CSV_FILE); \
 	fi
 	
 	$(XCRESOURCE) csv2strings \
-	--csv-path $(TRANSLATION_CSV_FILE) \
-	--header-style $(TRANSLATION_CSV_STYLE) \
+	--csv-path $(LOCALIZATION_CSV_FILE) \
+	--header-style $(LOCALIZATION_CSV_STYLE) \
 	--resources-path $(RESOURCES_DIR)

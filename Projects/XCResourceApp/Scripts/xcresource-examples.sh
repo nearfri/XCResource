@@ -5,7 +5,8 @@ set -e
 
 XCRESOURCE="xcrun --sdk macosx swift run --package-path ../../../ xcresource"
 
-PROJECT_DIR=../XCResourceApp
+PROJECT_NAME=XCResourceApp
+PROJECT_DIR=../$PROJECT_NAME
 RESOURCES_DIR=$PROJECT_DIR
 RESOURCEKEYS_DIR=$PROJECT_DIR/ResourceKeys
 
@@ -21,7 +22,7 @@ STRINGFORM_FILE=$RESOURCEKEYS_DIR/$STRINGFORM_NAME.swift
 
 ASSETS_DIR=$RESOURCES_DIR/Assets.xcassets
 
-CSV_FILE=./SampleApp-translation.csv
+CSV_FILE=./$PROJECT_NAME-localization.csv
 
 # Run xcresource with xcresource.json
 eval $XCRESOURCE
