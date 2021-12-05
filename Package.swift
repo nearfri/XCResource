@@ -4,7 +4,7 @@
 import PackageDescription
 import Foundation
 
-func swiftSyntaxVersion() -> Package.Dependency.Requirement {
+private func swiftSyntaxVersion() -> Package.Dependency.Requirement {
 #if swift(>=5.6)
     return .exact("0.50600.0")
 #elseif swift(>=5.5)
@@ -97,14 +97,14 @@ let package = Package(
 
 fixRPathProblem()
 
-func fixRPathProblem() {
+private func fixRPathProblem() {
     let bundleID = ProcessInfo.processInfo.environment["__CFBundleIdentifier"]
     if bundleID == "com.apple.dt.Xcode" {
         addToolchainPathToRPath()
     }
 }
 
-func addToolchainPathToRPath() {
+private func addToolchainPathToRPath() {
     do {
         let linkerSetting = LinkerSetting.unsafeFlags(["-rpath", try toolchainPath()])
         
@@ -117,16 +117,16 @@ func addToolchainPathToRPath() {
     }
 }
 
-func toolchainPath() throws -> String {
+private func toolchainPath() throws -> String {
     let developerPath = try Bash.execute(command: "xcode-select", arguments: ["-p"]).trimmed
     return "\(developerPath)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx"
 }
 
-extension String {
+private extension String {
     var trimmed: String { trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) }
 }
 
-enum Bash {
+private enum Bash {
     @discardableResult
     static func execute(command: String, arguments: [String] = []) throws -> String {
         let path = try execute(path: "/bin/bash", arguments: ["-lc", "which \(command)"]).trimmed
