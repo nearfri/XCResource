@@ -22,7 +22,7 @@ STRINGFORM_NAME = StringForm
 ASSETS_DIR = $(RESOURCES_DIR)/Assets.xcassets
 ASSET_CONTENTS_FILES := $(shell find $(ASSETS_DIR) -name "Contents.json" | sed 's/ /\\ /g')
 
-# It's fast. But it doesn't work when adding images with Zeplin.
+# It's fast. But it doesn't run when adding images with Zeplin.
 #ASSET_CONTENTS_FILES := $(shell find $(ASSETS_DIR) -type d -print0 \
 #	| xargs -0 dirname | sort | uniq | sed '1d; s/ /\\ /g; s/$$/\/Contents.json/')
 
