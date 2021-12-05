@@ -20,8 +20,15 @@ STRINGKEY_NAME = StringKey
 STRINGFORM_NAME = StringForm
 
 ASSETS_DIR = $(RESOURCES_DIR)/Assets.xcassets
-asset_contents_files = $(shell find -E $(ASSETS_DIR) -type d -regex $(1) -print0 \
-	| xargs -0 dirname | sort | uniq | sed 's/ /\\ /g; s/$$/\/Contents.json/')
+ASSET_CONTENTS_FILES := $(shell find $(ASSETS_DIR) -name "Contents.json" | sed 's/ /\\ /g')
+
+# It's fast. But it doesn't work when adding images with Zeplin.
+#ASSET_CONTENTS_FILES := $(shell find $(ASSETS_DIR) -type d -print0 \
+#	| xargs -0 dirname | sort | uniq | sed '1d; s/ /\\ /g; s/$$/\/Contents.json/')
+
+#asset_contents_files = $(shell find -E $(ASSETS_DIR) -type d -regex $(1) -print0 \
+#	| xargs -0 dirname | sort | uniq | sed 's/ /\\ /g; s/$$/\/Contents.json/')
+#IMAGE_CONTENTS_FILES = $(call asset_contents_files,'.+\.imageset$$')
 
 SWIFT2STRINGS_LANGUAGES = ko
 SWIFT2STRINGS_STRATEGIES = ko:comment
@@ -44,7 +51,7 @@ xcassets2swift: images2swift colors2swift
 .PHONY: images2swift
 images2swift: $(IMAGEKEY_FILE)
 
-$(IMAGEKEY_FILE): $(call asset_contents_files,'.+\.imageset$$')
+$(IMAGEKEY_FILE): $(ASSET_CONTENTS_FILES)
 	$(XCRESOURCE) xcassets2swift \
 	--xcassets-path $(ASSETS_DIR) \
 	--asset-type imageset \
@@ -56,7 +63,7 @@ $(IMAGEKEY_FILE): $(call asset_contents_files,'.+\.imageset$$')
 .PHONY: colors2swift
 colors2swift: $(COLORKEY_FILE)
 
-$(COLORKEY_FILE): $(call asset_contents_files,'.+\.colorset$$')
+$(COLORKEY_FILE): $(ASSET_CONTENTS_FILES)
 	$(XCRESOURCE) xcassets2swift \
 	--xcassets-path $(ASSETS_DIR) \
 	--asset-type colorset \
