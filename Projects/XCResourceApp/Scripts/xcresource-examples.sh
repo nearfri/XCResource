@@ -68,4 +68,5 @@ grep -q '\r' $CSV_FILE && sed -i '' 's/\r//g' $CSV_FILE
 eval $XCRESOURCE csv2strings \
     --csv-path $CSV_FILE \
     --header-style long-ko \
-    --resources-path $RESOURCES_DIR
+    --resources-path $RESOURCES_DIR \
+    --empty-encoding "#EMPTY"

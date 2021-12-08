@@ -7,11 +7,11 @@ protocol LocalizationTableDecoder: AnyObject {
 extension LocalizationImporter {
     public struct Request {
         public var tableSource: TableSource
-        public var includesEmptyFields: Bool
+        public var emptyTranslationEncoding: String?
         
-        public init(tableSource: TableSource, includesEmptyFields: Bool = false) {
+        public init(tableSource: TableSource, emptyTranslationEncoding: String? = nil) {
             self.tableSource = tableSource
-            self.includesEmptyFields = includesEmptyFields
+            self.emptyTranslationEncoding = emptyTranslationEncoding
         }
     }
     
@@ -57,8 +57,9 @@ public class LocalizationImporter {
     
     public func generate(for request: Request) throws -> [LanguageID: String] {
         let table = try tableDecoder.decode(from: try request.tableSource.contents())
-        let sections = try table.toSections(languageFormatter: languageFormatter,
-                                            includeEmptyFields: request.includesEmptyFields)
+        let sections = try table.toSections(
+            languageFormatter: languageFormatter,
+            emptyTranslationEncoding: request.emptyTranslationEncoding)
         
         return sections.reduce(into: [:]) { result, section in
             result[section.language] = plistGenerator.generate(from: section.items)

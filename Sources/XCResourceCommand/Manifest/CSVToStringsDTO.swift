@@ -9,7 +9,7 @@ struct CSVToStringsDTO: CommandDTO {
     var headerStyle: String?
     var resourcesPath: String
     var tableName: String?
-    var includesEmptyFields: Bool?
+    var emptyEncoding: String?
     
     func toCommand() throws -> ParsableCommand {
         typealias Default = CSVToStrings.Default
@@ -29,7 +29,7 @@ struct CSVToStringsDTO: CommandDTO {
         command.headerStyle = headerStyle ?? Default.headerStyle
         command.resourcesPath = resourcesPath
         command.tableName = tableName ?? Default.tableName
-        command.includesEmptyFields = includesEmptyFields ?? Default.includesEmptyFields
+        command.emptyEncoding = emptyEncoding
         
         return command
     }

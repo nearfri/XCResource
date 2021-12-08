@@ -76,7 +76,7 @@ private struct FastAccessibleSection {
 
 extension LocalizationTable {
     func toSections(languageFormatter: LanguageFormatter,
-                    includeEmptyFields: Bool = false
+                    emptyTranslationEncoding: String? = nil
     ) throws -> [LocalizationSection] {
         try validate()
         
@@ -94,8 +94,11 @@ extension LocalizationTable {
         for record in records {
             let key = record[keyColumnIndex]
             let comment = commentColumnIndex.map({ record[$0] })
-            for (i, value) in record[firstValueColumnIndex...].enumerated() {
-                if value.isEmpty && !includeEmptyFields { continue }
+            for (i, field) in record[firstValueColumnIndex...].enumerated() {
+                if field.isEmpty && emptyTranslationEncoding != field {
+                    continue
+                }
+                let value = field == emptyTranslationEncoding ? "" : field
                 let item = LocalizationItem(comment: comment, key: key, value: value)
                 sections[i].items.append(item)
             }

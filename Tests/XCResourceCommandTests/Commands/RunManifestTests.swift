@@ -65,7 +65,7 @@ private enum Seed {
                 "headerStyle": "short",
                 "resourcesPath": "%@",
                 "tableName": "Translated",
-                "includesEmptyFields": false
+                "emptyEncoding": "#EMPTY"
             }
         ]
     }

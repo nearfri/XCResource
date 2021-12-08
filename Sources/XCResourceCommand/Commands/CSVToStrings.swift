@@ -16,7 +16,6 @@ struct CSVToStrings: ParsableCommand {
     enum Default {
         static let headerStyle: LanguageFormatterStyle = .long(Locale.current)
         static let tableName: String = "Localizable"
-        static let includesEmptyFields: Bool = false
     }
     
     // MARK: - Arguments
@@ -30,8 +29,8 @@ struct CSVToStrings: ParsableCommand {
     
     @Option var tableName: String = Default.tableName
     
-    @Flag(name: .customLong("include-empty-fields"))
-    var includesEmptyFields: Bool = Default.includesEmptyFields
+    @Option(help: ArgumentHelp("Acceptable spelling for empty translations."))
+    var emptyEncoding: String?
     
     // MARK: - Run
     
@@ -46,7 +45,7 @@ struct CSVToStrings: ParsableCommand {
     private func generateStrings() throws -> [LanguageID: String] {
         let request = LocalizationImporter.Request(
             tableSource: .file(URL(fileURLWithExpandingTildeInPath: csvPath)),
-            includesEmptyFields: includesEmptyFields)
+            emptyTranslationEncoding: emptyEncoding)
         
         let importer = LocalizationImporter()
         importer.headerStyle = headerStyle

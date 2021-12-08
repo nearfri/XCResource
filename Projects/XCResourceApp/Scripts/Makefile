@@ -120,4 +120,5 @@ csv2strings:
 	$(XCRESOURCE) csv2strings \
 	--csv-path $(LOCALIZATION_CSV_FILE) \
 	--header-style $(LOCALIZATION_CSV_STYLE) \
-	--resources-path $(RESOURCES_DIR)
+	--resources-path $(RESOURCES_DIR) \
+	--empty-encoding "#EMPTY"

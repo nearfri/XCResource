@@ -115,7 +115,7 @@ final class LocalizationTableTests: XCTestCase {
         XCTAssertEqual(actualSections, expectedSections)
     }
     
-    func test_toSections_notIncludeEmptyFields() throws {
+    func test_toSections_withoutEmptyTranslationEncoding() throws {
         // Given
         let table = LocalizationTable(
             header: ["Key", "Comment", "ko", "en"],
@@ -136,13 +136,41 @@ final class LocalizationTableTests: XCTestCase {
         
         // When
         let actualSections = try table.toSections(languageFormatter: languageFormatter,
-                                                  includeEmptyFields: false)
+                                                  emptyTranslationEncoding: nil)
         
         // Then
         XCTAssertEqual(actualSections, expectedSections)
     }
     
-    func test_toSections_includeEmptyFields() throws {
+    func test_toSections_withEmptyTranslationEncoding() throws {
+        // Given
+        let table = LocalizationTable(
+            header: ["Key", "Comment", "ko", "en"],
+            records: [
+                ["cancel", "취소", "#EMPTY", "Cancel"],
+                ["confirm", "확인", "확인", "Confirm"],
+            ])
+        let languageFormatter = StubLanguageFormatter()
+        let expectedSections: [LocalizationSection] = [
+            LocalizationSection(language: "ko", items: [
+                LocalizationItem(comment: "취소", key: "cancel", value: ""),
+                LocalizationItem(comment: "확인", key: "confirm", value: "확인"),
+            ]),
+            LocalizationSection(language: "en", items: [
+                LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
+                LocalizationItem(comment: "확인", key: "confirm", value: "Confirm"),
+            ]),
+        ]
+        
+        // When
+        let actualSections = try table.toSections(languageFormatter: languageFormatter,
+                                                  emptyTranslationEncoding: "#EMPTY")
+        
+        // Then
+        XCTAssertEqual(actualSections, expectedSections)
+    }
+    
+    func test_toSections_withWholeEmptyTranslationEncoding() throws {
         // Given
         let table = LocalizationTable(
             header: ["Key", "Comment", "ko", "en"],
@@ -164,7 +192,7 @@ final class LocalizationTableTests: XCTestCase {
         
         // When
         let actualSections = try table.toSections(languageFormatter: languageFormatter,
-                                                  includeEmptyFields: true)
+                                                  emptyTranslationEncoding: "")
         
         // Then
         XCTAssertEqual(actualSections, expectedSections)
