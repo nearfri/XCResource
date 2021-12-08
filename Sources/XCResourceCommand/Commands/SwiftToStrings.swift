@@ -76,7 +76,7 @@ struct SwiftToStrings: ParsableCommand {
             sortOrder: sortsByKey ? .key : .occurrence)
         
         let generator = LocalizableStringsGenerator(
-            commandNameSet: .init(exclude: "xcresource:stringsdict"))
+            commandNameSet: .init(exclude: "xcresource:swift2strings:exclude"))
         
         return try generator.generate(for: request)
     }

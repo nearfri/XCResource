@@ -19,6 +19,27 @@ extension Parser where T == String {
     }
 }
 
+extension Parser where T == Bool {
+    static var containsPluralVariables: Parser<Bool> {
+        return Parser.formatPlaceholders.map { placeholders in
+            return placeholders.contains(where: { $0.isPluralVariable })
+        }
+    }
+    
+    private static var formatPlaceholders: Parser<[StrixParsers.FormatPlaceholder]> {
+        return ParserGenerator().formatElements.map { formatElements in
+            return formatElements.compactMap { formatElement in
+                switch formatElement {
+                case .character:
+                    return nil
+                case .placeholder(let placeholder, _):
+                    return placeholder
+                }
+            }
+        }
+    }
+}
+
 private struct ParserGenerator {
     var formatElements: Parser<[FormatElement]> {
         return .many(placeholder <|> character)

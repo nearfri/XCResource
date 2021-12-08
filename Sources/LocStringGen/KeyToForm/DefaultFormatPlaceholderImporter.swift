@@ -36,7 +36,7 @@ private extension StrixParsers.FormatPlaceholder {
     private var formatPlaceholderType: Any.Type {
         switch conversion {
         case .object:
-            return flags.contains(.hash) && variableName != nil ? Int.self : String.self
+            return isPluralVariable ? Int.self : String.self
         default:
             return valueType
         }

@@ -22,6 +22,12 @@ extension LocalizationItem {
         
         return result
     }
+    
+    var commentContainsPluralVariables: Bool {
+        guard let comment = comment, comment.contains("%") else { return false }
+        
+        return (try? Parser.containsPluralVariables.run(comment)) ?? false
+    }
 }
 
 private extension String {

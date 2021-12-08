@@ -26,4 +26,9 @@ extension StringForm {
     static func dogEatingApples(dogName: String, appleCount: Int) -> StringForm {
         return StringForm(key: StringKey.dogEatingApples.rawValue, arguments: [dogName, appleCount])
     }
+    
+    /// %ld{changeCount} changes made
+    static func changeDescription(changeCount: Int) -> StringForm {
+        return StringForm(key: StringKey.changeDescription.rawValue, arguments: [changeCount])
+    }
 }

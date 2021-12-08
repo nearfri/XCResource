@@ -78,7 +78,10 @@ public class LocalizableStringsGenerator {
     }
     
     public func generate(for request: Request) throws -> [LanguageID: String] {
-        let sourceItems = try sourceImporter.import(at: request.sourceCodeURL)
+        let sourceItems = try sourceImporter
+            .import(at: request.sourceCodeURL)
+            .filter({ !$0.commentContainsPluralVariables })
+        
         let languages = try languageDetector.detect(at: request.resourcesURL)
         let filteredLanguages = request.languages?.filter({ languages.contains($0) }) ?? languages
         

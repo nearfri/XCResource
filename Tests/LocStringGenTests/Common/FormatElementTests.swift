@@ -259,3 +259,31 @@ final class FormatLabelRemovalParserTests: XCTestCase {
         XCTAssertEqual(string, "영상은 최대 %ld분, %fGB까지 가능합니다.\\n길이를 수정하세요.")
     }
 }
+
+// MARK: - ContainsPluralVariablesParserTests
+
+final class ContainsPluralVariablesParserTests: XCTestCase {
+    private let sut: Parser<Bool> = Parser.containsPluralVariables
+    
+    func test_run_withoutPluralVariable() throws {
+        // Given
+        let comment = "My dog ate %@ today!"
+        
+        // When
+        let contains = try sut.run(comment)
+        
+        // Then
+        XCTAssertFalse(contains)
+    }
+    
+    func test_run_withPluralVariable() throws {
+        // Given
+        let comment = "My dog ate %#@appleCount@ today!"
+        
+        // When
+        let contains = try sut.run(comment)
+        
+        // Then
+        XCTAssert(contains)
+    }
+}

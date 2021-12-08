@@ -16,8 +16,13 @@ extension StringForm {
             arguments: [param1, param2])
     }
     
-    /// He ate %#@appleCount@ today!
-    static func eatingApples(appleCount: Int) -> StringForm {
-        return StringForm(key: StringKey.eatingApples.rawValue, arguments: [appleCount])
+    /// %ld{changeCount} changes made
+    static func changeDescription(changeCount: Int) -> StringForm {
+        return StringForm(key: StringKey.changeDescription.rawValue, arguments: [changeCount])
+    }
+    
+    /// My dog ate %#@appleCount@ today!
+    static func dogEatingApples(appleCount: Int) -> StringForm {
+        return StringForm(key: StringKey.dogEatingApples.rawValue, arguments: [appleCount])
     }
 }

@@ -24,7 +24,11 @@ enum StringKey: String, CaseIterable {
     /// 100% 성공
     case success100
     
-    // xcresource:stringsdict
-    /// He ate %#@appleCount@ today!
-    case eatingApples
+    // xcresource:swift2strings:exclude
+    /// %ld{changeCount} changes made
+    case changeDescription
+    
+    // Exclude implicitly
+    /// My dog ate %#@appleCount@ today!
+    case dogEatingApples
 }

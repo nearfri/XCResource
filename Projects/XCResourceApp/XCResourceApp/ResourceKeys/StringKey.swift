@@ -47,8 +47,11 @@ enum StringKey: String, CaseIterable {
     /// 100% 성공
     case success100
     
-    // xcresource:stringsdict - plural로 처리하기 위해 .strings 파일에서 제외.
-    // .stringsdict 파일은 직접 수정해야 함.
+    // %#@variable@ 포맷이면 암시적으로 .strings 파일에서 제외.
     /// My dog %@{dogName} ate %#@appleCount@ today!
     case dogEatingApples
+    
+    // xcresource:swift2strings:exclude - 명시적으로 제외
+    /// %ld{changeCount} changes made
+    case changeDescription
 }
