@@ -23,7 +23,7 @@ extension LocalizableStringsGenerator {
                     resourcesURL: URL,
                     tableName: String = "Localizable",
                     languages: [LanguageID]? = nil,
-                    defaultValueStrategy: ValueStrategy = .custom("UNTRANSLATED-TEXT"),
+                    defaultValueStrategy: ValueStrategy = .custom("UNLOCALIZED-TEXT"),
                     valueStrategiesByLanguage: [LanguageID: ValueStrategy] = [:],
                     sortOrder: SortOrder = .occurrence
         ) {

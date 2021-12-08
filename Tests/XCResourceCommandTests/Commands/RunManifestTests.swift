@@ -161,7 +161,7 @@ final class RunManifestTests: XCTestCase {
         let resourcesURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try fm.copyItem(at: localizationURL, to: resourcesURL)
         
-        let csvFileURL = resourcesURL.appendingPathComponent("translation.csv")
+        let csvFileURL = resourcesURL.appendingPathComponent("localizations.csv")
         let stringsURL = resourcesURL.appendingPathComponent("ko.lproj/Translated.strings")
         XCTAssertFalse(fm.fileExists(atPath: stringsURL.path))
         

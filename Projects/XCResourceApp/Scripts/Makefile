@@ -36,7 +36,7 @@ SWIFT2STRINGS_LASTRUN_FILE = ./swift2strings-lastrun
 
 LOCALIZABLE_STRINGS_FILES = $(wildcard $(RESOURCES_DIR)/*.lproj/Localizable.strings)
 
-LOCALIZATION_CSV_FILE = ./$(PROJECT_NAME)-localization.csv
+LOCALIZATION_CSV_FILE = ./$(PROJECT_NAME)-localizations.csv
 LOCALIZATION_DEV_LANGUAGE = ko
 LOCALIZATION_CSV_STYLE = long-ko
 

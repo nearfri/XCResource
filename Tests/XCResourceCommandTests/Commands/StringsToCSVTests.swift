@@ -9,7 +9,7 @@ final class StringsToCSVTests: XCTestCase {
         
         let resourcesURL = SampleData.localizationDirectoryURL()
         let urlOfActualCSVFile = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-        let urlOfExpectedCSVFile = resourcesURL.appendingPathComponent("translation.csv")
+        let urlOfExpectedCSVFile = resourcesURL.appendingPathComponent("localizations.csv")
         
         defer {
             try? fm.removeItem(at: urlOfActualCSVFile)

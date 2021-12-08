@@ -180,7 +180,7 @@ label.text = .formatted(.alert_attachTooLargeVideo(maxMinutes: maxMinutes))
 mint run xcresource strings2csv \
     --resources-path ../SampleApp \
     --development-language ko \
-    --csv-path ./translation.csv \
+    --csv-path ./localizations.csv \
     --header-style long-ko \
     --write-bom
 ```
@@ -195,7 +195,7 @@ mint run xcresource strings2csv \
 `xcresource csv2strings`를 실행합니다:
 ```sh
 mint run xcresource csv2strings \
-    --csv-path ./translation.csv \
+    --csv-path ./localizations.csv \
     --header-style long-ko \
     --resources-path ../SampleApp
 ```

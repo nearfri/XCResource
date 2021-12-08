@@ -22,7 +22,7 @@ STRINGFORM_FILE=$RESOURCEKEYS_DIR/$STRINGFORM_NAME.swift
 
 ASSETS_DIR=$RESOURCES_DIR/Assets.xcassets
 
-CSV_FILE=./$PROJECT_NAME-localization.csv
+CSV_FILE=./$PROJECT_NAME-localizations.csv
 
 # Run xcresource with xcresource.json
 eval $XCRESOURCE

@@ -10,7 +10,7 @@ struct SwiftToStrings: ParsableCommand {
         discussion: """
             enum 타입을 담고 있는 소스 코드에서 case와 주석을 추출해 Localizable.strings 파일을 생성한다.
             
-            - case의 rawValue를 key로 하고, "UNTRANSLATED-TEXT"을 value로 하는데 \
+            - case의 rawValue를 key로 하고, "UNLOCALIZED-TEXT"을 value로 하는데 \
             --strategy 옵션에 따라 key나 주석을 value로 할 수 있다.
             - strings 파일에 이미 해당 key가 존재한다면 기존 value를 유지한다.
             - 소스 코드에 없는 key는 strings 파일에서 제거한다.
@@ -21,7 +21,7 @@ struct SwiftToStrings: ParsableCommand {
     enum Default {
         static let tableName: String = "Localizable"
         static let languages: [String] = []
-        static let defaultValueStrategy: LocalizableValueStrategy = .custom("UNTRANSLATED-TEXT")
+        static let defaultValueStrategy: LocalizableValueStrategy = .custom("UNLOCALIZED-TEXT")
         static let valueStrategyArguments: [ValueStrategyArgument] = []
         static let sortsByKey: Bool = false
     }
