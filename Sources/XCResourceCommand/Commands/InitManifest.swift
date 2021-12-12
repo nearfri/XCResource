@@ -1,5 +1,6 @@
 import Foundation
 import ArgumentParser
+import LocStringGen
 
 struct InitManifest: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
@@ -63,14 +64,13 @@ private let manifestTemplate = """
             "swiftPath": "<#swift file path#>",
             "resourcesPath": "<#resources path#>",
             "tableName": "Localizable",
-            "languages": ["<#language to convert. If not specified, all languages are converted.#>"],
-            "defaultValueStrategy": "<#comment|key|custom-string#>",
             "valueStrategies": [
                 {
                     "language": "<#language#>",
                     "strategy": "<#comment|key|custom-string#>"
-                },
-                "<#If not specified, defaultValueStrategy is used.#>"
+                }
+                <#Value strategies by language to convert.#>
+                <#If "\(LanguageID.allSymbol)" is specified, all languages are converted.#>
             ],
             "sortsByKey": false
         }

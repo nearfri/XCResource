@@ -17,16 +17,11 @@ struct SwiftToStringsDTO: CommandDTO {
     var swiftPath: String
     var resourcesPath: String
     var tableName: String?
-    var languages: [String]?
-    var defaultValueStrategy: String?
     var valueStrategies: [ValueStrategyDTO]?
     var sortsByKey: Bool?
     
     func toCommand() throws -> ParsableCommand {
         typealias Default = SwiftToStrings.Default
-        
-        let defaultValueStrategy = self.defaultValueStrategy
-            .map({ LocalizableValueStrategy(argument: $0) })
         
         let valueStrategyArguments = valueStrategies?.map({ $0.toArgument() })
         
@@ -34,8 +29,6 @@ struct SwiftToStringsDTO: CommandDTO {
         command.swiftPath = swiftPath
         command.resourcesPath = resourcesPath
         command.tableName = tableName ?? Default.tableName
-        command.languages = languages ?? Default.languages
-        command.defaultValueStrategy = defaultValueStrategy ?? Default.defaultValueStrategy
         command.valueStrategyArguments = valueStrategyArguments ?? Default.valueStrategyArguments
         command.sortsByKey = sortsByKey ?? Default.sortsByKey
         

@@ -61,7 +61,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         let request = LocalizableStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
-            valueStrategiesByLanguage: ["ko": .comment],
+            valueStrategies: ["ko": .comment, .all: .custom("UNLOCALIZED-TEXT")],
             sortOrder: .key)
         
         // When
@@ -101,8 +101,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         let request = LocalizableStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
-            languages: ["ko"],
-            valueStrategiesByLanguage: ["ko": .comment],
+            valueStrategies: ["ko": .comment],
             sortOrder: .key)
         
         // When
@@ -147,7 +146,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         let request = LocalizableStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
-            valueStrategiesByLanguage: ["en": .comment],
+            valueStrategies: ["en": .comment],
             sortOrder: .key)
         
         // When

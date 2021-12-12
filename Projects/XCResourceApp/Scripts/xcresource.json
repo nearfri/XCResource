@@ -29,7 +29,6 @@
             "commandName": "swift2strings",
             "swiftPath": "../XCResourceApp/ResourceKeys/StringKey.swift",
             "resourcesPath": "../XCResourceApp",
-            "languages": ["ko"],
             "valueStrategies": [
                 {
                     "language": "ko",

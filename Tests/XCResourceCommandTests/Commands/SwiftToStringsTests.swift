@@ -56,8 +56,7 @@ final class SwiftToStringsTests: XCTestCase {
         try SwiftToStrings.runAsRoot(arguments: [
             "--swift-path", SampleData.sourceCodeURL("StringKey.swift").path,
             "--resources-path", resourcesURL.path,
-            "--default-value-strategy", "key",
-            "--value-strategy", "ko:comment", "jp:UNLOCALIZED-TEXT",
+            "--value-strategy", "ko:comment", "jp:UNLOCALIZED-TEXT", "*:key",
         ])
         
         // Then

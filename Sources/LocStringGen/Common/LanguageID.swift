@@ -16,6 +16,11 @@ public struct LanguageID: Hashable, RawRepresentable, ExpressibleByStringLiteral
     }
 }
 
+public extension LanguageID {
+    static let all: LanguageID = "*"
+    static let allSymbol: String = LanguageID.all.rawValue
+}
+
 extension LanguageID: CustomStringConvertible {
     public var description: String { rawValue }
 }

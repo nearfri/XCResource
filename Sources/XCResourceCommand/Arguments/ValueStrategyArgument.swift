@@ -16,7 +16,8 @@ struct ValueStrategyArgument: ExpressibleByArgument {
         
         let language = argument[..<separatorIndex]
         let strategy = argument[argument.index(after: separatorIndex)...]
-        if language.isEmpty || strategy.isEmpty { return nil }
+        
+        if language.isEmpty { return nil }
         
         self.language = String(language)
         self.strategy = LocalizableValueStrategy(argument: String(strategy))

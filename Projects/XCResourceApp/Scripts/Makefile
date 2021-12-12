@@ -30,7 +30,6 @@ ASSET_CONTENTS_FILES := $(shell find $(ASSETS_DIR) -name "Contents.json" | sed '
 #	| xargs -0 dirname | sort | uniq | sed 's/ /\\ /g; s/$$/\/Contents.json/')
 #IMAGE_CONTENTS_FILES = $(call asset_contents_files,'.+\.imageset$$')
 
-SWIFT2STRINGS_LANGUAGES = ko
 SWIFT2STRINGS_STRATEGIES = ko:comment
 SWIFT2STRINGS_LASTRUN_FILE = ./swift2strings-lastrun
 
@@ -79,7 +78,6 @@ $(SWIFT2STRINGS_LASTRUN_FILE): $(STRINGKEY_FILE)
 	$(XCRESOURCE) swift2strings \
 	--swift-path $< \
 	--resources-path $(RESOURCES_DIR) \
-	--language $(SWIFT2STRINGS_LANGUAGES) \
 	--value-strategy $(SWIFT2STRINGS_STRATEGIES)
 	
 	@touch $@

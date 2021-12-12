@@ -20,9 +20,9 @@ struct SwiftToStrings: ParsableCommand {
     
     enum Default {
         static let tableName: String = "Localizable"
-        static let languages: [String] = []
-        static let defaultValueStrategy: LocalizableValueStrategy = .custom("UNLOCALIZED-TEXT")
-        static let valueStrategyArguments: [ValueStrategyArgument] = []
+        static let valueStrategyArguments: [ValueStrategyArgument] = [
+            .init(language: LanguageID.allSymbol, strategy: .custom("UNLOCALIZED-TEXT"))
+        ]
         static let sortsByKey: Bool = false
     }
     
@@ -34,21 +34,13 @@ struct SwiftToStrings: ParsableCommand {
     
     @Option var tableName: String = Default.tableName
     
-    @Option(name: .customLong("language"),
-            parsing: .upToNextOption,
-            help: ArgumentHelp(
-                "Language to convert.",
-                discussion: "If not specified, all languages are converted."))
-    var languages: [String] = Default.languages
-    
-    @Option(help: ArgumentHelp(valueName: LocalizableValueStrategy.joinedValueStrings))
-    var defaultValueStrategy: LocalizableValueStrategy = Default.defaultValueStrategy
-    
     @Option(name: .customLong("value-strategy"),
             parsing: .upToNextOption,
             help: ArgumentHelp(
-                "Value strategy by language.",
-                discussion: "If not specified, default-value-strategy is used.",
+                "Value strategies by language to convert.",
+                discussion: """
+                    If "\(LanguageID.allSymbol)" is specified, all languages are converted.
+                    """,
                 valueName: "language:<\(LocalizableValueStrategy.joinedValueStrings)>"))
     var valueStrategyArguments: [ValueStrategyArgument] = Default.valueStrategyArguments
     
@@ -70,9 +62,7 @@ struct SwiftToStrings: ParsableCommand {
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftPath),
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
-            languages: languages.isEmpty ? nil : languages.map({ LanguageID($0) }),
-            defaultValueStrategy: defaultValueStrategy,
-            valueStrategiesByLanguage: valueStrategyArguments.strategiesByLanguage,
+            valueStrategies: valueStrategyArguments.strategiesByLanguage,
             sortOrder: sortsByKey ? .key : .occurrence)
         
         let generator = LocalizableStringsGenerator(

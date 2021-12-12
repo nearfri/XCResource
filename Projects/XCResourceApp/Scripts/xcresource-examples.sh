@@ -44,7 +44,6 @@ eval $XCRESOURCE xcassets2swift \
 eval $XCRESOURCE swift2strings \
     --swift-path $STRINGKEY_FILE \
     --resources-path $RESOURCES_DIR \
-    --language ko \
     --value-strategy ko:comment
 
 # Run key2form
@@ -69,4 +68,4 @@ eval $XCRESOURCE csv2strings \
     --csv-path $CSV_FILE \
     --header-style long-ko \
     --resources-path $RESOURCES_DIR \
-    --empty-encoding "#EMPTY"
+    --empty-encoding "\#EMPTY"
