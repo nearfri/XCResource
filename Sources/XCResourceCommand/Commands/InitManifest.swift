@@ -72,6 +72,7 @@ private let manifestTemplate = """
                 <#Value strategies by language to convert.#>
                 <#If "\(LanguageID.allSymbol)" is specified, all languages are converted.#>
             ],
+            "shouldCompareComments": false
             "sortsByKey": false
         }
     ]

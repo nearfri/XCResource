@@ -15,6 +15,7 @@ extension LocalizableStringsGenerator {
         public var resourcesURL: URL
         public var tableName: String
         public var valueStrategies: [LanguageID: ValueStrategy]
+        public var shouldCompareComments: Bool
         public var sortOrder: SortOrder
         
         public init(
@@ -22,12 +23,14 @@ extension LocalizableStringsGenerator {
             resourcesURL: URL,
             tableName: String = "Localizable",
             valueStrategies: [LanguageID: ValueStrategy] = [.all: .custom("UNLOCALIZED-TEXT")],
+            shouldCompareComments: Bool = true,
             sortOrder: SortOrder = .occurrence
         ) {
             self.sourceCodeURL = sourceCodeURL
             self.resourcesURL = resourcesURL
             self.tableName = tableName
             self.valueStrategies = valueStrategies
+            self.shouldCompareComments = shouldCompareComments
             self.sortOrder = sortOrder
         }
     }
@@ -89,7 +92,7 @@ public class LocalizableStringsGenerator {
             
             let combinedItems = sourceItems
                 .map({ $0.applying(valueStrategy) })
-                .combining(targetItems)
+                .combined(with: targetItems, comparingComments: request.shouldCompareComments)
                 .sorted(by: request.sortOrder)
             
             result[language] = plistGenerator.generate(from: combinedItems)

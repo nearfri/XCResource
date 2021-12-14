@@ -40,18 +40,19 @@ eval $XCRESOURCE xcassets2swift \
     --swift-path $COLORKEY_FILE \
     --swift-type-name $COLORKEY_NAME
 
-# Run swift2strings
-eval $XCRESOURCE swift2strings \
-    --swift-path $STRINGKEY_FILE \
-    --resources-path $RESOURCES_DIR \
-    --value-strategy ko:comment
-
 # Run key2form
 eval $XCRESOURCE key2form \
     --key-file-path $STRINGKEY_FILE \
     --form-file-path $STRINGFORM_FILE \
     --form-type-name $STRINGFORM_NAME \
     --issue-reporter xcode
+
+# Run swift2strings
+eval $XCRESOURCE swift2strings \
+    --swift-path $STRINGKEY_FILE \
+    --resources-path $RESOURCES_DIR \
+    --value-strategy ko:comment \
+	--enable-comment-comparison
 
 # Run strings2csv
 eval $XCRESOURCE strings2csv \

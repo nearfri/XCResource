@@ -39,14 +39,19 @@ private extension String {
 }
 
 extension Array where Element == LocalizationItem {
-    func combining<S>(_ other: S) -> [LocalizationItem] where S: Sequence, S.Element == Element {
+    func combined<S>(
+        with other: S,
+        comparingComments: Bool
+    ) -> [LocalizationItem] where S: Sequence, S.Element == Element {
         let othersByKey = Dictionary(uniqueKeysWithValues: other.map({ ($0.key, $0) }))
         
         var result = self
         
         for i in result.indices {
-            if let value = othersByKey[result[i].key]?.value {
-                result[i].value = value
+            guard let otherItem = othersByKey[result[i].key] else { continue }
+            
+            if !comparingComments || otherItem.comment == result[i].comment {
+                result[i].value = otherItem.value
             }
         }
         

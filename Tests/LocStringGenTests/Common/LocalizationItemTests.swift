@@ -20,31 +20,32 @@ final class LocalizationItemTests: XCTestCase {
         XCTAssertEqual(sut.applying(.comment).value, "Comment %ld %ld{bracket} String")
     }
     
-    func test_combiningOther() {
+    func test_combinedWithOther() {
         // Given
         let sut: [LocalizationItem] = [
-            .init(comment: nil, key: "cancel", value: ""),
-            .init(comment: nil, key: "confirm", value: ""),
-            .init(comment: nil, key: "new_key", value: ""),
+            .init(comment: "cancel", key: "cancel", value: "cancel"),
+            .init(comment: "new key", key: "new_key", value: "new key"),
+            .init(comment: "new comment", key: "greeting", value: "new comment"),
         ]
         
         let other: [LocalizationItem] = [
-            .init(comment: nil, key: "cancel", value: "취소"),
-            .init(comment: nil, key: "confirm", value: "확인"),
-            .init(comment: nil, key: "missing_key", value: "없어진 키")
+            .init(comment: "cancel", key: "cancel", value: "Cancel"),
+            .init(comment: "missing key", key: "missing_key", value: "Missing Key"),
+            .init(comment: "old comment", key: "greeting", value: "hello"),
         ]
         
-        let expectedCombinedItems: [LocalizationItem] = [
-            .init(comment: nil, key: "cancel", value: "취소"),
-            .init(comment: nil, key: "confirm", value: "확인"),
-            .init(comment: nil, key: "new_key", value: ""),
-        ]
+        // When, Then
+        XCTAssertEqual(sut.combined(with: other, comparingComments: true), [
+            .init(comment: "cancel", key: "cancel", value: "Cancel"),
+            .init(comment: "new key", key: "new_key", value: "new key"),
+            .init(comment: "new comment", key: "greeting", value: "new comment"),
+        ])
         
-        // When
-        let actualCombinedItems = sut.combining(other)
-        
-        // Then
-        XCTAssertEqual(actualCombinedItems, expectedCombinedItems)
+        XCTAssertEqual(sut.combined(with: other, comparingComments: false), [
+            .init(comment: "cancel", key: "cancel", value: "Cancel"),
+            .init(comment: "new key", key: "new_key", value: "new key"),
+            .init(comment: "new comment", key: "greeting", value: "hello"),
+        ])
     }
     
     func test_sortedBy_occurrence() {

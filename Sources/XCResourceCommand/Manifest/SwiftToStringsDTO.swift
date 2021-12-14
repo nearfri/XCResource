@@ -18,6 +18,7 @@ struct SwiftToStringsDTO: CommandDTO {
     var resourcesPath: String
     var tableName: String?
     var valueStrategies: [ValueStrategyDTO]?
+    var shouldCompareComments: Bool?
     var sortsByKey: Bool?
     
     func toCommand() throws -> ParsableCommand {
@@ -30,6 +31,7 @@ struct SwiftToStringsDTO: CommandDTO {
         command.resourcesPath = resourcesPath
         command.tableName = tableName ?? Default.tableName
         command.valueStrategyArguments = valueStrategyArguments ?? Default.valueStrategyArguments
+        command.shouldCompareComments = shouldCompareComments ?? Default.shouldCompareComments
         command.sortsByKey = sortsByKey ?? Default.sortsByKey
         
         return command

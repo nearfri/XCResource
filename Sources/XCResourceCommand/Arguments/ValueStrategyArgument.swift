@@ -22,6 +22,10 @@ struct ValueStrategyArgument: ExpressibleByArgument {
         self.language = String(language)
         self.strategy = LocalizableValueStrategy(argument: String(strategy))
     }
+    
+    var defaultValueDescription: String {
+        return "\(language):\(strategy.defaultValueDescription)"
+    }
 }
 
 extension Array where Element == ValueStrategyArgument {

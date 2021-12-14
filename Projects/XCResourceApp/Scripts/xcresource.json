@@ -34,7 +34,8 @@
                     "language": "ko",
                     "strategy": "comment"
                 }
-            ]
+            ],
+            "shouldCompareComments": true
         }
     ]
 }

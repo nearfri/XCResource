@@ -23,6 +23,7 @@ struct SwiftToStrings: ParsableCommand {
         static let valueStrategyArguments: [ValueStrategyArgument] = [
             .init(language: LanguageID.allSymbol, strategy: .custom("UNLOCALIZED-TEXT"))
         ]
+        static let shouldCompareComments: Bool = false
         static let sortsByKey: Bool = false
     }
     
@@ -44,6 +45,12 @@ struct SwiftToStrings: ParsableCommand {
                 valueName: "language:<\(LocalizableValueStrategy.joinedValueStrings)>"))
     var valueStrategyArguments: [ValueStrategyArgument] = Default.valueStrategyArguments
     
+    @Flag(name: .customLong("comment-comparison"),
+          inversion: .prefixedEnableDisable,
+          help: ArgumentHelp(
+            "If the flag is enabled and the comments are not equal, the key-value pair is reset."))
+    var shouldCompareComments: Bool = Default.shouldCompareComments
+    
     @Flag(name: .customLong("sort-by-key"))
     var sortsByKey: Bool = Default.sortsByKey
     
@@ -63,6 +70,7 @@ struct SwiftToStrings: ParsableCommand {
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
             valueStrategies: valueStrategyArguments.strategiesByLanguage,
+            shouldCompareComments: shouldCompareComments,
             sortOrder: sortsByKey ? .key : .occurrence)
         
         let generator = LocalizableStringsGenerator(

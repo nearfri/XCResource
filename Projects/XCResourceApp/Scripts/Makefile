@@ -42,7 +42,7 @@ LOCALIZATION_CSV_STYLE = long-ko
 .SUFFIXES:
 
 .PHONY: default
-default: xcassets2swift swift2strings key2form
+default: xcassets2swift key2form swift2strings
 
 .PHONY: xcassets2swift
 xcassets2swift: images2swift colors2swift
@@ -71,17 +71,6 @@ $(COLORKEY_FILE): $(ASSET_CONTENTS_FILES)
 	
 	@touch $@
 
-.PHONY: swift2strings
-swift2strings: $(SWIFT2STRINGS_LASTRUN_FILE)
-
-$(SWIFT2STRINGS_LASTRUN_FILE): $(STRINGKEY_FILE)
-	$(XCRESOURCE) swift2strings \
-	--swift-path $< \
-	--resources-path $(RESOURCES_DIR) \
-	--value-strategy $(SWIFT2STRINGS_STRATEGIES)
-	
-	@touch $@
-
 .PHONY: key2form
 key2form: $(STRINGFORM_FILE)
 
@@ -91,6 +80,18 @@ $(STRINGFORM_FILE): $(STRINGKEY_FILE)
 	--form-file-path $@ \
 	--form-type-name $(STRINGFORM_NAME) \
 	--issue-reporter xcode
+	
+	@touch $@
+
+.PHONY: swift2strings
+swift2strings: $(SWIFT2STRINGS_LASTRUN_FILE)
+
+$(SWIFT2STRINGS_LASTRUN_FILE): $(STRINGKEY_FILE)
+	$(XCRESOURCE) swift2strings \
+	--swift-path $< \
+	--resources-path $(RESOURCES_DIR) \
+	--value-strategy $(SWIFT2STRINGS_STRATEGIES) \
+	--enable-comment-comparison
 	
 	@touch $@
 
