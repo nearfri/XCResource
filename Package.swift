@@ -25,7 +25,7 @@ let package = Package(
         .library(name: "LocStringGen", targets: ["LocStringGen"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "0.5.0"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.2"),
         .package(url: "https://github.com/nearfri/Strix", from: "2.3.6"),
         .package(name: "SwiftSyntax", url: "https://github.com/apple/swift-syntax", swiftSyntaxVersion()),
     ],
