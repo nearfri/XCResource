@@ -9,14 +9,17 @@ extension LocalizationExporter {
         public var resourcesURL: URL
         public var tableName: String
         public var preferredLanguages: [LanguageID]
+        public var emptyTranslationEncoding: String
         
         public init(resourcesURL: URL,
                     tableName: String = "Localizable",
-                    preferredLanguages: [LanguageID] = []
+                    preferredLanguages: [LanguageID] = [],
+                    emptyTranslationEncoding: String = ""
         ) {
             self.resourcesURL = resourcesURL
             self.tableName = tableName
             self.preferredLanguages = preferredLanguages
+            self.emptyTranslationEncoding = emptyTranslationEncoding
         }
     }
 }
@@ -52,7 +55,9 @@ public class LocalizationExporter {
     
     public func generate(for request: Request) throws -> String {
         let sections = try importSections(with: request)
-        let table = LocalizationTable(sections: sections, languageFormatter: languageFormatter)
+        let table = LocalizationTable(sections: sections,
+                                      languageFormatter: languageFormatter,
+                                      emptyTranslationEncoding: request.emptyTranslationEncoding)
         return try tableEncoder.encode(table)
     }
     

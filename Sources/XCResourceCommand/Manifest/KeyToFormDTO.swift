@@ -2,7 +2,7 @@ import Foundation
 import ArgumentParser
 
 struct KeyToFormDTO: CommandDTO {
-    static let command: ParsableCommand.Type = KeyToForm.self
+    static let commandType: ParsableCommand.Type = KeyToForm.self
     
     var keyFilePath: String
     var formFilePath: String

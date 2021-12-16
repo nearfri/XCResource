@@ -3,13 +3,14 @@ import ArgumentParser
 import LocStringGen
 
 struct StringsToCSVDTO: CommandDTO {
-    static let command: ParsableCommand.Type = StringsToCSV.self
+    static let commandType: ParsableCommand.Type = StringsToCSV.self
     
     var resourcesPath: String
     var tableName: String?
     var developmentLanguage: String?
     var csvPath: String
     var headerStyle: String?
+    var emptyEncoding: String?
     var writesBOM: Bool?
     
     func toCommand() throws -> ParsableCommand {
@@ -31,6 +32,7 @@ struct StringsToCSVDTO: CommandDTO {
         command.developmentLanguage = developmentLanguage ?? Default.developmentLanguage
         command.csvPath = csvPath
         command.headerStyle = headerStyle ?? Default.headerStyle
+        command.emptyEncoding = emptyEncoding ?? Default.emptyEncoding
         command.writesBOM = writesBOM ?? Default.writesBOM
         
         return command

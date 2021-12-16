@@ -60,6 +60,7 @@ eval $XCRESOURCE strings2csv \
     --development-language ko \
     --csv-path $CSV_FILE \
     --header-style long-ko \
+	--empty-encoding "\#EMPTY" \
     --write-bom
 
 # Run csv2strings

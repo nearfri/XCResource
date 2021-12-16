@@ -2,7 +2,7 @@ import Foundation
 import ArgumentParser
 
 protocol CommandDTO: Codable {
-    static var command: ParsableCommand.Type { get }
+    static var commandType: ParsableCommand.Type { get }
     static var commandName: String { get }
     
     func toCommand() throws -> ParsableCommand
@@ -10,6 +10,6 @@ protocol CommandDTO: Codable {
 
 extension CommandDTO {
     static var commandName: String {
-        return command.configuration.commandName ?? String(describing: command)
+        return commandType.configuration.commandName ?? String(describing: commandType)
     }
 }

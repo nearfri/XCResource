@@ -106,6 +106,7 @@ $(LOCALIZATION_CSV_FILE): $(LOCALIZABLE_STRINGS_FILES)
 	--development-language $(LOCALIZATION_DEV_LANGUAGE) \
 	--csv-path $(LOCALIZATION_CSV_FILE) \
 	--header-style $(LOCALIZATION_CSV_STYLE) \
+	--empty-encoding "#EMPTY" \
 	--write-bom
 
 .PHONY: csv2strings

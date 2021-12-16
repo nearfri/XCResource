@@ -39,7 +39,10 @@ enum LocalizationTableError: Error {
 // MARK: - Init with [LocalizationSection]
 
 extension LocalizationTable {
-    init(sections: [LocalizationSection], languageFormatter: LanguageFormatter) {
+    init(sections: [LocalizationSection],
+         languageFormatter: LanguageFormatter,
+         emptyTranslationEncoding: String = ""
+    ) {
         header = [ColumnName.key, ColumnName.comment] + sections.map({ section in
             return languageFormatter.string(from: section.language)
         })
@@ -49,7 +52,10 @@ extension LocalizationTable {
         let fastSections = sections.map({ FastAccessibleSection(section: $0) })
         
         records = sections[0].items.reduce(into: [], { records, item in
-            let values = fastSections.map({ $0[item.key]?.value ?? "" })
+            let values: [String] = fastSections.map({ section in
+                guard let value = section[item.key]?.value else { return "" }
+                return value.isEmpty ? emptyTranslationEncoding : value
+            })
             let record: [String] = [item.key, item.comment ?? ""] + values
             records.append(record)
         })
@@ -95,7 +101,7 @@ extension LocalizationTable {
             let key = record[keyColumnIndex]
             let comment = commentColumnIndex.map({ record[$0] })
             for (i, field) in record[firstValueColumnIndex...].enumerated() {
-                if field.isEmpty && emptyTranslationEncoding != field {
+                if field.isEmpty && field != emptyTranslationEncoding {
                     continue
                 }
                 let value = field == emptyTranslationEncoding ? "" : field

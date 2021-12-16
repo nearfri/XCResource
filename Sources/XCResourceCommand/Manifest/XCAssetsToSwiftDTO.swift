@@ -3,7 +3,7 @@ import ArgumentParser
 import AssetKeyGen
 
 struct XCAssetsToSwiftDTO: CommandDTO {
-    static let command: ParsableCommand.Type = XCAssetsToSwift.self
+    static let commandType: ParsableCommand.Type = XCAssetsToSwift.self
     
     var xcassetsPaths: [String]
     var assetTypes: [String]?

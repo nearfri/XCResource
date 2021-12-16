@@ -17,6 +17,7 @@ struct StringsToCSV: ParsableCommand {
         static let tableName: String = "Localizable"
         static let developmentLanguage: String = "en"
         static let headerStyle: LanguageFormatterStyle = .long(Locale.current)
+        static let emptyEncoding: String = ""
         static let writesBOM: Bool = false
     }
     
@@ -33,6 +34,9 @@ struct StringsToCSV: ParsableCommand {
     @Option(help: ArgumentHelp(valueName: LanguageFormatterStyle.joinedValueStrings))
     var headerStyle: LanguageFormatterStyle = Default.headerStyle
     
+    @Option(help: ArgumentHelp("The string used to represent empty values."))
+    var emptyEncoding: String = Default.emptyEncoding
+    
     @Flag(name: .customLong("write-bom"))
     var writesBOM: Bool = Default.writesBOM
     
@@ -47,7 +51,8 @@ struct StringsToCSV: ParsableCommand {
         let request = LocalizationExporter.Request(
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
-            preferredLanguages: [LanguageID(developmentLanguage)])
+            preferredLanguages: [LanguageID(developmentLanguage)],
+            emptyTranslationEncoding: emptyEncoding)
         
         let exporter = LocalizationExporter()
         exporter.headerStyle = headerStyle

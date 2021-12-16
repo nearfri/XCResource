@@ -31,29 +31,15 @@ private enum Seed {
             ["cancel", "취소", "취소", "Cancel"],
             ["confirm", "확인", "확인", "Confirm"]
         ])
-    
-    static let nonCommentedSections: [LocalizationSection] = [
-        LocalizationSection(language: "ko", items: [
-            LocalizationItem(comment: nil, key: "cancel", value: "취소"),
-            LocalizationItem(comment: nil, key: "confirm", value: "확인"),
-        ]),
-        LocalizationSection(language: "en", items: [
-            LocalizationItem(comment: nil, key: "cancel", value: "Cancel"),
-            LocalizationItem(comment: nil, key: "confirm", value: "Confirm"),
-        ]),
-    ]
-    
-    static let nonCommentedTable: LocalizationTable = .init(
-        header: ["Key", "ko", "en"],
-        records: [
-            ["cancel", "취소", "Cancel"],
-            ["confirm", "확인", "Confirm"]
-        ])
 }
 
 final class LocalizationTableTests: XCTestCase {
     func test_validate_goodTable_noThrow() {
-        let table = Seed.commentedTable
+        let table = LocalizationTable(
+            header: ["Key", "Comment", "ko", "en"],
+            records: [
+                ["cancel", "취소", "취소", "Cancel"],
+            ])
         XCTAssertNoThrow(try table.validate())
     }
     
@@ -77,9 +63,24 @@ final class LocalizationTableTests: XCTestCase {
     
     func test_initWithSections() {
         // Given
-        let sections = Seed.commentedSections
         let languageFormatter = StubLanguageFormatter()
-        let expectedTable = Seed.commentedTable
+        
+        let sections: [LocalizationSection] = [
+            LocalizationSection(language: "ko", items: [
+                LocalizationItem(comment: "취소", key: "cancel", value: "취소"),
+                LocalizationItem(comment: "확인", key: "confirm", value: "확인"),
+            ]),
+            LocalizationSection(language: "en", items: [
+                LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
+            ]),
+        ]
+        
+        let expectedTable = LocalizationTable(
+            header: ["Key", "Comment", "ko", "en"],
+            records: [
+                ["cancel", "취소", "취소", "Cancel"],
+                ["confirm", "확인", "확인", ""],
+            ])
         
         // When
         let actualTable = LocalizationTable(sections: sections,
@@ -89,11 +90,54 @@ final class LocalizationTableTests: XCTestCase {
         XCTAssertEqual(actualTable, expectedTable)
     }
     
+    func test_initWithSections_withEmptyTranslationEncoding() throws {
+        // Given
+        let languageFormatter = StubLanguageFormatter()
+        
+        let sections: [LocalizationSection] = [
+            LocalizationSection(language: "ko", items: [
+                LocalizationItem(comment: "취소", key: "cancel", value: "취소"),
+                LocalizationItem(comment: "확인", key: "confirm", value: "확인"),
+            ]),
+            LocalizationSection(language: "en", items: [
+                LocalizationItem(comment: "취소", key: "cancel", value: ""),
+            ]),
+        ]
+        
+        let expectedTable = LocalizationTable(
+            header: ["Key", "Comment", "ko", "en"],
+            records: [
+                ["cancel", "취소", "취소", "#EMPTY"],
+                ["confirm", "확인", "확인", ""],
+            ])
+        
+        // When
+        let actualTable = LocalizationTable(sections: sections,
+                                            languageFormatter: languageFormatter,
+                                            emptyTranslationEncoding: "#EMPTY")
+        
+        // Then
+        XCTAssertEqual(actualTable, expectedTable)
+    }
+    
     func test_toSections_withComment() throws {
         // Given
-        let table = Seed.commentedTable
         let languageFormatter = StubLanguageFormatter()
-        let expectedSections = Seed.commentedSections
+        
+        let table = LocalizationTable(
+            header: ["Key", "Comment", "ko", "en"],
+            records: [
+                ["cancel", "취소", "취소", "Cancel"],
+            ])
+        
+        let expectedSections: [LocalizationSection] = [
+            LocalizationSection(language: "ko", items: [
+                LocalizationItem(comment: "취소", key: "cancel", value: "취소"),
+            ]),
+            LocalizationSection(language: "en", items: [
+                LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
+            ]),
+        ]
         
         // When
         let actualSections = try table.toSections(languageFormatter: languageFormatter)
@@ -104,9 +148,25 @@ final class LocalizationTableTests: XCTestCase {
     
     func test_toSections_withoutComment() throws {
         // Given
-        let table = Seed.nonCommentedTable
         let languageFormatter = StubLanguageFormatter()
-        let expectedSections = Seed.nonCommentedSections
+        
+        let table = LocalizationTable(
+            header: ["Key", "ko", "en"],
+            records: [
+                ["cancel", "취소", "Cancel"],
+                ["confirm", "확인", "Confirm"]
+            ])
+        
+        let expectedSections: [LocalizationSection] = [
+            LocalizationSection(language: "ko", items: [
+                LocalizationItem(comment: nil, key: "cancel", value: "취소"),
+                LocalizationItem(comment: nil, key: "confirm", value: "확인"),
+            ]),
+            LocalizationSection(language: "en", items: [
+                LocalizationItem(comment: nil, key: "cancel", value: "Cancel"),
+                LocalizationItem(comment: nil, key: "confirm", value: "Confirm"),
+            ]),
+        ]
         
         // When
         let actualSections = try table.toSections(languageFormatter: languageFormatter)
@@ -117,13 +177,15 @@ final class LocalizationTableTests: XCTestCase {
     
     func test_toSections_withoutEmptyTranslationEncoding() throws {
         // Given
+        let languageFormatter = StubLanguageFormatter()
+        
         let table = LocalizationTable(
             header: ["Key", "Comment", "ko", "en"],
             records: [
                 ["cancel", "취소", "", "Cancel"],
                 ["confirm", "확인", "확인", "Confirm"],
             ])
-        let languageFormatter = StubLanguageFormatter()
+        
         let expectedSections: [LocalizationSection] = [
             LocalizationSection(language: "ko", items: [
                 LocalizationItem(comment: "확인", key: "confirm", value: "확인"),
@@ -144,13 +206,15 @@ final class LocalizationTableTests: XCTestCase {
     
     func test_toSections_withEmptyTranslationEncoding() throws {
         // Given
+        let languageFormatter = StubLanguageFormatter()
+        
         let table = LocalizationTable(
             header: ["Key", "Comment", "ko", "en"],
             records: [
                 ["cancel", "취소", "#EMPTY", "Cancel"],
                 ["confirm", "확인", "확인", "Confirm"],
             ])
-        let languageFormatter = StubLanguageFormatter()
+        
         let expectedSections: [LocalizationSection] = [
             LocalizationSection(language: "ko", items: [
                 LocalizationItem(comment: "취소", key: "cancel", value: ""),
@@ -172,13 +236,15 @@ final class LocalizationTableTests: XCTestCase {
     
     func test_toSections_withWholeEmptyTranslationEncoding() throws {
         // Given
+        let languageFormatter = StubLanguageFormatter()
+        
         let table = LocalizationTable(
             header: ["Key", "Comment", "ko", "en"],
             records: [
                 ["cancel", "취소", "", "Cancel"],
                 ["confirm", "확인", "확인", "Confirm"],
             ])
-        let languageFormatter = StubLanguageFormatter()
+        
         let expectedSections: [LocalizationSection] = [
             LocalizationSection(language: "ko", items: [
                 LocalizationItem(comment: "취소", key: "cancel", value: ""),

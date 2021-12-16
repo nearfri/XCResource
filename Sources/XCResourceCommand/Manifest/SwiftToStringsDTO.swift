@@ -12,7 +12,7 @@ struct ValueStrategyDTO: Codable {
 }
 
 struct SwiftToStringsDTO: CommandDTO {
-    static let command: ParsableCommand.Type = SwiftToStrings.self
+    static let commandType: ParsableCommand.Type = SwiftToStrings.self
     
     var swiftPath: String
     var resourcesPath: String

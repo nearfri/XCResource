@@ -3,7 +3,7 @@ import ArgumentParser
 import LocStringGen
 
 struct CSVToStringsDTO: CommandDTO {
-    static let command: ParsableCommand.Type = CSVToStrings.self
+    static let commandType: ParsableCommand.Type = CSVToStrings.self
     
     var csvPath: String
     var headerStyle: String?

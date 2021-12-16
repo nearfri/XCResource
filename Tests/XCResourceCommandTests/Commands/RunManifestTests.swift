@@ -50,6 +50,7 @@ private enum Seed {
                 "developmentLanguage": "en",
                 "csvPath": "%@",
                 "headerStyle": "long-ko",
+                "emptyEncoding": "#EMPTY",
                 "writesBOM": false
             }
         ]
