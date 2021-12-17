@@ -61,7 +61,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         let request = LocalizableStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
-            valueStrategies: ["ko": .comment, .all: .custom("UNLOCALIZED-TEXT")],
+            mergeStrategies: ["ko": .add(.comment), .all: .doNotAdd],
             sortOrder: .key)
         
         // When
@@ -78,7 +78,6 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         
         XCTAssertEqual(plistGenerator.generateParamItemsList[0], [
             .init(comment: "취소 주석", key: "cancel", value: "Cancel"),
-            .init(comment: "확인 주석", key: "confirm", value: "UNLOCALIZED-TEXT"),
         ])
         
         XCTAssertEqual(plistGenerator.generateParamItemsList[1], [
@@ -101,7 +100,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         let request = LocalizableStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
-            valueStrategies: ["ko": .comment],
+            mergeStrategies: ["ko": .add(.comment)],
             sortOrder: .key)
         
         // When
@@ -146,7 +145,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         let request = LocalizableStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
-            valueStrategies: ["en": .comment],
+            mergeStrategies: ["en": .add(.comment)],
             sortOrder: .key)
         
         // When

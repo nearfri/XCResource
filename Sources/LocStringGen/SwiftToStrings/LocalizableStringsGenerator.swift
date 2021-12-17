@@ -14,7 +14,7 @@ extension LocalizableStringsGenerator {
         public var sourceCodeURL: URL
         public var resourcesURL: URL
         public var tableName: String
-        public var valueStrategies: [LanguageID: ValueStrategy]
+        public var mergeStrategies: [LanguageID: MergeStrategy]
         public var shouldCompareComments: Bool
         public var sortOrder: SortOrder
         
@@ -22,23 +22,28 @@ extension LocalizableStringsGenerator {
             sourceCodeURL: URL,
             resourcesURL: URL,
             tableName: String = "Localizable",
-            valueStrategies: [LanguageID: ValueStrategy] = [.all: .custom("UNLOCALIZED-TEXT")],
+            mergeStrategies: [LanguageID: MergeStrategy] = [.all: .doNotAdd],
             shouldCompareComments: Bool = true,
             sortOrder: SortOrder = .occurrence
         ) {
             self.sourceCodeURL = sourceCodeURL
             self.resourcesURL = resourcesURL
             self.tableName = tableName
-            self.valueStrategies = valueStrategies
+            self.mergeStrategies = mergeStrategies
             self.shouldCompareComments = shouldCompareComments
             self.sortOrder = sortOrder
         }
     }
     
-    public enum ValueStrategy: Equatable {
-        case comment
-        case key
-        case custom(String)
+    public enum MergeStrategy: Equatable {
+        case add(AddingMethod)
+        case doNotAdd
+        
+        public enum AddingMethod: Equatable {
+            case comment
+            case key
+            case label(String)
+        }
     }
     
     public enum SortOrder {
@@ -83,17 +88,26 @@ public class LocalizableStringsGenerator {
         let languages = try determineLanguages(for: request)
         
         return try languages.reduce(into: [:]) { result, language in
-            let valueStrategy = request.valueStrategies[language] ?? request.valueStrategies[.all]!
+            let strategy = request.mergeStrategies[language] ?? request.mergeStrategies[.all]!
             
             let stringsFileURL = request.resourcesURL
                 .appendingPathComponents(language: language.rawValue, tableName: request.tableName)
             
             let targetItems = try targetImporter.import(at: stringsFileURL)
             
-            let combinedItems = sourceItems
-                .map({ $0.applying(valueStrategy) })
-                .combined(with: targetItems, comparingComments: request.shouldCompareComments)
-                .sorted(by: request.sortOrder)
+            let combinedItems = { () -> [LocalizationItem] in
+                switch strategy {
+                case .add(let addingMethod):
+                    return sourceItems
+                        .map({ $0.applying(addingMethod) })
+                        .combined(with: targetItems,
+                                  comparingComments: request.shouldCompareComments)
+                case .doNotAdd:
+                    return sourceItems
+                        .combinedIntersection(targetItems,
+                                              comparingComments: request.shouldCompareComments)
+                }
+            }().sorted(by: request.sortOrder)
             
             result[language] = plistGenerator.generate(from: combinedItems)
         }
@@ -101,7 +115,7 @@ public class LocalizableStringsGenerator {
     
     private func determineLanguages(for request: Request) throws -> [LanguageID] {
         let availableLanguages = try languageDetector.detect(at: request.resourcesURL)
-        let requestedLanguages = Set(request.valueStrategies.keys)
+        let requestedLanguages = Set(request.mergeStrategies.keys)
         
         if requestedLanguages.contains(.all) {
             return availableLanguages

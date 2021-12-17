@@ -64,10 +64,10 @@ private let manifestTemplate = """
             "swiftPath": "<#swift file path#>",
             "resourcesPath": "<#resources path#>",
             "tableName": "Localizable",
-            "valueStrategies": [
+            "mergeStrategies": [
                 {
                     "language": "<#language#>",
-                    "strategy": "<#comment|key|custom-string#>"
+                    "strategy": "<#comment|key|custom-string|dont-add#>"
                 }
                 <#Value strategies by language to convert.#>
                 <#If "\(LanguageID.allSymbol)" is specified, all languages are converted.#>

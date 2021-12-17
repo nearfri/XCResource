@@ -29,10 +29,14 @@
             "commandName": "swift2strings",
             "swiftPath": "../XCResourceApp/ResourceKeys/StringKey.swift",
             "resourcesPath": "../XCResourceApp",
-            "valueStrategies": [
+            "mergeStrategies": [
                 {
                     "language": "ko",
                     "strategy": "comment"
+                },
+                {
+                    "language": "*",
+                    "strategy": "dont-add"
                 }
             ],
             "shouldCompareComments": true

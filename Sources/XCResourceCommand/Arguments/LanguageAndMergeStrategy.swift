@@ -2,11 +2,11 @@ import Foundation
 import ArgumentParser
 import LocStringGen
 
-struct ValueStrategyArgument: ExpressibleByArgument {
+struct LanguageAndMergeStrategy: ExpressibleByArgument {
     var language: String
-    var strategy: LocalizableValueStrategy
+    var strategy: LocalizationMergeStrategy
     
-    init(language: String, strategy: LocalizableValueStrategy) {
+    init(language: String, strategy: LocalizationMergeStrategy) {
         self.language = language
         self.strategy = strategy
     }
@@ -20,7 +20,7 @@ struct ValueStrategyArgument: ExpressibleByArgument {
         if language.isEmpty { return nil }
         
         self.language = String(language)
-        self.strategy = LocalizableValueStrategy(argument: String(strategy))
+        self.strategy = LocalizationMergeStrategy(argument: String(strategy))
     }
     
     var defaultValueDescription: String {
@@ -28,8 +28,8 @@ struct ValueStrategyArgument: ExpressibleByArgument {
     }
 }
 
-extension Array where Element == ValueStrategyArgument {
-    var strategiesByLanguage: [LanguageID: LocalizableValueStrategy] {
+extension Array where Element == LanguageAndMergeStrategy {
+    var strategiesByLanguage: [LanguageID: LocalizationMergeStrategy] {
         return reduce(into: [:]) { result, argument in
             result[LanguageID(argument.language)] = argument.strategy
         }

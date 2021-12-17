@@ -51,7 +51,7 @@ eval $XCRESOURCE key2form \
 eval $XCRESOURCE swift2strings \
     --swift-path $STRINGKEY_FILE \
     --resources-path $RESOURCES_DIR \
-    --value-strategy ko:comment \
+    --merge-strategy ko:comment "\*:dont-add" \
 	--enable-comment-comparison
 
 # Run strings2csv

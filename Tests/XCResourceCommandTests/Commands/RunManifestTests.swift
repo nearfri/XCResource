@@ -28,7 +28,7 @@ private enum Seed {
                 "resourcesPath": "%@",
                 "tableName": "Localizable",
                 "languages": ["ko"],
-                "valueStrategies": [
+                "mergeStrategies": [
                     {
                         "language": "ko",
                         "strategy": "comment"

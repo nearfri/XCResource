@@ -10,7 +10,7 @@ struct SwiftToStrings: ParsableCommand {
         discussion: """
             enum 타입을 담고 있는 소스 코드에서 case와 주석을 추출해 Localizable.strings 파일을 생성한다.
             
-            - case의 rawValue를 key로 하고, --strategy 옵션에 따라 주석이나 custom string을 value로 한다.
+            - case의 rawValue를 key로 하고, --merge-strategy 옵션에 따라 주석이나 custom label을 value로 한다.
             - 소스 코드에 없는 key는 strings 파일에서 제거된다.
             """)
     
@@ -18,8 +18,8 @@ struct SwiftToStrings: ParsableCommand {
     
     enum Default {
         static let tableName: String = "Localizable"
-        static let valueStrategyArguments: [ValueStrategyArgument] = [
-            .init(language: LanguageID.allSymbol, strategy: .custom("UNLOCALIZED-TEXT"))
+        static let mergeStrategies: [LanguageAndMergeStrategy] = [
+            .init(language: LanguageID.allSymbol, strategy: .doNotAdd)
         ]
         static let shouldCompareComments: Bool = false
         static let sortsByKey: Bool = false
@@ -33,15 +33,15 @@ struct SwiftToStrings: ParsableCommand {
     
     @Option var tableName: String = Default.tableName
     
-    @Option(name: .customLong("value-strategy"),
+    @Option(name: .customLong("merge-strategy"),
             parsing: .upToNextOption,
             help: ArgumentHelp(
-                "Value strategies by language to convert.",
+                "Merge strategies by language to convert.",
                 discussion: """
                     If "\(LanguageID.allSymbol)" is specified, all languages are converted.
                     """,
-                valueName: "language:<\(LocalizableValueStrategy.joinedValueStrings)>"))
-    var valueStrategyArguments: [ValueStrategyArgument] = Default.valueStrategyArguments
+                valueName: "language:<\(LocalizationMergeStrategy.joinedValueStrings)>"))
+    var mergeStrategies: [LanguageAndMergeStrategy] = Default.mergeStrategies
     
     @Flag(name: .customLong("comment-comparison"),
           inversion: .prefixedEnableDisable,
@@ -67,7 +67,7 @@ struct SwiftToStrings: ParsableCommand {
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftPath),
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
-            valueStrategies: valueStrategyArguments.strategiesByLanguage,
+            mergeStrategies: mergeStrategies.strategiesByLanguage,
             shouldCompareComments: shouldCompareComments,
             sortOrder: sortsByKey ? .key : .occurrence)
         
