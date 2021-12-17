@@ -17,7 +17,7 @@ public struct LanguageID: Hashable, RawRepresentable, ExpressibleByStringLiteral
 }
 
 public extension LanguageID {
-    static let all: LanguageID = "*"
+    static let all: LanguageID = "all"
     static let allSymbol: String = LanguageID.all.rawValue
 }
 

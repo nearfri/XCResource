@@ -35,7 +35,7 @@
                     "strategy": "comment"
                 },
                 {
-                    "language": "*",
+                    "language": "all",
                     "strategy": "dont-add"
                 }
             ],
