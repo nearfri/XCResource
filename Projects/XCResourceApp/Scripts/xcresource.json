@@ -24,7 +24,8 @@
             "keyFilePath": "../XCResourceApp/ResourceKeys/StringKey.swift",
             "formFilePath": "../XCResourceApp/ResourceKeys/StringForm.swift",
             "formTypeName": "StringForm",
-            "issueReporter": "xcode"
+            "issueReporter": "xcode",
+            "accessLevel": null
         },
         {
             "commandName": "swift2strings",

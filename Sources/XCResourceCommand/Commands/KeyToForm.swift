@@ -32,6 +32,9 @@ struct KeyToForm: ParsableCommand {
     
     @Option var formTypeName: String
     
+    @Option(help: ArgumentHelp(valueName: AccessLevel.joinedValueStrings))
+    var accessLevel: AccessLevel?
+    
     @Flag(name: .customLong("exclude-type-declation"))
     var excludesTypeDeclation: Bool = Default.excludesTypeDeclation
     
@@ -50,7 +53,8 @@ struct KeyToForm: ParsableCommand {
     private func generateCodes() throws -> StringFormGenerator.Result {
         let request = StringFormGenerator.Request(
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: keyFilePath),
-            formTypeName: formTypeName)
+            formTypeName: formTypeName,
+            accessLevel: accessLevel?.rawValue)
         
         let generator = StringFormGenerator(
             commandNameSet: .init(exclude: "xcresource:key2form:exclude"))

@@ -3,11 +3,16 @@ import Foundation
 class DefaultMethodDeclationGenerator: MethodDeclationGenerator {
     var maxColumns: Int = 100
     
-    func generate(formTypeName: String, keyTypeName: String, items: [FunctionItem]) -> String {
+    func generate(formTypeName: String,
+                  accessLevel: String?,
+                  keyTypeName: String,
+                  items: [FunctionItem]) -> String {
+        let accessLevel = accessLevel.map({ $0 + " " }) ?? ""
+        
         var result = ""
         
         result += "// MARK: - \(formTypeName) generated from \(keyTypeName)\n\n"
-        result += "extension \(formTypeName) {\n"
+        result += "\(accessLevel)extension \(formTypeName) {\n"
         
         for (i, item) in items.enumerated() {
             result += i == 0 ? tab1 : "\n\(tab1)\n\(tab1)"

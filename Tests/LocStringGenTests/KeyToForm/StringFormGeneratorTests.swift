@@ -47,7 +47,7 @@ private class StubFormatPlaceholderImporter: FormatPlaceholderImporter {
 private class StubTypeDeclarationGenerator: TypeDeclarationGenerator {
     static let declarationString = "{ Type Declaration }"
     
-    func generate(formTypeName: String) -> String {
+    func generate(formTypeName: String, accessLevel: String?) -> String {
         return Self.declarationString
     }
 }
@@ -57,7 +57,10 @@ private class StubMethodDeclationGenerator: MethodDeclationGenerator {
     
     var generateParamItems: [FunctionItem] = []
     
-    func generate(formTypeName: String, keyTypeName: String, items: [FunctionItem]) -> String {
+    func generate(formTypeName: String,
+                  accessLevel: String?,
+                  keyTypeName: String,
+                  items: [FunctionItem]) -> String {
         generateParamItems = items
         
         return Self.declarationsString
@@ -78,7 +81,8 @@ final class StringFormGeneratorTests: XCTestCase {
         
         request = StringFormGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "StringKey.swift"),
-            formTypeName: "StringForm")
+            formTypeName: "StringForm",
+            accessLevel: nil)
         
         sut = StringFormGenerator(
             enumerationImporter: StubStringEnumerationImporter(),

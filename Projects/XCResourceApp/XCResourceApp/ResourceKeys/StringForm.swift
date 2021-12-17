@@ -4,6 +4,11 @@
 struct StringForm {
     var key: String
     var arguments: [CVarArg]
+    
+    init(key: String, arguments: [CVarArg]) {
+        self.key = key
+        self.arguments = arguments
+    }
 }
 
 // MARK: - StringForm generated from StringKey

@@ -9,11 +9,14 @@ protocol FormatPlaceholderImporter: AnyObject {
 }
 
 protocol TypeDeclarationGenerator: AnyObject {
-    func generate(formTypeName: String) -> String
+    func generate(formTypeName: String, accessLevel: String?) -> String
 }
 
 protocol MethodDeclationGenerator: AnyObject {
-    func generate(formTypeName: String, keyTypeName: String, items: [FunctionItem]) -> String
+    func generate(formTypeName: String,
+                  accessLevel: String?,
+                  keyTypeName: String,
+                  items: [FunctionItem]) -> String
 }
 
 extension StringFormGenerator {
@@ -28,10 +31,12 @@ extension StringFormGenerator {
     public struct Request {
         public var sourceCodeURL: URL
         public var formTypeName: String
+        public var accessLevel: String?
         
-        public init(sourceCodeURL: URL, formTypeName: String) {
+        public init(sourceCodeURL: URL, formTypeName: String, accessLevel: String?) {
             self.sourceCodeURL = sourceCodeURL
             self.formTypeName = formTypeName
+            self.accessLevel = accessLevel
         }
     }
     
@@ -106,7 +111,8 @@ public class StringFormGenerator {
     }
     
     private func generateTypeDeclation(for request: Request) -> String {
-        return typeDeclationGenerator.generate(formTypeName: request.formTypeName)
+        return typeDeclationGenerator.generate(formTypeName: request.formTypeName,
+                                               accessLevel: request.accessLevel)
     }
     
     private func generateMethodDeclations(for request: Request) throws -> String {
@@ -118,6 +124,7 @@ public class StringFormGenerator {
         
         return methodDeclationGenerator.generate(
             formTypeName: request.formTypeName,
+            accessLevel: request.accessLevel,
             keyTypeName: enumeration.identifier,
             items: functionItems)
     }

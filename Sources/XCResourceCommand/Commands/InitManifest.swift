@@ -49,6 +49,7 @@ private let manifestTemplate = """
             ],
             "swiftPath": "<#swift file path#>",
             "swiftTypeName": "<#swift type name#>",
+            "accessLevel": null,
             "excludesTypeDeclation": false
         },
         {
@@ -56,6 +57,7 @@ private let manifestTemplate = """
             "keyFilePath": "<#key file path#>",
             "formFilePath": "<#form file path#>",
             "formTypeName": "<#form type name#>",
+            "accessLevel": null,
             "excludesTypeDeclation": false,
             "issueReporter": "<#none|xcode#>"
         },

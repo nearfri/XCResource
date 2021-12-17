@@ -256,11 +256,48 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
         
         // When
         let actualDeclations = sut.generate(formTypeName: formTypeName,
+                                            accessLevel: nil,
                                             keyTypeName: keyTypeName,
                                             items: functionItems)
         
         // Then
         XCTAssertEqual(actualDeclations, expectedDeclations)
+    }
+    
+    func test_generate_publicAccessLevel() {
+        // Given
+        let functionItem = FunctionItem(
+            enumCase: .init(
+                comments: [
+                    .documentLine("%ld{fileCount}개의 파일을 로드하였습니다.")
+                ],
+                identifier: "fileLoadSuccess",
+                rawValue: "fileLoadSuccess"),
+            parameters: [
+                .init(externalName: "", localName: "fileCount", type: Int.self),
+            ])
+        
+        let expectedDeclation = """
+        // MARK: - \(formTypeName) generated from \(keyTypeName)
+        
+        public extension \(formTypeName) {
+            /// %ld{fileCount}개의 파일을 로드하였습니다.
+            static func fileLoadSuccess(fileCount: Int) -> \(formTypeName) {
+                return StringForm(key: StringKey.fileLoadSuccess.rawValue, arguments: [fileCount])
+            }
+        }
+        """
+        
+        let sut = DefaultMethodDeclationGenerator()
+        
+        // When
+        let actualDeclation = sut.generate(formTypeName: formTypeName,
+                                           accessLevel: "public",
+                                           keyTypeName: keyTypeName,
+                                           items: [functionItem])
+        
+        // Then
+        XCTAssertEqual(actualDeclation, expectedDeclation)
     }
 }
 
