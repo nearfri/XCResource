@@ -1,16 +1,18 @@
 import Foundation
 
 class DefaultTypeDeclarationGenerator: TypeDeclarationGenerator {
-    func generate(keyTypeName: String) -> String {
+    func generate(keyTypeName: String, accessLevel: String?) -> String {
+        let accessLevel = accessLevel.map({ $0 + " " }) ?? ""
+        
         return """
-            struct \(keyTypeName): ExpressibleByStringLiteral, Hashable {
-                var rawValue: String
+            \(accessLevel)struct \(keyTypeName): ExpressibleByStringLiteral, Hashable {
+                \(accessLevel)var rawValue: String
                 
-                init(_ rawValue: String) {
+                \(accessLevel)init(_ rawValue: String) {
                     self.rawValue = rawValue
                 }
                 
-                init(stringLiteral value: String) {
+                \(accessLevel)init(stringLiteral value: String) {
                     self.rawValue = value
                 }
             }

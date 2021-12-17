@@ -12,7 +12,7 @@ extension AssetType: ExpressibleByArgument {
     }
     
     public static var allValueStrings: [String] {
-        return AssetType.allCases.map(\.pathExtension)
+        return allCases.map(\.pathExtension)
     }
     
     static var someValueStrings: [String] {

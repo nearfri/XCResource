@@ -1,6 +1,6 @@
 import Foundation
 
-public enum LanguageFormatterStyle {
+public enum LanguageFormatterStyle: Equatable {
     case short
     case long(Locale)
 }

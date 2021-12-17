@@ -16,7 +16,8 @@
             ],
             "assetTypes": ["colorset"],
             "swiftPath": "../XCResourceApp/ResourceKeys/ColorKey.swift",
-            "swiftTypeName": "ColorKey"
+            "swiftTypeName": "ColorKey",
+            "accessLevel": "internal"
         },
         {
             "commandName": "key2form",

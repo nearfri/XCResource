@@ -67,7 +67,8 @@ $(COLORKEY_FILE): $(ASSET_CONTENTS_FILES)
 	--xcassets-path $(ASSETS_DIR) \
 	--asset-type colorset \
 	--swift-path $@ \
-	--swift-type-name $(COLORKEY_NAME)
+	--swift-type-name $(COLORKEY_NAME) \
+	--access-level internal
 	
 	@touch $@
 

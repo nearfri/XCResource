@@ -1,0 +1,23 @@
+import Foundation
+import ArgumentParser
+
+enum AccessLevel: String, CaseIterable, ExpressibleByArgument {
+    case `public`
+    case `internal`
+    
+    public init?(argument: String) {
+        self.init(rawValue: argument)
+    }
+    
+    public var defaultValueDescription: String {
+        return rawValue
+    }
+    
+    public static var allValueStrings: [String] {
+        return allCases.map(\.rawValue)
+    }
+    
+    static var joinedValueStrings: String {
+        return allValueStrings.joined(separator: "|")
+    }
+}

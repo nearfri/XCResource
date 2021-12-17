@@ -38,7 +38,8 @@ eval $XCRESOURCE xcassets2swift \
     --xcassets-path $ASSETS_DIR \
     --asset-type colorset \
     --swift-path $COLORKEY_FILE \
-    --swift-type-name $COLORKEY_NAME
+    --swift-type-name $COLORKEY_NAME \
+	--access-level internal
 
 # Run key2form
 eval $XCRESOURCE key2form \

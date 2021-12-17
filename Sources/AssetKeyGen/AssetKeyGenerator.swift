@@ -5,11 +5,11 @@ protocol AssetCatalogImporter: AnyObject {
 }
 
 protocol TypeDeclarationGenerator: AnyObject {
-    func generate(keyTypeName: String) -> String
+    func generate(keyTypeName: String, accessLevel: String?) -> String
 }
 
 protocol KeyDeclarationGenerator: AnyObject {
-    func generate(catalog: AssetCatalog, keyTypeName: String) -> String
+    func generate(catalog: AssetCatalog, keyTypeName: String, accessLevel: String?) -> String
 }
 
 extension AssetKeyGenerator {
@@ -17,11 +17,17 @@ extension AssetKeyGenerator {
         public var assetCatalogURLs: [URL]
         public var assetTypes: Set<AssetType>
         public var keyTypeName: String
+        public var accessLevel: String?
         
-        public init(assetCatalogURLs: [URL], assetTypes: Set<AssetType>, keyTypeName: String) {
+        public init(assetCatalogURLs: [URL],
+                    assetTypes: Set<AssetType>,
+                    keyTypeName: String,
+                    accessLevel: String? = nil
+        ) {
             self.assetCatalogURLs = assetCatalogURLs
             self.assetTypes = assetTypes
             self.keyTypeName = keyTypeName
+            self.accessLevel = accessLevel
         }
     }
     
@@ -65,7 +71,8 @@ public class AssetKeyGenerator {
     }
     
     private func generateTypeDeclation(for request: Request) -> String {
-        return typeDeclarationGenerator.generate(keyTypeName: request.keyTypeName)
+        return typeDeclarationGenerator.generate(keyTypeName: request.keyTypeName,
+                                                 accessLevel: request.accessLevel)
     }
     
     private func generateKeyDeclations(for request: Request) throws -> [String] {
@@ -76,7 +83,9 @@ public class AssetKeyGenerator {
         }
         
         return catalogs.map {
-            return keyDeclarationGenerator.generate(catalog: $0, keyTypeName: request.keyTypeName)
+            return keyDeclarationGenerator.generate(catalog: $0,
+                                                    keyTypeName: request.keyTypeName,
+                                                    accessLevel: request.accessLevel)
         }
     }
 }

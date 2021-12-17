@@ -47,6 +47,9 @@ struct XCAssetsToSwift: ParsableCommand {
     
     @Option var swiftTypeName: String
     
+    @Option(help: ArgumentHelp(valueName: AccessLevel.joinedValueStrings))
+    var accessLevel: AccessLevel?
+    
     @Flag(name: .customLong("exclude-type-declation"))
     var excludesTypeDeclation: Bool = Default.excludesTypeDeclation
     
@@ -62,7 +65,8 @@ struct XCAssetsToSwift: ParsableCommand {
         let request = AssetKeyGenerator.Request(
             assetCatalogURLs: assetCatalogPaths.map({ URL(fileURLWithExpandingTildeInPath: $0) }),
             assetTypes: Set(assetTypes.isEmpty ? AssetType.allCases : assetTypes),
-            keyTypeName: swiftTypeName)
+            keyTypeName: swiftTypeName,
+            accessLevel: accessLevel?.rawValue)
         
         return try AssetKeyGenerator().generate(for: request)
     }

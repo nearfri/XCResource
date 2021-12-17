@@ -1,12 +1,14 @@
 import Foundation
 
 class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
-    func generate(catalog: AssetCatalog, keyTypeName: String) -> String {
+    func generate(catalog: AssetCatalog, keyTypeName: String, accessLevel: String?) -> String {
+        let accessLevel = accessLevel.map({ $0 + " " }) ?? ""
+        
         var result = ""
         
         print("// MARK: - \(catalog.name)", to: &result)
         print("", to: &result)
-        print("extension \(keyTypeName) {", to: &result)
+        print("\(accessLevel)extension \(keyTypeName) {", to: &result)
         
         var currentDirectoryPath = ""
         var commentPrefix = ""

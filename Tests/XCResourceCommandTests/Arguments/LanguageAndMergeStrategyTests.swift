@@ -1,7 +1,7 @@
 import XCTest
 @testable import XCResourceCommand
 
-class LanguageAndMergeStrategyTests: XCTestCase {
+final class LanguageAndMergeStrategyTests: XCTestCase {
     func test_initWithArgument() throws {
         // Given
         let argument = "ko:comment"

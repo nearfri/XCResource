@@ -9,6 +9,7 @@ struct XCAssetsToSwiftDTO: CommandDTO {
     var assetTypes: [String]?
     var swiftPath: String
     var swiftTypeName: String
+    var accessLevel: String?
     var excludesTypeDeclation: Bool?
     
     func toCommand() throws -> ParsableCommand {
@@ -23,11 +24,22 @@ struct XCAssetsToSwiftDTO: CommandDTO {
             types.append(assetType)
         })
         
+        let accessLevel: AccessLevel? = try self.accessLevel.map({
+            guard let level = AccessLevel(argument: $0) else {
+                throw ValueValidationError(
+                    key: CodingKeys.accessLevel.stringValue,
+                    value: $0,
+                    valueDescription: AccessLevel.joinedValueStrings)
+            }
+            return level
+        })
+        
         var command = XCAssetsToSwift()
         command.assetCatalogPaths = xcassetsPaths
         command.assetTypes = assetTypes ?? Default.assetTypes
         command.swiftPath = swiftPath
         command.swiftTypeName = swiftTypeName
+        command.accessLevel = accessLevel
         command.excludesTypeDeclation = excludesTypeDeclation ?? Default.excludesTypeDeclation
         
         return command
