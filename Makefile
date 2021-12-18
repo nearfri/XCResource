@@ -9,6 +9,7 @@ SWIFT_BUILD_FLAGS = -c release
 # SWIFT_BUILD_FLAGS = --product $(EXECUTABLE_NAME) -c release --disable-sandbox --arch arm64 --arch x86_64
 
 ROOT_CMD_PATH = Sources/XCResourceCommand/Commands/XCResource.swift
+MINTFILE_PATH = Projects/XCResourceApp/Scripts/Mintfile
 
 .PHONY: all
 all: build
@@ -39,9 +40,13 @@ clean-all:
 
 .PHONY: new-version
 new-version: version
-	@if ! git diff-index --quiet HEAD --; then \
-		echo "You have uncommitted changes."; \
-		exit 1; \
+	@if [ -z $(GIT_CHECK) ] || [ $(GIT_CHECK) == true ]; then \
+		if ! git diff-index --quiet HEAD --; then \
+			echo "You have uncommitted changes."; \
+			git status -s; \
+			echo "If you want to ignore git status, execute make with \"GIT_CHECK=false\""; \
+			exit 10; \
+		fi; \
 	fi
 	
 #	.ONESHELL은 make 3.82부터 지원하므로 NEW_VERSION 정의를 위해 eval을 이용한다.
@@ -49,13 +54,14 @@ new-version: version
 #	Bug: eval이 위의 git 체크보다 먼저 실행되는 문제가 있다.
 	$(eval NEW_VERSION=$(shell read -p "Enter New Version: " NEW_VER; echo $$NEW_VER))
 	
-	@if [ ! $(NEW_VERSION) ]; then \
-		exit 2; \
+	@if [ -z $(NEW_VERSION) ]; then \
+		exit 11; \
 	fi
 	
 	@sed -E -i '' 's/(version: ")(.*)(",)/\1$(NEW_VERSION)\3/' $(ROOT_CMD_PATH)
+	@sed -E -i '' 's/(@)(.*)/\1$(NEW_VERSION)/' $(MINTFILE_PATH)
 	
-	git add $(ROOT_CMD_PATH)
+	git add .
 	git commit -m "Update to $(NEW_VERSION)"
 	git tag $(NEW_VERSION)
 
