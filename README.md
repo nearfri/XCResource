@@ -22,9 +22,16 @@ let text = String.formatted(.alert_attachTooLargeVideo(maxMinutes: maxMinutes))
 - `run (default)`: Manifest 파일에 나열된 하위 커맨드들을 실행합니다.
 
 ## 설치
-[Mint](https://github.com/yonaskolb/Mint)로 XCResource를 설치합니다:
+[Mint](https://github.com/yonaskolb/Mint)
 ```sh
 mint install nearfri/XCResource
+```
+
+Make
+```sh
+git clone https://github.com/nearfri/XCResource.git
+cd XCResource
+make build install
 ```
 
 ## 사용 예제
@@ -97,8 +104,7 @@ enum StringKey: String, CaseIterable {
 xcrun --sdk macosx mint run xcresource swift2strings \
     --swift-path ../SampleApp/ResourceKeys/StringKey.swift \
     --resources-path ../SampleApp \
-    --value-strategy ko:comment \
-    --sort-by-key
+    --merge-strategy ko:comment
 ```
 
 아래와 같이 strings 파일이 업데이트 됩니다:

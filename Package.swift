@@ -88,6 +88,7 @@ let package = Package(
         
         .target(
             name: "SampleData",
+            path: "Tests/_SampleData",
             resources: [
                 // 테스트용 리소스 폴더로 쓰기 위해 통째로 복사한다.
                 .copy("Resources"),

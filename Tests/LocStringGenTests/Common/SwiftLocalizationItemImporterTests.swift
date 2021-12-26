@@ -1,5 +1,4 @@
 import XCTest
-import SampleData
 @testable import LocStringGen
 
 private class StubStringEnumerationImporter: StringEnumerationImporter {

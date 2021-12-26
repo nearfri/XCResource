@@ -1,6 +1,5 @@
 import XCTest
 import class Foundation.Bundle
-import SampleData
 
 private func toolchainPath() throws -> String {
     let developerPath = try Bash.execute(command: "xcode-select", arguments: ["-p"]).trimmed
