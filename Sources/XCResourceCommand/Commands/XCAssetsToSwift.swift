@@ -40,14 +40,14 @@ struct XCAssetsToSwift: ParsableCommand {
                 "Asset type to export.",
                 discussion: "If not specified, all asset types are exported. For more "
                     + "information about possible types, see \(catalogDocumentURLString)",
-                valueName: AssetType.joinedValueStrings))
+                valueName: AssetType.joinedAllValuesString))
     var assetTypes: [AssetType] = Default.assetTypes
     
     @Option var swiftPath: String
     
     @Option var swiftTypeName: String
     
-    @Option(help: ArgumentHelp(valueName: AccessLevel.joinedValueStrings))
+    @Option(help: ArgumentHelp(valueName: AccessLevel.joinedAllValuesString))
     var accessLevel: AccessLevel?
     
     @Flag(name: .customLong("exclude-type-declation"))

@@ -17,7 +17,7 @@ enum AccessLevel: String, CaseIterable, ExpressibleByArgument {
         return allCases.map(\.rawValue)
     }
     
-    static var joinedValueStrings: String {
+    static var joinedAllValuesString: String {
         return allValueStrings.joined(separator: "|")
     }
 }

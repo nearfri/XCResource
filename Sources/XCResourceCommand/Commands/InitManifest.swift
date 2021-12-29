@@ -66,15 +66,12 @@ private let manifestTemplate = """
             "swiftPath": "<#swift file path#>",
             "resourcesPath": "<#resources path#>",
             "tableName": "Localizable",
-            "mergeStrategies": [
-                {
-                    "language": "<#language#>",
-                    "strategy": "<#comment|key|custom-string|dont-add#>"
+            "configurationsByLanguage": {
+                "<#language#>": {
+                    "mergeStrategy": "<#comment|key|custom-string|dont-add#>",
+                    "verifiesComment": false
                 }
-                <#Value strategies by language to convert.#>
-                <#If "\(LanguageID.allSymbol)" is specified, all languages are converted.#>
-            ],
-            "shouldCompareComments": false
+            },
             "sortsByKey": false
         }
     ]

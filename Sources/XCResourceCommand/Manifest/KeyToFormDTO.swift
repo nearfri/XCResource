@@ -19,16 +19,17 @@ struct KeyToFormDTO: CommandDTO {
                 throw ValueValidationError(
                     key: CodingKeys.accessLevel.stringValue,
                     value: $0,
-                    valueDescription: AccessLevel.joinedValueStrings)
+                    valueDescription: AccessLevel.joinedAllValuesString)
             }
             return level
         })
         
         let issueReporterType: IssueReporterType? = try issueReporter.map({
             guard let reporter = IssueReporterType(argument: $0) else {
-                throw ValueValidationError(key: CodingKeys.issueReporter.stringValue,
-                                           value: $0,
-                                           valueDescription: IssueReporterType.joinedValueStrings)
+                throw ValueValidationError(
+                    key: CodingKeys.issueReporter.stringValue,
+                    value: $0,
+                    valueDescription: IssueReporterType.joinedAllValuesString)
             }
             return reporter
         })

@@ -38,7 +38,7 @@ extension LocalizationMergeStrategy: ExpressibleByArgument {
         ]
     }
     
-    static var joinedValueStrings: String {
+    static var joinedAllValuesString: String {
         return allValueStrings.joined(separator: "|")
     }
 }

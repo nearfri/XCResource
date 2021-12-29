@@ -36,7 +36,7 @@ extension LanguageFormatterStyle: ExpressibleByArgument {
         return ["short", "long", "long-<language>"]
     }
     
-    static var joinedValueStrings: String {
+    static var joinedAllValuesString: String {
         return allValueStrings.joined(separator: "|")
     }
 }

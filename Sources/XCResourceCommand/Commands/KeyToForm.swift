@@ -32,14 +32,14 @@ struct KeyToForm: ParsableCommand {
     
     @Option var formTypeName: String
     
-    @Option(help: ArgumentHelp(valueName: AccessLevel.joinedValueStrings))
+    @Option(help: ArgumentHelp(valueName: AccessLevel.joinedAllValuesString))
     var accessLevel: AccessLevel?
     
     @Flag(name: .customLong("exclude-type-declation"))
     var excludesTypeDeclation: Bool = Default.excludesTypeDeclation
     
     @Option(name: .customLong("issue-reporter"),
-            help: ArgumentHelp(valueName: IssueReporterType.joinedValueStrings))
+            help: ArgumentHelp(valueName: IssueReporterType.joinedAllValuesString))
     var issueReporterType: IssueReporterType = Default.issueReporterType
     
     // MARK: - Run

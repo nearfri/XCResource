@@ -14,24 +14,33 @@ extension LocalizableStringsGenerator {
         public var sourceCodeURL: URL
         public var resourcesURL: URL
         public var tableName: String
-        public var mergeStrategies: [LanguageID: MergeStrategy]
-        public var shouldCompareComments: Bool
+        public var configurationsByLanguage: [LanguageID: LocalizationConfiguration]
         public var sortOrder: SortOrder
         
         public init(
             sourceCodeURL: URL,
             resourcesURL: URL,
             tableName: String = "Localizable",
-            mergeStrategies: [LanguageID: MergeStrategy] = [.all: .doNotAdd],
-            shouldCompareComments: Bool = true,
+            configurationsByLanguage: [LanguageID: LocalizationConfiguration] = [
+                .all: .init(mergeStrategy: .doNotAdd, verifiesComment: true)
+            ],
             sortOrder: SortOrder = .occurrence
         ) {
             self.sourceCodeURL = sourceCodeURL
             self.resourcesURL = resourcesURL
             self.tableName = tableName
-            self.mergeStrategies = mergeStrategies
-            self.shouldCompareComments = shouldCompareComments
+            self.configurationsByLanguage = configurationsByLanguage
             self.sortOrder = sortOrder
+        }
+    }
+    
+    public struct LocalizationConfiguration {
+        public var mergeStrategy: MergeStrategy
+        public var verifiesComment: Bool
+        
+        public init(mergeStrategy: MergeStrategy, verifiesComment: Bool) {
+            self.mergeStrategy = mergeStrategy
+            self.verifiesComment = verifiesComment
         }
     }
     
@@ -88,7 +97,8 @@ public class LocalizableStringsGenerator {
         let languages = try determineLanguages(for: request)
         
         return try languages.reduce(into: [:]) { result, language in
-            let strategy = request.mergeStrategies[language] ?? request.mergeStrategies[.all]!
+            let configs = request.configurationsByLanguage
+            let config = configs[language] ?? configs[.all]!
             
             let stringsFileURL = request.resourcesURL
                 .appendingPathComponents(language: language.rawValue, tableName: request.tableName)
@@ -96,16 +106,15 @@ public class LocalizableStringsGenerator {
             let targetItems = try targetImporter.import(at: stringsFileURL)
             
             let combinedItems = { () -> [LocalizationItem] in
-                switch strategy {
+                switch config.mergeStrategy {
                 case .add(let addingMethod):
                     return sourceItems
                         .map({ $0.applying(addingMethod) })
-                        .combined(with: targetItems,
-                                  comparingComments: request.shouldCompareComments)
+                        .combined(with: targetItems, verifyingComments: config.verifiesComment)
                 case .doNotAdd:
                     return sourceItems
                         .combinedIntersection(targetItems,
-                                              comparingComments: request.shouldCompareComments)
+                                              verifyingComments: config.verifiesComment)
                 }
             }().sorted(by: request.sortOrder)
             
@@ -115,7 +124,7 @@ public class LocalizableStringsGenerator {
     
     private func determineLanguages(for request: Request) throws -> [LanguageID] {
         let availableLanguages = try languageDetector.detect(at: request.resourcesURL)
-        let requestedLanguages = Set(request.mergeStrategies.keys)
+        let requestedLanguages = Set(request.configurationsByLanguage.keys)
         
         if requestedLanguages.contains(.all) {
             return availableLanguages

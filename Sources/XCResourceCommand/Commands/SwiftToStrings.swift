@@ -10,7 +10,7 @@ struct SwiftToStrings: ParsableCommand {
         discussion: """
             enum 타입을 담고 있는 소스 코드에서 case와 주석을 추출해 Localizable.strings 파일을 생성한다.
             
-            - case의 rawValue를 key로 하고, --merge-strategy 옵션에 따라 주석이나 custom label을 value로 한다.
+            - case의 rawValue를 key로 하고, --localization-config 옵션에 따라 value를 결정한다.
             - 소스 코드에 없는 key는 strings 파일에서 제거된다.
             """)
     
@@ -18,10 +18,10 @@ struct SwiftToStrings: ParsableCommand {
     
     enum Default {
         static let tableName: String = "Localizable"
-        static let mergeStrategies: [LanguageAndMergeStrategy] = [
-            .init(language: LanguageID.allSymbol, strategy: .doNotAdd)
+        static let languageAndConfigurations: [LanguageAndConfiguration] = [
+            .init(language: LanguageID.allSymbol,
+                  configuration: .init(mergeStrategy: .doNotAdd, verifiesComment: false))
         ]
-        static let shouldCompareComments: Bool = false
         static let sortsByKey: Bool = false
     }
     
@@ -33,21 +33,18 @@ struct SwiftToStrings: ParsableCommand {
     
     @Option var tableName: String = Default.tableName
     
-    @Option(name: .customLong("merge-strategy"),
+    @Option(name: .customLong("language-config"),
             parsing: .upToNextOption,
             help: ArgumentHelp(
-                "Merge strategies by language to convert.",
+                "Languages and configurations to convert.",
                 discussion: """
-                    If "\(LanguageID.allSymbol)" is specified, all languages are converted.
+                    If "\(LanguageID.allSymbol)" is specified at language position, \
+                    all languages are converted.
+                    If "\(LocalizationConfiguration.Name.verifiesComment)" is specied \
+                    and the comments are not equal, the key-value pair is reset.
                     """,
-                valueName: "language:<\(LocalizationMergeStrategy.joinedValueStrings)>"))
-    var mergeStrategies: [LanguageAndMergeStrategy] = Default.mergeStrategies
-    
-    @Flag(name: .customLong("comment-comparison"),
-          inversion: .prefixedEnableDisable,
-          help: ArgumentHelp(
-            "If the flag is enabled and the comments are not equal, the key-value pair is reset."))
-    var shouldCompareComments: Bool = Default.shouldCompareComments
+                valueName: LanguageAndConfiguration.usageDescription))
+    var languageAndConfigurations: [LanguageAndConfiguration] = Default.languageAndConfigurations
     
     @Flag(name: .customLong("sort-by-key"))
     var sortsByKey: Bool = Default.sortsByKey
@@ -67,8 +64,7 @@ struct SwiftToStrings: ParsableCommand {
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftPath),
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
-            mergeStrategies: mergeStrategies.strategiesByLanguage,
-            shouldCompareComments: shouldCompareComments,
+            configurationsByLanguage: languageAndConfigurations.configurationsByLanguage,
             sortOrder: sortsByKey ? .key : .occurrence)
         
         let generator = LocalizableStringsGenerator(

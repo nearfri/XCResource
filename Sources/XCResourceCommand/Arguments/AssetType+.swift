@@ -20,7 +20,7 @@ extension AssetType: ExpressibleByArgument {
         return someTypes.map(\.pathExtension) + ["..."]
     }
     
-    static var joinedValueStrings: String {
+    static var joinedAllValuesString: String {
         return someValueStrings.joined(separator: "|")
     }
 }

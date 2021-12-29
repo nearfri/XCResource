@@ -43,7 +43,7 @@ private extension String {
 extension Array where Element == LocalizationItem {
     func combined<S>(
         with other: S,
-        comparingComments: Bool
+        verifyingComments: Bool
     ) -> [LocalizationItem] where S: Sequence, S.Element == Element {
         let othersByKey = Dictionary(uniqueKeysWithValues: other.map({ ($0.key, $0) }))
         
@@ -52,7 +52,7 @@ extension Array where Element == LocalizationItem {
         for i in indices {
             guard let otherItem = othersByKey[result[i].key] else { continue }
             
-            if !comparingComments || otherItem.comment == result[i].comment {
+            if !verifyingComments || otherItem.comment == result[i].comment {
                 result[i].value = otherItem.value
             }
         }
@@ -62,7 +62,7 @@ extension Array where Element == LocalizationItem {
     
     func combinedIntersection<S>(
         _ other: S,
-        comparingComments: Bool
+        verifyingComments: Bool
     ) -> [LocalizationItem] where S: Sequence, S.Element == Element {
         let othersByKey = Dictionary(uniqueKeysWithValues: other.map({ ($0.key, $0) }))
         
@@ -71,7 +71,7 @@ extension Array where Element == LocalizationItem {
         for item in self {
             guard var otherItem = othersByKey[item.key] else { continue }
             
-            if !comparingComments || otherItem.comment == item.comment {
+            if !verifyingComments || otherItem.comment == item.comment {
                 otherItem.comment = item.comment
                 result.append(otherItem)
             }

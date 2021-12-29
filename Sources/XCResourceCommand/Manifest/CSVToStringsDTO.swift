@@ -19,7 +19,7 @@ struct CSVToStringsDTO: CommandDTO {
                 throw ValueValidationError(
                     key: CodingKeys.headerStyle.stringValue,
                     value: $0,
-                    valueDescription: LanguageFormatterStyle.joinedValueStrings)
+                    valueDescription: LanguageFormatterStyle.joinedAllValuesString)
             }
             return style
         }

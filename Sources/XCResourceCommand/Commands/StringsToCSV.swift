@@ -31,7 +31,7 @@ struct StringsToCSV: ParsableCommand {
     
     @Option var csvPath: String
     
-    @Option(help: ArgumentHelp(valueName: LanguageFormatterStyle.joinedValueStrings))
+    @Option(help: ArgumentHelp(valueName: LanguageFormatterStyle.joinedAllValuesString))
     var headerStyle: LanguageFormatterStyle = Default.headerStyle
     
     @Option(help: ArgumentHelp("The string used to represent empty values."))

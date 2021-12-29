@@ -19,7 +19,7 @@ struct XCAssetsToSwiftDTO: CommandDTO {
             guard let assetType = AssetType(argument: type) else {
                 throw ValueValidationError(key: CodingKeys.assetTypes.stringValue,
                                            value: type,
-                                           valueDescription: AssetType.joinedValueStrings)
+                                           valueDescription: AssetType.joinedAllValuesString)
             }
             types.append(assetType)
         })
@@ -29,7 +29,7 @@ struct XCAssetsToSwiftDTO: CommandDTO {
                 throw ValueValidationError(
                     key: CodingKeys.accessLevel.stringValue,
                     value: $0,
-                    valueDescription: AccessLevel.joinedValueStrings)
+                    valueDescription: AccessLevel.joinedAllValuesString)
             }
             return level
         })

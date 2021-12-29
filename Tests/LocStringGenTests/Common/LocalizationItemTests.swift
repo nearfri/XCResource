@@ -35,13 +35,13 @@ final class LocalizationItemTests: XCTestCase {
         ]
         
         // When, Then
-        XCTAssertEqual(sut.combined(with: other, comparingComments: true), [
+        XCTAssertEqual(sut.combined(with: other, verifyingComments: true), [
             .init(comment: "cancel", key: "cancel", value: "Cancel"),
             .init(comment: "new key", key: "new_key", value: "new key"),
             .init(comment: "new comment", key: "greeting", value: "new comment"),
         ])
         
-        XCTAssertEqual(sut.combined(with: other, comparingComments: false), [
+        XCTAssertEqual(sut.combined(with: other, verifyingComments: false), [
             .init(comment: "cancel", key: "cancel", value: "Cancel"),
             .init(comment: "new key", key: "new_key", value: "new key"),
             .init(comment: "new comment", key: "greeting", value: "hello"),
@@ -63,11 +63,11 @@ final class LocalizationItemTests: XCTestCase {
         ]
         
         // When, Then
-        XCTAssertEqual(sut.combinedIntersection(other, comparingComments: true), [
+        XCTAssertEqual(sut.combinedIntersection(other, verifyingComments: true), [
             .init(comment: "cancel", key: "cancel", value: "Cancel"),
         ])
         
-        XCTAssertEqual(sut.combinedIntersection(other, comparingComments: false), [
+        XCTAssertEqual(sut.combinedIntersection(other, verifyingComments: false), [
             .init(comment: "cancel", key: "cancel", value: "Cancel"),
             .init(comment: "new comment", key: "greeting", value: "hello"),
         ])

@@ -31,17 +31,16 @@
             "commandName": "swift2strings",
             "swiftPath": "../XCResourceApp/ResourceKeys/StringKey.swift",
             "resourcesPath": "../XCResourceApp",
-            "mergeStrategies": [
-                {
-                    "language": "ko",
-                    "strategy": "comment"
+            "configurationsByLanguage": {
+                "ko": {
+                    "mergeStrategy": "comment",
+                    "verifiesComment": true
                 },
-                {
-                    "language": "all",
-                    "strategy": "dont-add"
+                "all": {
+                    "mergeStrategy": "dont-add",
+                    "verifiesComment": false
                 }
-            ],
-            "shouldCompareComments": true
+            }
         }
     ]
 }

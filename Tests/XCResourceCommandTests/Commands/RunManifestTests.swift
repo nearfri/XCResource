@@ -28,12 +28,12 @@ private enum Seed {
                 "resourcesPath": "%@",
                 "tableName": "Localizable",
                 "languages": ["ko"],
-                "mergeStrategies": [
-                    {
-                        "language": "ko",
-                        "strategy": "comment"
+                "configurationsByLanguage": {
+                    "ko": {
+                        "mergeStrategy": "comment",
+                        "verifiesComment": false
                     }
-                ],
+                },
                 "sortsByKey": false
             }
         ]

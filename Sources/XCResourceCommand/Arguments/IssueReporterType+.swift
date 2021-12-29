@@ -17,7 +17,7 @@ extension IssueReporterType: ExpressibleByArgument {
         return Self.allCases.map(\.rawValue)
     }
     
-    static var joinedValueStrings: String {
+    static var joinedAllValuesString: String {
         return allValueStrings.joined(separator: "|")
     }
 }

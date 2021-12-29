@@ -30,7 +30,7 @@ ASSET_CONTENTS_FILES := $(shell find $(ASSETS_DIR) -name "Contents.json" | sed '
 #	| xargs -0 dirname | sort | uniq | sed 's/ /\\ /g; s/$$/\/Contents.json/')
 #IMAGE_CONTENTS_FILES = $(call asset_contents_files,'.+\.imageset$$')
 
-SWIFT2STRINGS_STRATEGIES = ko:comment all:dont-add
+SWIFT2STRINGS_LANGUAGE_CONFIG = ko:comment:verify-comment all:dont-add
 SWIFT2STRINGS_LASTRUN_FILE = ./swift2strings-lastrun
 
 LOCALIZABLE_STRINGS_FILES = $(wildcard $(RESOURCES_DIR)/*.lproj/Localizable.strings)
@@ -38,6 +38,7 @@ LOCALIZABLE_STRINGS_FILES = $(wildcard $(RESOURCES_DIR)/*.lproj/Localizable.stri
 LOCALIZATION_CSV_FILE = ./$(PROJECT_NAME)-localizations.csv
 LOCALIZATION_DEV_LANGUAGE = ko
 LOCALIZATION_CSV_STYLE = long-ko
+LOCALIZATION_CSV_EMPTY_ENCODING = "\#EMPTY"
 
 .SUFFIXES:
 
@@ -91,8 +92,7 @@ $(SWIFT2STRINGS_LASTRUN_FILE): $(STRINGKEY_FILE)
 	$(XCRESOURCE) swift2strings \
 	--swift-path $< \
 	--resources-path $(RESOURCES_DIR) \
-	--merge-strategy $(SWIFT2STRINGS_STRATEGIES) \
-	--enable-comment-comparison
+	--language-config $(SWIFT2STRINGS_LANGUAGE_CONFIG)
 	
 	@touch $@
 
@@ -107,7 +107,7 @@ $(LOCALIZATION_CSV_FILE): $(LOCALIZABLE_STRINGS_FILES)
 	--development-language $(LOCALIZATION_DEV_LANGUAGE) \
 	--csv-path $(LOCALIZATION_CSV_FILE) \
 	--header-style $(LOCALIZATION_CSV_STYLE) \
-	--empty-encoding "#EMPTY" \
+	--empty-encoding $(LOCALIZATION_CSV_EMPTY_ENCODING) \
 	--write-bom
 
 .PHONY: csv2strings
@@ -122,4 +122,4 @@ csv2strings:
 	--csv-path $(LOCALIZATION_CSV_FILE) \
 	--header-style $(LOCALIZATION_CSV_STYLE) \
 	--resources-path $(RESOURCES_DIR) \
-	--empty-encoding "#EMPTY"
+	--empty-encoding $(LOCALIZATION_CSV_EMPTY_ENCODING)
