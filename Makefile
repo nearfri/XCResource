@@ -1,5 +1,5 @@
 EXECUTABLE_NAME = xcresource
-EXECUTABLE_DIR = $(shell swift build $(SWIFT_BUILD_FLAGS) --show-bin-path | sed "s|$$PWD/||")
+EXECUTABLE_DIR = $(shell swift build $(SWIFT_BUILD_FLAGS) --show-bin-path | sed "s|^$$PWD/||")
 EXECUTABLE_PATH = $(EXECUTABLE_DIR)/$(EXECUTABLE_NAME)
 
 INSTALL_DIR = /usr/local/bin
@@ -10,6 +10,9 @@ SWIFT_BUILD_FLAGS = -c release
 
 ROOT_CMD_PATH = Sources/XCResourceCommand/Commands/XCResource.swift
 MINTFILE_PATH = Projects/XCResourceApp/Scripts/Mintfile
+
+# Invoke make with GIT_CHECK=false to override this value.
+GIT_CHECK ?= true
 
 .PHONY: all
 all: build
@@ -40,11 +43,11 @@ clean-all:
 
 .PHONY: new-version
 new-version: version
-	@if [ -z $(GIT_CHECK) ] || [ $(GIT_CHECK) == true ]; then \
+	@if [ $(GIT_CHECK) == true ]; then \
 		if ! git diff-index --quiet HEAD --; then \
 			echo "You have uncommitted changes."; \
 			git status -s; \
-			echo "If you want to ignore git status, execute make with \"GIT_CHECK=false\""; \
+			echo "If you want to ignore git status, invoke make with \"GIT_CHECK=false\""; \
 			exit 10; \
 		fi; \
 	fi
