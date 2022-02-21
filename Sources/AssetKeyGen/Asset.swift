@@ -1,4 +1,5 @@
 import Foundation
+import XCResourceUtil
 
 struct Asset {
     var name: String    // icon.check
@@ -8,7 +9,7 @@ struct Asset {
     var key: String {   // icon_check
         return name
             .components(separatedBy: CharacterSet.alphanumerics.inverted)
-            .map({ $0.prefix(1).lowercased() + $0.dropFirst(1) })
+            .map({ $0.camelCased() })
             .joined(separator: "_")
     }
 }

@@ -1,6 +1,34 @@
 import Foundation
 
 extension String {
+    public func camelCased() -> String {
+        var result = ""
+        
+        var allowsUppercase = false
+        for index in indices {
+            let character = self[index]
+            if index == startIndex {
+                result += character.lowercased()
+            } else if character.isLowercase {
+                result.append(character)
+                allowsUppercase = true
+            } else {
+                let nextIndex = self.index(after: index)
+                let isNextLowercase = nextIndex < endIndex ? self[nextIndex].isLowercase : false
+                let hasNextNext = nextIndex < endIndex && self.index(after: nextIndex) < endIndex
+                let isBeginningOfWord = isNextLowercase && hasNextNext
+                
+                if allowsUppercase || isBeginningOfWord {
+                    result.append(character)
+                } else {
+                    result += character.lowercased()
+                }
+            }
+        }
+        
+        return result
+    }
+    
     public func addingBackslashEncoding() -> String {
         let backslashMap: [Character: String] = [
             "\"": #"\""#, "\n": #"\n"#, "\r": #"\r"#, "\t": #"\t"#,

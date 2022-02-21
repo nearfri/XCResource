@@ -2,6 +2,15 @@ import XCTest
 @testable import XCResourceUtil
 
 final class StringTests: XCTestCase {
+    func test_camelCased() {
+        XCTAssertEqual("helloWorld".camelCased(), "helloWorld")
+        XCTAssertEqual("HelloWorld".camelCased(), "helloWorld")
+        XCTAssertEqual("URL".camelCased(), "url")
+        XCTAssertEqual("URLs".camelCased(), "urls")
+        XCTAssertEqual("URLString".camelCased(), "urlString")
+        XCTAssertEqual("downloadURL".camelCased(), "downloadURL")
+    }
+    
     func test_addingBackslashEncoding() {
         XCTAssertEqual("ab\"cd".addingBackslashEncoding(), #"ab\"cd"#)
         XCTAssertEqual("ab\\cd".addingBackslashEncoding(), #"ab\cd"#)

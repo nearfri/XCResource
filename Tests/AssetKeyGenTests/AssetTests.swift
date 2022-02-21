@@ -14,6 +14,8 @@ final class AssetTests: XCTestCase {
     
     func test_key_twoWords() {
         checkComputedKey(name: "helloWorld", key: "helloWorld")
+        checkComputedKey(name: "URLString", key: "urlString")
+        checkComputedKey(name: "downloadURL", key: "downloadURL")
     }
     
     func test_key_number() {
@@ -31,9 +33,10 @@ final class AssetTests: XCTestCase {
         checkComputedKey(name: "hello_world", key: "hello_world")
     }
     
-    func test_key_uppercase() {
+    func test_key_path() {
         checkComputedKey(name: "HelloWorld", key: "helloWorld")
         checkComputedKey(name: "Hello/Swift/world", key: "hello_swift_world")
         checkComputedKey(name: "Hello/SwiftWorld", key: "hello_swiftWorld")
+        checkComputedKey(name: "Hello/URLString", key: "hello_urlString")
     }
 }
