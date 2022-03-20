@@ -3,6 +3,7 @@ import Foundation
 class StandardOutputSniffer {
     private let originalPipe: Pipe
     private let replacementPipe: Pipe
+    private let dataLock: NSLocking
     private(set) var data: Data
     
     var dropsStandardOutput: Bool
@@ -10,6 +11,7 @@ class StandardOutputSniffer {
     init(dropsStandardOutput: Bool = false) {
         self.originalPipe = Pipe()
         self.replacementPipe = Pipe()
+        self.dataLock = NSLock()
         self.data = Data()
         self.dropsStandardOutput = dropsStandardOutput
         
@@ -18,6 +20,8 @@ class StandardOutputSniffer {
     }
     
     func start() {
+        fflush(stdout)
+        
         // stdout을 replacement write handle로 연결. 이제 stdout에 쓰는건 이 handle로 전달된다.
         dup2(replacementPipe.fileHandleForWriting.fileDescriptor, STDOUT_FILENO)
         
@@ -27,6 +31,9 @@ class StandardOutputSniffer {
     }
     
     private func readAvailableData(from handle: FileHandle) {
+        dataLock.lock()
+        defer { dataLock.unlock() }
+        
         let newData = handle.availableData
         data += newData
         
@@ -41,10 +48,9 @@ class StandardOutputSniffer {
     }
     
     private func synchronize() {
-        try? replacementPipe.fileHandleForWriting.synchronize()
-        try? replacementPipe.fileHandleForReading.synchronize()
+        fflush(stdout)
         
-        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.005))
+        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.001))
     }
     
     private func rollback() {
@@ -55,10 +61,16 @@ class StandardOutputSniffer {
     }
     
     func resetData() {
+        dataLock.lock()
+        defer { dataLock.unlock() }
+        
         data.removeAll()
     }
     
     func stringFromData(encoding: String.Encoding = .utf8) -> String? {
+        dataLock.lock()
+        defer { dataLock.unlock() }
+        
         return String(data: data, encoding: encoding)
     }
 }

@@ -108,6 +108,8 @@ final class TextFileOutputStreamTests: XCTestCase {
         // actualStdWHandle을 /dev/stdout로 연결
         XCTAssertNotEqual(dup2(STDOUT_FILENO, actualStdWriteHandle.fileDescriptor), -1)
         
+        fflush(stdout)
+        
         // stdout을 stdWHandle로 연결. 이제 stdout에 쓰는건 stdWHandle로 전달된다.
         XCTAssertNotEqual(dup2(stdWriteHandle.fileDescriptor, STDOUT_FILENO), -1)
         
@@ -128,10 +130,9 @@ final class TextFileOutputStreamTests: XCTestCase {
         // When
         print(text, terminator: "", to: &TextFileOutputStream.standardOutput)
         
-        try? stdWriteHandle.synchronize()
-        try? stdReadHandle.synchronize()
+        fflush(stdout)
         
-        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.005))
+        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.001))
         
         // stdout을 /dev/stdout으로 되돌린다.
         dup2(actualStdWriteHandle.fileDescriptor, STDOUT_FILENO)
