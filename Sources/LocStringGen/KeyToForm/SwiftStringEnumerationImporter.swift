@@ -1,5 +1,8 @@
 import Foundation
 import SwiftSyntax
+#if canImport(SwiftSyntaxParser)
+import SwiftSyntaxParser
+#endif
 
 class SwiftStringEnumerationImporter: StringEnumerationImporter {
     func `import`(at url: URL) throws -> Enumeration<String> {

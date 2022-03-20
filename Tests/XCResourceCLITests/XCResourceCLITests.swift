@@ -36,20 +36,26 @@ private enum Bash {
 }
 
 final class XCResourceCLITests: XCTestCase {
-    let shouldTestMain: Bool = false // 너무 오래 걸리므로 생략
-    
     func test_main() throws {
-        guard shouldTestMain else { return }
-        
-        let toolchainPath = try toolchainPath()
         let executableURL = productsDirectory.appendingPathComponent("xcresource")
         
-        try Bash.execute(command: "install_name_tool",
-                         arguments: ["-add_rpath", toolchainPath, executableURL.path])
-        defer {
-            try! Bash.execute(command: "install_name_tool",
-                              arguments: ["-delete_rpath", toolchainPath, executableURL.path])
+#if canImport(SwiftSyntaxParser)
+#else
+        let bundleID = ProcessInfo.processInfo.environment["__CFBundleIdentifier"]
+        let shouldFixRPath = bundleID == "com.apple.dt.Xcode"
+        let toolchainPath = try toolchainPath()
+        
+        if shouldFixRPath {
+            try Bash.execute(command: "install_name_tool",
+                             arguments: ["-add_rpath", toolchainPath, executableURL.path])
         }
+        defer {
+            if shouldFixRPath {
+                try! Bash.execute(command: "install_name_tool",
+                                  arguments: ["-delete_rpath", toolchainPath, executableURL.path])
+            }
+        }
+#endif
         
         let process = Process()
         process.executableURL = executableURL

@@ -1,5 +1,8 @@
 import XCTest
 import SwiftSyntax
+#if canImport(SwiftSyntaxParser)
+import SwiftSyntaxParser
+#endif
 @testable import LocStringGen
 
 private enum Seed {

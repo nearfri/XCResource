@@ -4,15 +4,30 @@
 import PackageDescription
 import Foundation
 
-private func swiftSyntaxVersion() -> Package.Dependency.Requirement {
-#if swift(>=5.6)
-    return .exact("0.50600.0")
-#elseif swift(>=5.5)
-    return .exact("0.50500.0")
-#else
-    return .exact("0.50400.0")
-#endif
+private struct SwiftSyntaxPackage {
+    var version: Package.Dependency.Requirement
+    var parserDependency: Target.Dependency?
+    
+    var targetDependencies: [Target.Dependency] {
+        return ["SwiftSyntax"] + (parserDependency.map({ [$0] }) ?? [])
+    }
+    
+    var shouldFixRPath: Bool {
+        let bundleID = ProcessInfo.processInfo.environment["__CFBundleIdentifier"]
+        return parserDependency == nil && bundleID == "com.apple.dt.Xcode"
+    }
 }
+
+#if swift(>=5.6)
+private let swiftSyntax = SwiftSyntaxPackage(
+    version: .exact("0.50600.1"),
+    parserDependency: .product(name: "SwiftSyntaxParser", package: "SwiftSyntax")
+)
+#elseif swift(>=5.5)
+private let swiftSyntax = SwiftSyntaxPackage(version: .exact("0.50500.0"))
+#else
+private let swiftSyntax = SwiftSyntaxPackage(version: .exact("0.50400.0"))
+#endif
 
 let package = Package(
     name: "XCResource",
@@ -27,7 +42,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.2"),
         .package(url: "https://github.com/nearfri/Strix", from: "2.3.6"),
-        .package(name: "SwiftSyntax", url: "https://github.com/apple/swift-syntax", swiftSyntaxVersion()),
+        .package(name: "SwiftSyntax", url: "https://github.com/apple/swift-syntax", swiftSyntax.version),
     ],
     targets: [
         // MARK: - XCResourceCLI
@@ -68,12 +83,11 @@ let package = Package(
             name: "LocStringGen",
             dependencies: [
                 "XCResourceUtil",
-                "SwiftSyntax",
                 .product(name: "StrixParsers", package: "Strix"),
-            ]),
+            ] + swiftSyntax.targetDependencies),
         .testTarget(
             name: "LocStringGenTests",
-            dependencies: ["LocStringGen", "SwiftSyntax", "SampleData"]),
+            dependencies: ["LocStringGen", "SampleData"] + swiftSyntax.targetDependencies),
         
         // MARK: - XCResourceUtil
         
@@ -96,13 +110,8 @@ let package = Package(
     ]
 )
 
-fixRPathProblem()
-
-private func fixRPathProblem() {
-    let bundleID = ProcessInfo.processInfo.environment["__CFBundleIdentifier"]
-    if bundleID == "com.apple.dt.Xcode" {
-        addToolchainPathToRPath()
-    }
+if swiftSyntax.shouldFixRPath {
+    addToolchainPathToRPath()
 }
 
 private func addToolchainPathToRPath() {
