@@ -9,7 +9,7 @@ SWIFT_BUILD_FLAGS = -c release
 # SWIFT_BUILD_FLAGS = --product $(EXECUTABLE_NAME) -c release --disable-sandbox --arch arm64 --arch x86_64
 
 ROOT_CMD_PATH = Sources/XCResourceCommand/Commands/XCResource.swift
-MINTFILE_PATH = Projects/XCResourceApp/Scripts/Mintfile
+MINTFILE_PATH = Samples/XCResourceApp/Scripts/Mintfile
 
 # Invoke make with GIT_CHECK=false to override this value.
 GIT_CHECK ?= true
