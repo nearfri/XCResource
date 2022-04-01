@@ -1,32 +1,52 @@
-// swift-tools-version:5.4
+// swift-tools-version:5.6
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 import Foundation
 
 private struct SwiftSyntaxPackage {
-    var version: Package.Dependency.Requirement
-    var parserDependency: Target.Dependency?
-    
-    var targetDependencies: [Target.Dependency] {
-        return ["SwiftSyntax"] + (parserDependency.map({ [$0] }) ?? [])
+    struct InternalParser {
+        var version: String
+        var checksum: String
     }
     
-    var shouldFixRPath: Bool {
-        let bundleID = ProcessInfo.processInfo.environment["__CFBundleIdentifier"]
-        return parserDependency == nil && bundleID == "com.apple.dt.Xcode"
+    var version: Version
+    var internalParser: InternalParser
+    
+    var packageDependency: Package.Dependency {
+        return .package(url: "https://github.com/apple/swift-syntax", exact: version)
+    }
+    
+    var targetDependencies: [Target.Dependency] {
+        return [
+            .product(name: "SwiftSyntax", package: "swift-syntax"),
+            .product(name: "SwiftSyntaxParser", package: "swift-syntax"),
+            "lib_InternalSwiftSyntaxParser",
+        ]
+    }
+    
+    // Pass `-dead_strip_dylibs` to ignore the dynamic version of `lib_InternalSwiftSyntaxParser`
+    // that ships with SwiftSyntax because we want the static version from
+    // `StaticInternalSwiftSyntaxParser`.
+    var linkerSettings: [LinkerSetting] {
+        return [.unsafeFlags(["-Xlinker", "-dead_strip_dylibs"])]
+    }
+    
+    var internalParserTarget: Target {
+        return .binaryTarget(
+            name: "lib_InternalSwiftSyntaxParser",
+            url: "https://github.com/keith/StaticInternalSwiftSyntaxParser/releases/download/"
+            + "\(internalParser.version)/lib_InternalSwiftSyntaxParser.xcframework.zip",
+            checksum: internalParser.checksum)
     }
 }
 
 #if swift(>=5.6)
 private let swiftSyntax = SwiftSyntaxPackage(
-    version: .exact("0.50600.1"),
-    parserDependency: .product(name: "SwiftSyntaxParser", package: "SwiftSyntax")
-)
-#elseif swift(>=5.5)
-private let swiftSyntax = SwiftSyntaxPackage(version: .exact("0.50500.0"))
-#else
-private let swiftSyntax = SwiftSyntaxPackage(version: .exact("0.50400.0"))
+    version: "0.50600.1",
+    internalParser: .init(
+        version: "5.6",
+        checksum: "88d748f76ec45880a8250438bd68e5d6ba716c8042f520998a438db87083ae9d"))
 #endif
 
 let package = Package(
@@ -42,7 +62,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.2"),
         .package(url: "https://github.com/nearfri/Strix", from: "2.3.6"),
-        .package(name: "SwiftSyntax", url: "https://github.com/apple/swift-syntax", swiftSyntax.version),
+        swiftSyntax.packageDependency,
     ],
     targets: [
         // MARK: - XCResourceCLI
@@ -84,7 +104,8 @@ let package = Package(
             dependencies: [
                 "XCResourceUtil",
                 .product(name: "StrixParsers", package: "Strix"),
-            ] + swiftSyntax.targetDependencies),
+            ] + swiftSyntax.targetDependencies,
+            linkerSettings: swiftSyntax.linkerSettings),
         .testTarget(
             name: "LocStringGenTests",
             dependencies: ["LocStringGen", "SampleData"] + swiftSyntax.targetDependencies),
@@ -107,56 +128,9 @@ let package = Package(
                 // 테스트용 리소스 폴더로 쓰기 위해 통째로 복사한다.
                 .copy("Resources"),
             ]),
+        
+        // MARK: - lib_InternalSwiftSyntaxParser
+        
+        swiftSyntax.internalParserTarget,
     ]
 )
-
-if swiftSyntax.shouldFixRPath {
-    addToolchainPathToRPath()
-}
-
-private func addToolchainPathToRPath() {
-    do {
-        let linkerSetting = LinkerSetting.unsafeFlags(["-rpath", try toolchainPath()])
-        
-        package
-            .targets
-            .filter(\.isTest)
-            .forEach({ $0.linkerSettings = [linkerSetting] })
-    } catch {
-        preconditionFailure("\(error.localizedDescription)")
-    }
-}
-
-private func toolchainPath() throws -> String {
-    let developerPath = try Bash.execute(command: "xcode-select", arguments: ["-p"]).trimmed
-    return "\(developerPath)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx"
-}
-
-private extension String {
-    var trimmed: String { trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) }
-}
-
-private enum Bash {
-    @discardableResult
-    static func execute(command: String, arguments: [String] = []) throws -> String {
-        let path = try execute(path: "/bin/bash", arguments: ["-lc", "which \(command)"]).trimmed
-        return try execute(path: path, arguments: arguments)
-    }
-    
-    @discardableResult
-    static func execute(path: String, arguments: [String] = []) throws -> String {
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: path)
-        process.arguments = arguments
-        
-        let outputPipe = Pipe()
-        process.standardOutput = outputPipe
-        
-        try process.run()
-        process.waitUntilExit()
-        
-        let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(decoding: outputData, as: UTF8.self)
-        return output
-    }
-}
