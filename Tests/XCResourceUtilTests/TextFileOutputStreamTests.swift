@@ -128,7 +128,8 @@ final class TextFileOutputStreamTests: XCTestCase {
         
         fflush(stdout)
         
-        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.001))
+        try? stdWriteHandle.synchronize()
+        try? stdReadHandle.synchronize()
         
         // stdout을 /dev/stdout으로 되돌린다.
         dup2(actualStdWriteHandle.fileDescriptor, STDOUT_FILENO)
