@@ -2,6 +2,9 @@ EXECUTABLE_NAME = xcresource
 EXECUTABLE_DIR = $(shell swift build $(SWIFT_BUILD_FLAGS) --show-bin-path | sed "s|^$$PWD/||")
 EXECUTABLE_PATH = $(EXECUTABLE_DIR)/$(EXECUTABLE_NAME)
 
+ARCHIVE_PATH = $(EXECUTABLE_NAME).xcarchive
+ARCHIVED_EXECUTABLE_PATH = $(ARCHIVE_PATH)/Products/usr/local/bin/$(EXECUTABLE_NAME)
+
 INSTALL_DIR = /usr/local/bin
 INSTALL_PATH = $(INSTALL_DIR)/$(EXECUTABLE_NAME)
 
@@ -20,6 +23,16 @@ all: build
 .PHONY: build
 build:
 	swift build $(SWIFT_BUILD_FLAGS)
+
+.PHONY: archive
+archive:
+# Use xcodebuild due to https://bugs.swift.org/browse/SR-15802
+	xcodebuild -scheme $(EXECUTABLE_NAME) -destination generic/platform=macOS \
+	-archivePath $(ARCHIVE_PATH) archive
+
+.PHONY: zip
+zip:
+	zip -jr $(EXECUTABLE_NAME).zip $(ARCHIVED_EXECUTABLE_PATH)
 
 .PHONY: test
 test:
@@ -52,9 +65,9 @@ new-version: version
 		fi; \
 	fi
 	
-#	.ONESHELL은 make 3.82부터 지원하므로 NEW_VERSION 정의를 위해 eval을 이용한다.
-#	https://superuser.com/a/1285748
-#	Bug: eval이 위의 git 체크보다 먼저 실행되는 문제가 있다.
+# .ONESHELL은 make 3.82부터 지원하므로 NEW_VERSION 정의를 위해 eval을 이용한다.
+# https://superuser.com/a/1285748
+# Bug: eval이 위의 git 체크보다 먼저 실행되는 문제가 있다.
 	$(eval NEW_VERSION=$(shell read -p "Enter New Version: " NEW_VER; echo $$NEW_VER))
 	
 	@if [ -z $(NEW_VERSION) ]; then \
