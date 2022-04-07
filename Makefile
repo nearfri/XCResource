@@ -50,9 +50,9 @@ uninstall:
 clean:
 	swift package clean
 
-.PHONY: clean-all
-clean-all:
-	rm -rf .build
+.PHONY: reset
+reset:
+	swift package reset
 
 .PHONY: new-version
 new-version: version
