@@ -113,8 +113,6 @@ release:
 		-o "$(RESPONSE_PATH)" \
     	https://api.github.com/repos/nearfri/XCResource/releases
 	
-	open $(HTML_URL)
-
 .PHONY: upload
 upload:
 	@if [ ! -f $(RESPONSE_PATH) ]; then \
