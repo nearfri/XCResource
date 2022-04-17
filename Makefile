@@ -3,6 +3,7 @@ EXECUTABLE_DIR = $(shell swift build $(SWIFT_BUILD_FLAGS) --show-bin-path | sed 
 EXECUTABLE_PATH = $(EXECUTABLE_DIR)/$(EXECUTABLE_NAME)
 
 ARCHIVE_PATH = $(EXECUTABLE_NAME).xcarchive
+ARCHIVE_ZIP_PATH = $(EXECUTABLE_NAME).zip
 ARCHIVED_EXECUTABLE_PATH = $(ARCHIVE_PATH)/Products/usr/local/bin/$(EXECUTABLE_NAME)
 
 INSTALL_DIR = /usr/local/bin
@@ -16,6 +17,15 @@ MINTFILE_PATH = Samples/XCResourceApp/Scripts/Mintfile
 
 # Invoke make with GIT_CHECK=false to override this value.
 GIT_CHECK ?= true
+
+LATEST_TAG = $(shell git describe --tags --abbrev=0)
+GITHUB_TOKEN = $(shell security find-generic-password -w -s GITHUB_TOKEN)
+RESPONSE_PATH = tmp_response.json
+UPLOAD_URL = $(shell cat $(RESPONSE_PATH) \
+	| python3 -c "import sys, json; print(json.load(sys.stdin)['upload_url'])" \
+	| sed -E 's/{.*}/?name=$(EXECUTABLE_NAME).zip/')
+HTML_URL = $(shell cat $(RESPONSE_PATH) \
+	| python3 -c "import sys, json; print(json.load(sys.stdin)['html_url'])")
 
 .PHONY: all
 all: build
@@ -32,7 +42,7 @@ archive:
 
 .PHONY: zip
 zip:
-	zip -jr $(EXECUTABLE_NAME).zip $(ARCHIVED_EXECUTABLE_PATH)
+	zip -jr $(ARCHIVE_ZIP_PATH) $(ARCHIVED_EXECUTABLE_PATH)
 
 .PHONY: test
 test:
@@ -80,7 +90,44 @@ new-version: version
 	git add .
 	git commit -m "Update to $(NEW_VERSION)"
 	git tag $(NEW_VERSION)
+	git push origin $(NEW_VERSION)
 
 .PHONY: version
 version:
 	@echo Current Version: $$(sed -En 's/.*version: "(.*)".*/\1/p' $(ROOT_CMD_PATH))
+
+.PHONY: release
+release:
+	@echo Create a release $(LATEST_TAG)
+	
+	@if [ -z $(GITHUB_TOKEN) ]; then \
+		echo "GITHUB_TOKEN not found in the keychain."; \
+		exit 20; \
+	fi
+
+	curl -X POST \
+    	-H "Authorization: token $(GITHUB_TOKEN)" \
+    	-H "Accept: application/vnd.github.v3+json" \
+    	-H "Content-Type:application/json" \
+    	-d '{"tag_name":"$(LATEST_TAG)","target_commitish":"main","draft":true,"generate_release_notes":true}' \
+		-o "$(RESPONSE_PATH)" \
+    	https://api.github.com/repos/nearfri/XCResource/releases
+	
+	open $(HTML_URL)
+
+.PHONY: upload
+upload:
+	@if [ ! -f $(RESPONSE_PATH) ]; then \
+		echo "$(RESPONSE_PATH) file not found."; \
+		exit 30; \
+	fi
+
+	curl -X POST \
+		-T "$(ARCHIVE_ZIP_PATH)" \
+		-H "Content-Type: $(shell file -b --mime-type $(ARCHIVE_ZIP_PATH))" \
+		-H "Authorization: token $(GITHUB_TOKEN)" \
+		-H "Accept: application/vnd.github.v3+json" \
+		"$(UPLOAD_URL)" \
+	| cat
+
+	open $(HTML_URL)
