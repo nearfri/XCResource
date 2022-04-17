@@ -106,12 +106,12 @@ release:
 	fi
 
 	curl -X POST \
-    	-H "Authorization: token $(GITHUB_TOKEN)" \
-    	-H "Accept: application/vnd.github.v3+json" \
-    	-H "Content-Type:application/json" \
-    	-d '{"tag_name":"$(LATEST_TAG)","target_commitish":"main","draft":true,"generate_release_notes":true}' \
+		-H "Authorization: token $(GITHUB_TOKEN)" \
+		-H "Accept: application/vnd.github.v3+json" \
+		-H "Content-Type:application/json" \
+		-d '{"tag_name":"$(LATEST_TAG)","target_commitish":"main","draft":true,"generate_release_notes":true}' \
 		-o "$(RESPONSE_PATH)" \
-    	https://api.github.com/repos/nearfri/XCResource/releases
+		https://api.github.com/repos/nearfri/XCResource/releases
 	
 .PHONY: upload
 upload:
