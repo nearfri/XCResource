@@ -4,43 +4,6 @@
 import PackageDescription
 import Foundation
 
-private struct SwiftSyntaxPackage {
-    struct InternalParser {
-        var version: String
-        var checksum: String
-    }
-    
-    var version: Version
-    var internalParser: InternalParser
-    
-    var packageDependency: Package.Dependency {
-        return .package(url: "https://github.com/apple/swift-syntax", exact: version)
-    }
-    
-    var targetDependencies: [Target.Dependency] {
-        return [
-            .product(name: "SwiftSyntax", package: "swift-syntax"),
-            .product(name: "SwiftSyntaxParser", package: "swift-syntax"),
-            "lib_InternalSwiftSyntaxParser",
-        ]
-    }
-    
-    // Pass `-dead_strip_dylibs` to ignore the dynamic version of `lib_InternalSwiftSyntaxParser`
-    // that ships with SwiftSyntax because we want the static version from
-    // `StaticInternalSwiftSyntaxParser`.
-    var linkerSettings: [LinkerSetting] {
-        return [.unsafeFlags(["-Xlinker", "-dead_strip_dylibs"])]
-    }
-    
-    var internalParserTarget: Target {
-        return .binaryTarget(
-            name: "lib_InternalSwiftSyntaxParser",
-            url: "https://github.com/keith/StaticInternalSwiftSyntaxParser/releases/download/"
-            + "\(internalParser.version)/lib_InternalSwiftSyntaxParser.xcframework.zip",
-            checksum: internalParser.checksum)
-    }
-}
-
 #if swift(>=5.6)
 private let swiftSyntax = SwiftSyntaxPackage(
     version: "0.50600.1",
@@ -134,3 +97,40 @@ let package = Package(
         swiftSyntax.internalParserTarget,
     ]
 )
+
+private struct SwiftSyntaxPackage {
+    struct InternalParser {
+        var version: String
+        var checksum: String
+    }
+    
+    var version: Version
+    var internalParser: InternalParser
+    
+    var packageDependency: Package.Dependency {
+        return .package(url: "https://github.com/apple/swift-syntax", exact: version)
+    }
+    
+    var targetDependencies: [Target.Dependency] {
+        return [
+            .product(name: "SwiftSyntax", package: "swift-syntax"),
+            .product(name: "SwiftSyntaxParser", package: "swift-syntax"),
+            "lib_InternalSwiftSyntaxParser",
+        ]
+    }
+    
+    // Pass `-dead_strip_dylibs` to ignore the dynamic version of `lib_InternalSwiftSyntaxParser`
+    // that ships with SwiftSyntax because we want the static version from
+    // `StaticInternalSwiftSyntaxParser`.
+    var linkerSettings: [LinkerSetting] {
+        return [.unsafeFlags(["-Xlinker", "-dead_strip_dylibs"])]
+    }
+    
+    var internalParserTarget: Target {
+        return .binaryTarget(
+            name: "lib_InternalSwiftSyntaxParser",
+            url: "https://github.com/keith/StaticInternalSwiftSyntaxParser/releases/download/"
+            + "\(internalParser.version)/lib_InternalSwiftSyntaxParser.xcframework.zip",
+            checksum: internalParser.checksum)
+    }
+}
