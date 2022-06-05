@@ -1,0 +1,47 @@
+{
+    "commands": [
+        {
+            "commandName": "xcassets2swift",
+            "xcassetsPaths": [
+                "../Sources/Resource/Resources/Assets.xcassets"
+            ],
+            "assetTypes": ["imageset"],
+            "swiftPath": "../Sources/Resource/Keys/ImageKey.swift",
+            "swiftTypeName": "ImageKey",
+            "accessLevel": "public"
+        },
+        {
+            "commandName": "xcassets2swift",
+            "xcassetsPaths": [
+                "../Sources/Resource/Resources/Assets.xcassets"
+            ],
+            "assetTypes": ["colorset"],
+            "swiftPath": "../Sources/Resource/Keys/ColorKey.swift",
+            "swiftTypeName": "ColorKey",
+            "accessLevel": "public"
+        },
+        {
+            "commandName": "key2form",
+            "keyFilePath": "../Sources/Resource/Keys/StringKey.swift",
+            "formFilePath": "../Sources/Resource/Keys/StringForm.swift",
+            "formTypeName": "StringForm",
+            "issueReporter": "xcode",
+            "accessLevel": "public"
+        },
+        {
+            "commandName": "swift2strings",
+            "swiftPath": "../Sources/Resource/Keys/StringKey.swift",
+            "resourcesPath": "../Sources/Resource/Resources",
+            "configurationsByLanguage": {
+                "ko": {
+                    "mergeStrategy": "comment",
+                    "verifiesComment": true
+                },
+                "all": {
+                    "mergeStrategy": "dont-add",
+                    "verifiesComment": false
+                }
+            }
+        }
+    ]
+}
