@@ -14,17 +14,25 @@ public struct StringForm {
 // MARK: - StringForm generated from StringKey
 
 public extension StringForm {
-    /// 이 새로운 문서('%@{documentTitle}')를 유지하겠습니까?\n변경 사항을 저장하거나 이 문서를 즉시 삭제할 수도 있습니다.
-    /// 이 동작은 취소할 수 없습니다.
-    static func alert_saveBeforeClose(documentTitle: String) -> StringForm {
-        return StringForm(key: StringKey.alert_saveBeforeClose.rawValue, arguments: [documentTitle])
+    /// Undo %@{command}
+    static func editMenu_undo(command: String) -> StringForm {
+        return StringForm(key: StringKey.editMenu_undo.rawValue, arguments: [command])
     }
     
-    /// 동영상 첨부는 최대 %ld{maxMinutes}분, %@{maxFileSize}까지 가능합니다.\n다른 파일을 선택해주세요.
-    static func alert_attachTooLargeVideo(maxMinutes: Int, maxFileSize: String) -> StringForm {
-        return StringForm(
-            key: StringKey.alert_attachTooLargeVideo.rawValue,
-            arguments: [maxMinutes, maxFileSize])
+    /// Redo %@{command}
+    static func editMenu_redo(command: String) -> StringForm {
+        return StringForm(key: StringKey.editMenu_redo.rawValue, arguments: [command])
+    }
+    
+    /// %ld{_ fileCount} files
+    static func fileList_fileCount(_ fileCount: Int) -> StringForm {
+        return StringForm(key: StringKey.fileList_fileCount.rawValue, arguments: [fileCount])
+    }
+    
+    /// "%@{fileName}" will be deleted.
+    /// This action cannot be undone.
+    static func alert_deleteFile(fileName: String) -> StringForm {
+        return StringForm(key: StringKey.alert_deleteFile.rawValue, arguments: [fileName])
     }
     
     /// %@{dogName} ate %#@appleCount@ today!

@@ -1,8 +1,32 @@
-/* 취소 */
+/* Cancel */
 "common_cancel" = "Cancel";
 
-/* 확인 */
+/* Confirm */
 "common_confirm" = "Confirm";
 
-/* 완료 */
+/* Done */
 "common_done" = "Done";
+
+/* Undo %@{command} */
+"editMenu_undo" = "Undo %@";
+
+/* Redo %@{command} */
+"editMenu_redo" = "Redo %@";
+
+/* Cut */
+"editMenu_cut" = "Cut";
+
+/* Copy */
+"editMenu_copy" = "Copy";
+
+/* Paste */
+"editMenu_paste" = "Paste";
+
+/* %ld{_ fileCount} files */
+"fileList_fileCount" = "%ld files";
+
+/* \"%@{fileName}\" will be deleted. This action cannot be undone. */
+"alert_deleteFile" = "\"%@\" will be deleted. This action cannot be undone.";
+
+/* 100% success */
+"success100" = "100% success";

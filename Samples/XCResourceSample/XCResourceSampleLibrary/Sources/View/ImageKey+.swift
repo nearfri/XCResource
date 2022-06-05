@@ -2,7 +2,7 @@ import Foundation
 import Resource
 
 extension ImageKey {
-    static func textStyleIcon(for type: TextStyleType) -> ImageKey {
+    static func textStyle(_ type: TextStyleType) -> ImageKey {
         switch type {
         case .bold:
             return .textFormattingBold

@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		083856FC284BBD1F00E49632 /* XCResourceSampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083856FB284BBCEA00E49632 /* XCResourceSampleApp.swift */; };
 		083856FD284BBD2300E49632 /* XCResourceSampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083856FA284BBCE400E49632 /* XCResourceSampleApp.swift */; };
-		08385701284BBDA400E49632 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08385700284BBDA100E49632 /* Assets.xcassets */; };
-		08385734284BBE8200E49632 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08385733284BBE8200E49632 /* Assets.xcassets */; };
 		08385737284BBF2500E49632 /* XCResourceSampleLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 08385736284BBF2500E49632 /* XCResourceSampleLibrary */; };
 		08385739284BBF3C00E49632 /* XCResourceSampleLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 08385738284BBF3C00E49632 /* XCResourceSampleLibrary */; };
 		0838573B284BC1BA00E49632 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838573A284BC1BA00E49632 /* AppDelegate.swift */; };
+		08385794284CF16400E49632 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08385793284CF16400E49632 /* Assets.xcassets */; };
+		08385795284CF16400E49632 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08385793284CF16400E49632 /* Assets.xcassets */; };
+		08385799284CF18A00E49632 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0838579C284CF18A00E49632 /* InfoPlist.strings */; };
+		0838579A284CF18A00E49632 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0838579C284CF18A00E49632 /* InfoPlist.strings */; };
 		08BB5B41284B4119001C8E41 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BB5B40284B4119001C8E41 /* Tests_iOS.swift */; };
 		08BB5B43284B4119001C8E41 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BB5B42284B4119001C8E41 /* Tests_iOSLaunchTests.swift */; };
 		08BB5B4D284B4119001C8E41 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BB5B4C284B4119001C8E41 /* Tests_macOS.swift */; };
@@ -40,9 +42,10 @@
 /* Begin PBXFileReference section */
 		083856FA284BBCE400E49632 /* XCResourceSampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCResourceSampleApp.swift; sourceTree = "<group>"; };
 		083856FB284BBCEA00E49632 /* XCResourceSampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCResourceSampleApp.swift; sourceTree = "<group>"; };
-		08385700284BBDA100E49632 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		08385733284BBE8200E49632 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0838573A284BC1BA00E49632 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		08385793284CF16400E49632 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0838579B284CF18A00E49632 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0838579D284CF18C00E49632 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08BB5B2F284B4119001C8E41 /* XCResourceSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XCResourceSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08BB5B35284B4119001C8E41 /* XCResourceSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XCResourceSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08BB5B37284B4119001C8E41 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
@@ -93,15 +96,24 @@
 			isa = PBXGroup;
 			children = (
 				083856FA284BBCE400E49632 /* XCResourceSampleApp.swift */,
-				08385700284BBDA100E49632 /* Assets.xcassets */,
 			);
 			path = iOS;
+			sourceTree = "<group>";
+		};
+		08385740284CEEF500E49632 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				08385793284CF16400E49632 /* Assets.xcassets */,
+				0838579C284CF18A00E49632 /* InfoPlist.strings */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		08BB5B22284B4118001C8E41 = {
 			isa = PBXGroup;
 			children = (
 				08BB5BC7284B7322001C8E41 /* Packages */,
+				08385740284CEEF500E49632 /* Shared */,
 				083856F7284BBCAD00E49632 /* iOS */,
 				08BB5B36284B4119001C8E41 /* macOS */,
 				08BB5B3F284B4119001C8E41 /* Tests iOS */,
@@ -126,7 +138,6 @@
 			children = (
 				0838573A284BC1BA00E49632 /* AppDelegate.swift */,
 				083856FB284BBCEA00E49632 /* XCResourceSampleApp.swift */,
-				08385733284BBE8200E49632 /* Assets.xcassets */,
 				08BB5B37284B4119001C8E41 /* macOS.entitlements */,
 			);
 			path = macOS;
@@ -290,7 +301,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08385701284BBDA400E49632 /* Assets.xcassets in Resources */,
+				08385794284CF16400E49632 /* Assets.xcassets in Resources */,
+				08385799284CF18A00E49632 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +310,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08385734284BBE8200E49632 /* Assets.xcassets in Resources */,
+				08385795284CF16400E49632 /* Assets.xcassets in Resources */,
+				0838579A284CF18A00E49632 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +381,18 @@
 			targetProxy = 08BB5B49284B4119001C8E41 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0838579C284CF18A00E49632 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0838579B284CF18A00E49632 /* en */,
+				0838579D284CF18C00E49632 /* ko */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		08BB5B56284B4119001C8E41 /* Debug */ = {

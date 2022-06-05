@@ -1,35 +1,32 @@
-/* 취소 */
+/* Cancel */
 "common_cancel" = "취소";
 
-/* 확인 */
+/* Confirm */
 "common_confirm" = "확인";
 
-/* 완료 */
+/* Done */
 "common_done" = "완료";
 
-/* 실행 취소 */
-"editMenu_undo" = "실행 취소";
+/* Undo %@{command} */
+"editMenu_undo" = "%@ 실행 취소";
 
-/* 실행 복귀 */
-"editMenu_redo" = "실행 복귀";
+/* Redo %@{command} */
+"editMenu_redo" = "%@ 실행 복귀";
 
-/* 오려두기 */
+/* Cut */
 "editMenu_cut" = "오려두기";
 
-/* 복사 */
+/* Copy */
 "editMenu_copy" = "복사";
 
-/* 붙여넣기 */
+/* Paste */
 "editMenu_paste" = "붙여넣기";
 
-/* 이미지를 불러오는 데 실패했습니다.\n다른 이미지를 선택해주세요. */
-"alert_failedToLoadImage" = "이미지를 불러오는 데 실패했습니다.\n다른 이미지를 선택해주세요.";
+/* %ld{_ fileCount} files */
+"fileList_fileCount" = "%ld개의 파일";
 
-/* 이 새로운 문서('%@{documentTitle}')를 유지하겠습니까?\n변경 사항을 저장하거나 이 문서를 즉시 삭제할 수도 있습니다. 이 동작은 취소할 수 없습니다. */
-"alert_saveBeforeClose" = "이 새로운 문서('%@')를 유지하겠습니까?\n변경 사항을 저장하거나 이 문서를 즉시 삭제할 수도 있습니다. 이 동작은 취소할 수 없습니다.";
+/* \"%@{fileName}\" will be deleted. This action cannot be undone. */
+"alert_deleteFile" = "\"%@\" 파일은 삭제됩니다. 이 동작은 취소할 수 없습니다.";
 
-/* 동영상 첨부는 최대 %ld{maxMinutes}분, %@{maxFileSize}까지 가능합니다.\n다른 파일을 선택해주세요. */
-"alert_attachTooLargeVideo" = "동영상 첨부는 최대 %ld분, %@까지 가능합니다.\n다른 파일을 선택해주세요.";
-
-/* 100% 성공 */
+/* 100% success */
 "success100" = "100% 성공";

@@ -3,55 +3,54 @@ import Foundation
 public enum StringKey: String, CaseIterable {
     // MARK: - Common
     
-    /// 취소
+    /// Cancel
     case common_cancel
     
-    /// 확인
+    /// Confirm
     case common_confirm
     
-    /// 완료
+    /// Done
     case common_done
     
     // MARK: - Edit Menu
     
-    /// 실행 취소
+    /// Undo %@{command}
     case editMenu_undo
     
-    /// 실행 복귀
+    /// Redo %@{command}
     case editMenu_redo
     
-    /// 오려두기
+    /// Cut
     case editMenu_cut
     
-    /// 복사
+    /// Copy
     case editMenu_copy
     
-    /// 붙여넣기
+    /// Paste
     case editMenu_paste
+    
+    // MARK: - File List
+    
+    /// %ld{_ fileCount} files
+    case fileList_fileCount
     
     // MARK: - Alert
     
-    /// 이미지를 불러오는 데 실패했습니다.\n다른 이미지를 선택해주세요.
-    case alert_failedToLoadImage
-    
-    /// 이 새로운 문서('%@{documentTitle}')를 유지하겠습니까?\n변경 사항을 저장하거나 이 문서를 즉시 삭제할 수도 있습니다.
-    /// 이 동작은 취소할 수 없습니다.
-    case alert_saveBeforeClose
-    
-    /// 동영상 첨부는 최대 %ld{maxMinutes}분, %@{maxFileSize}까지 가능합니다.\n다른 파일을 선택해주세요.
-    case alert_attachTooLargeVideo
+    /// "%@{fileName}" will be deleted.
+    /// This action cannot be undone.
+    case alert_deleteFile
     
     // MARK: - etc.
     
-    // xcresource:key2form:exclude - StringForm에서 제외
-    /// 100% 성공
+    // xcresource:key2form:exclude - Exclude from StringForm
+    /// 100% success
     case success100
     
-    // %#@variable@ 포맷이면 암시적으로 .strings 파일에서 제외.
+    // If %#@variable@ format is included, it is implicitly excluded from .strings file.
     /// %@{dogName} ate %#@appleCount@ today!
     case dogEatingApples
     
-    // xcresource:swift2strings:exclude - 명시적으로 제외
+    // xcresource:swift2strings:exclude - Explicitly exclude from .strings.
     /// %ld{changeCount} changes made
     case changeDescription
 }
