@@ -29,6 +29,23 @@ public enum StringKey: String, CaseIterable {
     /// Paste
     case editMenu_paste
     
+    /// Text Style
+    case editMenu_textStyle
+    
+    // MARK: - Text Style
+    
+    /// Bold
+    case text_bold
+    
+    /// Italic
+    case text_italic
+    
+    /// Underline
+    case text_underline
+    
+    /// Strikethrough
+    case text_strikethrough
+    
     // MARK: - File List
     
     /// %ld{_ fileCount} files

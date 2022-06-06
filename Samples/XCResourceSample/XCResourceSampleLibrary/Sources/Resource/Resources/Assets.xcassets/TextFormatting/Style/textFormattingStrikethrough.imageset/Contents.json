@@ -1,8 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "text-formatting-strikethrough.pdf",
+      "filename" : "strikethrough.svg",
       "idiom" : "universal"
+    },
+    {
+      "filename" : "strikethrough-mac.svg",
+      "idiom" : "mac"
     }
   ],
   "info" : {

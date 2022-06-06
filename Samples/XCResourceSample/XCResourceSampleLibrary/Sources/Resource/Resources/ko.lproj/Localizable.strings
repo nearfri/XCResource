@@ -22,6 +22,21 @@
 /* Paste */
 "editMenu_paste" = "붙여넣기";
 
+/* Text Style */
+"editMenu_textStyle" = "텍스트 스타일";
+
+/* Bold */
+"text_bold" = "볼드";
+
+/* Italic */
+"text_italic" = "이탤릭";
+
+/* Underline */
+"text_underline" = "밑줄";
+
+/* Strikethrough */
+"text_strikethrough" = "취소선";
+
 /* %ld{_ fileCount} files */
 "fileList_fileCount" = "%ld개의 파일";
 

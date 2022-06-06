@@ -1,8 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "bold.pdf",
+      "filename" : "bold.svg",
       "idiom" : "universal"
+    },
+    {
+      "filename" : "bold-mac.svg",
+      "idiom" : "mac"
     }
   ],
   "info" : {

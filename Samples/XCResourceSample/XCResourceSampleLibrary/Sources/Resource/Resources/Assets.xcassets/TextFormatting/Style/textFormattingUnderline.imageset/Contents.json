@@ -1,8 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "text-formatting-underline.pdf",
+      "filename" : "underline.svg",
       "idiom" : "universal"
+    },
+    {
+      "filename" : "underline-mac.svg",
+      "idiom" : "mac"
     }
   ],
   "info" : {

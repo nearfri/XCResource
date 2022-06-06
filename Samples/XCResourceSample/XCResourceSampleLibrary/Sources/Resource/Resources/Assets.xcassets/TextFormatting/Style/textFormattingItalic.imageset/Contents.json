@@ -1,8 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "italic.pdf",
+      "filename" : "italic.svg",
       "idiom" : "universal"
+    },
+    {
+      "filename" : "italic-mac.svg",
+      "idiom" : "mac"
     }
   ],
   "info" : {

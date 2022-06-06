@@ -16,7 +16,7 @@ public extension String {
     
     static func formatted(_ form: StringForm) -> String {
         let format = NSLocalizedString(form.key, bundle: .module, comment: "")
-        return String(format: format, locale: .current, arguments: form.arguments)
+        return String(format: format, arguments: form.arguments)
     }
 }
 
@@ -25,6 +25,7 @@ public extension Text {
         self.init(LocalizedStringKey(key.rawValue), bundle: .module)
     }
     
+    // It doesn't support EnvironmentValues.locale because it uses NSLocalizedString.
     init(form: StringForm) {
         self.init(String.formatted(form))
     }
