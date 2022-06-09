@@ -1,4 +1,4 @@
-﻿Key,Comment,English (en),Korean (ko)
+Key,Comment,English (en),Korean (ko)
 common_cancel,Cancel,Cancel,취소
 common_confirm,Confirm,Confirm,확인
 common_done,Done,Done,완료
@@ -7,6 +7,12 @@ editMenu_redo,Redo %@{command},Redo %@,%@ 실행 복귀
 editMenu_cut,Cut,Cut,오려두기
 editMenu_copy,Copy,Copy,복사
 editMenu_paste,Paste,Paste,붙여넣기
+editMenu_textStyle,Text Style,Text Style,텍스트 스타일
+text_bold,Bold,Bold,볼드
+text_italic,Italic,Italic,이탤릭
+text_underline,Underline,Underline,밑줄
+text_strikethrough,Strikethrough,Strikethrough,취소선
 fileList_fileCount,%ld{_ fileCount} files,%ld files,%ld개의 파일
-alert_deleteFile,"\""%@{fileName}\"" will be deleted. This action cannot be undone.","""%@"" will be deleted. This action cannot be undone.","""%@"" 파일은 삭제됩니다. 이 동작은 취소할 수 없습니다."
+alert_deleteFile,"""%@{fileName}"" will be deleted.\nThis action cannot be undone.","""%@"" will be deleted.
+This action cannot be undone.","""%@"" 파일은 삭제됩니다. 이 동작은 취소할 수 없습니다."
 success100,100% success,100% success,100% 성공

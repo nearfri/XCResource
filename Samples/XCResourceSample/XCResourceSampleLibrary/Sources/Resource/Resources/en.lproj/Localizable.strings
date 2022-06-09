@@ -40,8 +40,8 @@
 /* %ld{_ fileCount} files */
 "fileList_fileCount" = "%ld files";
 
-/* \"%@{fileName}\" will be deleted. This action cannot be undone. */
-"alert_deleteFile" = "\"%@\" will be deleted. This action cannot be undone.";
+/* "%@{fileName}" will be deleted.\nThis action cannot be undone. */
+"alert_deleteFile" = "\"%@\" will be deleted.\nThis action cannot be undone.";
 
 /* 100% success */
 "success100" = "100% success";

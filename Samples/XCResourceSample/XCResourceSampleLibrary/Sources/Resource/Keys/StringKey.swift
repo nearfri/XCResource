@@ -53,7 +53,7 @@ public enum StringKey: String, CaseIterable {
     
     // MARK: - Alert
     
-    /// "%@{fileName}" will be deleted.
+    /// "%@{fileName}" will be deleted.\n
     /// This action cannot be undone.
     case alert_deleteFile
     

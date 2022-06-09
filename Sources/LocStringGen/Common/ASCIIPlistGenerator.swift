@@ -7,7 +7,7 @@ class ASCIIPlistGenerator: PropertyListGenerator {
         
         for (index, item) in items.enumerated() {
             if let comment = item.comment {
-                result += "/* \(comment.addingBackslashEncoding()) */\n"
+                result += "/* \(comment.replacingOccurrences(of: "*/", with: " ")) */\n"
             }
             result += "\"\(item.key)\" = \"\(item.value.addingBackslashEncoding())\";"
             

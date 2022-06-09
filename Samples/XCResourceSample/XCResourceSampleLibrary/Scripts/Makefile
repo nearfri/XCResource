@@ -1,4 +1,4 @@
-XCRESOURCE_DEBUG = xcrun --sdk macosx swift run --package-path ../../../ xcresource
+XCRESOURCE_DEBUG = xcrun --sdk macosx swift run --package-path ../../../../ xcresource
 XCRESOURCE_RELEASE = xcresource
 XCRESOURCE_MINT = xcrun --sdk macosx mint run xcresource
 

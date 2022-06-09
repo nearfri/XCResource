@@ -29,7 +29,7 @@ public extension StringForm {
         return StringForm(key: StringKey.fileList_fileCount.rawValue, arguments: [fileCount])
     }
     
-    /// "%@{fileName}" will be deleted.
+    /// "%@{fileName}" will be deleted.\n
     /// This action cannot be undone.
     static func alert_deleteFile(fileName: String) -> StringForm {
         return StringForm(key: StringKey.alert_deleteFile.rawValue, arguments: [fileName])

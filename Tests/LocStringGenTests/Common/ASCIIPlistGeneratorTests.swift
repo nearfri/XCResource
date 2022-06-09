@@ -10,6 +10,7 @@ final class ASCIIPlistGeneratorTests: XCTestCase {
             LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
             LocalizationItem(comment: "확인", key: "confirm", value: "Confirm"),
             LocalizationItem(comment: "2라인\\n문자열", key: "two_lines", value: "two_lines"),
+            LocalizationItem(comment: "잘못된*/주석", key: "invalidCmt", value: "invalidCmt"),
         ]
         
         let expectedPlist = """
@@ -21,6 +22,9 @@ final class ASCIIPlistGeneratorTests: XCTestCase {
         
         /* 2라인\\n문자열 */
         "two_lines" = "two_lines";
+        
+        /* 잘못된 주석 */
+        "invalidCmt" = "invalidCmt";
         """
         
         // When
