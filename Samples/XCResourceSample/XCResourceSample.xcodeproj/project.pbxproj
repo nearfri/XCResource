@@ -176,6 +176,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 08BB5B58284B4119001C8E41 /* Build configuration list for PBXNativeTarget "XCResourceSample (iOS)" */;
 			buildPhases = (
+				08228CF42853230100D66B7D /* Run XCResource */,
 				08BB5B2B284B4119001C8E41 /* Sources */,
 				08BB5B2C284B4119001C8E41 /* Frameworks */,
 				08BB5B2D284B4119001C8E41 /* Resources */,
@@ -196,6 +197,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 08BB5B5B284B4119001C8E41 /* Build configuration list for PBXNativeTarget "XCResourceSample (macOS)" */;
 			buildPhases = (
+				08228CF328531D6500D66B7D /* Run XCResource */,
 				08BB5B31284B4119001C8E41 /* Sources */,
 				08BB5B32284B4119001C8E41 /* Frameworks */,
 				08BB5B33284B4119001C8E41 /* Resources */,
@@ -330,6 +332,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		08228CF328531D6500D66B7D /* Run XCResource */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run XCResource";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "XCRESOURCE=${BUILD_ROOT}/../../SourcePackages/artifacts/xcresourcesamplelibrary/xcresource.artifactbundle/xcresource-macos/bin/xcresource\ncd \"${SRCROOT}/XCResourceSampleLibrary/Scripts\"\nmake XCRESOURCE=${XCRESOURCE}\n";
+		};
+		08228CF42853230100D66B7D /* Run XCResource */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run XCResource";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "XCRESOURCE=${BUILD_ROOT}/../../SourcePackages/artifacts/xcresourcesamplelibrary/xcresource.artifactbundle/xcresource-macos/bin/xcresource\ncd \"${SRCROOT}/XCResourceSampleLibrary/Scripts\"\nmake XCRESOURCE=${XCRESOURCE}\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		08BB5B2B284B4119001C8E41 /* Sources */ = {

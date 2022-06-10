@@ -2,7 +2,7 @@ XCRESOURCE_DEBUG = xcrun --sdk macosx swift run --package-path ../../../../ xcre
 XCRESOURCE_RELEASE = xcresource
 XCRESOURCE_MINT = xcrun --sdk macosx mint run xcresource
 
-XCRESOURCE = $(XCRESOURCE_RELEASE)
+XCRESOURCE ?= $(XCRESOURCE_RELEASE)
 
 PROJECT_NAME = XCResourceSample
 PROJECT_DIR = ../Sources/Resource
