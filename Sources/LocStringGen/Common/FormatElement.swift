@@ -60,7 +60,10 @@ private struct ParserGenerator {
     private var placeholder: Parser<FormatElement> {
         let labelsAndSpecifierContent = Parser.tuple(labelsOrEmptyArray, .formatSpecifierContent)
         
-        return .character("%") *> labelsAndSpecifierContent.map({ labels, formatSpecifier in
+        return .character("%") *> labelsAndSpecifierContent.map({
+            let labels = $0.0
+            let formatSpecifier = $0.1
+            
             switch formatSpecifier {
             case .percentSign:
                 return .character("%")
