@@ -13,7 +13,7 @@ final class LocalizationItemTests: XCTestCase {
     }
     
     func test_applyingAddingMethod_formattedComment() {
-        let sut = LocalizationItem(comment: "Comment %ld{count} %ld{{bracket} String",
+        let sut = LocalizationItem(comment: "Comment %{count}ld %ld{bracket} String",
                                    key: "Key String",
                                    value: "")
         

@@ -25,7 +25,7 @@ enum StringKey: String, CaseIterable {
     case success100
     
     // xcresource:swift2strings:exclude
-    /// %ld{changeCount} changes made
+    /// %{changeCount}ld changes made
     case changeDescription
     
     // Exclude implicitly

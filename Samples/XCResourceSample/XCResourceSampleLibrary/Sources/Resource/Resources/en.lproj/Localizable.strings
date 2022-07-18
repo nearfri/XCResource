@@ -7,10 +7,10 @@
 /* Done */
 "common_done" = "Done";
 
-/* Undo %@{command} */
+/* Undo %{command}@ */
 "editMenu_undo" = "Undo %@";
 
-/* Redo %@{command} */
+/* Redo %{command}@ */
 "editMenu_redo" = "Redo %@";
 
 /* Cut */
@@ -37,10 +37,10 @@
 /* Strikethrough */
 "text_strikethrough" = "Strikethrough";
 
-/* %ld{_ fileCount} files */
+/* %{_ fileCount}ld files */
 "fileList_fileCount" = "%ld files";
 
-/* "%@{fileName}" will be deleted.\nThis action cannot be undone. */
+/* "%{fileName}@" will be deleted.\nThis action cannot be undone. */
 "alert_deleteFile" = "\"%@\" will be deleted.\nThis action cannot be undone.";
 
 /* 100% success */

@@ -21,7 +21,7 @@ extension StringForm {
             arguments: [param1, param2])
     }
     
-    /// %ld{changeCount} changes made
+    /// %{changeCount}ld changes made
     static func changeDescription(changeCount: Int) -> StringForm {
         return StringForm(key: StringKey.changeDescription.rawValue, arguments: [changeCount])
     }

@@ -20,7 +20,7 @@ final class FormatElementsParserTests: XCTestCase {
     
     func test_run_simpleLabel() throws {
         // Given
-        let comment = "%@{name}"
+        let comment = "%{name}@"
         
         // When
         let formatElements = try sut.run(comment)
@@ -32,7 +32,7 @@ final class FormatElementsParserTests: XCTestCase {
     
     func test_run_labelWithExternalInternalNames() throws {
         // Given
-        let comment = "%@{with name}"
+        let comment = "%{with name}@"
         
         // When
         let formatElements = try sut.run(comment)
@@ -44,7 +44,7 @@ final class FormatElementsParserTests: XCTestCase {
     
     func test_run_labelWithWidthAndPrecision() throws {
         // Given
-        let comment = "%*.*f{width, precision, number}"
+        let comment = "%{width, precision, number}*.*f"
         
         // When
         let formatElements = try sut.run(comment)
@@ -57,7 +57,7 @@ final class FormatElementsParserTests: XCTestCase {
     
     func test_run_labelStartsWithUnderline() throws {
         // Given
-        let comment = "%@{_name}"
+        let comment = "%{_name}@"
         
         // When
         let formatElements = try sut.run(comment)
@@ -69,7 +69,19 @@ final class FormatElementsParserTests: XCTestCase {
     
     func test_run_labelStartsWithNumber_fail() {
         // Given
-        let comment = "%@{5ab}"
+        let comment = "%{5ab}@"
+        
+        // When
+        XCTAssertThrowsError(try sut.run(comment)) { error in
+            // Then
+            let error = error as! Strix.RunError
+            XCTAssertEqual(error.textPosition.column, 3)
+        }
+    }
+    
+    func test_run_labelContainsPunctuation_fail() {
+        // Given
+        let comment = "%{a-b}@"
         
         // When
         XCTAssertThrowsError(try sut.run(comment)) { error in
@@ -79,27 +91,15 @@ final class FormatElementsParserTests: XCTestCase {
         }
     }
     
-    func test_run_labelContainsPunctuation_fail() {
+    func test_run_labelEndsWithoutBracket_fail() {
         // Given
-        let comment = "%@{a-b}"
+        let comment = "%{ab@"
         
         // When
         XCTAssertThrowsError(try sut.run(comment)) { error in
             // Then
             let error = error as! Strix.RunError
             XCTAssertEqual(error.textPosition.column, 5)
-        }
-    }
-    
-    func test_run_labelEndsWithoutBracket_fail() {
-        // Given
-        let comment = "%@{ab"
-        
-        // When
-        XCTAssertThrowsError(try sut.run(comment)) { error in
-            // Then
-            let error = error as! Strix.RunError
-            XCTAssertEqual(error.textPosition.column, 6)
         }
     }
     
@@ -135,7 +135,7 @@ final class FormatElementsParserTests: XCTestCase {
     
     func test_run_withLabel() throws {
         // Given
-        let comment = "영상은 최대 %ld{duration}분, %f{size}GB까지 가능합니다.\\n길이를 수정하세요."
+        let comment = "영상은 최대 %{duration}ld분, %{size}fGB까지 가능합니다.\\n길이를 수정하세요."
         
         // When
         let formatElements = try sut.run(comment).filterPlaceholder()
@@ -175,7 +175,7 @@ final class FormatElementsParserTests: XCTestCase {
     
     func test_run_withIndexWithLabel() throws {
         // Given
-        let comment = "%1$ld{hours}:%2$.*3$ld{precision p1,minutes}:%4$.*3$ld{precision p2,seconds}"
+        let comment = "%{hours}1$ld:%{precision p1,minutes}2$.*3$ld:%{precision p2,seconds}4$.*3$ld"
         
         // When
         let formatElements = try sut.run(comment).filterPlaceholder()
@@ -196,21 +196,6 @@ final class FormatElementsParserTests: XCTestCase {
                                length: .long,
                                conversion: .decimal),
                          labels: ["precision p2", "seconds"]),
-        ])
-    }
-    
-    func test_run_doubleCurlyBracket_ignoreFollowingLabel() throws {
-        // Given
-        let comment = "%ld{{count} %f{{%d"
-        
-        // When
-        let formatElements = try sut.run(comment).filterPlaceholder()
-        
-        // Then
-        XCTAssertEqual(formatElements, [
-            .placeholder(.init(length: .long, conversion: .decimal), labels: []),
-            .placeholder(.init(conversion: .float), labels: []),
-            .placeholder(.init(conversion: .decimal), labels: []),
         ])
     }
     
@@ -250,7 +235,7 @@ final class FormatLabelRemovalParserTests: XCTestCase {
     
     func test_run_withLabel() throws {
         // Given
-        let comment = "영상은 최대 %ld{duration}분, %f{size}GB까지 가능합니다.\\n길이를 수정하세요."
+        let comment = "영상은 최대 %{duration}ld분, %{size}fGB까지 가능합니다.\\n길이를 수정하세요."
         
         // When
         let string = try sut.run(comment)

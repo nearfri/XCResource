@@ -131,6 +131,8 @@ final class TextFileOutputStreamTests: XCTestCase {
         try? stdWriteHandle.synchronize()
         try? stdReadHandle.synchronize()
         
+        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.001))
+        
         // stdout을 /dev/stdout으로 되돌린다.
         dup2(actualStdWriteHandle.fileDescriptor, STDOUT_FILENO)
         stdReadHandle.readabilityHandler = nil
