@@ -14,10 +14,10 @@ public enum StringKey: String, CaseIterable {
     
     // MARK: - Edit Menu
     
-    /// Undo %@{command}
+    /// Undo %{command}@
     case editMenu_undo
     
-    /// Redo %@{command}
+    /// Redo %{command}@
     case editMenu_redo
     
     /// Cut
@@ -48,12 +48,12 @@ public enum StringKey: String, CaseIterable {
     
     // MARK: - File List
     
-    /// %ld{_ fileCount} files
+    /// %{_ fileCount}ld files
     case fileList_fileCount
     
     // MARK: - Alert
     
-    /// "%@{fileName}" will be deleted.\n
+    /// "%{fileName}@" will be deleted.\n
     /// This action cannot be undone.
     case alert_deleteFile
     
@@ -64,10 +64,10 @@ public enum StringKey: String, CaseIterable {
     case success100
     
     // If %#@variable@ format is included, it is implicitly excluded from .strings file.
-    /// %@{dogName} ate %#@appleCount@ today!
+    /// %{dogName}@ ate %#@appleCount@ today!
     case dogEatingApples
     
     // xcresource:swift2strings:exclude - Explicitly exclude from .strings.
-    /// %ld{changeCount} changes made
+    /// %{changeCount}ld changes made
     case changeDescription
 }

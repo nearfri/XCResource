@@ -20,7 +20,7 @@ final class ActualFormatPlaceholderImporterTests: XCTestCase {
     
     func test_import_withLabel() throws {
         // Given
-        let comment = "영상은 최대 %ld{duration}분, %f{size}GB까지 가능합니다.\\n길이를 수정하세요."
+        let comment = "영상은 최대 %{duration}ld분, %{size}fGB까지 가능합니다.\\n길이를 수정하세요."
         
         // When
         let placeholders = try sut.import(from: comment)
@@ -49,7 +49,7 @@ final class ActualFormatPlaceholderImporterTests: XCTestCase {
     
     func test_import_withIndexWithLabel() throws {
         // Given
-        let comment = "%1$ld{hours}:%2$.*3$ld{precision p1,minutes}:%4$.*3$ld{precision p2,seconds}"
+        let comment = "%{hours}1$ld:%{precision p1,minutes}2$.*3$ld:%{precision p2,seconds}4$.*3$ld"
         
         // When
         let placeholders = try sut.import(from: comment)

@@ -34,7 +34,7 @@ extension LocalizationItem {
 
 private extension String {
     func removingFormatLabels() -> String {
-        if !contains("%") { return self }
+        if !contains("%{") { return self }
         
         return (try? Parser.formatLabelRemoval.run(self)) ?? self
     }

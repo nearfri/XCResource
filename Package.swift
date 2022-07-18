@@ -24,7 +24,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.2"),
-        .package(url: "https://github.com/nearfri/Strix", from: "2.3.6"),
+        .package(url: "https://github.com/nearfri/Strix", from: "2.3.7"),
         swiftSyntax.packageDependency,
     ],
     targets: [

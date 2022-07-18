@@ -135,7 +135,7 @@ label.text = .localized(.cancel)
 `StringKey`의 `case`에 format string 형식의 주석을 추가합니다:
 ```swift
 enum StringKey: String, CaseIterable {
-    /// 동영상 첨부는 최대 %ld{maxMinutes}분까지 가능합니다.\n다른 파일을 선택해주세요.
+    /// 동영상 첨부는 최대 %{maxMinutes}ld분까지 가능합니다.\n다른 파일을 선택해주세요.
     case alert_attachTooLargeVideo
 }
 ```
@@ -157,7 +157,7 @@ struct StringForm {
 }
 
 extension StringForm {
-    /// 동영상 첨부는 최대 %ld{maxMinutes}분까지 가능합니다.\n다른 파일을 선택해주세요.
+    /// 동영상 첨부는 최대 %{maxMinutes}ld분까지 가능합니다.\n다른 파일을 선택해주세요.
     static func alert_attachTooLargeVideo(maxMinutes: Int) -> StringForm {
         return StringForm(
             key: StringKey.alert_attachTooLargeVideo.rawValue,

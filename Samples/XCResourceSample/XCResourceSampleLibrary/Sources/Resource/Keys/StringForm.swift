@@ -14,33 +14,33 @@ public struct StringForm {
 // MARK: - StringForm generated from StringKey
 
 public extension StringForm {
-    /// Undo %@{command}
+    /// Undo %{command}@
     static func editMenu_undo(command: String) -> StringForm {
         return StringForm(key: StringKey.editMenu_undo.rawValue, arguments: [command])
     }
     
-    /// Redo %@{command}
+    /// Redo %{command}@
     static func editMenu_redo(command: String) -> StringForm {
         return StringForm(key: StringKey.editMenu_redo.rawValue, arguments: [command])
     }
     
-    /// %ld{_ fileCount} files
+    /// %{_ fileCount}ld files
     static func fileList_fileCount(_ fileCount: Int) -> StringForm {
         return StringForm(key: StringKey.fileList_fileCount.rawValue, arguments: [fileCount])
     }
     
-    /// "%@{fileName}" will be deleted.\n
+    /// "%{fileName}@" will be deleted.\n
     /// This action cannot be undone.
     static func alert_deleteFile(fileName: String) -> StringForm {
         return StringForm(key: StringKey.alert_deleteFile.rawValue, arguments: [fileName])
     }
     
-    /// %@{dogName} ate %#@appleCount@ today!
+    /// %{dogName}@ ate %#@appleCount@ today!
     static func dogEatingApples(dogName: String, appleCount: Int) -> StringForm {
         return StringForm(key: StringKey.dogEatingApples.rawValue, arguments: [dogName, appleCount])
     }
     
-    /// %ld{changeCount} changes made
+    /// %{changeCount}ld changes made
     static func changeDescription(changeCount: Int) -> StringForm {
         return StringForm(key: StringKey.changeDescription.rawValue, arguments: [changeCount])
     }

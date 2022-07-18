@@ -7,10 +7,10 @@
 /* Done */
 "common_done" = "완료";
 
-/* Undo %@{command} */
+/* Undo %{command}@ */
 "editMenu_undo" = "%@ 실행 취소";
 
-/* Redo %@{command} */
+/* Redo %{command}@ */
 "editMenu_redo" = "%@ 실행 복귀";
 
 /* Cut */
@@ -37,10 +37,10 @@
 /* Strikethrough */
 "text_strikethrough" = "취소선";
 
-/* %ld{_ fileCount} files */
+/* %{_ fileCount}ld files */
 "fileList_fileCount" = "%ld개의 파일";
 
-/* "%@{fileName}" will be deleted.\nThis action cannot be undone. */
+/* "%{fileName}@" will be deleted.\nThis action cannot be undone. */
 "alert_deleteFile" = "\"%@\" 파일은 삭제됩니다.\n이 동작은 취소할 수 없습니다.";
 
 /* 100% success */

@@ -46,34 +46,33 @@ private struct ParserGenerator {
     }
     
     var formatLabelRemoval: Parser<String> {
-        let specifierAndOmitLabel = Parser.skipped(by: Parser.formatSpecifier) <* labelsOrEmptyArray
+        let specifierOmittingLabels: Parser<String> = .character("%")
+        *> labelsOrEmptyArray
+        *> .skipped(by: .formatSpecifierContent).map({ "%" + $0 })
         
-        return Parser.many(specifierAndOmitLabel <|> Parser.skipped(by: .anyCharacter))
+        return Parser.many(specifierOmittingLabels <|> Parser.skipped(by: .anyCharacter))
             .map({ $0.joined() })
     }
     
     private let character: Parser<FormatElement> = Parser.anyCharacter.map({ .character($0) })
     
-    // `%ld{duration}` 같이 format specifier와 그 뒤에 `{}`로 감싼 레이블을 파싱한다.
-    // 레이블을 파싱하지 않으려면 `%ld{{duration}` 같이 `{`을 두 번 쓴다.
+    // `%{duration}ld` 같은 문법의 labeled format specifier를 파싱한다.
     private var placeholder: Parser<FormatElement> {
-        return Parser.formatSpecifier.flatMap { [labelsOrEmptyArray] formatSpecifier in
+        let labelsAndSpecifierContent = Parser.tuple(labelsOrEmptyArray, .formatSpecifierContent)
+        
+        return .character("%") *> labelsAndSpecifierContent.map({ labels, formatSpecifier in
             switch formatSpecifier {
             case .percentSign:
-                return .just(.character("%"))
+                return .character("%")
             case .placeholder(let placeholder):
-                return labelsOrEmptyArray.map({ .placeholder(placeholder, labels: $0) })
+                return .placeholder(placeholder, labels: labels)
             }
-        }
+        })
     }
     
     private var labelsOrEmptyArray: Parser<[String]> {
-        return emptyLabelsIfDoubleBracket <|> labels <|> .just([])
+        return labels <|> .just([])
     }
-    
-    private let emptyLabelsIfDoubleBracket: Parser<[String]> = {
-        return .lookAhead(.string("{{")) *> .character("{") *> .just([])
-    }()
     
     private var labels: Parser<[String]> {
         let id = identifier
