@@ -17,8 +17,7 @@ struct CSVToStringsPlugin: CommandPlugin {
     }
     
     private func performStringsToCSV(context: PackagePluginContext, directoryPath: Path) throws {
-        // swiftgen으로 해야 xcresource가 호출되네? 🤔
-        let xcresource = try context.tool(named: "swiftgen")
+        let xcresource = try context.tool(named: "xcresource")
         
         let process = Process()
         process.currentDirectoryURL = URL(fileURLWithPath: directoryPath.string)
