@@ -16,8 +16,8 @@ jobs:
       ARTIFACTBUNDLE_ZIP: xcresource.artifactbundle.zip
       ARTIFACTBUNDLE_INFO_FILE: artifactbundle_info.md
       
-    runs-on: macos-latest
-
+    runs-on: macos-12
+    
     steps:
       - name: Find latest tag
         uses: oprypin/find-latest-tag@v1
