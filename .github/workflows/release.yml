@@ -22,7 +22,7 @@ jobs:
       - name: Find latest tag
         uses: oprypin/find-latest-tag@v1
         with:
-          repository: nearfri/GitHubActionsTest
+          repository: nearfri/XCResource
         id: find-tag
 
       - name: Determine tag
