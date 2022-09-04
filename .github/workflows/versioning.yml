@@ -1,0 +1,32 @@
+name: Versioning
+
+on:
+  workflow_dispatch:
+    inputs:
+      new_version:
+        description: 'New version'
+        required: true
+        type: string
+        
+jobs:
+  build:
+    env:
+      NEW_VERSION: ${{ inputs.new_version }}
+      AUTHOR: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+    
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set version
+        run: make set-version NEW_VERSION=${NEW_VERSION}
+      
+      - name: Commit
+        run: |
+          git add .
+          git commit --author "${AUTHOR}" -m "Update to ${NEW_VERSION}"
+          git tag ${NEW_VERSION}
+          git push origin ${NEW_VERSION}
+          git push origin $(git branch --show-current)
