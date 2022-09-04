@@ -164,10 +164,19 @@ new-version: version
 # Bug: eval이 위의 git 체크보다 먼저 실행되는 문제가 있다.
 	$(eval NEW_VERSION=$(shell read -p "Enter New Version: " NEW_VER; echo $$NEW_VER))
 	
-	$(MAKE) new-version-core NEW_VERSION=$(NEW_VERSION)
+	@if [ -z $(NEW_VERSION) ]; then \
+		exit 11; \
+	fi
 
-.PHONY: new-version-core
-new-version-core:
+	$(MAKE) set-version NEW_VERSION=$(NEW_VERSION)
+
+	git add .
+	git commit -m "Update to $(NEW_VERSION)"
+	git tag $(NEW_VERSION)
+	git push origin $(NEW_VERSION)
+
+.PHONY: set-version
+set-version:
 	@if [ -z $(NEW_VERSION) ]; then \
 		echo "Invoke make with \"NEW_VERSION=x.y.z\""; \
 		exit 11; \
@@ -175,11 +184,6 @@ new-version-core:
 	
 	@sed -E -i '' 's/(version: ")(.*)(",)/\1$(NEW_VERSION)\3/' $(ROOT_CMD_PATH)
 	@sed -E -i '' 's/(@)(.*)/\1$(NEW_VERSION)/' $(MINTFILE_PATH)
-	
-	git add .
-	git commit -m "Update to $(NEW_VERSION)"
-	git tag $(NEW_VERSION)
-	git push origin $(NEW_VERSION)
 
 .PHONY: version
 version:
