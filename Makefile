@@ -164,7 +164,12 @@ new-version: version
 # Bug: eval이 위의 git 체크보다 먼저 실행되는 문제가 있다.
 	$(eval NEW_VERSION=$(shell read -p "Enter New Version: " NEW_VER; echo $$NEW_VER))
 	
+	$(MAKE) new-version-core NEW_VERSION=$(NEW_VERSION)
+
+.PHONY: new-version-core
+new-version-core:
 	@if [ -z $(NEW_VERSION) ]; then \
+		echo "Invoke make with \"NEW_VERSION=x.y.z\""; \
 		exit 11; \
 	fi
 	
