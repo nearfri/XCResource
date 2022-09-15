@@ -52,7 +52,7 @@ extension StringsToCSVPlugin: XcodeCommandPlugin {
     /// This entry point is called when operating on an Xcode project.
     func performCommand(context: XcodePluginContext, arguments: [String]) throws {
         let projectDir = context.xcodeProject.directory
-        let scriptsDir = projectDir.appending(subpath: "XCResourceSampleLibrary/Scripts")
+        let scriptsDir = projectDir.appending(subpath: "XCResourceSampleLib/Scripts")
         
         try performStringsToCSV(context: context, directoryPath: scriptsDir)
     }

@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "08BB5B2E284B4119001C8E41"
-               BuildableName = "XCResourceSample.app"
-               BlueprintName = "XCResourceSample (iOS)"
-               ReferencedContainer = "container:XCResourceSample.xcodeproj">
+               BlueprintIdentifier = "XCResourceSampleLib"
+               BuildableName = "XCResourceSampleLib"
+               BlueprintName = "XCResourceSampleLib"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,16 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "08BB5B3B284B4119001C8E41"
-               BuildableName = "Tests iOS.xctest"
-               BlueprintName = "Tests iOS"
-               ReferencedContainer = "container:XCResourceSample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -50,16 +40,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "08BB5B2E284B4119001C8E41"
-            BuildableName = "XCResourceSample.app"
-            BlueprintName = "XCResourceSample (iOS)"
-            ReferencedContainer = "container:XCResourceSample.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -67,16 +47,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "08BB5B2E284B4119001C8E41"
-            BuildableName = "XCResourceSample.app"
-            BlueprintName = "XCResourceSample (iOS)"
-            ReferencedContainer = "container:XCResourceSample.xcodeproj">
+            BlueprintIdentifier = "XCResourceSampleLib"
+            BuildableName = "XCResourceSampleLib"
+            BlueprintName = "XCResourceSampleLib"
+            ReferencedContainer = "container:">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

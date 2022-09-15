@@ -4,12 +4,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "XCResourceSampleLibrary",
+    name: "XCResourceSampleLib",
     defaultLocalization: "en",
     platforms: [.iOS(.v15), .macCatalyst(.v15), .macOS(.v12)],
     products: [
         .library(
-            name: "XCResourceSampleLibrary",
+            name: "XCResourceSampleLib",
             targets: ["View", "Resource"]),
         .plugin(
             name: "StringsToCSV",
