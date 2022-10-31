@@ -14,7 +14,7 @@ class FilterableStringEnumerationImporter: StringEnumerationImporter {
     func `import`(at url: URL) throws -> Enumeration<String> {
         var enumeration = try importer.import(at: url)
         
-        if let exclusionFilter = exclusionFilter {
+        if let exclusionFilter {
             enumeration.cases.removeAll(where: exclusionFilter)
         }
         
@@ -22,7 +22,7 @@ class FilterableStringEnumerationImporter: StringEnumerationImporter {
     }
     
     private var exclusionFilter: ((Enumeration<String>.Case) -> Bool)? {
-        guard let commandNameOfExclusion = commandNameOfExclusion else {
+        guard let commandNameOfExclusion else {
             return nil
         }
         

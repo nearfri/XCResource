@@ -7,7 +7,7 @@ struct IssueReportError: LocalizedError {
     var failureDescription: String
     
     var errorDescription: String? {
-        guard let positionInText = positionInText else {
+        guard let positionInText else {
             return """
                 \(failureDescription)
                     Text: \(text)

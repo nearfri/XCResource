@@ -9,7 +9,7 @@ extension ContentTree {
     }
     
     var namespace: String {
-        guard let parent = parent else { return "" }
+        guard let parent else { return "" }
         
         guard parent.element.providesNamespace else {
             return parent.namespace
@@ -18,7 +18,7 @@ extension ContentTree {
     }
     
     var relativePath: String {
-        guard let parent = parent else { return "" }
+        guard let parent else { return "" }
         
         return parent.relativePath.appendingPathComponent(element.url.lastPathComponent)
     }

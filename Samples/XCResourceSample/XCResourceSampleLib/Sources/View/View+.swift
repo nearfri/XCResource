@@ -20,7 +20,7 @@ extension View {
     
     @ViewBuilder
     func ifLet<T, V: View>(_ value: T?, @ViewBuilder then transform: (Self, T) -> V) -> some View {
-        if let value = value {
+        if let value {
             transform(self, value)
         } else {
             self
