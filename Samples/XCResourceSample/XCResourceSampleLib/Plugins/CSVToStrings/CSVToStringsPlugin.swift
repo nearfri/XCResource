@@ -22,13 +22,15 @@ struct CSVToStringsPlugin: CommandPlugin {
         let process = Process()
         process.currentDirectoryURL = URL(fileURLWithPath: directoryPath.string)
         process.executableURL = URL(fileURLWithPath: xcresource.path.string)
-        process.arguments = [
-            "csv2strings",
-            "--csv-path", "./XCResourceSample-localizations.csv",
-            "--header-style", "long-en",
-            "--resources-path", "../Sources/Resource/Resources",
-            "--empty-encoding", "#EMPTY",
-        ]
+        
+        let arguments = """
+        csv2strings \
+        --csv-path ./XCResourceSample-localizations.csv \
+        --header-style long-en \
+        --resources-path ../Sources/Resource/Resources \
+        --empty-encoding #EMPTY
+        """
+        process.arguments = arguments.split(separator: " ").map(String.init)
         
         try process.run()
         process.waitUntilExit()
