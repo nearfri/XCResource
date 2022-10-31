@@ -4,18 +4,16 @@
 import PackageDescription
 import Foundation
 
-#if swift(>=5.6)
 private let swiftSyntax = SwiftSyntaxPackage(
     version: "0.50700.1",
     internalParser: .init(
         version: "5.7.1",
         checksum: "feb332ba0a027812b1ee7f552321d6069a46207e5cd0f64fa9bb78e2a261b366"))
-#endif
 
 let package = Package(
     name: "XCResource",
     defaultLocalization: "en",
-    platforms: [.macOS(.v11)],
+    platforms: [.macOS(.v12)],
     products: [
         .executable(name: "xcresource", targets: ["XCResourceCLI"]),
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
