@@ -6,10 +6,10 @@ import Foundation
 
 #if swift(>=5.6)
 private let swiftSyntax = SwiftSyntaxPackage(
-    version: "0.50600.1",
+    version: "0.50700.1",
     internalParser: .init(
-        version: "5.6",
-        checksum: "88d748f76ec45880a8250438bd68e5d6ba716c8042f520998a438db87083ae9d"))
+        version: "5.7.1",
+        checksum: "feb332ba0a027812b1ee7f552321d6069a46207e5cd0f64fa9bb78e2a261b366"))
 #endif
 
 let package = Package(
@@ -23,7 +23,7 @@ let package = Package(
         .library(name: "LocStringGen", targets: ["LocStringGen"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.2"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.4"),
         .package(url: "https://github.com/nearfri/Strix", from: "2.3.7"),
         swiftSyntax.packageDependency,
     ],
