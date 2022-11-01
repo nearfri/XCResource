@@ -2,14 +2,6 @@ import Foundation
 import XCResourceUtil
 
 extension LocalizableStringsGenerator {
-    public struct CommandNameSet {
-        public var exclude: String
-        
-        public init(exclude: String) {
-            self.exclude = exclude
-        }
-    }
-    
     public struct Request {
         public var sourceCodeURL: URL
         public var resourcesURL: URL
@@ -78,13 +70,11 @@ public class LocalizableStringsGenerator {
         self.plistGenerator = plistGenerator
     }
     
-    public convenience init(commandNameSet: CommandNameSet) {
+    public convenience init() {
         self.init(
             languageDetector: DefaultLanguageDetector(),
             sourceImporter: SwiftLocalizationItemImporter(
-                enumerationImporter: FilterableStringEnumerationImporter(
-                    importer: SwiftStringEnumerationImporter(),
-                    commandNameOfExclusion: commandNameSet.exclude)),
+                enumerationImporter: SwiftStringEnumerationImporter()),
             targetImporter: ASCIIPlistImporter(),
             plistGenerator: ASCIIPlistGenerator())
     }

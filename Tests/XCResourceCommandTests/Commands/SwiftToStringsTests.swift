@@ -28,6 +28,9 @@ private enum Seed {
     /* 100% 성공 */
     "success100" = "100% 성공";
     
+    /* %{changeCount}ld changes made */
+    "changeDescription" = "%ld changes made";
+    
     """
 }
 
