@@ -105,7 +105,7 @@ extension LocalizationTable {
                     continue
                 }
                 let value = field == emptyTranslationEncoding ? "" : field
-                let item = LocalizationItem(comment: comment, key: key, value: value)
+                let item = LocalizationItem(key: key, value: value, comment: comment)
                 sections[i].items.append(item)
             }
         }

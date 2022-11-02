@@ -33,12 +33,12 @@ final class SwiftLocalizationItemImporterTests: XCTestCase {
             enumerationImporter: StubStringEnumerationImporter())
         
         let expectedItems: [LocalizationItem] = [
-            .init(comment: "document line - cancel 1. document line - cancel 2.",
-                  key: "common_cancel",
-                  value: ""),
-            .init(comment: "document block - confirm 1. document block - confirm 2.",
-                  key: "common_confirm",
-                  value: ""),
+            .init(key: "common_cancel",
+                  value: "",
+                  comment: "document line - cancel 1. document line - cancel 2."),
+            .init(key: "common_confirm",
+                  value: "",
+                  comment: "document block - confirm 1. document block - confirm 2."),
         ]
         
         // When

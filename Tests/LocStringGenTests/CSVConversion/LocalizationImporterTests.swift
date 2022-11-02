@@ -59,11 +59,11 @@ final class LocalizationImporterTests: XCTestCase {
         XCTAssertEqual(tableDecoder.decodeParamString, tableString)
         
         XCTAssertEqual(plistGenerator.generateParamItemsList[0], [
-            .init(comment: "취소", key: "cancel", value: "취소")
+            .init(key: "cancel", value: "취소", comment: "취소")
         ])
         
         XCTAssertEqual(plistGenerator.generateParamItemsList[1], [
-            .init(comment: "취소", key: "cancel", value: "Cancel")
+            .init(key: "cancel", value: "Cancel", comment: "취소")
         ])
     }
 }

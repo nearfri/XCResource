@@ -15,11 +15,11 @@ private class StubItemImporter: LocalizationItemImporter {
         
         if url.path.contains("en.lproj") {
             return [
-                .init(comment: "취소 주석", key: "cancel", value: "Cancel"),
+                .init(key: "cancel", value: "Cancel", comment: "취소 주석"),
             ]
         } else if url.path.contains("ko.lproj") {
             return [
-                .init(comment: "취소 주석", key: "cancel", value: "취소"),
+                .init(key: "cancel", value: "취소", comment: "취소 주석"),
             ]
         }
         

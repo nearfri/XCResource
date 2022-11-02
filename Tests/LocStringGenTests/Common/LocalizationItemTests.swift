@@ -3,9 +3,9 @@ import XCTest
 
 final class LocalizationItemTests: XCTestCase {
     func test_applyingAddingMethod() {
-        let sut = LocalizationItem(comment: "Comment String",
-                                   key: "Key String",
-                                   value: "")
+        let sut = LocalizationItem(key: "Key String",
+                                   value: "",
+                                   comment: "Comment String")
         
         XCTAssertEqual(sut.applying(.comment).value, "Comment String")
         XCTAssertEqual(sut.applying(.key).value, "Key String")
@@ -13,9 +13,9 @@ final class LocalizationItemTests: XCTestCase {
     }
     
     func test_applyingAddingMethod_formattedComment() {
-        let sut = LocalizationItem(comment: "Comment %{count}ld %ld{bracket} String",
-                                   key: "Key String",
-                                   value: "")
+        let sut = LocalizationItem(key: "Key String",
+                                   value: "",
+                                   comment: "Comment %{count}ld %ld{bracket} String")
         
         XCTAssertEqual(sut.applying(.comment).value, "Comment %ld %ld{bracket} String")
     }
@@ -23,66 +23,66 @@ final class LocalizationItemTests: XCTestCase {
     func test_combinedWithOther() {
         // Given
         let sut: [LocalizationItem] = [
-            .init(comment: "cancel", key: "cancel", value: "cancel"),
-            .init(comment: "new key", key: "new_key", value: "new key"),
-            .init(comment: "new comment", key: "greeting", value: "new comment"),
+            .init(key: "cancel", value: "cancel", comment: "cancel"),
+            .init(key: "new_key", value: "new key", comment: "new key"),
+            .init(key: "greeting", value: "new comment", comment: "new comment"),
         ]
         
         let other: [LocalizationItem] = [
-            .init(comment: "cancel", key: "cancel", value: "Cancel"),
-            .init(comment: "missing key", key: "missing_key", value: "Missing Key"),
-            .init(comment: "old comment", key: "greeting", value: "hello"),
+            .init(key: "cancel", value: "Cancel", comment: "cancel"),
+            .init(key: "missing_key", value: "Missing Key", comment: "missing key"),
+            .init(key: "greeting", value: "hello", comment: "old comment"),
         ]
         
         // When, Then
         XCTAssertEqual(sut.combined(with: other, verifyingComments: true), [
-            .init(comment: "cancel", key: "cancel", value: "Cancel"),
-            .init(comment: "new key", key: "new_key", value: "new key"),
-            .init(comment: "new comment", key: "greeting", value: "new comment"),
+            .init(key: "cancel", value: "Cancel", comment: "cancel"),
+            .init(key: "new_key", value: "new key", comment: "new key"),
+            .init(key: "greeting", value: "new comment", comment: "new comment"),
         ])
         
         XCTAssertEqual(sut.combined(with: other, verifyingComments: false), [
-            .init(comment: "cancel", key: "cancel", value: "Cancel"),
-            .init(comment: "new key", key: "new_key", value: "new key"),
-            .init(comment: "new comment", key: "greeting", value: "hello"),
+            .init(key: "cancel", value: "Cancel", comment: "cancel"),
+            .init(key: "new_key", value: "new key", comment: "new key"),
+            .init(key: "greeting", value: "hello", comment: "new comment"),
         ])
     }
     
     func test_combinedIntersection() throws {
         // Given
         let sut: [LocalizationItem] = [
-            .init(comment: "cancel", key: "cancel", value: "cancel"),
-            .init(comment: "new key", key: "new_key", value: "new key"),
-            .init(comment: "new comment", key: "greeting", value: "new comment"),
+            .init(key: "cancel", value: "cancel", comment: "cancel"),
+            .init(key: "new_key", value: "new key", comment: "new key"),
+            .init(key: "greeting", value: "new comment", comment: "new comment"),
         ]
         
         let other: [LocalizationItem] = [
-            .init(comment: "cancel", key: "cancel", value: "Cancel"),
-            .init(comment: "missing key", key: "missing_key", value: "Missing Key"),
-            .init(comment: "old comment", key: "greeting", value: "hello"),
+            .init(key: "cancel", value: "Cancel", comment: "cancel"),
+            .init(key: "missing_key", value: "Missing Key", comment: "missing key"),
+            .init(key: "greeting", value: "hello", comment: "old comment"),
         ]
         
         // When, Then
         XCTAssertEqual(sut.combinedIntersection(other, verifyingComments: true), [
-            .init(comment: "cancel", key: "cancel", value: "Cancel"),
+            .init(key: "cancel", value: "Cancel", comment: "cancel"),
         ])
         
         XCTAssertEqual(sut.combinedIntersection(other, verifyingComments: false), [
-            .init(comment: "cancel", key: "cancel", value: "Cancel"),
-            .init(comment: "new comment", key: "greeting", value: "hello"),
+            .init(key: "cancel", value: "Cancel", comment: "cancel"),
+            .init(key: "greeting", value: "hello", comment: "new comment"),
         ])
     }
     
     func test_sortedBy_occurrence() {
         // Given
         let sut: [LocalizationItem] = [
-            .init(comment: nil, key: "confirm", value: ""),
-            .init(comment: nil, key: "cancel", value: ""),
+            .init(key: "confirm", value: "", comment: nil),
+            .init(key: "cancel", value: "", comment: nil),
         ]
         
         let expectedSortedItems: [LocalizationItem] = [
-            .init(comment: nil, key: "confirm", value: ""),
-            .init(comment: nil, key: "cancel", value: ""),
+            .init(key: "confirm", value: "", comment: nil),
+            .init(key: "cancel", value: "", comment: nil),
         ]
         
         // When
@@ -95,13 +95,13 @@ final class LocalizationItemTests: XCTestCase {
     func test_sortedBy_key() {
         // Given
         let sut: [LocalizationItem] = [
-            .init(comment: nil, key: "confirm", value: ""),
-            .init(comment: nil, key: "cancel", value: ""),
+            .init(key: "confirm", value: "", comment: nil),
+            .init(key: "cancel", value: "", comment: nil),
         ]
         
         let expectedSortedItems: [LocalizationItem] = [
-            .init(comment: nil, key: "cancel", value: ""),
-            .init(comment: nil, key: "confirm", value: ""),
+            .init(key: "cancel", value: "", comment: nil),
+            .init(key: "confirm", value: "", comment: nil),
         ]
         
         // When

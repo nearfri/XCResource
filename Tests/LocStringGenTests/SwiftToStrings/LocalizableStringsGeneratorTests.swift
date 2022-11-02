@@ -10,8 +10,8 @@ private class StubLanguageDetector: LanguageDetector {
 private class StubSourceImporter: LocalizationItemImporter {
     func `import`(at url: URL) throws -> [LocalizationItem] {
         return [
-            .init(comment: "확인 주석", key: "confirm", value: ""),
-            .init(comment: "취소 주석", key: "cancel", value: ""),
+            .init(key: "confirm", value: "", comment: "확인 주석"),
+            .init(key: "cancel", value: "", comment: "취소 주석"),
         ]
     }
 }
@@ -24,11 +24,11 @@ private class StubTargetImporter: LocalizationItemImporter {
         
         if url.path.contains("en.lproj") {
             return [
-                .init(comment: "취소 주석", key: "cancel", value: "Cancel"),
+                .init(key: "cancel", value: "Cancel", comment: "취소 주석"),
             ]
         } else if url.path.contains("ko.lproj") {
             return [
-                .init(comment: "취소 주석", key: "cancel", value: "취소"),
+                .init(key: "cancel", value: "취소", comment: "취소 주석"),
             ]
         }
         
@@ -80,12 +80,12 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         ])
         
         XCTAssertEqual(plistGenerator.generateParamItemsList[0], [
-            .init(comment: "취소 주석", key: "cancel", value: "Cancel"),
+            .init(key: "cancel", value: "Cancel", comment: "취소 주석"),
         ])
         
         XCTAssertEqual(plistGenerator.generateParamItemsList[1], [
-            .init(comment: "취소 주석", key: "cancel", value: "취소"),
-            .init(comment: "확인 주석", key: "confirm", value: "확인 주석"),
+            .init(key: "cancel", value: "취소", comment: "취소 주석"),
+            .init(key: "confirm", value: "확인 주석", comment: "확인 주석"),
         ])
     }
     
@@ -120,8 +120,8 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         ])
         
         XCTAssertEqual(plistGenerator.generateParamItemsList[0], [
-            .init(comment: "취소 주석", key: "cancel", value: "취소"),
-            .init(comment: "확인 주석", key: "confirm", value: "확인 주석"),
+            .init(key: "cancel", value: "취소", comment: "취소 주석"),
+            .init(key: "confirm", value: "확인 주석", comment: "확인 주석"),
         ])
     }
     
@@ -130,10 +130,10 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         class PluralStubSourceImporter: LocalizationItemImporter {
             func `import`(at url: URL) throws -> [LocalizationItem] {
                 return [
-                    .init(comment: "Hello World", key: "greeting", value: ""),
-                    .init(comment: "My dog ate %#@appleCount@ today!",
-                          key: "dogEatingApples",
-                          value: ""),
+                    .init(key: "greeting", value: "", comment: "Hello World"),
+                    .init(key: "dogEatingApples",
+                          value: "",
+                          comment: "My dog ate %#@appleCount@ today!"),
                 ]
             }
         }
@@ -160,7 +160,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         
         // Then
         XCTAssertEqual(plistGenerator.generateParamItemsList[0], [
-            .init(comment:"Hello World", key: "greeting", value: "Hello World"),
+            .init(key: "greeting", value: "Hello World", comment:"Hello World"),
         ])
     }
 }

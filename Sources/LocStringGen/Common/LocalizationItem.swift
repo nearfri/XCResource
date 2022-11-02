@@ -1,10 +1,20 @@
 import Foundation
 import Strix
 
-struct LocalizationItem: Equatable {
-    var comment: String?
+struct LocalizationItem: Equatable, Identifiable {
+    var id: String
     var key: String
     var value: String
+    var comment: String?
+}
+
+extension LocalizationItem {
+    init(key: String, value: String, comment: String? = nil) {
+        self.id = key
+        self.key = key
+        self.value = value
+        self.comment = comment
+    }
 }
 
 extension LocalizationItem {
