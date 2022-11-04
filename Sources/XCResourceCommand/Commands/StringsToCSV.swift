@@ -44,6 +44,7 @@ struct StringsToCSV: ParsableCommand {
     
     mutating func run() throws {
         let csv = try generateCSV()
+        
         try writeCSV(csv)
     }
     

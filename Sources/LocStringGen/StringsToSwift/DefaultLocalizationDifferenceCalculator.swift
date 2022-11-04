@@ -55,9 +55,10 @@ private class CalculatorInternal {
     private func calculateInsertions() {
         insertions = difference.insertions.reduce(into: []) { partialResult, change in
             guard case let .insert(index, key, association) = change, association == nil,
-                  let targetItem = targetItemsByKey[key]
+                  var targetItem = targetItemsByKey[key]
             else { return }
             
+            targetItem.comment = targetItem.value
             partialResult.append((index, targetItem))
         }
     }

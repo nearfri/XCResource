@@ -9,7 +9,8 @@ public struct XCResource: ParsableCommand {
         subcommands: [
             InitManifest.self, RunManifest.self,
             XCAssetsToSwift.self, KeyToForm.self,
-            SwiftToStrings.self, StringsToCSV.self, CSVToStrings.self
+            SwiftToStrings.self, StringsToSwift.self,
+            StringsToCSV.self, CSVToStrings.self
         ],
         defaultSubcommand: RunManifest.self)
     

@@ -23,9 +23,13 @@ extension EnumCaseDeclSyntax {
         let leadingTrivia = Trivia(pieces: triviaPieces)
         
         let builder = EnumCaseDecl(elementsBuilder:  {
-            EnumCaseElement(
-                identifier: localizationItem.id,
-                rawValue: InitializerClause(value: StringLiteralExpr(localizationItem.key)))
+            if localizationItem.id == localizationItem.key {
+                EnumCaseElement(identifier: localizationItem.id)
+            } else {
+                EnumCaseElement(
+                    identifier: localizationItem.id,
+                    rawValue: InitializerClause(value: StringLiteralExpr(localizationItem.key)))
+            }
         })
         
         self = builder.buildDecl(format: .init(), leadingTrivia: leadingTrivia).as(Self.self)!

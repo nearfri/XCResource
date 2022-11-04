@@ -73,6 +73,13 @@ private let manifestTemplate = """
                 }
             },
             "sortsByKey": false
+        },
+        {
+            "commandName": "strings2swift",
+            "resourcesPath": "<#resources path#>",
+            "tableName": "Localizable",
+            "language": "en",
+            "swiftPath": "<#swift file path#>"
         }
     ]
 }

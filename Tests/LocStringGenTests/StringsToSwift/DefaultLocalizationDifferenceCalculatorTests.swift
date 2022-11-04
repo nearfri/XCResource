@@ -11,15 +11,10 @@ final class DefaultLocalizationDifferenceCalculatorTests: XCTestCase {
             .init(id: "id3", key: "key3", value: "", comment: "text3"),
         ]
         
-        let insertedItems: [LocalizationItem] = [
-            .init(key: "key0", value: "text0", comment: ""),
-            .init(key: "key2", value: "text2", comment: ""),
-        ]
-        
         let itemsInStrings: [LocalizationItem] = [
-            insertedItems[0],
+            .init(key: "key0", value: "text0", comment: ""),
             .init(key: "key1", value: "text1", comment: ""),
-            insertedItems[1],
+            .init(key: "key2", value: "text2", comment: ""),
             .init(key: "key3", value: "text3", comment: ""),
         ]
         
@@ -32,8 +27,13 @@ final class DefaultLocalizationDifferenceCalculatorTests: XCTestCase {
             return
         }
         
-        XCTAssert(difference.insertions[0] == (0, insertedItems[0]))
-        XCTAssert(difference.insertions[1] == (2, insertedItems[1]))
+        XCTAssertEqual(difference.insertions[0].index, 0)
+        XCTAssertEqual(difference.insertions[0].item.key, "key0")
+        XCTAssertEqual(difference.insertions[0].item.comment, "text0")
+        
+        XCTAssertEqual(difference.insertions[1].index, 2)
+        XCTAssertEqual(difference.insertions[1].item.key, "key2")
+        XCTAssertEqual(difference.insertions[1].item.comment, "text2")
     }
     
     func test_calculate_removals() throws {

@@ -42,6 +42,22 @@ final class EnumCaseDeclSyntaxTests: XCTestCase {
         XCTAssertEqual(enumCaseDecl.description, "\n    case confirm = \"common_confirm\"")
     }
     
+    func test_initWithLocalizationItem_keyIsEqualToID() throws {
+        // Given
+        let localizationItem = LocalizationItem(
+            id: "confirm",
+            key: "confirm",
+            value: "",
+            comment: nil)
+        
+        // When
+        let enumCaseDecl = EnumCaseDeclSyntax(localizationItem: localizationItem,
+                                              indent: .spaces(4))
+        
+        // Then
+        XCTAssertEqual(enumCaseDecl.description, "\n    case confirm")
+    }
+    
     // MARK: - applyingLocalizationItem
     
     func test_applyingLocalizationItem() throws {
