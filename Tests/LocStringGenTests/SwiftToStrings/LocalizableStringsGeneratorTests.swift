@@ -7,7 +7,7 @@ private class StubLanguageDetector: LanguageDetector {
     }
 }
 
-private class StubSourceImporter: LocalizationItemImporter {
+private class StubSourceCodeImporter: LocalizationItemImporter {
     func `import`(at url: URL) throws -> [LocalizationItem] {
         return [
             .init(key: "confirm", value: "", comment: "확인 주석"),
@@ -16,7 +16,7 @@ private class StubSourceImporter: LocalizationItemImporter {
     }
 }
 
-private class StubTargetImporter: LocalizationItemImporter {
+private class StubStringsImporter: LocalizationItemImporter {
     var importParamURLs: [URL] = []
     
     func `import`(at url: URL) throws -> [LocalizationItem] {
@@ -49,14 +49,14 @@ private class StubPropertyListGenerator: PropertyListGenerator {
 final class LocalizableStringsGeneratorTests: XCTestCase {
     func test_generate_allLanguages() throws {
         // Given
-        let targetImporter = StubTargetImporter()
-        let plistGenerator = StubPropertyListGenerator()
+        let stringsImporter = StubStringsImporter()
+        let stringsGenerator = StubPropertyListGenerator()
         
         let sut = LocalizableStringsGenerator(
             languageDetector: StubLanguageDetector(),
-            sourceImporter: StubSourceImporter(),
-            targetImporter: targetImporter,
-            plistGenerator: plistGenerator)
+            sourceCodeImporter: StubSourceCodeImporter(),
+            stringsImporter: stringsImporter,
+            stringsGenerator: stringsGenerator)
         
         let request = LocalizableStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
@@ -74,16 +74,16 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         XCTAssertNotNil(result["en"])
         XCTAssertNotNil(result["ko"])
         
-        XCTAssertEqual(targetImporter.importParamURLs, [
+        XCTAssertEqual(stringsImporter.importParamURLs, [
             URL(fileURLWithPath: "Resources/en.lproj/Localizable.strings"),
             URL(fileURLWithPath: "Resources/ko.lproj/Localizable.strings"),
         ])
         
-        XCTAssertEqual(plistGenerator.generateParamItemsList[0], [
+        XCTAssertEqual(stringsGenerator.generateParamItemsList[0], [
             .init(key: "cancel", value: "Cancel", comment: "취소 주석"),
         ])
         
-        XCTAssertEqual(plistGenerator.generateParamItemsList[1], [
+        XCTAssertEqual(stringsGenerator.generateParamItemsList[1], [
             .init(key: "cancel", value: "취소", comment: "취소 주석"),
             .init(key: "confirm", value: "확인 주석", comment: "확인 주석"),
         ])
@@ -91,14 +91,14 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
     
     func test_generate_oneLanguage() throws {
         // Given
-        let targetImporter = StubTargetImporter()
-        let plistGenerator = StubPropertyListGenerator()
+        let stringsImporter = StubStringsImporter()
+        let stringsGenerator = StubPropertyListGenerator()
         
         let sut = LocalizableStringsGenerator(
             languageDetector: StubLanguageDetector(),
-            sourceImporter: StubSourceImporter(),
-            targetImporter: targetImporter,
-            plistGenerator: plistGenerator)
+            sourceCodeImporter: StubSourceCodeImporter(),
+            stringsImporter: stringsImporter,
+            stringsGenerator: stringsGenerator)
         
         let request = LocalizableStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
@@ -115,11 +115,11 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         XCTAssertNil(result["en"])
         XCTAssertNotNil(result["ko"])
         
-        XCTAssertEqual(targetImporter.importParamURLs, [
+        XCTAssertEqual(stringsImporter.importParamURLs, [
             URL(fileURLWithPath: "Resources/ko.lproj/Localizable.strings"),
         ])
         
-        XCTAssertEqual(plistGenerator.generateParamItemsList[0], [
+        XCTAssertEqual(stringsGenerator.generateParamItemsList[0], [
             .init(key: "cancel", value: "취소", comment: "취소 주석"),
             .init(key: "confirm", value: "확인 주석", comment: "확인 주석"),
         ])
@@ -127,7 +127,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
     
     func test_generate_excludePlurals() throws {
         // Given
-        class PluralStubSourceImporter: LocalizationItemImporter {
+        class PluralStubSourceCodeImporter: LocalizationItemImporter {
             func `import`(at url: URL) throws -> [LocalizationItem] {
                 return [
                     .init(key: "greeting", value: "", comment: "Hello World"),
@@ -138,14 +138,14 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
             }
         }
         
-        let targetImporter = StubTargetImporter()
-        let plistGenerator = StubPropertyListGenerator()
+        let stringsImporter = StubStringsImporter()
+        let stringsGenerator = StubPropertyListGenerator()
         
         let sut = LocalizableStringsGenerator(
             languageDetector: StubLanguageDetector(),
-            sourceImporter: PluralStubSourceImporter(),
-            targetImporter: targetImporter,
-            plistGenerator: plistGenerator)
+            sourceCodeImporter: PluralStubSourceCodeImporter(),
+            stringsImporter: stringsImporter,
+            stringsGenerator: stringsGenerator)
         
         let request = LocalizableStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
@@ -159,7 +159,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         _ = try sut.generate(for: request)
         
         // Then
-        XCTAssertEqual(plistGenerator.generateParamItemsList[0], [
+        XCTAssertEqual(stringsGenerator.generateParamItemsList[0], [
             .init(key: "greeting", value: "Hello World", comment:"Hello World"),
         ])
     }

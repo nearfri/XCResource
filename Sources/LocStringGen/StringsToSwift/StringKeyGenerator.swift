@@ -2,8 +2,8 @@ import Foundation
 
 protocol LocalizationDifferenceCalculator: AnyObject {
     func calculate(
-        sourceItems: [LocalizationItem],
-        targetItems: [LocalizationItem]
+        targetItems: [LocalizationItem],
+        baseItems: [LocalizationItem]
     ) -> LocalizationDifference
 }
 
@@ -37,31 +37,40 @@ extension StringKeyGenerator {
 }
 
 public class StringKeyGenerator {
-    private let sourceImporter: LocalizationItemImporter
-    private let targetImporter: LocalizationItemImporter
+    private let stringsImporter: LocalizationItemImporter
+    private let sourceCodeImporter: LocalizationItemImporter
     private let differenceCalculator: LocalizationDifferenceCalculator
     private let sourceCodeRewriter: LocalizationSourceCodeRewriter
     
-    init(sourceImporter: LocalizationItemImporter,
-         targetImporter: LocalizationItemImporter,
+    init(stringsImporter: LocalizationItemImporter,
+         sourceCodeImporter: LocalizationItemImporter,
          differenceCalculator: LocalizationDifferenceCalculator,
          sourceCodeRewriter: LocalizationSourceCodeRewriter
     ) {
-        self.sourceImporter = sourceImporter
-        self.targetImporter = targetImporter
+        self.stringsImporter = stringsImporter
+        self.sourceCodeImporter = sourceCodeImporter
         self.differenceCalculator = differenceCalculator
         self.sourceCodeRewriter = sourceCodeRewriter
     }
     
+    public convenience init() {
+        self.init(
+            stringsImporter: ASCIIPlistImporter(),
+            sourceCodeImporter: SwiftLocalizationItemImporter(
+                enumerationImporter: SwiftStringEnumerationImporter()),
+            differenceCalculator: DefaultLocalizationDifferenceCalculator(),
+            sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
+    }
+    
     public func generate(for request: Request) throws -> String {
-        let sourceItems = try sourceImporter.import(at: request.stringsFileURL)
+        let itemsInStrings = try stringsImporter.import(at: request.stringsFileURL)
         
-        let targetItems = try targetImporter
+        let itemsInSourceCode = try sourceCodeImporter
             .import(at: request.sourceCodeURL)
             .filter({ !$0.commentContainsPluralVariables })
         
-        let difference = differenceCalculator.calculate(sourceItems: sourceItems,
-                                                        targetItems: targetItems)
+        let difference = differenceCalculator.calculate(targetItems: itemsInStrings,
+                                                        baseItems: itemsInSourceCode)
         
         return try sourceCodeRewriter.applying(difference, toSourceCodeAt: request.sourceCodeURL)
     }

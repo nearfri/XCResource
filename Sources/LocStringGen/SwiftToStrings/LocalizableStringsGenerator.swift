@@ -55,32 +55,32 @@ extension LocalizableStringsGenerator {
 
 public class LocalizableStringsGenerator {
     private let languageDetector: LanguageDetector
-    private let sourceImporter: LocalizationItemImporter
-    private let targetImporter: LocalizationItemImporter
-    private let plistGenerator: PropertyListGenerator
+    private let sourceCodeImporter: LocalizationItemImporter
+    private let stringsImporter: LocalizationItemImporter
+    private let stringsGenerator: PropertyListGenerator
     
     init(languageDetector: LanguageDetector,
-         sourceImporter: LocalizationItemImporter,
-         targetImporter: LocalizationItemImporter,
-         plistGenerator: PropertyListGenerator
+         sourceCodeImporter: LocalizationItemImporter,
+         stringsImporter: LocalizationItemImporter,
+         stringsGenerator: PropertyListGenerator
     ) {
         self.languageDetector = languageDetector
-        self.sourceImporter = sourceImporter
-        self.targetImporter = targetImporter
-        self.plistGenerator = plistGenerator
+        self.sourceCodeImporter = sourceCodeImporter
+        self.stringsImporter = stringsImporter
+        self.stringsGenerator = stringsGenerator
     }
     
     public convenience init() {
         self.init(
             languageDetector: DefaultLanguageDetector(),
-            sourceImporter: SwiftLocalizationItemImporter(
+            sourceCodeImporter: SwiftLocalizationItemImporter(
                 enumerationImporter: SwiftStringEnumerationImporter()),
-            targetImporter: ASCIIPlistImporter(),
-            plistGenerator: ASCIIPlistGenerator())
+            stringsImporter: ASCIIPlistImporter(),
+            stringsGenerator: ASCIIPlistGenerator())
     }
     
     public func generate(for request: Request) throws -> [LanguageID: String] {
-        let sourceItems = try sourceImporter
+        let itemsInSourceCode = try sourceCodeImporter
             .import(at: request.sourceCodeURL)
             .filter({ !$0.commentContainsPluralVariables })
         
@@ -93,22 +93,21 @@ public class LocalizableStringsGenerator {
             let stringsFileURL = request.resourcesURL
                 .appendingPathComponents(language: language.rawValue, tableName: request.tableName)
             
-            let targetItems = try targetImporter.import(at: stringsFileURL)
+            let baseItems = try stringsImporter.import(at: stringsFileURL)
             
             let combinedItems = { () -> [LocalizationItem] in
                 switch config.mergeStrategy {
                 case .add(let addingMethod):
-                    return sourceItems
+                    return itemsInSourceCode
                         .map({ $0.applying(addingMethod) })
-                        .combined(with: targetItems, verifyingComments: config.verifiesComment)
+                        .combined(with: baseItems, verifyingComments: config.verifiesComment)
                 case .doNotAdd:
-                    return sourceItems
-                        .combinedIntersection(targetItems,
-                                              verifyingComments: config.verifiesComment)
+                    return itemsInSourceCode
+                        .combinedIntersection(baseItems, verifyingComments: config.verifiesComment)
                 }
             }().sorted(by: request.sortOrder)
             
-            result[language] = plistGenerator.generate(from: combinedItems)
+            result[language] = stringsGenerator.generate(from: combinedItems)
         }
     }
     
