@@ -58,7 +58,7 @@ private class CalculatorInternal {
                   var targetItem = targetItemsByKey[key]
             else { return }
             
-            targetItem.comment = targetItem.value
+            targetItem.comment = targetItem.comment
             partialResult.append((index, targetItem))
         }
     }
@@ -78,8 +78,8 @@ private class CalculatorInternal {
             var baseItem = element.value
             guard let targetItem = targetItemsByKey[baseItem.key] else { return }
             
-            if targetItem.value != baseItem.commentByRemovingFormatLabels {
-                baseItem.comment = targetItem.value
+            if baseItem.comment != targetItem.comment {
+                baseItem.comment = targetItem.comment
                 partialResult[baseItem.id] = baseItem
             }
         }

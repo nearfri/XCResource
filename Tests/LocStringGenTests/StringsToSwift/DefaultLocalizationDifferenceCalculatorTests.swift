@@ -12,10 +12,10 @@ final class DefaultLocalizationDifferenceCalculatorTests: XCTestCase {
         ]
         
         let itemsInStrings: [LocalizationItem] = [
-            .init(key: "key0", value: "text0", comment: ""),
-            .init(key: "key1", value: "text1", comment: ""),
-            .init(key: "key2", value: "text2", comment: ""),
-            .init(key: "key3", value: "text3", comment: ""),
+            .init(key: "key0", value: "", comment: "text0"),
+            .init(key: "key1", value: "", comment: "text1"),
+            .init(key: "key2", value: "", comment: "text2"),
+            .init(key: "key3", value: "", comment: "text3"),
         ]
         
         // When
@@ -60,17 +60,17 @@ final class DefaultLocalizationDifferenceCalculatorTests: XCTestCase {
     func test_calculate_modifications() throws {
         // Given
         let itemsInSourceCode: [LocalizationItem] = [
-            .init(id: "id0", key: "key0", value: "", comment: "%{label}ld text0"),
-            .init(id: "id1", key: "key1", value: "", comment: "%{label}ld text1"),
-            .init(id: "id2", key: "key2", value: "", comment: "%{label}ld text2"),
-            .init(id: "id3", key: "key3", value: "", comment: "%{label}ld text3"),
+            .init(id: "id0", key: "key0", value: "", comment: "%ld text0"),
+            .init(id: "id1", key: "key1", value: "", comment: "%ld text1"),
+            .init(id: "id2", key: "key2", value: "", comment: "%ld text2"),
+            .init(id: "id3", key: "key3", value: "", comment: "%ld text3"),
         ]
         
         let itemsInStrings: [LocalizationItem] = [
-            .init(key: "key0", value: "%ld text0-new", comment: ""),
-            .init(key: "key1", value: "%ld text1", comment: ""),
-            .init(key: "key2", value: "%ld text2-new", comment: ""),
-            .init(key: "key3", value: "%ld text3", comment: ""),
+            .init(key: "key0", value: "", comment: "%ld text0-new"),
+            .init(key: "key1", value: "", comment: "%ld text1"),
+            .init(key: "key2", value: "", comment: "%ld text2-new"),
+            .init(key: "key3", value: "", comment: "%ld text3"),
         ]
         
         // When

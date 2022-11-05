@@ -55,9 +55,12 @@ public class StringKeyGenerator {
     
     public convenience init() {
         self.init(
-            stringsImporter: ASCIIPlistImporter(),
-            sourceCodeImporter: SwiftLocalizationItemImporter(
-                enumerationImporter: SwiftStringEnumerationImporter()),
+            stringsImporter: SetCommentWithValueLocalizationItemImporterDecorator(
+                importer: ASCIIPlistImporter()),
+            sourceCodeImporter: FormatLabelRemovedLocalizationItemImporterDecorator(
+                importer: SingularLocalizationItemImporterDecorator(
+                    importer: SwiftLocalizationItemImporter(
+                        enumerationImporter: SwiftStringEnumerationImporter()))),
             differenceCalculator: DefaultLocalizationDifferenceCalculator(),
             sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
     }
@@ -65,9 +68,7 @@ public class StringKeyGenerator {
     public func generate(for request: Request) throws -> String {
         let itemsInStrings = try stringsImporter.import(at: request.stringsFileURL)
         
-        let itemsInSourceCode = try sourceCodeImporter
-            .import(at: request.sourceCodeURL)
-            .filter({ !$0.commentContainsPluralVariables })
+        let itemsInSourceCode = try sourceCodeImporter.import(at: request.sourceCodeURL)
         
         let difference = differenceCalculator.calculate(targetItems: itemsInStrings,
                                                         baseItems: itemsInSourceCode)

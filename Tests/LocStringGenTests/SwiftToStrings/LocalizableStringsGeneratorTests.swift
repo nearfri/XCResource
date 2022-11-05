@@ -124,43 +124,4 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
             .init(key: "confirm", value: "확인 주석", comment: "확인 주석"),
         ])
     }
-    
-    func test_generate_excludePlurals() throws {
-        // Given
-        class PluralStubSourceCodeImporter: LocalizationItemImporter {
-            func `import`(at url: URL) throws -> [LocalizationItem] {
-                return [
-                    .init(key: "greeting", value: "", comment: "Hello World"),
-                    .init(key: "dogEatingApples",
-                          value: "",
-                          comment: "My dog ate %#@appleCount@ today!"),
-                ]
-            }
-        }
-        
-        let stringsImporter = StubStringsImporter()
-        let stringsGenerator = StubPropertyListGenerator()
-        
-        let sut = LocalizableStringsGenerator(
-            languageDetector: StubLanguageDetector(),
-            sourceCodeImporter: PluralStubSourceCodeImporter(),
-            stringsImporter: stringsImporter,
-            stringsGenerator: stringsGenerator)
-        
-        let request = LocalizableStringsGenerator.Request(
-            sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
-            resourcesURL: URL(fileURLWithPath: "Resources"),
-            configurationsByLanguage: [
-                "en": .init(mergeStrategy: .add(.comment), verifiesComment: true),
-            ],
-            sortOrder: .key)
-        
-        // When
-        _ = try sut.generate(for: request)
-        
-        // Then
-        XCTAssertEqual(stringsGenerator.generateParamItemsList[0], [
-            .init(key: "greeting", value: "Hello World", comment:"Hello World"),
-        ])
-    }
 }

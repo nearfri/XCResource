@@ -73,16 +73,15 @@ public class LocalizableStringsGenerator {
     public convenience init() {
         self.init(
             languageDetector: DefaultLanguageDetector(),
-            sourceCodeImporter: SwiftLocalizationItemImporter(
-                enumerationImporter: SwiftStringEnumerationImporter()),
+            sourceCodeImporter: SingularLocalizationItemImporterDecorator(
+                importer: SwiftLocalizationItemImporter(
+                    enumerationImporter: SwiftStringEnumerationImporter())),
             stringsImporter: ASCIIPlistImporter(),
             stringsGenerator: ASCIIPlistGenerator())
     }
     
     public func generate(for request: Request) throws -> [LanguageID: String] {
-        let itemsInSourceCode = try sourceCodeImporter
-            .import(at: request.sourceCodeURL)
-            .filter({ !$0.commentContainsPluralVariables })
+        let itemsInSourceCode = try sourceCodeImporter.import(at: request.sourceCodeURL)
         
         let languages = try determineLanguages(for: request)
         
