@@ -66,8 +66,4 @@ public enum StringKey: String, CaseIterable {
     // If %#@variable@ format is included, it is implicitly excluded from .strings file.
     /// %{dogName}@ ate %#@appleCount@ today!
     case dogEatingApples
-    
-    // xcresource:swift2strings:exclude - Explicitly exclude from .strings.
-    /// %{changeCount}ld changes made
-    case changeDescription
 }

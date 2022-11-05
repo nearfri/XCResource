@@ -1,10 +1,20 @@
 import Foundation
 import Strix
 
-struct LocalizationItem: Equatable {
-    var comment: String?
+struct LocalizationItem: Equatable, Identifiable {
+    let id: String
     var key: String
     var value: String
+    var comment: String?
+}
+
+extension LocalizationItem {
+    init(key: String, value: String, comment: String? = nil) {
+        self.id = key
+        self.key = key
+        self.value = value
+        self.comment = comment
+    }
 }
 
 extension LocalizationItem {
@@ -15,7 +25,7 @@ extension LocalizationItem {
         
         switch addingMethod {
         case .comment:
-            result.value = result.comment?.removingFormatLabels() ?? ""
+            result.value = result.commentByRemovingFormatLabels ?? ""
         case .key:
             result.value = result.key
         case .label(let string):
@@ -25,18 +35,17 @@ extension LocalizationItem {
         return result
     }
     
+    var commentByRemovingFormatLabels: String? {
+        guard let comment, comment.contains("%{") else {
+            return comment
+        }
+        return (try? Parser.formatLabelRemoval.run(comment)) ?? comment
+    }
+    
     var commentContainsPluralVariables: Bool {
         guard let comment, comment.contains("%") else { return false }
         
         return (try? Parser.containsPluralVariables.run(comment)) ?? false
-    }
-}
-
-private extension String {
-    func removingFormatLabels() -> String {
-        if !contains("%{") { return self }
-        
-        return (try? Parser.formatLabelRemoval.run(self)) ?? self
     }
 }
 

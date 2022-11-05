@@ -16,12 +16,12 @@ private class StubLanguageFormatter: LanguageFormatter {
 private enum Seed {
     static let commentedSections: [LocalizationSection] = [
         LocalizationSection(language: "ko", items: [
-            LocalizationItem(comment: "취소", key: "cancel", value: "취소"),
-            LocalizationItem(comment: "확인", key: "confirm", value: "확인"),
+            LocalizationItem(key: "cancel", value: "취소", comment: "취소"),
+            LocalizationItem(key: "confirm", value: "확인", comment: "확인"),
         ]),
         LocalizationSection(language: "en", items: [
-            LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
-            LocalizationItem(comment: "확인", key: "confirm", value: "Confirm"),
+            LocalizationItem(key: "cancel", value: "Cancel", comment: "취소"),
+            LocalizationItem(key: "confirm", value: "Confirm", comment: "확인"),
         ]),
     ]
     
@@ -67,11 +67,11 @@ final class LocalizationTableTests: XCTestCase {
         
         let sections: [LocalizationSection] = [
             LocalizationSection(language: "ko", items: [
-                LocalizationItem(comment: "취소", key: "cancel", value: "취소"),
-                LocalizationItem(comment: "확인", key: "confirm", value: "확인"),
+                LocalizationItem(key: "cancel", value: "취소", comment: "취소"),
+                LocalizationItem(key: "confirm", value: "확인", comment: "확인"),
             ]),
             LocalizationSection(language: "en", items: [
-                LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
+                LocalizationItem(key: "cancel", value: "Cancel", comment: "취소"),
             ]),
         ]
         
@@ -96,11 +96,11 @@ final class LocalizationTableTests: XCTestCase {
         
         let sections: [LocalizationSection] = [
             LocalizationSection(language: "ko", items: [
-                LocalizationItem(comment: "취소", key: "cancel", value: "취소"),
-                LocalizationItem(comment: "확인", key: "confirm", value: "확인"),
+                LocalizationItem(key: "cancel", value: "취소", comment: "취소"),
+                LocalizationItem(key: "confirm", value: "확인", comment: "확인"),
             ]),
             LocalizationSection(language: "en", items: [
-                LocalizationItem(comment: "취소", key: "cancel", value: ""),
+                LocalizationItem(key: "cancel", value: "", comment: "취소"),
             ]),
         ]
         
@@ -132,10 +132,10 @@ final class LocalizationTableTests: XCTestCase {
         
         let expectedSections: [LocalizationSection] = [
             LocalizationSection(language: "ko", items: [
-                LocalizationItem(comment: "취소", key: "cancel", value: "취소"),
+                LocalizationItem(key: "cancel", value: "취소", comment: "취소"),
             ]),
             LocalizationSection(language: "en", items: [
-                LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
+                LocalizationItem(key: "cancel", value: "Cancel", comment: "취소"),
             ]),
         ]
         
@@ -159,12 +159,12 @@ final class LocalizationTableTests: XCTestCase {
         
         let expectedSections: [LocalizationSection] = [
             LocalizationSection(language: "ko", items: [
-                LocalizationItem(comment: nil, key: "cancel", value: "취소"),
-                LocalizationItem(comment: nil, key: "confirm", value: "확인"),
+                LocalizationItem(key: "cancel", value: "취소", comment: nil),
+                LocalizationItem(key: "confirm", value: "확인", comment: nil),
             ]),
             LocalizationSection(language: "en", items: [
-                LocalizationItem(comment: nil, key: "cancel", value: "Cancel"),
-                LocalizationItem(comment: nil, key: "confirm", value: "Confirm"),
+                LocalizationItem(key: "cancel", value: "Cancel", comment: nil),
+                LocalizationItem(key: "confirm", value: "Confirm", comment: nil),
             ]),
         ]
         
@@ -188,11 +188,11 @@ final class LocalizationTableTests: XCTestCase {
         
         let expectedSections: [LocalizationSection] = [
             LocalizationSection(language: "ko", items: [
-                LocalizationItem(comment: "확인", key: "confirm", value: "확인"),
+                LocalizationItem(key: "confirm", value: "확인", comment: "확인"),
             ]),
             LocalizationSection(language: "en", items: [
-                LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
-                LocalizationItem(comment: "확인", key: "confirm", value: "Confirm"),
+                LocalizationItem(key: "cancel", value: "Cancel", comment: "취소"),
+                LocalizationItem(key: "confirm", value: "Confirm", comment: "확인"),
             ]),
         ]
         
@@ -217,12 +217,12 @@ final class LocalizationTableTests: XCTestCase {
         
         let expectedSections: [LocalizationSection] = [
             LocalizationSection(language: "ko", items: [
-                LocalizationItem(comment: "취소", key: "cancel", value: ""),
-                LocalizationItem(comment: "확인", key: "confirm", value: "확인"),
+                LocalizationItem(key: "cancel", value: "", comment: "취소"),
+                LocalizationItem(key: "confirm", value: "확인", comment: "확인"),
             ]),
             LocalizationSection(language: "en", items: [
-                LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
-                LocalizationItem(comment: "확인", key: "confirm", value: "Confirm"),
+                LocalizationItem(key: "cancel", value: "Cancel", comment: "취소"),
+                LocalizationItem(key: "confirm", value: "Confirm", comment: "확인"),
             ]),
         ]
         
@@ -247,12 +247,12 @@ final class LocalizationTableTests: XCTestCase {
         
         let expectedSections: [LocalizationSection] = [
             LocalizationSection(language: "ko", items: [
-                LocalizationItem(comment: "취소", key: "cancel", value: ""),
-                LocalizationItem(comment: "확인", key: "confirm", value: "확인"),
+                LocalizationItem(key: "cancel", value: "", comment: "취소"),
+                LocalizationItem(key: "confirm", value: "확인", comment: "확인"),
             ]),
             LocalizationSection(language: "en", items: [
-                LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
-                LocalizationItem(comment: "확인", key: "confirm", value: "Confirm"),
+                LocalizationItem(key: "cancel", value: "Cancel", comment: "취소"),
+                LocalizationItem(key: "confirm", value: "Confirm", comment: "확인"),
             ]),
         ]
         

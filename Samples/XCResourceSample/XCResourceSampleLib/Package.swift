@@ -12,6 +12,9 @@ let package = Package(
             name: "XCResourceSampleLib",
             targets: ["View", "Resource"]),
         .plugin(
+            name: "StringsToSwift",
+            targets: ["StringsToSwift"]),
+        .plugin(
             name: "StringsToCSV",
             targets: ["StringsToCSV"]),
         .plugin(
@@ -44,6 +47,17 @@ let package = Package(
         .plugin(
             name: "GenerateResourceKeys",
             capability: .buildTool(),
+            dependencies: ["xcresource"]),
+        
+        // MARK: - StringsToSwift
+        
+        .plugin(
+            name: "StringsToSwift",
+            capability: .command(
+                intent: .custom(verb: "strings2swift", description: "Convert strings to swift"),
+                permissions: [
+                    .writeToPackageDirectory(reason: "Converts strings to swift")
+                ]),
             dependencies: ["xcresource"]),
         
         // MARK: - StringsToCSV

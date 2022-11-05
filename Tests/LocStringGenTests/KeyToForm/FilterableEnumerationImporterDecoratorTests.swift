@@ -14,7 +14,7 @@ private enum Seed {
     """
 }
 
-final class FilterableStringEnumerationImporterTests: XCTestCase {
+final class FilterableEnumerationImporterDecoratorTests: XCTestCase {
     func test_example() throws {
         // Given
         let fm = FileManager.default
@@ -23,7 +23,7 @@ final class FilterableStringEnumerationImporterTests: XCTestCase {
         try Seed.sourceCode.write(to: sourceURL, atomically: true, encoding: .utf8)
         defer { try? fm.removeItem(at: sourceURL) }
         
-        let sut = FilterableStringEnumerationImporter(
+        let sut = FilterableEnumerationImporterDecorator(
             importer: SwiftStringEnumerationImporter(),
             commandNameOfExclusion: "xcresource:key2form:exclude")
         

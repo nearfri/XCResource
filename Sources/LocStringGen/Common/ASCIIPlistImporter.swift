@@ -13,7 +13,7 @@ class ASCIIPlistImporter: LocalizationItemImporter {
             guard case let .string(value) = entry.value else {
                 throw ASCIIPlistError.invalidPlistType(expected: "string", actual: entry.value)
             }
-            return LocalizationItem(comment: entry.comment, key: entry.key, value: value)
+            return LocalizationItem(key: entry.key, value: value, comment: entry.comment)
         }
     }
 }

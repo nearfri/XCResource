@@ -10,8 +10,8 @@ final class ASCIIPlistImporterTests: XCTestCase {
             .appendingPathComponent("en.lproj/Localizable.strings")
         
         let expectedItems: [LocalizationItem] = [
-            LocalizationItem(comment: "취소", key: "common_cancel", value: "Cancel"),
-            LocalizationItem(comment: "확인", key: "common_confirm", value: "Confirm")
+            LocalizationItem(key: "common_cancel", value: "Cancel", comment: "취소"),
+            LocalizationItem(key: "common_confirm", value: "Confirm", comment: "확인")
         ]
         
         // When

@@ -12,8 +12,11 @@ class SwiftLocalizationItemImporter: LocalizationItemImporter {
         let enumeration: Enumeration<String> = try enumerationImporter.import(at: url)
         
         return enumeration.cases.map { enumCase in
-            let comment = enumCase.joinedDocumentComment
-            return LocalizationItem(comment: comment, key: enumCase.rawValue, value: "")
+            LocalizationItem(
+                id: enumCase.identifier,
+                key: enumCase.rawValue,
+                value: "",
+                comment: enumCase.joinedDocumentComment)
         }
     }
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-class FilterableStringEnumerationImporter: StringEnumerationImporter {
+class FilterableEnumerationImporterDecorator: StringEnumerationImporter {
     private let importer: StringEnumerationImporter
     private let commandNameOfExclusion: String?
     

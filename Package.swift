@@ -113,6 +113,7 @@ private struct SwiftSyntaxPackage {
         return [
             .product(name: "SwiftSyntax", package: "swift-syntax"),
             .product(name: "SwiftSyntaxParser", package: "swift-syntax"),
+            .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
             "lib_InternalSwiftSyntaxParser",
         ]
     }

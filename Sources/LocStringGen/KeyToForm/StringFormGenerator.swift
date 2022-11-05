@@ -89,7 +89,7 @@ public class StringFormGenerator {
     
     public convenience init(commandNameSet: CommandNameSet) {
         self.init(
-            enumerationImporter: FilterableStringEnumerationImporter(
+            enumerationImporter: FilterableEnumerationImporterDecorator(
                 importer: SwiftStringEnumerationImporter(),
                 commandNameOfExclusion: commandNameSet.exclude),
             placeholderImporter: DefaultFormatPlaceholderImporter(),

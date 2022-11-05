@@ -7,10 +7,10 @@ final class ASCIIPlistGeneratorTests: XCTestCase {
         let sut = ASCIIPlistGenerator()
         
         let items: [LocalizationItem] = [
-            LocalizationItem(comment: "취소", key: "cancel", value: "Cancel"),
-            LocalizationItem(comment: "확인", key: "confirm", value: "Confirm"),
-            LocalizationItem(comment: "2라인\\n문자열", key: "two_lines", value: "two_lines"),
-            LocalizationItem(comment: "잘못된*/주석", key: "invalidCmt", value: "invalidCmt"),
+            LocalizationItem(key: "cancel", value: "Cancel", comment: "취소"),
+            LocalizationItem(key: "confirm", value: "Confirm", comment: "확인"),
+            LocalizationItem(key: "two_lines", value: "two_lines", comment: "2라인\\n문자열"),
+            LocalizationItem(key: "invalidCmt", value: "invalidCmt", comment: "잘못된*/주석"),
         ]
         
         let expectedPlist = """
