@@ -36,8 +36,19 @@ extension EnumCaseDeclSyntax {
     }
     
     func applying(_ localizationItem: LocalizationItem) -> Self {
-        assert(localizationItem.id == EnumCaseIdentifierExtractor().extract(from: self))
-        assert(localizationItem.key == EnumCaseRawValueExtractor().extract(from: self))
+        func checkID() -> Bool {
+            return localizationItem.id == EnumCaseIdentifierExtractor().extract(from: self)
+        }
+        
+        func checkKey() -> Bool {
+            guard let rawValue = EnumCaseRawValueExtractor().extract(from: self) else {
+                return true
+            }
+            return localizationItem.key == rawValue
+        }
+        
+        assert(checkID())
+        assert(checkKey())
         
         var result = self
         
