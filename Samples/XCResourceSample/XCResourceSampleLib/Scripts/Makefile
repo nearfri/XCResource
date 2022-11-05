@@ -100,6 +100,13 @@ $(SWIFT2STRINGS_LASTRUN_FILE): $(STRINGKEY_FILE)
 
 # Non-default targets
 
+.PHONY: strings2swift
+strings2swift:
+	$(XCRESOURCE) strings2swift \
+	--resources-path $(RESOURCES_DIR) \
+	--language $(LOCALIZATION_DEV_LANGUAGE) \
+	--swift-path $(STRINGKEY_FILE)
+
 .PHONY: strings2csv
 strings2csv: $(LOCALIZATION_CSV_FILE)
 
