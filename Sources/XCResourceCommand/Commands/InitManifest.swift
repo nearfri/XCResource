@@ -72,6 +72,7 @@ private let manifestTemplate = """
                     "verifiesComments": false
                 }
             },
+            "omitsComments": false,
             "sortsByKey": false
         },
         {
@@ -80,6 +81,24 @@ private let manifestTemplate = """
             "tableName": "Localizable",
             "language": "en",
             "swiftPath": "<#swift file path#>"
+        },
+        {
+            "commandName": "strings2csv",
+            "resourcesPath": "<#resources path#>",
+            "tableName": "Localizable",
+            "developmentLanguage": "en",
+            "csvPath": "<#CSV file path#>",
+            "headerStyle": "<#short|long|long-<language>#>",
+            "emptyEncoding": "<#string used to represent empty value#>",
+            "writesBOM": false
+        },
+        {
+            "commandName": "csv2strings",
+            "csvPath": "<#CSV file path#>",
+            "headerStyle": "<#short|long|long-<language>#>",
+            "resourcesPath": "<#resources path#>",
+            "tableName": "Localizable",
+            "emptyEncoding": "<#string used to represent empty value#>"
         }
     ]
 }

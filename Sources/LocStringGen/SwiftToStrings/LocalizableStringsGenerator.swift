@@ -7,6 +7,7 @@ extension LocalizableStringsGenerator {
         public var resourcesURL: URL
         public var tableName: String
         public var configurationsByLanguage: [LanguageID: LocalizationConfiguration]
+        public var includesComments: Bool
         public var sortOrder: SortOrder
         
         public init(
@@ -16,12 +17,14 @@ extension LocalizableStringsGenerator {
             configurationsByLanguage: [LanguageID: LocalizationConfiguration] = [
                 .all: .init(mergeStrategy: .doNotAdd, verifiesComments: true)
             ],
+            includesComments: Bool = true,
             sortOrder: SortOrder = .occurrence
         ) {
             self.sourceCodeURL = sourceCodeURL
             self.resourcesURL = resourcesURL
             self.tableName = tableName
             self.configurationsByLanguage = configurationsByLanguage
+            self.includesComments = includesComments
             self.sortOrder = sortOrder
         }
     }
@@ -94,7 +97,7 @@ public class LocalizableStringsGenerator {
             
             let baseItems = try stringsImporter.import(at: stringsFileURL)
             
-            let combinedItems = { () -> [LocalizationItem] in
+            var outputItems = { () -> [LocalizationItem] in
                 switch config.mergeStrategy {
                 case .add(let addingMethod):
                     return itemsInSourceCode
@@ -104,9 +107,15 @@ public class LocalizableStringsGenerator {
                     return itemsInSourceCode
                         .combinedIntersection(baseItems, verifyingComments: config.verifiesComments)
                 }
-            }().sorted(by: request.sortOrder)
+            }()
             
-            result[language] = stringsGenerator.generate(from: combinedItems)
+            if !request.includesComments {
+                outputItems = outputItems.map({ $0.setting(\.comment, nil) })
+            }
+            
+            outputItems = outputItems.sorted(by: request.sortOrder)
+            
+            result[language] = stringsGenerator.generate(from: outputItems)
         }
     }
     

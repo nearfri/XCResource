@@ -22,6 +22,7 @@ struct SwiftToStrings: ParsableCommand {
             .init(language: LanguageID.allSymbol,
                   configuration: .init(mergeStrategy: .doNotAdd, verifiesComments: false))
         ]
+        static let omitsComments: Bool = false
         static let sortsByKey: Bool = false
     }
     
@@ -46,6 +47,9 @@ struct SwiftToStrings: ParsableCommand {
                 valueName: LanguageAndConfiguration.usageDescription))
     var languageAndConfigurations: [LanguageAndConfiguration] = Default.languageAndConfigurations
     
+    @Flag(name: .customLong("omit-comments"))
+    var omitsComments: Bool = Default.omitsComments
+    
     @Flag(name: .customLong("sort-by-key"))
     var sortsByKey: Bool = Default.sortsByKey
     
@@ -65,6 +69,7 @@ struct SwiftToStrings: ParsableCommand {
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
             configurationsByLanguage: languageAndConfigurations.configurationsByLanguage,
+            includesComments: !omitsComments,
             sortOrder: sortsByKey ? .key : .occurrence)
         
         let generator = LocalizableStringsGenerator()

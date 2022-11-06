@@ -65,6 +65,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
                 "ko": .init(mergeStrategy: .add(.comment), verifiesComments: true),
                 .all: .init(mergeStrategy: .doNotAdd, verifiesComments: true)
             ],
+            includesComments: true,
             sortOrder: .key)
         
         // When
@@ -106,6 +107,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
             configurationsByLanguage: [
                 "ko": .init(mergeStrategy: .add(.comment), verifiesComments: true),
             ],
+            includesComments: true,
             sortOrder: .key)
         
         // When
@@ -122,6 +124,40 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
         XCTAssertEqual(stringsGenerator.generateParamItemsList[0], [
             .init(key: "cancel", value: "취소", comment: "취소 주석"),
             .init(key: "confirm", value: "확인 주석", comment: "확인 주석"),
+        ])
+    }
+    
+    func test_generate_notIncludeComments() throws {
+        // Given
+        let stringsImporter = StubStringsImporter()
+        let stringsGenerator = StubPropertyListGenerator()
+        
+        let sut = LocalizableStringsGenerator(
+            languageDetector: StubLanguageDetector(),
+            sourceCodeImporter: StubSourceCodeImporter(),
+            stringsImporter: stringsImporter,
+            stringsGenerator: stringsGenerator)
+        
+        let request = LocalizableStringsGenerator.Request(
+            sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
+            resourcesURL: URL(fileURLWithPath: "Resources"),
+            configurationsByLanguage: [
+                "ko": .init(mergeStrategy: .add(.comment), verifiesComments: true),
+            ],
+            includesComments: false,
+            sortOrder: .key)
+        
+        // When
+        let result = try sut.generate(for: request)
+        
+        // Then
+        XCTAssertEqual(stringsImporter.importParamURLs, [
+            URL(fileURLWithPath: "Resources/ko.lproj/Localizable.strings"),
+        ])
+        
+        XCTAssertEqual(stringsGenerator.generateParamItemsList[0], [
+            .init(key: "cancel", value: "취소", comment: nil),
+            .init(key: "confirm", value: "확인 주석", comment: nil),
         ])
     }
 }

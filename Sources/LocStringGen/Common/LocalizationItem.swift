@@ -1,7 +1,8 @@
 import Foundation
 import Strix
+import XCResourceUtil
 
-struct LocalizationItem: Equatable, Identifiable {
+struct LocalizationItem: Equatable, Identifiable, SettableByKeyPath {
     let id: String
     var key: String
     var value: String

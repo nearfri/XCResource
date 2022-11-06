@@ -6,13 +6,19 @@ class ASCIIPlistGenerator: PropertyListGenerator {
         var result = ""
         
         for (index, item) in items.enumerated() {
-            if let comment = item.comment {
+            let comment = item.comment ?? ""
+            
+            if !comment.isEmpty {
                 result += "/* \(comment.replacingOccurrences(of: "*/", with: " ")) */\n"
             }
             result += "\"\(item.key)\" = \"\(item.value.addingBackslashEncoding())\";"
             
-            let isLastItem = index + 1 == items.count
-            result += isLastItem ? "" : "\n\n"
+            if index + 1 == items.count {
+                break
+            }
+            
+            let nextComment = items[index + 1].comment ?? ""
+            result += comment.isEmpty && nextComment.isEmpty ? "\n" : "\n\n"
         }
         
         return result

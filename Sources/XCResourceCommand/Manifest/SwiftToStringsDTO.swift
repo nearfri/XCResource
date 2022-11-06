@@ -19,6 +19,7 @@ struct SwiftToStringsDTO: CommandDTO {
     var resourcesPath: String
     var tableName: String?
     var configurationsByLanguage: [String: LocalizationConfigurationDTO]?
+    var omitsComments: Bool?
     var sortsByKey: Bool?
     
     func toCommand() throws -> ParsableCommand {
@@ -33,6 +34,7 @@ struct SwiftToStringsDTO: CommandDTO {
         command.resourcesPath = resourcesPath
         command.tableName = tableName ?? Default.tableName
         command.languageAndConfigurations = langAndConfigs ?? Default.languageAndConfigurations
+        command.omitsComments = omitsComments ?? Default.omitsComments
         command.sortsByKey = sortsByKey ?? Default.sortsByKey
         
         return command
