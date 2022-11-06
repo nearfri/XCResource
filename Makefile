@@ -46,10 +46,15 @@ ARTIFACTBUNDLE_UPLOAD_URL = $(shell cat $(RELEASE_RESPONSE_PATH) \
 	| python3 -c "import sys, json; print(json.load(sys.stdin)['upload_url'])" \
 	| sed -E 's/{.*}/?name=$(ARTIFACTBUNDLE_ZIP)/')
 
-define ARTIFACTBUNDLE_INFO
+define NEWLINE
+
+
+endef
+
+define ARTIFACTBUNDLE_INFO_TEMPLATE
 ### Asset Checksums
-- $(EXECUTABLE_ZIP) `$(EXECUTABLE_CHECKSUM)`
-- $(ARTIFACTBUNDLE_ZIP) `$(ARTIFACTBUNDLE_CHECKSUM)`
+- $(EXECUTABLE_ZIP): `$(EXECUTABLE_CHECKSUM)`
+- $(ARTIFACTBUNDLE_ZIP): `$(ARTIFACTBUNDLE_CHECKSUM)`
 
 ### Swift Package Manager snippet
 ```swift
@@ -60,14 +65,16 @@ define ARTIFACTBUNDLE_INFO
 )
 ```
 endef
+ARTIFACTBUNDLE_INFO = $(subst $(NEWLINE),\n,$(ARTIFACTBUNDLE_INFO_TEMPLATE))
 
-define RELEASE_NOTES
+define RELEASE_NOTES_TEMPLATE
 {
 	"tag_name": "$(RELEASE_TAG)",
 	"target_commitish": "main",
-	"body": "$(subst \n,\\n,$(RELEASE_NOTES_BODY))"
+	"body": "$(subst ','\'',$(subst \n,\\n,$(RELEASE_NOTES_BODY)))"
 }
 endef
+RELEASE_NOTES = $(subst $(NEWLINE),\n,$(RELEASE_NOTES_TEMPLATE))
 
 define ARTIFACTBUNDLE_MANIFEST
 {
@@ -104,14 +111,14 @@ archive:
 	-archivePath $(ARCHIVE_PATH) archive
 
 .PHONY: zip
-zip: zip-executable zip-artifactbundle
+zip: _zip-executable _zip-artifactbundle
 
-.PHONY: zip-executable
-zip-executable:
+.PHONY: _zip-executable
+_zip-executable:
 	zip -jr $(EXECUTABLE_ZIP) $(ARCHIVED_EXECUTABLE_PATH)
 
-.PHONY: zip-artifactbundle
-zip-artifactbundle:
+.PHONY: _zip-artifactbundle
+_zip-artifactbundle:
 	mkdir -p $(ARTIFACTBUNDLE_PATH)/$(EXECUTABLE_NAME)-macos/bin/
 	cp $(ARCHIVED_EXECUTABLE_PATH) $(ARTIFACTBUNDLE_PATH)/$(EXECUTABLE_NAME)-macos/bin/
 	echo "$$ARTIFACTBUNDLE_MANIFEST" > $(ARTIFACTBUNDLE_PATH)/info.json
@@ -179,7 +186,7 @@ version:
 	@echo Current Version: $(VERSION)
 
 .PHONY: distribute
-distribute: archive zip create-release upload update-release-notes open-release-page
+distribute: archive zip create-release upload update-release-notes _open-release-page
 
 .PHONY: create-release
 create-release:
@@ -199,22 +206,11 @@ create-release:
 		https://api.github.com/repos/nearfri/XCResource/releases
 
 .PHONY: update-release-notes
-update-release-notes:
+update-release-notes: _generate-release-notes-file
 	@echo Update a release notes
-	
-	@export ARTIFACTBUNDLE_INFO
-	@export RELEASE_NOTES
-	
-# Write auto-generated release notes first
-	@cat $(RELEASE_RESPONSE_PATH) \
-	| python3 -c "import sys, json; print(json.load(sys.stdin)['body'])" \
-	| tr -d '\r' \
-	> $(RELEASE_NOTES_FILE)
 
-	@echo "\n$$ARTIFACTBUNDLE_INFO" >> $(RELEASE_NOTES_FILE)
+	@echo '$(RELEASE_NOTES)' > $(RELEASE_NOTES_JSON_FILE)
 
-	@echo "$$RELEASE_NOTES" > $(RELEASE_NOTES_JSON_FILE)
-	
 	curl -X PATCH \
 		-H "Authorization: token $(GITHUB_TOKEN)" \
 		-H "Accept: application/vnd.github.v3+json" \
@@ -222,7 +218,17 @@ update-release-notes:
 		--data-binary @$(RELEASE_NOTES_JSON_FILE) \
 		-o "$(RELEASE_NOTES_RESPONSE_PATH)" \
 		https://api.github.com/repos/nearfri/XCResource/releases/$(RELEASE_ID)
-	
+
+.PHONY: _generate-release-notes-file
+_generate-release-notes-file:
+# Write auto-generated release notes first
+	@cat $(RELEASE_RESPONSE_PATH) \
+	| python3 -c "import sys, json; print(json.load(sys.stdin)['body'])" \
+	| tr -d '\r' \
+	> $(RELEASE_NOTES_FILE)
+
+	@echo '\n$(ARTIFACTBUNDLE_INFO)' >> $(RELEASE_NOTES_FILE)
+
 .PHONY: upload
 upload:
 	@if [ ! -f $(RELEASE_RESPONSE_PATH) ]; then \
@@ -246,6 +252,6 @@ upload:
 		"$(ARTIFACTBUNDLE_UPLOAD_URL)" \
 	| cat
 
-.PHONY: open-release-page
-open-release-page:
+.PHONY: _open-release-page
+_open-release-page:
 	open https://github.com/nearfri/XCResource/releases
