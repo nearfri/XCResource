@@ -15,6 +15,7 @@ let text = String.formatted(.alert_attachTooLargeVideo(maxMinutes: maxMinutes))
 ## 제공기능
 `xcresource`는 다음의 하위 커맨드를 가지고 있습니다:
 - `xcassets2swift`: xcassets을 위한 Swift 코드를 생성합니다.
+- `strings2swift`: strings 파일로 Swift enum을 생성합니다.
 - `swift2strings`: Swift enum으로 strings 파일을 생성합니다.
 - `key2form`: Swift enum으로 format string 코드를 생성합니다.
 - `strings2csv`: strings 파일로 CSV 파일을 생성합니다.
@@ -88,8 +89,38 @@ extension UIImage {
 imageView.image = .named(.settings)
 ```
 
-### Swift enum으로 strings 파일 만들기
-`enum` 타입의 `StringKey`를 만들어줍니다:
+### strings 파일로 Swift enum 만들기
+`enum` 타입의 빈 `StringKey`를 만들어줍니다:
+```swift
+enum StringKey: String, CaseIterable {
+
+}
+```
+
+`String`에 생성자를 추가합니다:
+```swift
+extension String {
+    static func localized(_ key: StringKey) -> String {
+        return NSLocalizedString(key.rawValue, bundle: .module, comment: "")
+    }
+}
+```
+
+strings 파일을 준비합니다:
+```
+"cancel" = "취소";
+"confirm" = "확인";
+```
+
+`xcresource strings2swift`를 실행합니다:
+```sh
+xcrun --sdk macosx mint run xcresource strings2swift \
+    --resources-path ../SampleApp \
+    --language ko \
+    --swift-path ../SampleApp/ResourceKeys/StringKey.swift \
+```
+
+아래와 같이 `StringKey`가 업데이트 됩니다:
 ```swift
 enum StringKey: String, CaseIterable {
     /// 취소
@@ -100,7 +131,13 @@ enum StringKey: String, CaseIterable {
 }
 ```
 
-`xcresource swift2strings`를 실행합니다:
+이제 자동완성과 함께 지역화된 문자열을 생성할 수 있습니다:
+```swift
+label.text = .localized(.cancel)
+```
+
+### Swift enum으로 strings 파일 만들기
+`swift2strings`는 `strings2swift`와는 반대로 `enum`을 strings로 변환해줍니다.
 ```sh
 xcrun --sdk macosx mint run xcresource swift2strings \
     --swift-path ../SampleApp/ResourceKeys/StringKey.swift \
@@ -115,20 +152,6 @@ xcrun --sdk macosx mint run xcresource swift2strings \
 
 /* 확인 */
 "confirm" = "확인";
-```
-
-`String`에 생성자를 추가해줍니다:
-```swift
-extension String {
-    static func localized(_ key: StringKey) -> String {
-        return NSLocalizedString(key.rawValue, bundle: .module, comment: "")
-    }
-}
-```
-
-이제 자동완성과 함께 지역화된 문자열을 생성할 수 있습니다:
-```swift
-label.text = .localized(.cancel)
 ```
 
 ### Swift enum으로 format string 코드 만들기
