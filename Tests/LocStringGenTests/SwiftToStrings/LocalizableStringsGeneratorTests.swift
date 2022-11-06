@@ -62,8 +62,8 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
             configurationsByLanguage: [
-                "ko": .init(mergeStrategy: .add(.comment), verifiesComment: true),
-                .all: .init(mergeStrategy: .doNotAdd, verifiesComment: true)
+                "ko": .init(mergeStrategy: .add(.comment), verifiesComments: true),
+                .all: .init(mergeStrategy: .doNotAdd, verifiesComments: true)
             ],
             sortOrder: .key)
         
@@ -104,7 +104,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
             configurationsByLanguage: [
-                "ko": .init(mergeStrategy: .add(.comment), verifiesComment: true),
+                "ko": .init(mergeStrategy: .add(.comment), verifiesComments: true),
             ],
             sortOrder: .key)
         

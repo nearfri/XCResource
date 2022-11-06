@@ -35,11 +35,11 @@
             "configurationsByLanguage": {
                 "ko": {
                     "mergeStrategy": "comment",
-                    "verifiesComment": true
+                    "verifiesComments": true
                 },
                 "all": {
                     "mergeStrategy": "dont-add",
-                    "verifiesComment": false
+                    "verifiesComments": false
                 }
             }
         }

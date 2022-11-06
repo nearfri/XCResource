@@ -69,7 +69,7 @@ private let manifestTemplate = """
             "configurationsByLanguage": {
                 "<#language#>": {
                     "mergeStrategy": "<#comment|key|custom-string|dont-add#>",
-                    "verifiesComment": false
+                    "verifiesComments": false
                 }
             },
             "sortsByKey": false

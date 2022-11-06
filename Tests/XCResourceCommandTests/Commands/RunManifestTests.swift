@@ -31,7 +31,7 @@ private enum Seed {
                 "configurationsByLanguage": {
                     "ko": {
                         "mergeStrategy": "comment",
-                        "verifiesComment": false
+                        "verifiesComments": false
                     }
                 },
                 "sortsByKey": false

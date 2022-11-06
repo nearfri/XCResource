@@ -20,7 +20,7 @@ struct SwiftToStrings: ParsableCommand {
         static let tableName: String = "Localizable"
         static let languageAndConfigurations: [LanguageAndConfiguration] = [
             .init(language: LanguageID.allSymbol,
-                  configuration: .init(mergeStrategy: .doNotAdd, verifiesComment: false))
+                  configuration: .init(mergeStrategy: .doNotAdd, verifiesComments: false))
         ]
         static let sortsByKey: Bool = false
     }
@@ -40,7 +40,7 @@ struct SwiftToStrings: ParsableCommand {
                 discussion: """
                     If "\(LanguageID.allSymbol)" is specified at language position, \
                     all languages are converted.
-                    If "\(LocalizationConfiguration.Name.verifiesComment)" is specied \
+                    If "\(LocalizationConfiguration.Name.verifiesComments)" is specied \
                     and the comments are not equal, the key-value pair is reset.
                     """,
                 valueName: LanguageAndConfiguration.usageDescription))

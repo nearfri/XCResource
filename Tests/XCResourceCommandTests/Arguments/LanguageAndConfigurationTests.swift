@@ -4,7 +4,7 @@ import XCTest
 final class LanguageAndConfigurationTests: XCTestCase {
     func test_initWithArgument() throws {
         // Given
-        let argument = "ko:comment:verify-comment"
+        let argument = "ko:comment:verify-comments"
         
         // When
         let langAndConfig = try XCTUnwrap(LanguageAndConfiguration(argument: argument))
@@ -12,6 +12,6 @@ final class LanguageAndConfigurationTests: XCTestCase {
         // Then
         XCTAssertEqual(langAndConfig.language, "ko")
         XCTAssertEqual(langAndConfig.configuration.mergeStrategy, .add(.comment))
-        XCTAssertEqual(langAndConfig.configuration.verifiesComment, true)
+        XCTAssertEqual(langAndConfig.configuration.verifiesComments, true)
     }
 }

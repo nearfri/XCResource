@@ -3,12 +3,12 @@ import ArgumentParser
 
 struct LocalizationConfigurationDTO: Codable {
     var mergeStrategy: String
-    var verifiesComment: Bool
+    var verifiesComments: Bool
     
     func toArgument() -> LocalizationConfiguration {
         return LocalizationConfiguration(
             mergeStrategy: LocalizationMergeStrategy(argument: mergeStrategy),
-            verifiesComment: verifiesComment)
+            verifiesComments: verifiesComments)
     }
 }
 

@@ -14,7 +14,7 @@ extension LocalizableStringsGenerator {
             resourcesURL: URL,
             tableName: String = "Localizable",
             configurationsByLanguage: [LanguageID: LocalizationConfiguration] = [
-                .all: .init(mergeStrategy: .doNotAdd, verifiesComment: true)
+                .all: .init(mergeStrategy: .doNotAdd, verifiesComments: true)
             ],
             sortOrder: SortOrder = .occurrence
         ) {
@@ -28,11 +28,11 @@ extension LocalizableStringsGenerator {
     
     public struct LocalizationConfiguration {
         public var mergeStrategy: MergeStrategy
-        public var verifiesComment: Bool
+        public var verifiesComments: Bool
         
-        public init(mergeStrategy: MergeStrategy, verifiesComment: Bool) {
+        public init(mergeStrategy: MergeStrategy, verifiesComments: Bool) {
             self.mergeStrategy = mergeStrategy
-            self.verifiesComment = verifiesComment
+            self.verifiesComments = verifiesComments
         }
     }
     
@@ -99,10 +99,10 @@ public class LocalizableStringsGenerator {
                 case .add(let addingMethod):
                     return itemsInSourceCode
                         .map({ $0.applying(addingMethod) })
-                        .combined(with: baseItems, verifyingComments: config.verifiesComment)
+                        .combined(with: baseItems, verifyingComments: config.verifiesComments)
                 case .doNotAdd:
                     return itemsInSourceCode
-                        .combinedIntersection(baseItems, verifyingComments: config.verifiesComment)
+                        .combinedIntersection(baseItems, verifyingComments: config.verifiesComments)
                 }
             }().sorted(by: request.sortOrder)
             

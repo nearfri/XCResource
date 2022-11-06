@@ -4,14 +4,14 @@ import XCTest
 final class LocalizationConfigurationTests: XCTestCase {
     func test_initWithArgument_withVerifyComment() throws {
         // Given
-        let argument = "comment:verify-comment"
+        let argument = "comment:verify-comments"
         
         // When
         let config = try XCTUnwrap(LocalizationConfiguration(argument: argument))
         
         // Then
         XCTAssertEqual(config.mergeStrategy, .add(.comment))
-        XCTAssertEqual(config.verifiesComment, true)
+        XCTAssertEqual(config.verifiesComments, true)
     }
     
     func test_initWithArgument_withoutVerifyComment() throws {
@@ -23,7 +23,7 @@ final class LocalizationConfigurationTests: XCTestCase {
         
         // Then
         XCTAssertEqual(config.mergeStrategy, .add(.comment))
-        XCTAssertEqual(config.verifiesComment, false)
+        XCTAssertEqual(config.verifiesComments, false)
     }
     
     func test_initWithArgument_withoutVerifyCommentSeparator() throws {
@@ -35,7 +35,7 @@ final class LocalizationConfigurationTests: XCTestCase {
         
         // Then
         XCTAssertEqual(config.mergeStrategy, .add(.comment))
-        XCTAssertEqual(config.verifiesComment, false)
+        XCTAssertEqual(config.verifiesComments, false)
     }
     
     func test_initWithArgument_withUnknownOption() throws {

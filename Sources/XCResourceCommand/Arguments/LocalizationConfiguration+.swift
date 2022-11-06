@@ -6,7 +6,7 @@ typealias LocalizationConfiguration = LocalizableStringsGenerator.LocalizationCo
 
 extension LocalizationConfiguration {
     enum Name {
-        static let verifiesComment: String = "verify-comment"
+        static let verifiesComments: String = "verify-comments"
     }
 }
 
@@ -16,30 +16,30 @@ extension LocalizationConfiguration: ExpressibleByArgument {
         
         let mergeStrategy = LocalizationMergeStrategy(argument: String(configValues[0]))
         
-        let verifiesComment: Bool
+        let verifiesComments: Bool
         switch configValues.count >= 2 ? configValues[1] : nil {
-        case Name.verifiesComment?:
-            verifiesComment = true
+        case Name.verifiesComments?:
+            verifiesComments = true
         case nil, "":
-            verifiesComment = false
+            verifiesComments = false
         default:
             return nil
         }
         
-        self.init(mergeStrategy: mergeStrategy, verifiesComment: verifiesComment)
+        self.init(mergeStrategy: mergeStrategy, verifiesComments: verifiesComments)
     }
     
     public var defaultValueDescription: String {
         var result = mergeStrategy.defaultValueDescription
         
-        if verifiesComment {
-            result += ":\(Name.verifiesComment)"
+        if verifiesComments {
+            result += ":\(Name.verifiesComments)"
         }
         
         return result
     }
     
     static var usageDescription: String {
-        return "<\(LocalizationMergeStrategy.joinedAllValuesString)>[:\(Name.verifiesComment)]"
+        return "<\(LocalizationMergeStrategy.joinedAllValuesString)>[:\(Name.verifiesComments)]"
     }
 }

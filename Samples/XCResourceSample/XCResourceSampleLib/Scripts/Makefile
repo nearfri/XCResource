@@ -30,7 +30,7 @@ ASSET_CONTENTS_FILES := $(shell find $(ASSETS_DIR) -name "Contents.json" | sed '
 #	| xargs -0 dirname | sort | uniq | sed 's/ /\\ /g; s/$$/\/Contents.json/')
 #IMAGE_CONTENTS_FILES = $(call asset_contents_files,'.+\.imageset$$')
 
-SWIFT2STRINGS_LANGUAGE_CONFIG = en:comment:verify-comment all:dont-add
+SWIFT2STRINGS_LANGUAGE_CONFIG = en:comment:verify-comments all:dont-add
 SWIFT2STRINGS_LASTRUN_FILE = ./swift2strings-lastrun
 
 LOCALIZABLE_STRINGS_FILES = $(wildcard $(RESOURCES_DIR)/*.lproj/Localizable.strings)
