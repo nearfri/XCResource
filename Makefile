@@ -60,7 +60,6 @@ define ARTIFACTBUNDLE_INFO
 )
 ```
 endef
-export ARTIFACTBUNDLE_INFO
 
 define RELEASE_NOTES
 {
@@ -69,7 +68,6 @@ define RELEASE_NOTES
 	"body": "$(subst \n,\\n,$(RELEASE_NOTES_BODY))"
 }
 endef
-export RELEASE_NOTES
 
 define ARTIFACTBUNDLE_MANIFEST
 {
@@ -203,7 +201,10 @@ create-release:
 .PHONY: update-release-notes
 update-release-notes:
 	@echo Update a release notes
-
+	
+	@export ARTIFACTBUNDLE_INFO
+	@export RELEASE_NOTES
+	
 # Write auto-generated release notes first
 	@cat $(RELEASE_RESPONSE_PATH) \
 	| python3 -c "import sys, json; print(json.load(sys.stdin)['body'])" \
