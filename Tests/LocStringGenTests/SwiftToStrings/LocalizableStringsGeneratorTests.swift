@@ -148,7 +148,7 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
             sortOrder: .key)
         
         // When
-        let result = try sut.generate(for: request)
+        _ = try sut.generate(for: request)
         
         // Then
         XCTAssertEqual(stringsImporter.importParamURLs, [

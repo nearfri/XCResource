@@ -22,6 +22,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.4"),
+        .package(url: "https://github.com/apple/swift-collections", from: "1.0.3"),
         .package(url: "https://github.com/nearfri/Strix", from: "2.3.7"),
         swiftSyntax.packageDependency,
     ],
@@ -65,6 +66,7 @@ let package = Package(
             dependencies: [
                 "XCResourceUtil",
                 .product(name: "StrixParsers", package: "Strix"),
+                .product(name: "OrderedCollections", package: "swift-collections"),
             ] + swiftSyntax.targetDependencies,
             linkerSettings: swiftSyntax.linkerSettings),
         .testTarget(
