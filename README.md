@@ -39,6 +39,8 @@ make build install
 ## 사용 예제
 
 ### xcassets 이미지 로딩하기
+https://user-images.githubusercontent.com/323940/202911680-3bb7bed7-ccaf-40c2-b136-439ff05b983b.mov
+
 `xcresource xcassets2swift`를 실행합니다:
 ```sh
 xcrun --sdk macosx mint run xcresource xcassets2swift \
@@ -90,6 +92,8 @@ imageView.image = .named(.settings)
 ```
 
 ### strings 파일로 Swift enum 만들기
+https://user-images.githubusercontent.com/323940/202911792-bc48ef57-0ff3-404b-84b4-94931350e847.mov
+
 `enum` 타입의 빈 `StringKey`를 만들어줍니다:
 ```swift
 enum StringKey: String, CaseIterable {
@@ -137,12 +141,14 @@ label.text = .localized(.cancel)
 ```
 
 ### Swift enum으로 strings 파일 만들기
+https://user-images.githubusercontent.com/323940/202911866-cbd49782-05c8-4908-8e34-5187ad867331.mov
+
 `swift2strings`는 `strings2swift`와는 반대로 `enum`을 strings로 변환해줍니다.
 ```sh
 xcrun --sdk macosx mint run xcresource swift2strings \
     --swift-path ../SampleApp/ResourceKeys/StringKey.swift \
     --resources-path ../SampleApp \
-    --merge-strategy ko:comment
+    --language-config ko:comment
 ```
 
 아래와 같이 strings 파일이 업데이트 됩니다:
@@ -155,6 +161,8 @@ xcrun --sdk macosx mint run xcresource swift2strings \
 ```
 
 ### Swift enum으로 format string 코드 만들기
+https://user-images.githubusercontent.com/323940/202911913-b9603b3b-cac7-40c2-8573-75e7617edd9c.mov
+
 `StringKey`의 `case`에 format string 형식의 주석을 추가합니다:
 ```swift
 enum StringKey: String, CaseIterable {
@@ -205,6 +213,8 @@ label.text = .formatted(.alert_attachTooLargeVideo(maxMinutes: maxMinutes))
 ```
 
 ### strings 파일로 CSV 파일 만들기
+https://user-images.githubusercontent.com/323940/202911933-e1041967-9fd1-4eb5-9c73-999cdbbb6a13.mov
+
 `xcresource strings2csv`를 실행합니다:
 ```sh
 mint run xcresource strings2csv \
@@ -222,6 +232,8 @@ mint run xcresource strings2csv \
 | confirm | 확인 | 확인 | |
 
 ### CSV 파일로 strings 파일 만들기
+https://user-images.githubusercontent.com/323940/202911964-00ebcb96-90d8-430d-8385-e0cecbe8b181.mov
+
 `xcresource csv2strings`를 실행합니다:
 ```sh
 mint run xcresource csv2strings \
