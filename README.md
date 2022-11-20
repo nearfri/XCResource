@@ -166,8 +166,8 @@ https://user-images.githubusercontent.com/323940/202911913-b9603b3b-cac7-40c2-85
 `StringKey`의 `case`에 format string 형식의 주석을 추가합니다:
 ```swift
 enum StringKey: String, CaseIterable {
-    /// 동영상 첨부는 최대 %{maxMinutes}ld분까지 가능합니다.\n다른 파일을 선택해주세요.
-    case alert_attachTooLargeVideo
+    /// "%{fileName}" 파일은 삭제됩니다.\n이 동작은 취소할 수 없습니다.
+    case alert_deleteFile
 }
 ```
 
@@ -188,11 +188,9 @@ struct StringForm {
 }
 
 extension StringForm {
-    /// 동영상 첨부는 최대 %{maxMinutes}ld분까지 가능합니다.\n다른 파일을 선택해주세요.
-    static func alert_attachTooLargeVideo(maxMinutes: Int) -> StringForm {
-        return StringForm(
-            key: StringKey.alert_attachTooLargeVideo.rawValue,
-            arguments: [maxMinutes])
+    /// "%{fileName}" 파일은 삭제됩니다.\n이 동작은 취소할 수 없습니다.
+    static func alert_deleteFile(fileName: String) -> StringForm {
+        return StringForm(key: StringKey.alert_deleteFile.rawValue, arguments: [fileName])
     }
 }
 ```
@@ -209,7 +207,7 @@ extension String {
 
 이제 자동완성과 함께 지역화된 문자열을 생성할 수 있습니다:
 ```swift
-label.text = .formatted(.alert_attachTooLargeVideo(maxMinutes: maxMinutes))
+label.text = .formatted(.alert_deleteFile(fileName: fileName))
 ```
 
 ### strings 파일로 CSV 파일 만들기
