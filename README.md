@@ -9,7 +9,7 @@ XCResource는 xcassets 리소스 로딩과 다국어 지원을 도와주는 커�
 let image = UIImage.named(.settings)
 let color = UIColor.named(.coralPink)
 let string = String.localized(.done)
-let text = String.formatted(.alert_attachTooLargeVideo(maxMinutes: maxMinutes))
+let text = String.formatted(.alert_deleteFile(fileName: fileName))
 ```
 
 ## 제공기능
