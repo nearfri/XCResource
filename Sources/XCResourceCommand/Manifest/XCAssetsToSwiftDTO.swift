@@ -8,7 +8,7 @@ struct XCAssetsToSwiftDTO: CommandDTO {
     var xcassetsPaths: [String]
     var assetTypes: [String]?
     var swiftPath: String
-    var swiftTypeName: String
+    var keyTypeName: String
     var accessLevel: String?
     var excludesTypeDeclation: Bool?
     
@@ -38,7 +38,7 @@ struct XCAssetsToSwiftDTO: CommandDTO {
         command.assetCatalogPaths = xcassetsPaths
         command.assetTypes = assetTypes ?? Default.assetTypes
         command.swiftPath = swiftPath
-        command.swiftTypeName = swiftTypeName
+        command.keyTypeName = keyTypeName
         command.accessLevel = accessLevel
         command.excludesTypeDeclation = excludesTypeDeclation ?? Default.excludesTypeDeclation
         

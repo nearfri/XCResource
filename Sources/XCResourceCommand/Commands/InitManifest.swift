@@ -48,7 +48,7 @@ private let manifestTemplate = """
                 "<#If not specified, all asset types are exported.#>"
             ],
             "swiftPath": "<#swift file path#>",
-            "swiftTypeName": "<#swift type name#>",
+            "keyTypeName": "<#key type name#>",
             "accessLevel": null,
             "excludesTypeDeclation": false
         },
