@@ -1,6 +1,7 @@
 import XCTest
-@testable import XCResourceCommand
+import TestUtil
 import SampleData
+@testable import XCResourceCommand
 
 final class StringsToCSVTests: XCTestCase {
     func test_runAsRoot() throws {

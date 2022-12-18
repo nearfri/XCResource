@@ -1,6 +1,7 @@
 import XCTest
-@testable import XCResourceCommand
+import TestUtil
 import SampleData
+@testable import XCResourceCommand
 
 private enum Seed {
     static let enStrings = """

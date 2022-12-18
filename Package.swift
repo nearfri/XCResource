@@ -48,7 +48,7 @@ let package = Package(
             ]),
         .testTarget(
             name: "XCResourceCommandTests",
-            dependencies: ["XCResourceCommand", "SampleData"]),
+            dependencies: ["XCResourceCommand", "SampleData", "TestUtil"]),
         
         // MARK: - AssetKeyGen
         
@@ -57,7 +57,7 @@ let package = Package(
             dependencies: ["XCResourceUtil"]),
         .testTarget(
             name: "AssetKeyGenTests",
-            dependencies: ["AssetKeyGen", "SampleData"]),
+            dependencies: ["AssetKeyGen", "SampleData", "TestUtil"]),
         
         // MARK: - LocStringGen
         
@@ -71,7 +71,9 @@ let package = Package(
             linkerSettings: swiftSyntax.linkerSettings),
         .testTarget(
             name: "LocStringGenTests",
-            dependencies: ["LocStringGen", "SampleData"] + swiftSyntax.targetDependencies),
+            dependencies: [
+                "LocStringGen", "SampleData", "TestUtil"
+            ] + swiftSyntax.targetDependencies),
         
         // MARK: - XCResourceUtil
         
@@ -91,6 +93,12 @@ let package = Package(
                 // 테스트용 리소스 폴더로 쓰기 위해 통째로 복사한다.
                 .copy("Resources"),
             ]),
+        
+        // MARK: - TestUtil
+        
+        .target(
+            name: "TestUtil",
+            path: "Tests/_TestUtil"),
         
         // MARK: - lib_InternalSwiftSyntaxParser
         

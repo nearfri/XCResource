@@ -1,4 +1,5 @@
 import XCTest
+import TestUtil
 @testable import LocStringGen
 
 final class CSVTableEncoderTests: XCTestCase {
