@@ -14,7 +14,8 @@ private struct GeneratorInternal {
         
         for childURL in try childURLs() {
             guard let resourceValues = try? childURL.resourceValues(forKeys: [.isDirectoryKey]),
-                  let isDirectory = resourceValues.isDirectory else { continue }
+                  let isDirectory = resourceValues.isDirectory
+            else { continue }
             
             if isDirectory {
                 let childTree = try GeneratorInternal(url: childURL).load()

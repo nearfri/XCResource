@@ -1,7 +1,8 @@
 import Foundation
 
 private let allCommandDTOTypes: [CommandDTO.Type] = [
-    XCAssetsToSwiftDTO.self, KeyToFormDTO.self,
+    XCAssetsToSwiftDTO.self, FontsToSwiftDTO.self,
+    KeyToFormDTO.self,
     SwiftToStringsDTO.self, StringsToSwiftDTO.self,
     StringsToCSVDTO.self, CSVToStringsDTO.self,
 ]

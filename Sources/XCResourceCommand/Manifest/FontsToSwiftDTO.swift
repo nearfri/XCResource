@@ -2,27 +2,17 @@ import Foundation
 import ArgumentParser
 import AssetKeyGen
 
-struct XCAssetsToSwiftDTO: CommandDTO {
-    static let commandType: ParsableCommand.Type = XCAssetsToSwift.self
+struct FontsToSwiftDTO: CommandDTO {
+    static let commandType: ParsableCommand.Type = FontsToSwift.self
     
-    var xcassetsPaths: [String]
-    var assetTypes: [String]?
+    var fontsPath: String
     var swiftPath: String
     var keyTypeName: String
     var accessLevel: String?
     var excludesTypeDeclation: Bool?
     
     func toCommand() throws -> ParsableCommand {
-        typealias Default = XCAssetsToSwift.Default
-        
-        let assetTypes = try self.assetTypes?.reduce(into: [] as [AssetType], { types, type in
-            guard let assetType = AssetType(argument: type) else {
-                throw ValueValidationError(key: CodingKeys.assetTypes.stringValue,
-                                           value: type,
-                                           valueDescription: AssetType.joinedAllValuesString)
-            }
-            types.append(assetType)
-        })
+        typealias Default = FontsToSwift.Default
         
         let accessLevel: AccessLevel? = try self.accessLevel.map({
             guard let level = AccessLevel(argument: $0) else {
@@ -34,9 +24,8 @@ struct XCAssetsToSwiftDTO: CommandDTO {
             return level
         })
         
-        var command = XCAssetsToSwift()
-        command.assetCatalogPaths = xcassetsPaths
-        command.assetTypes = assetTypes ?? Default.assetTypes
+        var command = FontsToSwift()
+        command.fontsPath = fontsPath
         command.swiftPath = swiftPath
         command.keyTypeName = keyTypeName
         command.accessLevel = accessLevel

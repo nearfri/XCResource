@@ -18,6 +18,7 @@ let package = Package(
         .executable(name: "xcresource", targets: ["XCResourceCLI"]),
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
+        .library(name: "FontKeyGen", targets: ["FontKeyGen"]),
         .library(name: "LocStringGen", targets: ["LocStringGen"]),
     ],
     dependencies: [
@@ -42,13 +43,14 @@ let package = Package(
             name: "XCResourceCommand",
             dependencies: [
                 "AssetKeyGen",
+                "FontKeyGen",
                 "LocStringGen",
                 "XCResourceUtil",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]),
         .testTarget(
             name: "XCResourceCommandTests",
-            dependencies: ["XCResourceCommand", "SampleData"]),
+            dependencies: ["XCResourceCommand", "SampleData", "TestUtil"]),
         
         // MARK: - AssetKeyGen
         
@@ -57,7 +59,16 @@ let package = Package(
             dependencies: ["XCResourceUtil"]),
         .testTarget(
             name: "AssetKeyGenTests",
-            dependencies: ["AssetKeyGen", "SampleData"]),
+            dependencies: ["AssetKeyGen", "SampleData", "TestUtil"]),
+        
+        // MARK: - FontKeyGen
+        
+        .target(
+            name: "FontKeyGen",
+            dependencies: ["XCResourceUtil"]),
+        .testTarget(
+            name: "FontKeyGenTests",
+            dependencies: ["FontKeyGen", "SampleData", "TestUtil"]),
         
         // MARK: - LocStringGen
         
@@ -71,7 +82,9 @@ let package = Package(
             linkerSettings: swiftSyntax.linkerSettings),
         .testTarget(
             name: "LocStringGenTests",
-            dependencies: ["LocStringGen", "SampleData"] + swiftSyntax.targetDependencies),
+            dependencies: [
+                "LocStringGen", "SampleData", "TestUtil"
+            ] + swiftSyntax.targetDependencies),
         
         // MARK: - XCResourceUtil
         
@@ -91,6 +104,12 @@ let package = Package(
                 // 테스트용 리소스 폴더로 쓰기 위해 통째로 복사한다.
                 .copy("Resources"),
             ]),
+        
+        // MARK: - TestUtil
+        
+        .target(
+            name: "TestUtil",
+            path: "Tests/_TestUtil"),
         
         // MARK: - lib_InternalSwiftSyntaxParser
         

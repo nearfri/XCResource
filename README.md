@@ -47,7 +47,7 @@ xcrun --sdk macosx mint run xcresource xcassets2swift \
     --xcassets-path ../SampleApp/Assets.xcassets \
     --asset-type imageset \
     --swift-path ../SampleApp/ResourceKeys/ImageKey.swift \
-    --swift-type-name ImageKey
+    --key-type-name ImageKey
 ```
 
 아래와 같은 코드가 생성됩니다:

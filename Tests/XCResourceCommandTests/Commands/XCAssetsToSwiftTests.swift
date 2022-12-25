@@ -1,6 +1,7 @@
 import XCTest
-@testable import XCResourceCommand
+import TestUtil
 import SampleData
+@testable import XCResourceCommand
 
 private enum Seed {
     static let publicColorKey = """
@@ -54,7 +55,7 @@ final class XCAssetsToSwiftTests: XCTestCase {
             "--xcassets-path", SampleData.assetURL().path,
             "--asset-type", "colorset",
             "--swift-path", swiftFileURL.path,
-            "--swift-type-name", "ColorKey",
+            "--key-type-name", "ColorKey",
         ])
         
         // Then
@@ -79,7 +80,7 @@ final class XCAssetsToSwiftTests: XCTestCase {
             "--xcassets-path", SampleData.assetURL().path,
             "--asset-type", "colorset",
             "--swift-path", swiftFileURL.path,
-            "--swift-type-name", "ColorKey",
+            "--key-type-name", "ColorKey",
             "--access-level", "public",
         ])
         

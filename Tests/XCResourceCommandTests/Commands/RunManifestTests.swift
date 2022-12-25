@@ -11,7 +11,7 @@ private enum Seed {
                 "xcassetsPaths": ["%@"],
                 "assetTypes": ["imageset"],
                 "swiftPath": "%@",
-                "swiftTypeName": "ImageKey",
+                "keyTypeName": "ImageKey",
                 "excludesTypeDeclation": false
             },
             {
