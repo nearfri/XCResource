@@ -18,6 +18,7 @@ let package = Package(
         .executable(name: "xcresource", targets: ["XCResourceCLI"]),
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
+        .library(name: "FontKeyGen", targets: ["FontKeyGen"]),
         .library(name: "LocStringGen", targets: ["LocStringGen"]),
     ],
     dependencies: [
@@ -42,6 +43,7 @@ let package = Package(
             name: "XCResourceCommand",
             dependencies: [
                 "AssetKeyGen",
+                "FontKeyGen",
                 "LocStringGen",
                 "XCResourceUtil",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
@@ -58,6 +60,15 @@ let package = Package(
         .testTarget(
             name: "AssetKeyGenTests",
             dependencies: ["AssetKeyGen", "SampleData", "TestUtil"]),
+        
+        // MARK: - FontKeyGen
+        
+        .target(
+            name: "FontKeyGen",
+            dependencies: ["XCResourceUtil"]),
+        .testTarget(
+            name: "FontKeyGenTests",
+            dependencies: ["FontKeyGen", "SampleData", "TestUtil"]),
         
         // MARK: - LocStringGen
         

@@ -53,6 +53,14 @@ private let manifestTemplate = """
             "excludesTypeDeclation": false
         },
         {
+            "commandName": "fonts2swift",
+            "fontsPath": "<#fonts path#>",
+            "swiftPath": "<#swift file path#>",
+            "keyTypeName": "<#key type name#>",
+            "accessLevel": null,
+            "excludesTypeDeclation": false
+        },
+        {
             "commandName": "key2form",
             "keyFilePath": "<#key file path#>",
             "formFilePath": "<#form file path#>",

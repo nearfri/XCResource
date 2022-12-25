@@ -1,7 +1,7 @@
 import Foundation
 
-protocol AssetCatalogImporter: AnyObject {
-    func `import`(at url: URL) throws -> AssetCatalog
+protocol FontImporter: AnyObject {
+    func `import`(at url: URL) throws -> [Font]
 }
 
 protocol TypeDeclarationGenerator: AnyObject {
@@ -9,23 +9,20 @@ protocol TypeDeclarationGenerator: AnyObject {
 }
 
 protocol KeyDeclarationGenerator: AnyObject {
-    func generate(catalog: AssetCatalog, keyTypeName: String, accessLevel: String?) -> String
+    func generate(fonts: [Font], keyTypeName: String, accessLevel: String?) -> String
 }
 
-extension AssetKeyGenerator {
+extension FontKeyGenerator {
     public struct Request {
-        public var assetCatalogURLs: [URL]
-        public var assetTypes: Set<AssetType>
+        public var fontsURL: URL
         public var keyTypeName: String
         public var accessLevel: String?
         
-        public init(assetCatalogURLs: [URL],
-                    assetTypes: Set<AssetType>,
+        public init(fontsURL: URL,
                     keyTypeName: String,
                     accessLevel: String? = nil
         ) {
-            self.assetCatalogURLs = assetCatalogURLs
-            self.assetTypes = assetTypes
+            self.fontsURL = fontsURL
             self.keyTypeName = keyTypeName
             self.accessLevel = accessLevel
         }
@@ -42,22 +39,22 @@ extension AssetKeyGenerator {
     }
 }
 
-public class AssetKeyGenerator {
-    private let catalogImporter: AssetCatalogImporter
+public class FontKeyGenerator {
+    private let fontImporter: FontImporter
     private let typeDeclarationGenerator: TypeDeclarationGenerator
     private let keyDeclarationGenerator: KeyDeclarationGenerator
     
-    init(catalogImporter: AssetCatalogImporter,
+    init(fontImporter: FontImporter,
          typeDeclarationGenerator: TypeDeclarationGenerator,
          keyDeclarationGenerator: KeyDeclarationGenerator
     ) {
-        self.catalogImporter = catalogImporter
+        self.fontImporter = fontImporter
         self.typeDeclarationGenerator = typeDeclarationGenerator
         self.keyDeclarationGenerator = keyDeclarationGenerator
     }
     
     public convenience init() {
-        self.init(catalogImporter: DefaultAssetCatalogImporter(),
+        self.init(fontImporter: DefaultFontImporter(),
                   typeDeclarationGenerator: DefaultTypeDeclarationGenerator(),
                   keyDeclarationGenerator: DefaultKeyDeclarationGenerator())
     }
@@ -65,27 +62,23 @@ public class AssetKeyGenerator {
     public func generate(for request: Request) throws -> Result {
         let typeDeclaration = generateTypeDeclaration(for: request)
         
-        let keyDeclarations = try generateKeyDeclarations(for: request).joined(separator: "\n\n")
+        let keyDeclarations = try generateKeyDeclarations(for: request)
         
         return Result(typeDeclaration: typeDeclaration, keyDeclarations: keyDeclarations)
     }
     
     private func generateTypeDeclaration(for request: Request) -> String {
-        return typeDeclarationGenerator.generate(keyTypeName: request.keyTypeName,
-                                                 accessLevel: request.accessLevel)
+        return typeDeclarationGenerator.generate(
+            keyTypeName: request.keyTypeName,
+            accessLevel: request.accessLevel)
     }
     
-    private func generateKeyDeclarations(for request: Request) throws -> [String] {
-        let catalogs: [AssetCatalog] = try request.assetCatalogURLs.map { url in
-            var catalog = try catalogImporter.import(at: url)
-            catalog.assets.removeAll(where: { !request.assetTypes.contains($0.type) })
-            return catalog
-        }
+    private func generateKeyDeclarations(for request: Request) throws -> String {
+        let fonts = try fontImporter.import(at: request.fontsURL)
         
-        return catalogs.map {
-            return keyDeclarationGenerator.generate(catalog: $0,
-                                                    keyTypeName: request.keyTypeName,
-                                                    accessLevel: request.accessLevel)
-        }
+        return keyDeclarationGenerator.generate(
+            fonts: fonts,
+            keyTypeName: request.keyTypeName,
+            accessLevel: request.accessLevel)
     }
 }
