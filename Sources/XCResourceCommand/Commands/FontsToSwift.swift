@@ -64,6 +64,8 @@ struct FontsToSwift: ParsableCommand {
             print(codes.typeDeclaration, terminator: "\n\n", to: &stream)
         }
         
+        print(codes.allKeysDeclaration, terminator: "\n\n", to: &stream)
+        
         print(codes.keyDeclarations, to: &stream)
         
         try stream.close()

@@ -8,8 +8,15 @@ protocol TypeDeclarationGenerator: AnyObject {
     func generate(keyTypeName: String, accessLevel: String?) -> String
 }
 
+struct KeyDeclarationRequest {
+    var fonts: [Font]
+    var keyTypeName: String
+    var accessLevel: String?
+}
+
 protocol KeyDeclarationGenerator: AnyObject {
-    func generate(fonts: [Font], keyTypeName: String, accessLevel: String?) -> String
+    func generateAllKeysDeclaration(for request: KeyDeclarationRequest) -> String
+    func generateKeyDeclarations(for request: KeyDeclarationRequest) -> String
 }
 
 extension FontKeyGenerator {
@@ -18,10 +25,7 @@ extension FontKeyGenerator {
         public var keyTypeName: String
         public var accessLevel: String?
         
-        public init(fontsURL: URL,
-                    keyTypeName: String,
-                    accessLevel: String? = nil
-        ) {
+        public init(fontsURL: URL, keyTypeName: String, accessLevel: String? = nil) {
             self.fontsURL = fontsURL
             self.keyTypeName = keyTypeName
             self.accessLevel = accessLevel
@@ -30,10 +34,12 @@ extension FontKeyGenerator {
     
     public struct Result {
         public var typeDeclaration: String
+        public var allKeysDeclaration: String
         public var keyDeclarations: String
         
-        public init(typeDeclaration: String, keyDeclarations: String) {
+        public init(typeDeclaration: String, allKeysDeclaration: String, keyDeclarations: String) {
             self.typeDeclaration = typeDeclaration
+            self.allKeysDeclaration = allKeysDeclaration
             self.keyDeclarations = keyDeclarations
         }
     }
@@ -60,25 +66,23 @@ public class FontKeyGenerator {
     }
     
     public func generate(for request: Request) throws -> Result {
-        let typeDeclaration = generateTypeDeclaration(for: request)
-        
-        let keyDeclarations = try generateKeyDeclarations(for: request)
-        
-        return Result(typeDeclaration: typeDeclaration, keyDeclarations: keyDeclarations)
-    }
-    
-    private func generateTypeDeclaration(for request: Request) -> String {
-        return typeDeclarationGenerator.generate(
-            keyTypeName: request.keyTypeName,
-            accessLevel: request.accessLevel)
-    }
-    
-    private func generateKeyDeclarations(for request: Request) throws -> String {
         let fonts = try fontImporter.import(at: request.fontsURL)
         
-        return keyDeclarationGenerator.generate(
+        let typeDeclaration = typeDeclarationGenerator.generate(
+            keyTypeName: request.keyTypeName,
+            accessLevel: request.accessLevel)
+        
+        let keyRequest = KeyDeclarationRequest(
             fonts: fonts,
             keyTypeName: request.keyTypeName,
             accessLevel: request.accessLevel)
+        
+        let allKeysDeclaration = keyDeclarationGenerator.generateAllKeysDeclaration(for: keyRequest)
+        
+        let keyDeclarations = keyDeclarationGenerator.generateKeyDeclarations(for: keyRequest)
+        
+        return Result(typeDeclaration: typeDeclaration,
+                      allKeysDeclaration: allKeysDeclaration,
+                      keyDeclarations: keyDeclarations)
     }
 }
