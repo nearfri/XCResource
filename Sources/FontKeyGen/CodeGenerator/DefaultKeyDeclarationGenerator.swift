@@ -1,29 +1,63 @@
 import Foundation
 
 class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
-    func generate(fonts: [Font], keyTypeName: String, accessLevel: String?) -> String {
-        let accessLevel = accessLevel.map({ $0 + " " }) ?? ""
+    func generateAllKeysDeclaration(for request: KeyDeclarationRequest) -> String {
+        let accessLevel = request.accessLevel.map({ $0 + " " }) ?? ""
         
         var result = ""
         
-        result += "\(accessLevel)extension \(keyTypeName) {\n"
+        result += """
+            \(accessLevel)extension \(request.keyTypeName) {
+                static let allKeys: [\(request.keyTypeName)] = [
+            
+            """
         
         var currentFamilyName = ""
         var commentPrefix = ""
-        for font in fonts {
+        for font in request.fonts {
+            defer { commentPrefix = "        \n" }
+            
+            if font.familyName != currentFamilyName {
+                result += commentPrefix
+                result += "        // \(font.familyName)\n"
+                currentFamilyName = font.familyName
+            }
+            
+            result += """
+                        .\(font.key),
+                
+                """
+        }
+        
+        result += """
+                ]
+            }
+            """
+        
+        return result
+    }
+    
+    func generateKeyDeclarations(for request: KeyDeclarationRequest) -> String {
+        let accessLevel = request.accessLevel.map({ $0 + " " }) ?? ""
+        
+        var result = ""
+        
+        result += "\(accessLevel)extension \(request.keyTypeName) {\n"
+        
+        var currentFamilyName = ""
+        var commentPrefix = ""
+        for font in request.fonts {
             defer { commentPrefix = "    \n" }
             
             if font.familyName != currentFamilyName {
                 result += commentPrefix
                 result += "    // MARK: \(font.familyName)\n"
-                result += "    \n"
                 currentFamilyName = font.familyName
-            } else {
-                result += "    \n"
             }
             
             result += """
-                    static let \(font.key): \(keyTypeName) = .init(
+                    
+                    static let \(font.key): \(request.keyTypeName) = .init(
                         fontName: "\(font.fontName)",
                         familyName: "\(font.familyName)",
                         style: "\(font.style)",
