@@ -1,10 +1,6 @@
-./SFNSText/SFNSText-Heavy.otf
-./SFNSText/SFNSText-Regular.otf
-./SFNSText/SFNSText-Bold.otf
 ./ZapfDingbats.ttf
 ./SFNSDisplay
 ./SFNSDisplay/SFNSDisplay-Regular.otf
 ./SFNSDisplay/SFNSDisplay-Heavy.otf
-./SFNSDisplay/SFNSDisplay-Black.otf
 ./SFNSDisplay/SFNSDisplay-Bold.otf
 ./Avenir.ttc

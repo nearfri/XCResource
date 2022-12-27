@@ -39,15 +39,9 @@ private enum Seed {
             .avenir_roman,
             
             // .SF NS Display
-            .sfnsDisplay_black,
             .sfnsDisplay_bold,
             .sfnsDisplay_heavy,
             .sfnsDisplay_regular,
-            
-            // .SF NS Text
-            .sfnsText_bold,
-            .sfnsText_heavy,
-            .sfnsText_regular,
             
             // Zapf Dingbats
             .zapfDingbats_regular,
