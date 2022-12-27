@@ -4,7 +4,7 @@ import Foundation
 
 import AppKit
 
-typealias NUImage = NSImage
+typealias NativeImage = NSImage
 
 extension NSImage {
     convenience init?(named name: String, in bundle: Bundle) {
@@ -23,7 +23,7 @@ extension NSImage {
 
 import UIKit
 
-typealias NUImage = UIImage
+typealias NativeImage = UIImage
 
 extension UIImage {
     convenience init?(named name: String, in bundle: Bundle) {

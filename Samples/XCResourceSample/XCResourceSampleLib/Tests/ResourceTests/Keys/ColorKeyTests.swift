@@ -8,7 +8,7 @@ final class ColorKeyTests: XCTestCase {
         ]
         
         for key in keys {
-            XCTAssertNotNil(NUColor(named: key.rawValue, in: .module),
+            XCTAssertNotNil(NativeColor(named: key.rawValue, in: .module),
                             "\(key.rawValue) color not found")
         }
     }

@@ -36,6 +36,7 @@ let package = Package(
         .target(
             name: "Resource",
             dependencies: [],
+            resources: [.copy("Resources/Fonts")],
             plugins: [.plugin(name: "GenerateResourceKeys")]),
         
         .testTarget(
@@ -86,8 +87,8 @@ let package = Package(
         
         .binaryTarget(
             name: "xcresource",
-            url: "https://github.com/nearfri/XCResource/releases/download/0.9.20/xcresource.artifactbundle.zip",
-            checksum: "5c4f9630f85406d641bf0dc5a8ce4ff569a0140ab0a99e0b18cd5a776531ddf7"
+            url: "https://github.com/nearfri/XCResource/releases/download/0.9.22/xcresource.artifactbundle.zip",
+            checksum: "dc09bdce90f2e68596dbbd6a42478594932462b1707f3e81274b551e98f5bcc8"
         ),
     ]
 )

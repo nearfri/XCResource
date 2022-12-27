@@ -9,7 +9,7 @@ final class ResourceTests: XCTestCase {
         ]
         
         for key in keys {
-            XCTAssertNotNil(NUImage(named: key.rawValue, in: .module),
+            XCTAssertNotNil(NativeImage(named: key.rawValue, in: .module),
                             "\(key.rawValue) image not found")
         }
     }

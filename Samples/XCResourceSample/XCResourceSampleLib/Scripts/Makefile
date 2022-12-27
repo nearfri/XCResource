@@ -11,11 +11,13 @@ RESOURCEKEYS_DIR = $(PROJECT_DIR)/Keys
 
 IMAGEKEY_FILE = $(RESOURCEKEYS_DIR)/$(IMAGEKEY_NAME).swift
 COLORKEY_FILE = $(RESOURCEKEYS_DIR)/$(COLORKEY_NAME).swift
+FONTKEY_FILE = $(RESOURCEKEYS_DIR)/$(FONTKEY_NAME).swift
 STRINGKEY_FILE = $(RESOURCEKEYS_DIR)/$(STRINGKEY_NAME).swift
 STRINGFORM_FILE = $(RESOURCEKEYS_DIR)/$(STRINGFORM_NAME).swift
 
 IMAGEKEY_NAME = ImageKey
 COLORKEY_NAME = ColorKey
+FONTKEY_NAME = FontKey
 STRINGKEY_NAME = StringKey
 STRINGFORM_NAME = StringForm
 
@@ -30,6 +32,9 @@ ASSET_CONTENTS_FILES := $(shell find $(ASSETS_DIR) -name "Contents.json" | sed '
 #	| xargs -0 dirname | sort | uniq | sed 's/ /\\ /g; s/$$/\/Contents.json/')
 #IMAGE_CONTENTS_FILES = $(call asset_contents_files,'.+\.imageset$$')
 
+FONTS_DIR = $(RESOURCES_DIR)/Fonts
+FONTS_DIR_FILES := $(shell find $(FONTS_DIR) | sed 's/ /\\ /g')
+
 SWIFT2STRINGS_LANGUAGE_CONFIG = en:comment:verify-comments all:dont-add
 SWIFT2STRINGS_LASTRUN_FILE = ./swift2strings-lastrun
 
@@ -43,7 +48,7 @@ LOCALIZATION_CSV_EMPTY_ENCODING = "\#EMPTY"
 .SUFFIXES:
 
 .PHONY: default
-default: xcassets2swift key2form swift2strings
+default: xcassets2swift fonts2swift key2form swift2strings
 
 .PHONY: xcassets2swift
 xcassets2swift: images2swift colors2swift
@@ -56,7 +61,7 @@ $(IMAGEKEY_FILE): $(ASSET_CONTENTS_FILES)
 	--xcassets-path $(ASSETS_DIR) \
 	--asset-type imageset \
 	--swift-path $@ \
-	--swift-type-name $(IMAGEKEY_NAME) \
+	--key-type-name $(IMAGEKEY_NAME) \
 	--access-level public
 	
 	@touch $@
@@ -69,7 +74,19 @@ $(COLORKEY_FILE): $(ASSET_CONTENTS_FILES)
 	--xcassets-path $(ASSETS_DIR) \
 	--asset-type colorset \
 	--swift-path $@ \
-	--swift-type-name $(COLORKEY_NAME) \
+	--key-type-name $(COLORKEY_NAME) \
+	--access-level public
+	
+	@touch $@
+
+.PHONY: fonts2swift
+fonts2swift: $(FONTKEY_FILE)
+
+$(FONTKEY_FILE): $(FONTS_DIR_FILES)
+	$(XCRESOURCE) fonts2swift \
+	--fonts-path $(FONTS_DIR) \
+	--swift-path $@ \
+	--key-type-name $(FONTKEY_NAME) \
 	--access-level public
 	
 	@touch $@

@@ -7,7 +7,7 @@
             ],
             "assetTypes": ["imageset"],
             "swiftPath": "../Sources/Resource/Keys/ImageKey.swift",
-            "swiftTypeName": "ImageKey",
+            "keyTypeName": "ImageKey",
             "accessLevel": "public"
         },
         {
@@ -17,7 +17,14 @@
             ],
             "assetTypes": ["colorset"],
             "swiftPath": "../Sources/Resource/Keys/ColorKey.swift",
-            "swiftTypeName": "ColorKey",
+            "keyTypeName": "ColorKey",
+            "accessLevel": "public"
+        },
+        {
+            "commandName": "fonts2swift",
+            "fontsPaths": "../Sources/Resource/Resources/Fonts",
+            "swiftPath": "../Sources/Resource/Keys/FontKey.swift",
+            "keyTypeName": "FontKey",
             "accessLevel": "public"
         },
         {

@@ -4,7 +4,7 @@ import Foundation
 
 import AppKit
 
-typealias NUColor = NSColor
+typealias NativeColor = NSColor
 
 extension NSColor {
     convenience init?(named name: String, in bundle: Bundle) {
@@ -16,7 +16,7 @@ extension NSColor {
 
 import UIKit
 
-typealias NUColor = UIColor
+typealias NativeColor = UIColor
 
 extension UIColor {
     convenience init?(named name: String, in bundle: Bundle) {
