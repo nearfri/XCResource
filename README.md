@@ -91,6 +91,67 @@ extension UIImage {
 imageView.image = .named(.settings)
 ```
 
+### 커스텀 폰트 로딩하기
+https://user-images.githubusercontent.com/323940/209695591-92fd68f8-141e-4766-ab6d-bcfdd072ac74.mov
+
+`xcresource fonts2swift`를 실행합니다:
+```sh
+xcrun --sdk macosx mint run xcresource fonts2swift \
+    --fonts-path ../SampleApp/Fonts \
+    --swift-path ../SampleApp/ResourceKeys/FontKey.swift \
+    --key-type-name FontKey
+```
+
+아래와 같은 코드가 생성됩니다:
+```swift
+public struct FontKey: Hashable {
+    public var fontName: String
+    public var familyName: String
+    public var style: String
+    public var path: String
+    
+    public init(fontName: String, familyName: String, style: String, path: String) {
+        self.fontName = fontName
+        self.familyName = familyName
+        self.style = style
+        self.path = path
+    }
+}
+
+public extension FontKey {
+    static let allKeys: [FontKey] = [
+        // Open Sans
+        .openSans_bold,
+        .openSans_regular,
+    ]
+}
+
+public extension FontKey {
+    // MARK: Open Sans
+    
+    static let openSans_bold: FontKey = .init(
+        fontName: "OpenSans-Bold",
+        familyName: "Open Sans",
+        style: "Bold",
+        path: "OpenSans/OpenSans-Bold.ttf")
+    
+    ...
+```
+
+`UIFont`에 생성자를 추가해줍니다:
+```swift
+extension UIFont {
+    static func named(_ key: FontKey, size: CGFloat) -> UIFont {
+        return UIFont(name: key.fontName, size: size)!
+    }
+}
+```
+
+이제 자동완성과 함께 폰트를 생성할 수 있습니다:
+```swift
+label.font = .named(.openSans_bold)
+```
+
 ### strings 파일로 Swift enum 만들기
 https://user-images.githubusercontent.com/323940/202911792-bc48ef57-0ff3-404b-84b4-94931350e847.mov
 
