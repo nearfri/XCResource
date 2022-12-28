@@ -15,6 +15,7 @@ let text = String.formatted(.alert_deleteFile(fileName: fileName))
 ## 제공기능
 `xcresource`는 다음의 하위 커맨드를 가지고 있습니다:
 - `xcassets2swift`: xcassets을 위한 Swift 코드를 생성합니다.
+- `fonts2swift`: font를 위한 Swift 코드를 생성합니다.
 - `strings2swift`: strings 파일로 Swift enum을 생성합니다.
 - `swift2strings`: Swift enum으로 strings 파일을 생성합니다.
 - `key2form`: Swift enum으로 format string 코드를 생성합니다.
