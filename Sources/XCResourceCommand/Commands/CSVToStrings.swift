@@ -1,6 +1,7 @@
 import Foundation
 import ArgumentParser
-import LocStringGen
+import LocCSVGen
+import LocStringCore
 import XCResourceUtil
 
 struct CSVToStrings: ParsableCommand {

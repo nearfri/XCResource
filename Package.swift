@@ -19,7 +19,10 @@ let package = Package(
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
         .library(name: "FontKeyGen", targets: ["FontKeyGen"]),
-        .library(name: "LocStringGen", targets: ["LocStringGen"]),
+        .library(name: "LocStringKeyGen", targets: ["LocStringKeyGen"]),
+        .library(name: "LocStringsGen", targets: ["LocStringsGen"]),
+        .library(name: "LocStringFormGen", targets: ["LocStringFormGen"]),
+        .library(name: "LocCSVGen", targets: ["LocCSVGen"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.4"),
@@ -44,7 +47,10 @@ let package = Package(
             dependencies: [
                 "AssetKeyGen",
                 "FontKeyGen",
-                "LocStringGen",
+                "LocStringKeyGen",
+                "LocStringsGen",
+                "LocStringFormGen",
+                "LocCSVGen",
                 "XCResourceUtil",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]),
@@ -70,21 +76,87 @@ let package = Package(
             name: "FontKeyGenTests",
             dependencies: ["FontKeyGen", "SampleData", "TestUtil"]),
         
-        // MARK: - LocStringGen
+        // MARK: - LocStringKeyGen
         
         .target(
-            name: "LocStringGen",
+            name: "LocStringKeyGen",
+            dependencies: [
+                "LocStringCore",
+                "LocSwiftCore",
+                .product(name: "OrderedCollections", package: "swift-collections"),
+            ] + swiftSyntax.targetDependencies),
+        .testTarget(
+            name: "LocStringKeyGenTests",
+            dependencies: [
+                "LocStringKeyGen", "TestUtil"
+            ] + swiftSyntax.targetDependencies),
+        
+        // MARK: - LocStringsGen
+        
+        .target(
+            name: "LocStringsGen",
+            dependencies: [
+                "LocStringCore",
+                "LocSwiftCore",
+                "XCResourceUtil",
+            ]),
+        .testTarget(
+            name: "LocStringsGenTests",
+            dependencies: [
+                "LocStringsGen", "TestUtil"
+            ] + swiftSyntax.targetDependencies),
+        
+        // MARK: - LocStringFormGen
+        
+        .target(
+            name: "LocStringFormGen",
+            dependencies: [
+                "LocStringCore",
+                "LocSwiftCore",
+                .product(name: "StrixParsers", package: "Strix"),
+            ]),
+        .testTarget(
+            name: "LocStringFormGenTests",
+            dependencies: [
+                "LocStringFormGen", "TestUtil"
+            ] + swiftSyntax.targetDependencies),
+        
+        // MARK: - LocCSVGen
+        
+        .target(
+            name: "LocCSVGen",
+            dependencies: [
+                "LocStringCore",
+                "XCResourceUtil",
+                .product(name: "StrixParsers", package: "Strix"),
+            ]),
+        .testTarget(
+            name: "LocCSVGenTests",
+            dependencies: [
+                "LocCSVGen", "TestUtil"
+            ]),
+        
+        // MARK: - LocStringCore
+        
+        .target(
+            name: "LocStringCore",
             dependencies: [
                 "XCResourceUtil",
                 .product(name: "StrixParsers", package: "Strix"),
-                .product(name: "OrderedCollections", package: "swift-collections"),
-            ] + swiftSyntax.targetDependencies,
+            ]),
+        .testTarget(
+            name: "LocStringCoreTests",
+            dependencies: ["LocStringCore", "SampleData", "TestUtil"]),
+        
+        // MARK: - LocSwiftCore
+        
+        .target(
+            name: "LocSwiftCore",
+            dependencies: ["LocStringCore"] + swiftSyntax.targetDependencies,
             linkerSettings: swiftSyntax.linkerSettings),
         .testTarget(
-            name: "LocStringGenTests",
-            dependencies: [
-                "LocStringGen", "SampleData", "TestUtil"
-            ] + swiftSyntax.targetDependencies),
+            name: "LocSwiftCoreTests",
+            dependencies: ["LocSwiftCore"] + swiftSyntax.targetDependencies),
         
         // MARK: - XCResourceUtil
         

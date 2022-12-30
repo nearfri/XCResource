@@ -52,16 +52,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "LocStringGenTests"
-               BuildableName = "LocStringGenTests"
-               BlueprintName = "LocStringGenTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "XCResourceCommandTests"
                BuildableName = "XCResourceCommandTests"
                BlueprintName = "XCResourceCommandTests"
@@ -85,6 +75,66 @@
                BlueprintIdentifier = "FontKeyGenTests"
                BuildableName = "FontKeyGenTests"
                BlueprintName = "FontKeyGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocStringCoreTests"
+               BuildableName = "LocStringCoreTests"
+               BlueprintName = "LocStringCoreTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocSwiftCoreTests"
+               BuildableName = "LocSwiftCoreTests"
+               BlueprintName = "LocSwiftCoreTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocCSVGenTests"
+               BuildableName = "LocCSVGenTests"
+               BlueprintName = "LocCSVGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocStringFormGenTests"
+               BuildableName = "LocStringFormGenTests"
+               BlueprintName = "LocStringFormGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocStringKeyGenTests"
+               BuildableName = "LocStringKeyGenTests"
+               BlueprintName = "LocStringKeyGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocStringsGenTests"
+               BuildableName = "LocStringsGenTests"
+               BlueprintName = "LocStringsGenTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

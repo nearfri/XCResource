@@ -1,6 +1,6 @@
 import Foundation
 import ArgumentParser
-import LocStringGen
+import LocStringsGen
 
 struct InitManifest: ParsableCommand {
     static let configuration: CommandConfiguration = .init(

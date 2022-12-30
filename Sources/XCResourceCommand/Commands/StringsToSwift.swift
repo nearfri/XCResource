@@ -1,6 +1,6 @@
 import Foundation
 import ArgumentParser
-import LocStringGen
+import LocStringKeyGen
 import XCResourceUtil
 
 struct StringsToSwift: ParsableCommand {

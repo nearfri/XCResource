@@ -1,6 +1,6 @@
 import Foundation
 import ArgumentParser
-import LocStringGen
+import LocCSVGen
 
 extension LanguageFormatterStyle: ExpressibleByArgument {
     public init?(argument: String) {
