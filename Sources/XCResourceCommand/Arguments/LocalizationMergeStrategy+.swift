@@ -1,6 +1,6 @@
 import Foundation
 import ArgumentParser
-import LocStringGen
+import LocStringsGen
 
 typealias LocalizationMergeStrategy = LocalizableStringsGenerator.MergeStrategy
 

@@ -28,20 +28,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "LocStringGen"
-               BuildableName = "LocStringGen"
-               BlueprintName = "LocStringGen"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "xcresource"
                BuildableName = "xcresource"
                BlueprintName = "xcresource"
@@ -59,20 +45,6 @@
                BlueprintIdentifier = "AssetKeyGenTests"
                BuildableName = "AssetKeyGenTests"
                BlueprintName = "AssetKeyGenTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "LocStringGenTests"
-               BuildableName = "LocStringGenTests"
-               BlueprintName = "LocStringGenTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -272,6 +244,20 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocStringsGen"
+               BuildableName = "LocStringsGen"
+               BlueprintName = "LocStringsGen"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -287,16 +273,6 @@
                BlueprintIdentifier = "AssetKeyGenTests"
                BuildableName = "AssetKeyGenTests"
                BlueprintName = "AssetKeyGenTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "LocStringGenTests"
-               BuildableName = "LocStringGenTests"
-               BlueprintName = "LocStringGenTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -387,6 +363,16 @@
                BlueprintIdentifier = "LocStringKeyGenTests"
                BuildableName = "LocStringKeyGenTests"
                BlueprintName = "LocStringKeyGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocStringsGenTests"
+               BuildableName = "LocStringsGenTests"
+               BlueprintName = "LocStringsGenTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

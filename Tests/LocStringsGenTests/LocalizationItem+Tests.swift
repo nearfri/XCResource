@@ -1,6 +1,6 @@
 import XCTest
 import LocStringCore
-@testable import LocStringGen
+@testable import LocStringsGen
 
 final class LocalizationItemTests: XCTestCase {
     func test_applyingAddingMethod() {

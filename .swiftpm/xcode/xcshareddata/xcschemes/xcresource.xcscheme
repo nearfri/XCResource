@@ -52,16 +52,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "LocStringGenTests"
-               BuildableName = "LocStringGenTests"
-               BlueprintName = "LocStringGenTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "XCResourceCommandTests"
                BuildableName = "XCResourceCommandTests"
                BlueprintName = "XCResourceCommandTests"
@@ -135,6 +125,16 @@
                BlueprintIdentifier = "LocStringKeyGenTests"
                BuildableName = "LocStringKeyGenTests"
                BlueprintName = "LocStringKeyGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocStringsGenTests"
+               BuildableName = "LocStringsGenTests"
+               BlueprintName = "LocStringsGenTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

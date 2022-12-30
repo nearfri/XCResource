@@ -20,7 +20,7 @@ let package = Package(
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
         .library(name: "FontKeyGen", targets: ["FontKeyGen"]),
         .library(name: "LocStringKeyGen", targets: ["LocStringKeyGen"]),
-        .library(name: "LocStringGen", targets: ["LocStringGen"]),
+        .library(name: "LocStringsGen", targets: ["LocStringsGen"]),
         .library(name: "LocStringFormGen", targets: ["LocStringFormGen"]),
         .library(name: "LocCSVGen", targets: ["LocCSVGen"]),
     ],
@@ -48,7 +48,7 @@ let package = Package(
                 "AssetKeyGen",
                 "FontKeyGen",
                 "LocStringKeyGen",
-                "LocStringGen",
+                "LocStringsGen",
                 "LocStringFormGen",
                 "LocCSVGen",
                 "XCResourceUtil",
@@ -91,19 +91,19 @@ let package = Package(
                 "LocStringKeyGen", "TestUtil"
             ] + swiftSyntax.targetDependencies),
         
-        // MARK: - LocStringGen
+        // MARK: - LocStringsGen
         
         .target(
-            name: "LocStringGen",
+            name: "LocStringsGen",
             dependencies: [
                 "LocStringCore",
                 "LocSwiftCore",
                 "XCResourceUtil",
             ]),
         .testTarget(
-            name: "LocStringGenTests",
+            name: "LocStringsGenTests",
             dependencies: [
-                "LocStringGen", "TestUtil"
+                "LocStringsGen", "TestUtil"
             ] + swiftSyntax.targetDependencies),
         
         // MARK: - LocStringFormGen
@@ -152,7 +152,8 @@ let package = Package(
         
         .target(
             name: "LocSwiftCore",
-            dependencies: ["LocStringCore"]),
+            dependencies: ["LocStringCore"] + swiftSyntax.targetDependencies,
+            linkerSettings: swiftSyntax.linkerSettings),
         .testTarget(
             name: "LocSwiftCoreTests",
             dependencies: ["LocSwiftCore"] + swiftSyntax.targetDependencies),
