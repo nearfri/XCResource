@@ -1,4 +1,5 @@
 import Foundation
+import LocStringCore
 
 public enum LanguageFormatterStyle: Equatable {
     case short

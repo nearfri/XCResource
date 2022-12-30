@@ -1,4 +1,6 @@
 import Foundation
+import LocStringCore
+import LocSwiftCore
 
 protocol LocalizationDifferenceCalculator: AnyObject {
     func calculate(

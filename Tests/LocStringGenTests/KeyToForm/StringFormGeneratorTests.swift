@@ -1,4 +1,5 @@
 import XCTest
+import LocSwiftCore
 @testable import LocStringGen
 
 private class StubStringEnumerationImporter: StringEnumerationImporter {

@@ -1,6 +1,7 @@
 import Foundation
 import ArgumentParser
 import LocStringGen
+import LocStringCore
 import XCResourceUtil
 
 struct SwiftToStrings: ParsableCommand {

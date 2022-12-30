@@ -1,4 +1,5 @@
 import Foundation
+import LocSwiftCore
 import SwiftSyntax
 
 class StringEnumerationCollector: SyntaxVisitor {

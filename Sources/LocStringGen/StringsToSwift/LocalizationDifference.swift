@@ -1,4 +1,5 @@
 import Foundation
+import LocStringCore
 
 struct LocalizationDifference {
     var insertions: [(index: Int, item: LocalizationItem)] = []

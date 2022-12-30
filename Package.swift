@@ -75,6 +75,8 @@ let package = Package(
         .target(
             name: "LocStringGen",
             dependencies: [
+                "LocStringCore",
+                "LocSwiftCore",
                 "XCResourceUtil",
                 .product(name: "StrixParsers", package: "Strix"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
@@ -85,6 +87,27 @@ let package = Package(
             dependencies: [
                 "LocStringGen", "SampleData", "TestUtil"
             ] + swiftSyntax.targetDependencies),
+        
+        // MARK: - LocStringCore
+        
+        .target(
+            name: "LocStringCore",
+            dependencies: [
+                "XCResourceUtil",
+                .product(name: "StrixParsers", package: "Strix"),
+            ]),
+        .testTarget(
+            name: "LocStringCoreTests",
+            dependencies: ["LocStringCore", "SampleData", "TestUtil"]),
+        
+        // MARK: - LocSwiftCore
+        
+        .target(
+            name: "LocSwiftCore",
+            dependencies: ["LocStringCore", "XCResourceUtil"]),
+        .testTarget(
+            name: "LocSwiftCoreTests",
+            dependencies: ["LocSwiftCore"] + swiftSyntax.targetDependencies),
         
         // MARK: - XCResourceUtil
         

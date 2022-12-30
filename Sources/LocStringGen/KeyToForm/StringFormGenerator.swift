@@ -1,8 +1,5 @@
 import Foundation
-
-protocol StringEnumerationImporter: AnyObject {
-    func `import`(at url: URL) throws -> Enumeration<String>
-}
+import LocSwiftCore
 
 protocol FormatPlaceholderImporter: AnyObject {
     func `import`(from string: String) throws -> [FormatPlaceholder]

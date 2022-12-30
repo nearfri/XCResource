@@ -1,4 +1,5 @@
 import Foundation
+import LocStringCore
 
 class DefaultLanguageFormatter: LanguageFormatter {
     var style: LanguageFormatterStyle = .short

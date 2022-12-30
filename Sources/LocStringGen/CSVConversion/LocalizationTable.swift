@@ -1,4 +1,5 @@
 import Foundation
+import LocStringCore
 
 struct LocalizationTable: Equatable {
     var header: [String] = []

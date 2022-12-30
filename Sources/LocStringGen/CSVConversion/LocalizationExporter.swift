@@ -1,4 +1,5 @@
 import Foundation
+import LocStringCore
 
 protocol LocalizationTableEncoder: AnyObject {
     func encode(_ table: LocalizationTable) throws -> String

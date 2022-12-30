@@ -202,6 +202,34 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocStringCore"
+               BuildableName = "LocStringCore"
+               BlueprintName = "LocStringCore"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocSwiftCore"
+               BuildableName = "LocSwiftCore"
+               BlueprintName = "LocSwiftCore"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -267,6 +295,26 @@
                BlueprintIdentifier = "FontKeyGenTests"
                BuildableName = "FontKeyGenTests"
                BlueprintName = "FontKeyGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocStringCoreTests"
+               BuildableName = "LocStringCoreTests"
+               BlueprintName = "LocStringCoreTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocSwiftCoreTests"
+               BuildableName = "LocSwiftCoreTests"
+               BlueprintName = "LocSwiftCoreTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

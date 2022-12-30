@@ -1,6 +1,7 @@
 import Foundation
 import ArgumentParser
 import LocStringGen
+import LocStringCore
 
 struct LanguageAndConfiguration: ExpressibleByArgument {
     var language: String

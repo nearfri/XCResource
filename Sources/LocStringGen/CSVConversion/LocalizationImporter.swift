@@ -1,4 +1,5 @@
 import Foundation
+import LocStringCore
 
 protocol LocalizationTableDecoder: AnyObject {
     func decode(from string: String) throws -> LocalizationTable

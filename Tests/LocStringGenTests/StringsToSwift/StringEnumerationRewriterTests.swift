@@ -1,4 +1,5 @@
 import XCTest
+import LocStringCore
 import TestUtil
 import SwiftSyntax
 import SwiftSyntaxParser

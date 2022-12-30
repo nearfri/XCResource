@@ -1,4 +1,5 @@
 import Foundation
+import LocSwiftCore
 
 class FilterableEnumerationImporterDecorator: StringEnumerationImporter {
     private let importer: StringEnumerationImporter

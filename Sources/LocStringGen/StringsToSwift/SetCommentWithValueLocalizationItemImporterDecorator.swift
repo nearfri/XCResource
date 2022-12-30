@@ -1,4 +1,5 @@
 import Foundation
+import LocStringCore
 
 class SetCommentWithValueLocalizationItemImporterDecorator: LocalizationItemImporter {
     private let importer: LocalizationItemImporter

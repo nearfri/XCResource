@@ -1,4 +1,5 @@
 import XCTest
+import LocStringCore
 @testable import LocStringGen
 
 private enum Seed {

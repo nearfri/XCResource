@@ -1,4 +1,5 @@
 import Foundation
+import LocStringCore
 
 class FormatLabelRemovedLocalizationItemImporterDecorator: LocalizationItemImporter {
     private let importer: LocalizationItemImporter

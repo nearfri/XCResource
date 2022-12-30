@@ -1,4 +1,6 @@
 import Foundation
+import LocStringCore
+import LocSwiftCore
 import XCResourceUtil
 
 extension LocalizableStringsGenerator {

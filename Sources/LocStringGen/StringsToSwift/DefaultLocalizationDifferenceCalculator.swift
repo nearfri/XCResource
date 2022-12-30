@@ -1,4 +1,5 @@
 import Foundation
+import LocStringCore
 import OrderedCollections
 
 class DefaultLocalizationDifferenceCalculator: LocalizationDifferenceCalculator {
