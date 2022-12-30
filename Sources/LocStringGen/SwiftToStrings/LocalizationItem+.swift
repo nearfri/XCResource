@@ -1,7 +1,6 @@
 import Foundation
 import LocStringCore
 import LocSwiftCore
-import Strix
 
 extension LocalizationItem {
     func applying(
@@ -19,13 +18,6 @@ extension LocalizationItem {
         }
         
         return result
-    }
-    
-    var commentByRemovingFormatLabels: String? {
-        guard let comment, comment.contains("%{") else {
-            return comment
-        }
-        return (try? Parser.formatLabelRemoval.run(comment)) ?? comment
     }
 }
 

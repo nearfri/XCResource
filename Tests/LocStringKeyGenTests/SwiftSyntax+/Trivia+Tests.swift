@@ -1,7 +1,7 @@
 import XCTest
 import SwiftSyntax
 import SwiftSyntaxParser
-@testable import LocStringGen
+@testable import LocStringKeyGen
 
 final class TriviaTests: XCTestCase {
     // MARK: - trimmingEmptyLinePrefix

@@ -1,7 +1,7 @@
 import XCTest
 import LocStringCore
 import SwiftSyntax
-@testable import LocStringGen
+@testable import LocStringKeyGen
 
 final class EnumCaseDeclSyntaxTests: XCTestCase {
     // MARK: - initWithLocalizationItem

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "LocStringFormGen"
-               BuildableName = "LocStringFormGen"
-               BlueprintName = "LocStringFormGen"
+               BlueprintIdentifier = "LocStringKeyGen"
+               BuildableName = "LocStringKeyGen"
+               BlueprintName = "LocStringKeyGen"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,9 +42,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "LocStringFormGenTests"
-               BuildableName = "LocStringFormGenTests"
-               BlueprintName = "LocStringFormGenTests"
+               BlueprintIdentifier = "LocStringKeyGenTests"
+               BuildableName = "LocStringKeyGenTests"
+               BlueprintName = "LocStringKeyGenTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -80,9 +80,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "LocStringFormGen"
-            BuildableName = "LocStringFormGen"
-            BlueprintName = "LocStringFormGen"
+            BlueprintIdentifier = "LocStringKeyGen"
+            BuildableName = "LocStringKeyGen"
+            BlueprintName = "LocStringKeyGen"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

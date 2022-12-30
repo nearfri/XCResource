@@ -1,6 +1,6 @@
 import XCTest
 import LocStringCore
-@testable import LocStringGen
+@testable import LocStringKeyGen
 
 final class DefaultLocalizationDifferenceCalculatorTests: XCTestCase {
     private let sut: DefaultLocalizationDifferenceCalculator = .init()

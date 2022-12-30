@@ -3,7 +3,7 @@ import LocStringCore
 import TestUtil
 import SwiftSyntax
 import SwiftSyntaxParser
-@testable import LocStringGen
+@testable import LocStringKeyGen
 
 private enum Seed {
     static let sourceCode: String = """

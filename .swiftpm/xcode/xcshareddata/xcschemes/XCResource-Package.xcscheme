@@ -258,6 +258,20 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocStringKeyGen"
+               BuildableName = "LocStringKeyGen"
+               BlueprintName = "LocStringKeyGen"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -363,6 +377,16 @@
                BlueprintIdentifier = "LocStringFormGenTests"
                BuildableName = "LocStringFormGenTests"
                BlueprintName = "LocStringFormGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocStringKeyGenTests"
+               BuildableName = "LocStringKeyGenTests"
+               BlueprintName = "LocStringKeyGenTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

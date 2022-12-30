@@ -19,6 +19,7 @@ let package = Package(
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
         .library(name: "FontKeyGen", targets: ["FontKeyGen"]),
+        .library(name: "LocStringKeyGen", targets: ["LocStringKeyGen"]),
         .library(name: "LocStringGen", targets: ["LocStringGen"]),
         .library(name: "LocStringFormGen", targets: ["LocStringFormGen"]),
         .library(name: "LocCSVGen", targets: ["LocCSVGen"]),
@@ -46,6 +47,7 @@ let package = Package(
             dependencies: [
                 "AssetKeyGen",
                 "FontKeyGen",
+                "LocStringKeyGen",
                 "LocStringGen",
                 "LocStringFormGen",
                 "LocCSVGen",
@@ -74,6 +76,21 @@ let package = Package(
             name: "FontKeyGenTests",
             dependencies: ["FontKeyGen", "SampleData", "TestUtil"]),
         
+        // MARK: - LocStringKeyGen
+        
+        .target(
+            name: "LocStringKeyGen",
+            dependencies: [
+                "LocStringCore",
+                "LocSwiftCore",
+                .product(name: "OrderedCollections", package: "swift-collections"),
+            ] + swiftSyntax.targetDependencies),
+        .testTarget(
+            name: "LocStringKeyGenTests",
+            dependencies: [
+                "LocStringKeyGen", "TestUtil"
+            ] + swiftSyntax.targetDependencies),
+        
         // MARK: - LocStringGen
         
         .target(
@@ -82,14 +99,11 @@ let package = Package(
                 "LocStringCore",
                 "LocSwiftCore",
                 "XCResourceUtil",
-                .product(name: "StrixParsers", package: "Strix"),
-                .product(name: "OrderedCollections", package: "swift-collections"),
-            ] + swiftSyntax.targetDependencies,
-            linkerSettings: swiftSyntax.linkerSettings),
+            ]),
         .testTarget(
             name: "LocStringGenTests",
             dependencies: [
-                "LocStringGen", "SampleData", "TestUtil"
+                "LocStringGen", "TestUtil"
             ] + swiftSyntax.targetDependencies),
         
         // MARK: - LocStringFormGen
@@ -99,7 +113,6 @@ let package = Package(
             dependencies: [
                 "LocStringCore",
                 "LocSwiftCore",
-                "XCResourceUtil",
                 .product(name: "StrixParsers", package: "Strix"),
             ]),
         .testTarget(
@@ -139,7 +152,7 @@ let package = Package(
         
         .target(
             name: "LocSwiftCore",
-            dependencies: ["LocStringCore", "XCResourceUtil"]),
+            dependencies: ["LocStringCore"]),
         .testTarget(
             name: "LocSwiftCoreTests",
             dependencies: ["LocSwiftCore"] + swiftSyntax.targetDependencies),
