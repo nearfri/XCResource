@@ -1,5 +1,5 @@
 import XCTest
-@testable import LocStringGen
+@testable import LocStringFormGen
 
 final class FunctionParameterTests: XCTestCase {
     func test_sourceCodeRepresentation_bothNamesExist_useBoth() {

@@ -1,22 +1,22 @@
 import XCTest
-import LocSwiftCore
-@testable import LocStringGen
+@testable import LocSwiftCore
 
 private enum Seed {
     static let sourceCode = """
     enum StringKey: String, CaseIterable {
         /// Cancel
         case common_cancel
-        
-        // xcresource:key2form:exclude
-        /// 100% chance!!
-        case chance100
+    }
+    
+    enum IgnoredEnum: String, CaseIterable {
+        /// Cancel
+        case common_cancel
     }
     """
 }
 
-final class FilterableEnumerationImporterDecoratorTests: XCTestCase {
-    func test_example() throws {
+final class SwiftStringEnumerationImporterTests: XCTestCase {
+    func test_import() throws {
         // Given
         let fm = FileManager.default
         
@@ -24,9 +24,7 @@ final class FilterableEnumerationImporterDecoratorTests: XCTestCase {
         try Seed.sourceCode.write(to: sourceURL, atomically: true, encoding: .utf8)
         defer { try? fm.removeItem(at: sourceURL) }
         
-        let sut = FilterableEnumerationImporterDecorator(
-            importer: SwiftStringEnumerationImporter(),
-            commandNameOfExclusion: "xcresource:key2form:exclude")
+        let sut = SwiftStringEnumerationImporter()
         
         let expectedEnum = Enumeration<String>(
             identifier: "StringKey",

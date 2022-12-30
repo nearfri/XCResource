@@ -1,5 +1,4 @@
 import XCTest
-@testable import LocStringGen
 
 final class StandardOutputSnifferTests: XCTestCase {
     func test_data() {

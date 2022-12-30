@@ -1,6 +1,6 @@
 import Foundation
 import ArgumentParser
-import LocStringGen
+import LocStringFormGen
 import XCResourceUtil
 
 private let headerComment = """

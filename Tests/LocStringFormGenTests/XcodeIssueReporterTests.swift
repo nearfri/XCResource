@@ -1,5 +1,5 @@
 import XCTest
-@testable import LocStringGen
+@testable import LocStringFormGen
 
 final class XcodeIssueReporterTests: XCTestCase {
     func test_report() {

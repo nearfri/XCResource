@@ -1,10 +1,11 @@
 import Foundation
-import LocSwiftCore
 import SwiftSyntax
 import SwiftSyntaxParser
 
-class SwiftStringEnumerationImporter: StringEnumerationImporter {
-    func `import`(at url: URL) throws -> Enumeration<String> {
+public class SwiftStringEnumerationImporter: StringEnumerationImporter {
+    public init() {}
+    
+    public func `import`(at url: URL) throws -> Enumeration<String> {
         let sourceFileNode: SourceFileSyntax = try SyntaxParser.parse(url)
         let enumCollector = StringEnumerationCollector()
         enumCollector.walk(sourceFileNode)
@@ -17,6 +18,6 @@ class SwiftStringEnumerationImporter: StringEnumerationImporter {
     }
 }
 
-enum DefaultStringEnumerationImporterError: Error {
+public enum DefaultStringEnumerationImporterError: Error {
     case enumDoesNotExist(URL)
 }

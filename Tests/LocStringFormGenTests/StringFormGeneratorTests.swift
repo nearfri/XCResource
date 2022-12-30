@@ -1,6 +1,6 @@
 import XCTest
 import LocSwiftCore
-@testable import LocStringGen
+@testable import LocStringFormGen
 
 private class StubStringEnumerationImporter: StringEnumerationImporter {
     func `import`(at url: URL) throws -> Enumeration<String> {

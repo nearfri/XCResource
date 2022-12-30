@@ -1,8 +1,7 @@
 import XCTest
-import LocSwiftCore
 import SwiftSyntax
 import SwiftSyntaxParser
-@testable import LocStringGen
+@testable import LocSwiftCore
 
 private enum Seed {
     static let stringKeyEnum = """

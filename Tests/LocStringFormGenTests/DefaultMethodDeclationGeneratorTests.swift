@@ -1,6 +1,6 @@
 import XCTest
 import TestUtil
-@testable import LocStringGen
+@testable import LocStringFormGen
 
 final class DefaultMethodDeclationGeneratorTests: XCTestCase {
     private let formTypeName: String = "StringForm"

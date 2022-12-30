@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "LocCSVGen"
-               BuildableName = "LocCSVGen"
-               BlueprintName = "LocCSVGen"
+               BlueprintIdentifier = "LocStringFormGen"
+               BuildableName = "LocStringFormGen"
+               BlueprintName = "LocStringFormGen"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "LocCSVGenTests"
-               BuildableName = "LocCSVGenTests"
-               BlueprintName = "LocCSVGenTests"
+               BlueprintIdentifier = "LocStringCoreTests"
+               BuildableName = "LocStringCoreTests"
+               BlueprintName = "LocStringCoreTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +42,19 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "LocStringCoreTests"
-               BuildableName = "LocStringCoreTests"
-               BlueprintName = "LocStringCoreTests"
+               BlueprintIdentifier = "LocStringFormGenTests"
+               BuildableName = "LocStringFormGenTests"
+               BlueprintName = "LocStringFormGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocSwiftCoreTests"
+               BuildableName = "LocSwiftCoreTests"
+               BlueprintName = "LocSwiftCoreTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -80,9 +90,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "LocCSVGen"
-            BuildableName = "LocCSVGen"
-            BlueprintName = "LocCSVGen"
+            BlueprintIdentifier = "LocStringFormGen"
+            BuildableName = "LocStringFormGen"
+            BlueprintName = "LocStringFormGen"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

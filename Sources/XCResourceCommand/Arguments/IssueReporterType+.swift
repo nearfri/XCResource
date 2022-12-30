@@ -1,6 +1,6 @@
 import Foundation
 import ArgumentParser
-import LocStringGen
+import LocStringFormGen
 
 typealias IssueReporterType = StringFormGenerator.IssueReporterType
 

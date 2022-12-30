@@ -1,5 +1,5 @@
 import XCTest
-@testable import LocStringGen
+@testable import LocStringFormGen
 
 final class ActualFormatPlaceholderImporterTests: XCTestCase {
     private let sut: DefaultFormatPlaceholderImporter = .init()
