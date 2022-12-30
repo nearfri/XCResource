@@ -230,6 +230,20 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocCSVGen"
+               BuildableName = "LocCSVGen"
+               BlueprintName = "LocCSVGen"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -315,6 +329,16 @@
                BlueprintIdentifier = "LocSwiftCoreTests"
                BuildableName = "LocSwiftCoreTests"
                BlueprintName = "LocSwiftCoreTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "LocCSVGenTests"
+               BuildableName = "LocCSVGenTests"
+               BlueprintName = "LocCSVGenTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

@@ -1,6 +1,6 @@
 import XCTest
 import TestUtil
-@testable import LocStringGen
+@testable import LocCSVGen
 
 final class CSVTableEncoderTests: XCTestCase {
     func test_encode() throws {

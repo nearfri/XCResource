@@ -1,6 +1,6 @@
 import XCTest
 import LocStringCore
-@testable import LocStringGen
+@testable import LocCSVGen
 
 private enum Seed {
     static let language: LanguageID = "ko"

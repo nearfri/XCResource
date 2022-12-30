@@ -1,6 +1,6 @@
 import XCTest
 import LocStringCore
-@testable import LocStringGen
+@testable import LocCSVGen
 
 private class StubTableDecoder: LocalizationTableDecoder {
     var decodeParamString: String!

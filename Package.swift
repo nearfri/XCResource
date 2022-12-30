@@ -20,6 +20,7 @@ let package = Package(
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
         .library(name: "FontKeyGen", targets: ["FontKeyGen"]),
         .library(name: "LocStringGen", targets: ["LocStringGen"]),
+        .library(name: "LocCSVGen", targets: ["LocCSVGen"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.4"),
@@ -45,6 +46,7 @@ let package = Package(
                 "AssetKeyGen",
                 "FontKeyGen",
                 "LocStringGen",
+                "LocCSVGen",
                 "XCResourceUtil",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]),
@@ -87,6 +89,21 @@ let package = Package(
             dependencies: [
                 "LocStringGen", "SampleData", "TestUtil"
             ] + swiftSyntax.targetDependencies),
+        
+        // MARK: - LocCSVGen
+        
+        .target(
+            name: "LocCSVGen",
+            dependencies: [
+                "LocStringCore",
+                "XCResourceUtil",
+                .product(name: "StrixParsers", package: "Strix"),
+            ]),
+        .testTarget(
+            name: "LocCSVGenTests",
+            dependencies: [
+                "LocCSVGen", "TestUtil"
+            ]),
         
         // MARK: - LocStringCore
         

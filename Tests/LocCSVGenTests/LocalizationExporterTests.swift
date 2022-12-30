@@ -1,6 +1,6 @@
 import XCTest
 import LocStringCore
-@testable import LocStringGen
+@testable import LocCSVGen
 
 private class StubLanguageDetector: LanguageDetector {
     func detect(at url: URL) throws -> [LanguageID] {

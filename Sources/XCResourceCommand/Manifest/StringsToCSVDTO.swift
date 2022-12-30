@@ -1,6 +1,6 @@
 import Foundation
 import ArgumentParser
-import LocStringGen
+import LocCSVGen
 
 struct StringsToCSVDTO: CommandDTO {
     static let commandType: ParsableCommand.Type = StringsToCSV.self

@@ -1,5 +1,5 @@
 import XCTest
-@testable import LocStringGen
+@testable import LocCSVGen
 
 final class CSVTableDecoderTests: XCTestCase {
     func test_decode() throws {

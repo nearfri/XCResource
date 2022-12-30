@@ -1,6 +1,6 @@
 import XCTest
 import LocStringCore
-@testable import LocStringGen
+@testable import LocCSVGen
 
 private class StubLanguageFormatter: LanguageFormatter {
     var style: LanguageFormatterStyle = .short

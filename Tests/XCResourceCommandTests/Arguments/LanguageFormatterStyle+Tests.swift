@@ -1,5 +1,5 @@
 import XCTest
-import LocStringGen
+import LocCSVGen
 @testable import XCResourceCommand
 
 final class LanguageFormatterStyleTests: XCTestCase {
