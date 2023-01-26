@@ -37,7 +37,7 @@ public func XCTAssertEqual(
     var lines1 = str1.split(separator: "\n", omittingEmptySubsequences: false)
     var lines2 = str2.split(separator: "\n", omittingEmptySubsequences: false)
     
-    if lines1.count == 1 && lines2.count == 1 {
+    if lines1.count <= 1 || lines2.count <= 1 {
         SystemAssertEqual(str1, str2, message(), file: file, line: line)
         return
     }
@@ -52,8 +52,10 @@ public func XCTAssertEqual(
             XCTFail(
                 """
                 found different characters at line \(index + 1)\(msgSuffix)
-                \t"\(line1)"
-                \t"\(line2)"
+                "\(line1)"
+                "\(line2)"
+                
+                \"\"\"\n\(str1)\n\"\"\" is not equal to \"\"\"\n\(str2)\n\"\"\"
                 """,
                 file: file,
                 line: line
