@@ -22,7 +22,7 @@ public class FontRegistry {
         let fontPaths = Set(FontKey.allKeys.map(\.path))
         
         for fontPath in fontPaths {
-            register(path: fontPath)
+            registerFont(atPath: fontPath)
         }
     }
     
@@ -36,11 +36,11 @@ public class FontRegistry {
         let fontPaths = Set(FontKey.allKeys.filter({ $0.familyName == familyName }).map(\.path))
         
         for fontPath in fontPaths {
-            register(path: fontPath)
+            registerFont(atPath: fontPath)
         }
     }
     
-    private func register(path: String) {
+    private func registerFont(atPath path: String) {
         do {
             guard let fontsDirectoryURL else {
                 throw FontError.fontsDirectoryNotFound
