@@ -78,8 +78,8 @@ public class LocalizableStringsGenerator {
     public convenience init() {
         self.init(
             languageDetector: DefaultLanguageDetector(),
-            sourceCodeImporter: SingularLocalizationItemImporterDecorator(
-                importer: SwiftLocalizationItemImporter(
+            sourceCodeImporter: LocalizationItemImporterSingularFilterDecorator(
+                decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter())),
             stringsImporter: ASCIIPlistImporter(),
             stringsGenerator: ASCIIPlistGenerator())

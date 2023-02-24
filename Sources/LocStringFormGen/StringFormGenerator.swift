@@ -86,9 +86,9 @@ public class StringFormGenerator {
     
     public convenience init(commandNameSet: CommandNameSet) {
         self.init(
-            enumerationImporter: FilterableEnumerationImporterDecorator(
-                importer: SwiftStringEnumerationImporter(),
-                commandNameOfExclusion: commandNameSet.exclude),
+            enumerationImporter: StringEnumerationImporterFilterDecorator(
+                decoratee: SwiftStringEnumerationImporter(),
+                commandNameForExclusion: commandNameSet.exclude),
             placeholderImporter: DefaultFormatPlaceholderImporter(),
             typeDeclationGenerator: DefaultTypeDeclarationGenerator(),
             methodDeclationGenerator: DefaultMethodDeclationGenerator())

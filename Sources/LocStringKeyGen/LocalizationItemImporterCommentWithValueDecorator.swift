@@ -1,15 +1,15 @@
 import Foundation
 import LocStringCore
 
-class SetCommentWithValueLocalizationItemImporterDecorator: LocalizationItemImporter {
-    private let importer: LocalizationItemImporter
+class LocalizationItemImporterCommentWithValueDecorator: LocalizationItemImporter {
+    private let decoratee: LocalizationItemImporter
     
-    init(importer: LocalizationItemImporter) {
-        self.importer = importer
+    init(decoratee: LocalizationItemImporter) {
+        self.decoratee = decoratee
     }
     
     func `import`(at url: URL) throws -> [LocalizationItem] {
-        var result = try importer.import(at: url)
+        var result = try decoratee.import(at: url)
         
         for i in result.indices {
             result[i].comment = result[i].value.replacingOccurrences(of: "\n", with: "\\n")

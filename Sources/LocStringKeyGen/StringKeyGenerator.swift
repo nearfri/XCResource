@@ -57,11 +57,11 @@ public class StringKeyGenerator {
     
     public convenience init() {
         self.init(
-            stringsImporter: SetCommentWithValueLocalizationItemImporterDecorator(
-                importer: ASCIIPlistImporter()),
-            sourceCodeImporter: FormatLabelRemovedLocalizationItemImporterDecorator(
-                importer: SingularLocalizationItemImporterDecorator(
-                    importer: SwiftLocalizationItemImporter(
+            stringsImporter: LocalizationItemImporterCommentWithValueDecorator(
+                decoratee: ASCIIPlistImporter()),
+            sourceCodeImporter: LocalizationItemImporterFormatLabelRemovalDecorator(
+                decoratee: LocalizationItemImporterSingularFilterDecorator(
+                    decoratee: SwiftLocalizationItemImporter(
                         enumerationImporter: SwiftStringEnumerationImporter()))),
             differenceCalculator: DefaultLocalizationDifferenceCalculator(),
             sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
