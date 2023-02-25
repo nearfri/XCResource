@@ -81,7 +81,8 @@ public class LocalizableStringsGenerator {
             sourceCodeImporter: LocalizationItemImporterSingularFilterDecorator(
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter())),
-            stringsImporter: ASCIIPlistImporter(),
+            stringsImporter: LocalizationItemImporterIDDecorator(
+                decoratee: ASCIIPlistImporter()),
             stringsGenerator: ASCIIPlistGenerator())
     }
     

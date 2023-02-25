@@ -58,7 +58,8 @@ public class StringKeyGenerator {
     public convenience init() {
         self.init(
             stringsImporter: LocalizationItemImporterCommentWithValueDecorator(
-                decoratee: ASCIIPlistImporter()),
+                decoratee: LocalizationItemImporterIDDecorator(
+                    decoratee: ASCIIPlistImporter())),
             sourceCodeImporter: LocalizationItemImporterFormatLabelRemovalDecorator(
                 decoratee: LocalizationItemImporterSingularFilterDecorator(
                     decoratee: SwiftLocalizationItemImporter(

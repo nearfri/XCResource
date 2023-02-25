@@ -2,30 +2,35 @@ import XCTest
 import LocSwiftCore
 @testable import LocStringFormGen
 
-private enum Seed {
-    static let sourceCode = """
-    enum StringKey: String, CaseIterable {
-        /// Cancel
-        case common_cancel
-        
-        // xcresource:key2form:exclude
-        /// 100% chance!!
-        case chance100
-    }
-    """
-}
-
 final class StringEnumerationImporterFilterDecoratorTests: XCTestCase {
-    func test_example() throws {
+    func test_import_removeCommentedWithExclude() throws {
         // Given
-        let fm = FileManager.default
-        
-        let sourceURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".swift")
-        try Seed.sourceCode.write(to: sourceURL, atomically: true, encoding: .utf8)
-        defer { try? fm.removeItem(at: sourceURL) }
+        class StubStringEnumerationImporter: StringEnumerationImporter {
+            static let enumeration = Enumeration<String>(
+                identifier: "StringKey",
+                cases: [
+                    .init(
+                        comments: [
+                            .documentLine("Cancel")
+                        ],
+                        identifier: "common_cancel",
+                        rawValue: "common_cancel"),
+                    .init(
+                        comments: [
+                            .line("xcresource:key2form:exclude"),
+                            .documentLine("100% chance!!")
+                        ],
+                        identifier: "chance100",
+                        rawValue: "chance100"),
+                ])
+            
+            func `import`(at url: URL) throws -> Enumeration<String> {
+                return Self.enumeration
+            }
+        }
         
         let sut = StringEnumerationImporterFilterDecorator(
-            decoratee: SwiftStringEnumerationImporter(),
+            decoratee: StubStringEnumerationImporter(),
             commandNameForExclusion: "xcresource:key2form:exclude")
         
         let expectedEnum = Enumeration<String>(
@@ -37,7 +42,7 @@ final class StringEnumerationImporterFilterDecoratorTests: XCTestCase {
             ])
         
         // When
-        let actualEnum = try sut.import(at: sourceURL)
+        let actualEnum = try sut.import(at: URL(fileURLWithPath: ""))
         
         // Then
         XCTAssertEqual(actualEnum, expectedEnum)
