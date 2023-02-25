@@ -87,8 +87,8 @@ let package = Package(
         
         .binaryTarget(
             name: "xcresource",
-            url: "https://github.com/nearfri/XCResource/releases/download/0.9.22/xcresource.artifactbundle.zip",
-            checksum: "dc09bdce90f2e68596dbbd6a42478594932462b1707f3e81274b551e98f5bcc8"
+            url: "https://github.com/nearfri/XCResource/releases/download/0.9.23/xcresource.artifactbundle.zip",
+            checksum: "01db71c275477b83d3e8b3017d724bd1ec1e0361a0efd8b7fcb07605101ce593"
         ),
     ]
 )
