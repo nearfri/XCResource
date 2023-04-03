@@ -2,10 +2,10 @@ import XCTest
 import TestUtil
 @testable import LocStringCore
 
-final class ASCIIPlistGeneratorTests: XCTestCase {
+final class DefaultStringsGeneratorTests: XCTestCase {
     func test_generate_withComment() {
         // Given
-        let sut = ASCIIPlistGenerator()
+        let sut = DefaultStringsGenerator()
         
         let items: [LocalizationItem] = [
             LocalizationItem(key: "cancel", value: "Cancel", comment: "취소"),
@@ -37,7 +37,7 @@ final class ASCIIPlistGeneratorTests: XCTestCase {
     
     func test_generate_withoutComment() throws {
         // Given
-        let sut = ASCIIPlistGenerator()
+        let sut = DefaultStringsGenerator()
         
         let items: [LocalizationItem] = [
             LocalizationItem(key: "cancel", value: "Cancel", comment: "취소"),

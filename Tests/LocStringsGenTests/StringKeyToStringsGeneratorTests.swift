@@ -37,7 +37,7 @@ private class StubStringsImporter: LocalizationItemImporter {
     }
 }
 
-private class StubPropertyListGenerator: PropertyListGenerator {
+private class StubStringsGenerator: StringsGenerator {
     var generateParamItemsList: [[LocalizationItem]] = []
     
     func generate(from items: [LocalizationItem]) -> String {
@@ -47,19 +47,19 @@ private class StubPropertyListGenerator: PropertyListGenerator {
     }
 }
 
-final class LocalizableStringsGeneratorTests: XCTestCase {
+final class StringKeyToStringsGeneratorTests: XCTestCase {
     func test_generate_allLanguages() throws {
         // Given
         let stringsImporter = StubStringsImporter()
-        let stringsGenerator = StubPropertyListGenerator()
+        let stringsGenerator = StubStringsGenerator()
         
-        let sut = LocalizableStringsGenerator(
+        let sut = StringKeyToStringsGenerator(
             languageDetector: StubLanguageDetector(),
             sourceCodeImporter: StubSourceCodeImporter(),
             stringsImporter: stringsImporter,
             stringsGenerator: stringsGenerator)
         
-        let request = LocalizableStringsGenerator.Request(
+        let request = StringKeyToStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
             configurationsByLanguage: [
@@ -94,15 +94,15 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
     func test_generate_oneLanguage() throws {
         // Given
         let stringsImporter = StubStringsImporter()
-        let stringsGenerator = StubPropertyListGenerator()
+        let stringsGenerator = StubStringsGenerator()
         
-        let sut = LocalizableStringsGenerator(
+        let sut = StringKeyToStringsGenerator(
             languageDetector: StubLanguageDetector(),
             sourceCodeImporter: StubSourceCodeImporter(),
             stringsImporter: stringsImporter,
             stringsGenerator: stringsGenerator)
         
-        let request = LocalizableStringsGenerator.Request(
+        let request = StringKeyToStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
             configurationsByLanguage: [
@@ -131,15 +131,15 @@ final class LocalizableStringsGeneratorTests: XCTestCase {
     func test_generate_notIncludeComments() throws {
         // Given
         let stringsImporter = StubStringsImporter()
-        let stringsGenerator = StubPropertyListGenerator()
+        let stringsGenerator = StubStringsGenerator()
         
-        let sut = LocalizableStringsGenerator(
+        let sut = StringKeyToStringsGenerator(
             languageDetector: StubLanguageDetector(),
             sourceCodeImporter: StubSourceCodeImporter(),
             stringsImporter: stringsImporter,
             stringsGenerator: stringsGenerator)
         
-        let request = LocalizableStringsGenerator.Request(
+        let request = StringKeyToStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
             configurationsByLanguage: [

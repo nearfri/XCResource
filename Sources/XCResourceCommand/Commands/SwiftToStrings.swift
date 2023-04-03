@@ -65,7 +65,7 @@ struct SwiftToStrings: ParsableCommand {
     }
     
     private func generateStrings() throws -> [LanguageID: String] {
-        let request = LocalizableStringsGenerator.Request(
+        let request = StringKeyToStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftPath),
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
@@ -73,7 +73,7 @@ struct SwiftToStrings: ParsableCommand {
             includesComments: !omitsComments,
             sortOrder: sortsByKey ? .key : .occurrence)
         
-        let generator = LocalizableStringsGenerator()
+        let generator = StringKeyToStringsGenerator()
         
         return try generator.generate(for: request)
     }

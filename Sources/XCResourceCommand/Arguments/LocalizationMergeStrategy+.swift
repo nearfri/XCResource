@@ -2,7 +2,7 @@ import Foundation
 import ArgumentParser
 import LocStringsGen
 
-typealias LocalizationMergeStrategy = LocalizableStringsGenerator.MergeStrategy
+typealias LocalizationMergeStrategy = StringKeyToStringsGenerator.MergeStrategy
 
 private enum StrategyValue {
     static let addComment: String = "comment"

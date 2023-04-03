@@ -2,7 +2,7 @@ import Foundation
 import ArgumentParser
 import LocStringsGen
 
-typealias LocalizationConfiguration = LocalizableStringsGenerator.LocalizationConfiguration
+typealias LocalizationConfiguration = StringKeyToStringsGenerator.LocalizationConfiguration
 
 extension LocalizationConfiguration {
     enum Name {

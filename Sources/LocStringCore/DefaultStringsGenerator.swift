@@ -1,7 +1,7 @@
 import Foundation
 import XCResourceUtil
 
-public class ASCIIPlistGenerator: PropertyListGenerator {
+public class DefaultStringsGenerator: StringsGenerator {
     public init() {}
     
     public func generate(from items: [LocalizationItem]) -> String {

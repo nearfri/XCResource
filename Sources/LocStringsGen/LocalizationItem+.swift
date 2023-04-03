@@ -4,7 +4,7 @@ import LocSwiftCore
 
 extension LocalizationItem {
     func applying(
-        _ addingMethod: LocalizableStringsGenerator.MergeStrategy.AddingMethod
+        _ addingMethod: StringKeyToStringsGenerator.MergeStrategy.AddingMethod
     ) -> LocalizationItem {
         var result = self
         
@@ -61,7 +61,7 @@ extension Array where Element == LocalizationItem {
         return result
     }
     
-    func sorted(by sortOrder: LocalizableStringsGenerator.SortOrder) -> [LocalizationItem] {
+    func sorted(by sortOrder: StringKeyToStringsGenerator.SortOrder) -> [LocalizationItem] {
         switch sortOrder {
         case .occurrence:
             return self

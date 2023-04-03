@@ -26,7 +26,7 @@ private class StubLanguageFormatter: LanguageFormatter {
     }
 }
 
-private class StubPropertyListGenerator: PropertyListGenerator {
+private class StubStringsGenerator: StringsGenerator {
     var generateParamItemsList: [[LocalizationItem]] = []
     
     func generate(from items: [LocalizationItem]) -> String {
@@ -39,14 +39,14 @@ private class StubPropertyListGenerator: PropertyListGenerator {
 final class LocalizationImporterTests: XCTestCase {
     func test_generate() throws {
         let tableDecoder = StubTableDecoder()
-        let plistGenerator = StubPropertyListGenerator()
+        let stringsGenerator = StubStringsGenerator()
         let tableString = "Stub-Table-String"
         
         // Given
         let sut = LocalizationImporter(
             tableDecoder: tableDecoder,
             languageFormatter: StubLanguageFormatter(),
-            plistGenerator: plistGenerator)
+            stringsGenerator: stringsGenerator)
         
         let request = LocalizationImporter.Request(tableSource: .text(tableString))
         
@@ -59,11 +59,11 @@ final class LocalizationImporterTests: XCTestCase {
         
         XCTAssertEqual(tableDecoder.decodeParamString, tableString)
         
-        XCTAssertEqual(plistGenerator.generateParamItemsList[0], [
+        XCTAssertEqual(stringsGenerator.generateParamItemsList[0], [
             .init(key: "cancel", value: "취소", comment: "취소")
         ])
         
-        XCTAssertEqual(plistGenerator.generateParamItemsList[1], [
+        XCTAssertEqual(stringsGenerator.generateParamItemsList[1], [
             .init(key: "cancel", value: "Cancel", comment: "취소")
         ])
     }

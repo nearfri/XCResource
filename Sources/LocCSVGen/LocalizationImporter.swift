@@ -34,21 +34,21 @@ extension LocalizationImporter {
 public class LocalizationImporter {
     private let tableDecoder: LocalizationTableDecoder
     private let languageFormatter: LanguageFormatter
-    private let plistGenerator: PropertyListGenerator
+    private let stringsGenerator: StringsGenerator
     
     init(tableDecoder: LocalizationTableDecoder,
          languageFormatter: LanguageFormatter,
-         plistGenerator: PropertyListGenerator
+         stringsGenerator: StringsGenerator
     ) {
         self.tableDecoder = tableDecoder
         self.languageFormatter = languageFormatter
-        self.plistGenerator = plistGenerator
+        self.stringsGenerator = stringsGenerator
     }
     
     public convenience init() {
         self.init(tableDecoder: CSVTableDecoder(),
                   languageFormatter: DefaultLanguageFormatter(),
-                  plistGenerator: ASCIIPlistGenerator())
+                  stringsGenerator: DefaultStringsGenerator())
     }
     
     public var headerStyle: LanguageFormatterStyle {
@@ -63,7 +63,7 @@ public class LocalizationImporter {
             emptyTranslationEncoding: request.emptyTranslationEncoding)
         
         return sections.reduce(into: [:]) { result, section in
-            result[section.language] = plistGenerator.generate(from: section.items)
+            result[section.language] = stringsGenerator.generate(from: section.items)
         }
     }
 }

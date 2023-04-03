@@ -1,5 +1,5 @@
 import Foundation
 
-public protocol PropertyListGenerator: AnyObject {
+public protocol StringsGenerator: AnyObject {
     func generate(from items: [LocalizationItem]) -> String
 }

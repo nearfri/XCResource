@@ -1,7 +1,7 @@
 import Foundation
 import StrixParsers
 
-public class ASCIIPlistImporter: LocalizationItemImporter {
+public class StringsLocalizationItemImporter: LocalizationItemImporter {
     public init() {}
     
     public func `import`(at url: URL) throws -> [LocalizationItem] {

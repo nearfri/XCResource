@@ -3,7 +3,7 @@ import LocStringCore
 import LocSwiftCore
 import XCResourceUtil
 
-extension LocalizableStringsGenerator {
+extension StringKeyToStringsGenerator {
     public struct Request {
         public var sourceCodeURL: URL
         public var resourcesURL: URL
@@ -58,16 +58,16 @@ extension LocalizableStringsGenerator {
     }
 }
 
-public class LocalizableStringsGenerator {
+public class StringKeyToStringsGenerator {
     private let languageDetector: LanguageDetector
     private let sourceCodeImporter: LocalizationItemImporter
     private let stringsImporter: LocalizationItemImporter
-    private let stringsGenerator: PropertyListGenerator
+    private let stringsGenerator: StringsGenerator
     
     init(languageDetector: LanguageDetector,
          sourceCodeImporter: LocalizationItemImporter,
          stringsImporter: LocalizationItemImporter,
-         stringsGenerator: PropertyListGenerator
+         stringsGenerator: StringsGenerator
     ) {
         self.languageDetector = languageDetector
         self.sourceCodeImporter = sourceCodeImporter
@@ -82,8 +82,8 @@ public class LocalizableStringsGenerator {
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter())),
             stringsImporter: LocalizationItemImporterIDDecorator(
-                decoratee: ASCIIPlistImporter()),
-            stringsGenerator: ASCIIPlistGenerator())
+                decoratee: StringsLocalizationItemImporter()),
+            stringsGenerator: DefaultStringsGenerator())
     }
     
     public func generate(for request: Request) throws -> [LanguageID: String] {

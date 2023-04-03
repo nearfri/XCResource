@@ -23,7 +23,7 @@ extension LocalizationSourceCodeRewriter {
     }
 }
 
-extension StringKeyGenerator {
+extension StringsToStringKeyGenerator {
     public struct Request {
         public var stringsFileURL: URL
         public var sourceCodeURL: URL
@@ -38,7 +38,7 @@ extension StringKeyGenerator {
     }
 }
 
-public class StringKeyGenerator {
+public class StringsToStringKeyGenerator {
     private let stringsImporter: LocalizationItemImporter
     private let sourceCodeImporter: LocalizationItemImporter
     private let differenceCalculator: LocalizationDifferenceCalculator
@@ -59,7 +59,7 @@ public class StringKeyGenerator {
         self.init(
             stringsImporter: LocalizationItemImporterCommentWithValueDecorator(
                 decoratee: LocalizationItemImporterIDDecorator(
-                    decoratee: ASCIIPlistImporter())),
+                    decoratee: StringsLocalizationItemImporter())),
             sourceCodeImporter: LocalizationItemImporterFormatLabelRemovalDecorator(
                 decoratee: LocalizationItemImporterSingularFilterDecorator(
                     decoratee: SwiftLocalizationItemImporter(

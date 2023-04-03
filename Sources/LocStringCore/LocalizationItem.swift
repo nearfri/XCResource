@@ -23,7 +23,7 @@ extension LocalizationItem {
         
         let firstChar = id[id.startIndex]
         if isIdentifierHead(firstChar) {
-            newID = "\(firstChar)"
+            newID = String(firstChar)
         } else {
             newID = firstChar.isNumber ? "_\(firstChar)" : "_"
         }
