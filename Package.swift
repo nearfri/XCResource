@@ -143,6 +143,7 @@ let package = Package(
             dependencies: [
                 "XCResourceUtil",
                 .product(name: "StrixParsers", package: "Strix"),
+                .product(name: "OrderedCollections", package: "swift-collections"),
             ]),
         .testTarget(
             name: "LocStringCoreTests",
