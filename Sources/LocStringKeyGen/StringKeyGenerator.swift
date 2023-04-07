@@ -23,7 +23,7 @@ extension LocalizationSourceCodeRewriter {
     }
 }
 
-extension StringsToStringKeyGenerator {
+extension StringKeyGenerator {
     public struct Request {
         public var stringsFileURL: URL
         public var sourceCodeURL: URL
@@ -38,7 +38,7 @@ extension StringsToStringKeyGenerator {
     }
 }
 
-public class StringsToStringKeyGenerator {
+public class StringKeyGenerator {
     private let stringsImporter: LocalizationItemImporter
     private let sourceCodeImporter: LocalizationItemImporter
     private let differenceCalculator: LocalizationDifferenceCalculator
@@ -55,15 +55,31 @@ public class StringsToStringKeyGenerator {
         self.sourceCodeRewriter = sourceCodeRewriter
     }
     
-    public convenience init() {
-        self.init(
+    public static func stringsToStringKey() -> StringKeyGenerator {
+        return make(
+            stringsImporter: StringsImporter(),
+            sourceCodeItemFilter: { !$0.commentContainsPluralVariables })
+    }
+    
+    public static func stringsdictToStringKey() -> StringKeyGenerator {
+        return make(
+            stringsImporter: StringsdictImporter(),
+            sourceCodeItemFilter: { $0.commentContainsPluralVariables })
+    }
+    
+    private static func make(
+        stringsImporter: LocalizationItemImporter,
+        sourceCodeItemFilter: @escaping (LocalizationItem) -> Bool
+    ) -> StringKeyGenerator {
+        return StringKeyGenerator(
             stringsImporter: LocalizationItemImporterCommentWithValueDecorator(
                 decoratee: LocalizationItemImporterIDDecorator(
-                    decoratee: StringsLocalizationItemImporter())),
+                    decoratee: stringsImporter)),
             sourceCodeImporter: LocalizationItemImporterFormatLabelRemovalDecorator(
-                decoratee: LocalizationItemImporterSingularFilterDecorator(
+                decoratee: LocalizationItemImporterFilterDecorator(
                     decoratee: SwiftLocalizationItemImporter(
-                        enumerationImporter: SwiftStringEnumerationImporter()))),
+                        enumerationImporter: SwiftStringEnumerationImporter()),
+                    filter: sourceCodeItemFilter)),
             differenceCalculator: DefaultLocalizationDifferenceCalculator(),
             sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
     }

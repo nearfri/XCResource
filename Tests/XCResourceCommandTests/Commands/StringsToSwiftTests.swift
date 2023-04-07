@@ -3,7 +3,7 @@ import TestUtil
 import SampleData
 @testable import XCResourceCommand
 
-private enum Seed {
+private enum Fixture {
     static let oldSourceCode = """
     import Foundation
     
@@ -61,9 +61,9 @@ final class StringsToSwiftTests: XCTestCase {
         
         try fm.copyItem(at: SampleData.localizationDirectoryURL(), to: resourcesURL)
         
-        try Seed.oldSourceCode.write(to: sourceCodeURL, atomically: false, encoding: .utf8)
+        try Fixture.oldSourceCode.write(to: sourceCodeURL, atomically: false, encoding: .utf8)
         
-        try Seed.strings.write(
+        try Fixture.strings.write(
             to: resourcesURL.appendingPathComponents(language: "en", tableName: "Localizable"),
             atomically: false,
             encoding: .utf8)
@@ -81,6 +81,6 @@ final class StringsToSwiftTests: XCTestCase {
         ])
         
         // Then
-        XCTAssertEqual(try String(contentsOf: sourceCodeURL), Seed.newSourceCode)
+        XCTAssertEqual(try String(contentsOf: sourceCodeURL), Fixture.newSourceCode)
     }
 }

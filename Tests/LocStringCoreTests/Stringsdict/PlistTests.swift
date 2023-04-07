@@ -1,4 +1,5 @@
 import XCTest
+import OrderedCollections
 @testable import LocStringCore
 
 final class PlistTests: XCTestCase {
@@ -373,5 +374,40 @@ final class PlistTests: XCTestCase {
             </dict>
             </plist>
             """)
+    }
+}
+
+final class OrderedDictionaryTests: XCTestCase {
+    func test_valueForKey_match_returnsValue() throws {
+        // Given
+        let dictionary: OrderedDictionary<String, Plist> = [
+            "greeting": .string("hello")
+        ]
+        
+        // When
+        let value = try dictionary.value(forKey: "greeting", type: String.self)
+        
+        // Then
+        XCTAssertEqual(value, "hello")
+    }
+    
+    func test_valueForKey_keyNotFound_throwsError() throws {
+        // Given
+        let dictionary: OrderedDictionary<String, Plist> = [
+            "greeting": .string("hello")
+        ]
+        
+        // When, Then
+        XCTAssertThrowsError(try dictionary.value(forKey: "greet", type: String.self))
+    }
+    
+    func test_valueForKey_typeMismatch_throwsError() throws {
+        // Given
+        let dictionary: OrderedDictionary<String, Plist> = [
+            "greeting": .string("hello")
+        ]
+        
+        // When, Then
+        XCTAssertThrowsError(try dictionary.value(forKey: "greeting", type: Int.self))
     }
 }

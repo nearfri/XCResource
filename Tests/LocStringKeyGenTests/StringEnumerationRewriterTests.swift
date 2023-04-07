@@ -5,7 +5,7 @@ import SwiftSyntax
 import SwiftSyntaxParser
 @testable import LocStringKeyGen
 
-private enum Seed {
+private enum Fixture {
     static let sourceCode: String = """
     enum StringKey: String, CaseIterable {
         // MARK: - Common
@@ -23,7 +23,7 @@ final class StringEnumerationRewriterTests: XCTestCase {
     private var fileNode: SourceFileSyntax!
     
     override func setUpWithError() throws {
-        fileNode = try SyntaxParser.parse(source: Seed.sourceCode)
+        fileNode = try SyntaxParser.parse(source: Fixture.sourceCode)
     }
     
     // MARK: - insert

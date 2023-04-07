@@ -44,7 +44,7 @@ public class LocalizationExporter {
     
     public convenience init() {
         self.init(languageDetector: DefaultLanguageDetector(),
-                  itemImporter: StringsLocalizationItemImporter(),
+                  itemImporter: StringsImporter(),
                   languageFormatter: DefaultLanguageFormatter(),
                   tableEncoder: CSVTableEncoder())
     }

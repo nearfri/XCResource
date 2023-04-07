@@ -42,11 +42,11 @@ struct StringsToSwift: ParsableCommand {
         let stringsFileURL = URL(fileURLWithExpandingTildeInPath: resourcesPath)
             .appendingPathComponents(language: language, tableName: tableName)
         
-        let request = StringsToStringKeyGenerator.Request(
+        let request = StringKeyGenerator.Request(
             stringsFileURL: stringsFileURL,
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftPath))
         
-        let generator = StringsToStringKeyGenerator()
+        let generator = StringKeyGenerator.stringsToStringKey()
         
         return try generator.generate(for: request)
     }

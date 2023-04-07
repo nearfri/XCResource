@@ -25,6 +25,20 @@ public enum Plist: Equatable {
         return nil
     }
     
+    public var dictionaryValue: OrderedDictionary<String, Plist>? {
+        if case .dictionary(let dictionary) = self {
+            return dictionary
+        }
+        return nil
+    }
+    
+    public var arrayValue: [Plist]? {
+        if case .array(let array) = self {
+            return array
+        }
+        return nil
+    }
+    
     public var stringValue: String? {
         if case .string(let str) = self {
             return str
@@ -66,6 +80,49 @@ public enum Plist: Equatable {
             return data
         }
         return nil
+    }
+    
+    public var value: Any {
+        switch self {
+        case .dictionary(let dictionary):
+            return dictionary
+        case .array(let array):
+            return array
+        case .string(let string):
+            return string
+        case .number(let number):
+            return number
+        case .bool(let bool):
+            return bool
+        case .date(let date):
+            return date
+        case .data(let data):
+            return data
+        }
+    }
+}
+
+public typealias PlistDictionary = OrderedDictionary<String, Plist>
+
+extension PlistDictionary {
+    public func value<T>(forKey key: String, type: T.Type) throws -> T {
+        guard let plist = self[key] else {
+            throw Plist.KeyValueError.keyNotFound(key, in: self)
+        }
+        
+        guard let value = plist.value as? T else {
+            let actualType = Swift.type(of: plist.value)
+            throw Plist.KeyValueError.typeMismatch(expected: type, actual: actualType)
+        }
+        
+        return value
+    }
+}
+
+extension Plist {
+    public enum KeyValueError: Error {
+        case keyNotFound(String, in: OrderedDictionary<String, Plist>)
+        case typeMismatch(expected: Any.Type, actual: Any.Type)
     }
 }
 

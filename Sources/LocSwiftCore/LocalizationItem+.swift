@@ -10,7 +10,7 @@ extension LocalizationItem {
         return (try? Parser.formatLabelRemoval.run(comment)) ?? comment
     }
     
-    var commentContainsPluralVariables: Bool {
+    public var commentContainsPluralVariables: Bool {
         guard let comment, comment.contains("%") else { return false }
         
         return (try? Parser.containsPluralVariables.run(comment)) ?? false

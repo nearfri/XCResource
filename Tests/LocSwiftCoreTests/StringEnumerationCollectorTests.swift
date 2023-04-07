@@ -3,7 +3,7 @@ import SwiftSyntax
 import SwiftSyntaxParser
 @testable import LocSwiftCore
 
-private enum Seed {
+private enum Fixture {
     static let stringKeyEnum = """
     enum StringKey: String, CaseIterable {
         // MARK: - Common
@@ -34,7 +34,7 @@ final class StringEnumerationCollectorTests: XCTestCase {
     func test_walk() throws {
         // Given
         let sut = StringEnumerationCollector()
-        let syntaxTree: SourceFileSyntax = try SyntaxParser.parse(source: Seed.stringKeyEnum)
+        let syntaxTree: SourceFileSyntax = try SyntaxParser.parse(source: Fixture.stringKeyEnum)
         
         let expectedEnum = Enumeration<String>(identifier: "StringKey", cases: [
             .init(comments: [.line("MARK: - Common"), .documentLine("취소")],

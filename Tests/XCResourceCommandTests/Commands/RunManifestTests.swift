@@ -2,7 +2,7 @@ import XCTest
 @testable import XCResourceCommand
 import SampleData
 
-private enum Seed {
+private enum Fixture {
     static let generalManifestFormat = """
     {
         "commands": [
@@ -94,7 +94,7 @@ final class RunManifestTests: XCTestCase {
         let oldStrings = try String(contentsOf: stringsURL)
         
         let manifest = String(
-            format: Seed.generalManifestFormat,
+            format: Fixture.generalManifestFormat,
             resourcesURL.appendingPathComponent("Media.xcassets").path,
             imageKeyFileURL.path,
             stringKeyFileURL.path,
@@ -133,7 +133,7 @@ final class RunManifestTests: XCTestCase {
         let csvFileURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         
         let manifest = String(
-            format: Seed.stringsToCSVManifestFormat,
+            format: Fixture.stringsToCSVManifestFormat,
             resourcesURL.path,
             csvFileURL.path)
         
@@ -167,7 +167,7 @@ final class RunManifestTests: XCTestCase {
         XCTAssertFalse(fm.fileExists(atPath: stringsURL.path))
         
         let manifest = String(
-            format: Seed.csvToStringsManifestFormat,
+            format: Fixture.csvToStringsManifestFormat,
             csvFileURL.path,
             resourcesURL.path)
         

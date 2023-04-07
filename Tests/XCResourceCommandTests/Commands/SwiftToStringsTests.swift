@@ -3,7 +3,7 @@ import TestUtil
 import SampleData
 @testable import XCResourceCommand
 
-private enum Seed {
+private enum Fixture {
     static let enStrings = """
     /* 취소 */
     "common_cancel" = "Cancel";
@@ -58,7 +58,7 @@ final class SwiftToStringsTests: XCTestCase {
         let enStringsURL = resourcesURL.appendingPathComponent("en.lproj/Localizable.strings")
         let koStringsURL = resourcesURL.appendingPathComponent("ko.lproj/Localizable.strings")
         
-        XCTAssertEqual(try String(contentsOf: enStringsURL), Seed.enStrings)
-        XCTAssertEqual(try String(contentsOf: koStringsURL), Seed.koStrings)
+        XCTAssertEqual(try String(contentsOf: enStringsURL), Fixture.enStrings)
+        XCTAssertEqual(try String(contentsOf: koStringsURL), Fixture.koStrings)
     }
 }
