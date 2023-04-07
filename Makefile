@@ -105,7 +105,7 @@ build:
 	swift build $(SWIFT_BUILD_FLAGS)
 
 .PHONY: release
-release: release-local-process release-remote-process
+release: release-local-process release-remote-process _finish_release
 
 .PHONY: release-local-process
 release-local-process: new-version artifactbundle _update-sampleapp-manifest
@@ -245,3 +245,9 @@ _generate-release-notes-file:
 .PHONY: _open-release-page
 _open-release-page:
 	open https://github.com/nearfri/XCResource/releases
+
+.PHONY: _finish_release
+_finish_release:
+	rm -rf $(TEMP_DIR)
+	@echo "The $(VERSION) update has been completed."
+	@echo "Please finish with 'git push origin main'."
