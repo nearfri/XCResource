@@ -5,7 +5,8 @@ import LocSwiftCore
 protocol LocalizationDifferenceCalculator: AnyObject {
     func calculate(
         targetItems: [LocalizationItem],
-        baseItems: [LocalizationItem]
+        baseItems: [LocalizationItem],
+        allBaseItems: [LocalizationItem]
     ) -> LocalizationDifference
 }
 
@@ -41,16 +42,19 @@ extension StringKeyGenerator {
 public class StringKeyGenerator {
     private let stringsImporter: LocalizationItemImporter
     private let sourceCodeImporter: LocalizationItemImporter
+    private let sourceCodeFilter: (LocalizationItem) -> Bool
     private let differenceCalculator: LocalizationDifferenceCalculator
     private let sourceCodeRewriter: LocalizationSourceCodeRewriter
     
     init(stringsImporter: LocalizationItemImporter,
          sourceCodeImporter: LocalizationItemImporter,
+         sourceCodeFilter: @escaping (LocalizationItem) -> Bool,
          differenceCalculator: LocalizationDifferenceCalculator,
          sourceCodeRewriter: LocalizationSourceCodeRewriter
     ) {
         self.stringsImporter = stringsImporter
         self.sourceCodeImporter = sourceCodeImporter
+        self.sourceCodeFilter = sourceCodeFilter
         self.differenceCalculator = differenceCalculator
         self.sourceCodeRewriter = sourceCodeRewriter
     }
@@ -58,28 +62,27 @@ public class StringKeyGenerator {
     public static func stringsToStringKey() -> StringKeyGenerator {
         return make(
             stringsImporter: StringsImporter(),
-            sourceCodeItemFilter: { !$0.commentContainsPluralVariables })
+            sourceCodeFilter: { !$0.commentContainsPluralVariables })
     }
     
     public static func stringsdictToStringKey() -> StringKeyGenerator {
         return make(
             stringsImporter: StringsdictImporter(),
-            sourceCodeItemFilter: { $0.commentContainsPluralVariables })
+            sourceCodeFilter: { $0.commentContainsPluralVariables })
     }
     
     private static func make(
         stringsImporter: LocalizationItemImporter,
-        sourceCodeItemFilter: @escaping (LocalizationItem) -> Bool
+        sourceCodeFilter: @escaping (LocalizationItem) -> Bool
     ) -> StringKeyGenerator {
         return StringKeyGenerator(
             stringsImporter: LocalizationItemImporterCommentWithValueDecorator(
                 decoratee: LocalizationItemImporterIDDecorator(
                     decoratee: stringsImporter)),
             sourceCodeImporter: LocalizationItemImporterFormatLabelRemovalDecorator(
-                decoratee: LocalizationItemImporterFilterDecorator(
-                    decoratee: SwiftLocalizationItemImporter(
-                        enumerationImporter: SwiftStringEnumerationImporter()),
-                    filter: sourceCodeItemFilter)),
+                decoratee: SwiftLocalizationItemImporter(
+                    enumerationImporter: SwiftStringEnumerationImporter())),
+            sourceCodeFilter: sourceCodeFilter,
             differenceCalculator: DefaultLocalizationDifferenceCalculator(),
             sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
     }
@@ -88,9 +91,12 @@ public class StringKeyGenerator {
         let itemsInStrings = try stringsImporter.import(at: request.stringsFileURL)
         
         let itemsInSourceCode = try sourceCodeImporter.import(at: request.sourceCodeURL)
+        let filteredItemsInSourceCode = itemsInSourceCode.filter(sourceCodeFilter)
         
-        let difference = differenceCalculator.calculate(targetItems: itemsInStrings,
-                                                        baseItems: itemsInSourceCode)
+        let difference = differenceCalculator.calculate(
+            targetItems: itemsInStrings,
+            baseItems: filteredItemsInSourceCode,
+            allBaseItems: itemsInSourceCode)
         
         return try sourceCodeRewriter.applying(difference, toSourceCodeAt: request.sourceCodeURL)
     }

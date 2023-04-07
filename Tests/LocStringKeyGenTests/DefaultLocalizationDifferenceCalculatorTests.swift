@@ -20,7 +20,9 @@ final class DefaultLocalizationDifferenceCalculatorTests: XCTestCase {
         ]
         
         // When
-        let difference = sut.calculate(targetItems: itemsInStrings, baseItems: itemsInSourceCode)
+        let difference = sut.calculate(targetItems: itemsInStrings,
+                                       baseItems: itemsInSourceCode,
+                                       allBaseItems: itemsInSourceCode)
         
         // Then
         if difference.insertions.count != 2 {
@@ -35,6 +37,49 @@ final class DefaultLocalizationDifferenceCalculatorTests: XCTestCase {
         
         // 0, 1, 2, 3
         XCTAssertEqual(difference.insertions[1].index, 2)
+        XCTAssertEqual(difference.insertions[1].item.key, "key2")
+        XCTAssertEqual(difference.insertions[1].item.comment, "text2")
+    }
+    
+    func test_calculate_insertions_filteredItems() throws {
+        // Given
+        let allItemsInSourceCode: [LocalizationItem] = [
+            .init(id: "idA", key: "keyA", value: "", comment: "%#@plural_format1@"),
+            .init(id: "idB", key: "keyB", value: "", comment: "%#@plural_format2@"),
+            .init(id: "id1", key: "key1", value: "", comment: "text1"),
+            .init(id: "id3", key: "key3", value: "", comment: "text3"),
+        ]
+        
+        let filteredItemsInSourceCode: [LocalizationItem] = [
+            .init(id: "id1", key: "key1", value: "", comment: "text1"),
+            .init(id: "id3", key: "key3", value: "", comment: "text3"),
+        ]
+        
+        let itemsInStrings: [LocalizationItem] = [
+            .init(key: "key0", value: "", comment: "text0"),
+            .init(key: "key1", value: "", comment: "text1"),
+            .init(key: "key2", value: "", comment: "text2"),
+            .init(key: "key3", value: "", comment: "text3"),
+        ]
+        
+        // When
+        let difference = sut.calculate(targetItems: itemsInStrings,
+                                       baseItems: filteredItemsInSourceCode,
+                                       allBaseItems: allItemsInSourceCode)
+        
+        // Then
+        if difference.insertions.count != 2 {
+            XCTFail("insertions.count != 2; insertions: \(difference.insertions.map(\.index))")
+            return
+        }
+        
+        // A, B, 0, 1, 3
+        XCTAssertEqual(difference.insertions[0].index, 2)
+        XCTAssertEqual(difference.insertions[0].item.key, "key0")
+        XCTAssertEqual(difference.insertions[0].item.comment, "text0")
+        
+        // A, B, 0, 1, 2, 3
+        XCTAssertEqual(difference.insertions[1].index, 4)
         XCTAssertEqual(difference.insertions[1].item.key, "key2")
         XCTAssertEqual(difference.insertions[1].item.comment, "text2")
     }
@@ -54,7 +99,9 @@ final class DefaultLocalizationDifferenceCalculatorTests: XCTestCase {
         ]
         
         // When
-        let difference = sut.calculate(targetItems: itemsInStrings, baseItems: itemsInSourceCode)
+        let difference = sut.calculate(targetItems: itemsInStrings,
+                                       baseItems: itemsInSourceCode,
+                                       allBaseItems: itemsInSourceCode)
         
         // Then
         if difference.insertions.count != 2 {
@@ -87,7 +134,9 @@ final class DefaultLocalizationDifferenceCalculatorTests: XCTestCase {
         ]
         
         // When
-        let difference = sut.calculate(targetItems: itemsInStrings, baseItems: itemsInSourceCode)
+        let difference = sut.calculate(targetItems: itemsInStrings,
+                                       baseItems: itemsInSourceCode,
+                                       allBaseItems: itemsInSourceCode)
         
         // Then
         if difference.insertions.count != 3 {
@@ -123,7 +172,9 @@ final class DefaultLocalizationDifferenceCalculatorTests: XCTestCase {
         ]
         
         // When
-        let difference = sut.calculate(targetItems: itemsInStrings, baseItems: itemsInSourceCode)
+        let difference = sut.calculate(targetItems: itemsInStrings,
+                                       baseItems: itemsInSourceCode,
+                                       allBaseItems: itemsInSourceCode)
         
         // Then
         XCTAssertEqual(difference.removals, ["id0", "id2"])
@@ -146,7 +197,9 @@ final class DefaultLocalizationDifferenceCalculatorTests: XCTestCase {
         ]
         
         // When
-        let difference = sut.calculate(targetItems: itemsInStrings, baseItems: itemsInSourceCode)
+        let difference = sut.calculate(targetItems: itemsInStrings,
+                                       baseItems: itemsInSourceCode,
+                                       allBaseItems: itemsInSourceCode)
         
         // Then
         XCTAssertEqual(difference.modifications, [
