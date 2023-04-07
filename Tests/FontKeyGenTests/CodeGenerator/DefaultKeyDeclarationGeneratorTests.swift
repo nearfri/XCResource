@@ -2,7 +2,7 @@ import XCTest
 import TestUtil
 @testable import FontKeyGen
 
-private enum Seed {
+private enum Fixture {
     static let fonts: [Font] = [
         Font(fontName: "Avenir-Heavy",
              familyName: "Avenir",
@@ -24,7 +24,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
     
     func test_generateAllKeysDeclaration() throws {
         // Given
-        let fonts: [Font] = Seed.fonts
+        let fonts: [Font] = Fixture.fonts
         
         // When
         let code = sut.generateAllKeysDeclaration(
@@ -50,7 +50,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
     
     func test_generateKeyDeclarations() throws {
         // Given
-        let fonts: [Font] = Seed.fonts
+        let fonts: [Font] = Fixture.fonts
         
         // When
         let code = sut.generateKeyDeclarations(

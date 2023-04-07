@@ -78,11 +78,12 @@ public class StringKeyToStringsGenerator {
     public convenience init() {
         self.init(
             languageDetector: DefaultLanguageDetector(),
-            sourceCodeImporter: LocalizationItemImporterSingularFilterDecorator(
+            sourceCodeImporter: LocalizationItemImporterFilterDecorator(
                 decoratee: SwiftLocalizationItemImporter(
-                    enumerationImporter: SwiftStringEnumerationImporter())),
+                    enumerationImporter: SwiftStringEnumerationImporter()),
+                filter: { !$0.commentContainsPluralVariables }),
             stringsImporter: LocalizationItemImporterIDDecorator(
-                decoratee: StringsLocalizationItemImporter()),
+                decoratee: StringsImporter()),
             stringsGenerator: DefaultStringsGenerator())
     }
     

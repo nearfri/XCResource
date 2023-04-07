@@ -2,10 +2,10 @@ import XCTest
 import SampleData
 @testable import LocStringCore
 
-final class StringsLocalizationItemImporterTests: XCTestCase {
+final class StringsImporterTests: XCTestCase {
     func test_import() throws {
         // Given
-        let sut = StringsLocalizationItemImporter()
+        let sut = StringsImporter()
         let stringsURL = SampleData.localizationDirectoryURL()
             .appendingPathComponent("en.lproj/Localizable.strings")
         
@@ -21,4 +21,3 @@ final class StringsLocalizationItemImporterTests: XCTestCase {
         XCTAssertEqual(actualItems, expectedItems)
     }
 }
-

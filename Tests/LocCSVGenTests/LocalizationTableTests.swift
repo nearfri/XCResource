@@ -14,7 +14,7 @@ private class StubLanguageFormatter: LanguageFormatter {
     }
 }
 
-private enum Seed {
+private enum Fixture {
     static let commentedSections: [LocalizationSection] = [
         LocalizationSection(language: "ko", items: [
             LocalizationItem(key: "cancel", value: "취소", comment: "취소"),

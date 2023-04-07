@@ -5,7 +5,8 @@ import LocSwiftCore
 protocol LocalizationDifferenceCalculator: AnyObject {
     func calculate(
         targetItems: [LocalizationItem],
-        baseItems: [LocalizationItem]
+        baseItems: [LocalizationItem],
+        allBaseItems: [LocalizationItem]
     ) -> LocalizationDifference
 }
 
@@ -23,7 +24,7 @@ extension LocalizationSourceCodeRewriter {
     }
 }
 
-extension StringsToStringKeyGenerator {
+extension StringKeyGenerator {
     public struct Request {
         public var stringsFileURL: URL
         public var sourceCodeURL: URL
@@ -38,32 +39,50 @@ extension StringsToStringKeyGenerator {
     }
 }
 
-public class StringsToStringKeyGenerator {
+public class StringKeyGenerator {
     private let stringsImporter: LocalizationItemImporter
     private let sourceCodeImporter: LocalizationItemImporter
+    private let sourceCodeFilter: (LocalizationItem) -> Bool
     private let differenceCalculator: LocalizationDifferenceCalculator
     private let sourceCodeRewriter: LocalizationSourceCodeRewriter
     
     init(stringsImporter: LocalizationItemImporter,
          sourceCodeImporter: LocalizationItemImporter,
+         sourceCodeFilter: @escaping (LocalizationItem) -> Bool,
          differenceCalculator: LocalizationDifferenceCalculator,
          sourceCodeRewriter: LocalizationSourceCodeRewriter
     ) {
         self.stringsImporter = stringsImporter
         self.sourceCodeImporter = sourceCodeImporter
+        self.sourceCodeFilter = sourceCodeFilter
         self.differenceCalculator = differenceCalculator
         self.sourceCodeRewriter = sourceCodeRewriter
     }
     
-    public convenience init() {
-        self.init(
+    public static func stringsToStringKey() -> StringKeyGenerator {
+        return make(
+            stringsImporter: StringsImporter(),
+            sourceCodeFilter: { !$0.commentContainsPluralVariables })
+    }
+    
+    public static func stringsdictToStringKey() -> StringKeyGenerator {
+        return make(
+            stringsImporter: StringsdictImporter(),
+            sourceCodeFilter: { $0.commentContainsPluralVariables })
+    }
+    
+    private static func make(
+        stringsImporter: LocalizationItemImporter,
+        sourceCodeFilter: @escaping (LocalizationItem) -> Bool
+    ) -> StringKeyGenerator {
+        return StringKeyGenerator(
             stringsImporter: LocalizationItemImporterCommentWithValueDecorator(
                 decoratee: LocalizationItemImporterIDDecorator(
-                    decoratee: StringsLocalizationItemImporter())),
+                    decoratee: stringsImporter)),
             sourceCodeImporter: LocalizationItemImporterFormatLabelRemovalDecorator(
-                decoratee: LocalizationItemImporterSingularFilterDecorator(
-                    decoratee: SwiftLocalizationItemImporter(
-                        enumerationImporter: SwiftStringEnumerationImporter()))),
+                decoratee: SwiftLocalizationItemImporter(
+                    enumerationImporter: SwiftStringEnumerationImporter())),
+            sourceCodeFilter: sourceCodeFilter,
             differenceCalculator: DefaultLocalizationDifferenceCalculator(),
             sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
     }
@@ -72,9 +91,12 @@ public class StringsToStringKeyGenerator {
         let itemsInStrings = try stringsImporter.import(at: request.stringsFileURL)
         
         let itemsInSourceCode = try sourceCodeImporter.import(at: request.sourceCodeURL)
+        let filteredItemsInSourceCode = itemsInSourceCode.filter(sourceCodeFilter)
         
-        let difference = differenceCalculator.calculate(targetItems: itemsInStrings,
-                                                        baseItems: itemsInSourceCode)
+        let difference = differenceCalculator.calculate(
+            targetItems: itemsInStrings,
+            baseItems: filteredItemsInSourceCode,
+            allBaseItems: itemsInSourceCode)
         
         return try sourceCodeRewriter.applying(difference, toSourceCodeAt: request.sourceCodeURL)
     }

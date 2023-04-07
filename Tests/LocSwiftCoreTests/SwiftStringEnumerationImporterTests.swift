@@ -1,7 +1,7 @@
 import XCTest
 @testable import LocSwiftCore
 
-private enum Seed {
+private enum Fixture {
     static let sourceCode = """
     enum StringKey: String, CaseIterable {
         /// Cancel
@@ -21,7 +21,7 @@ final class SwiftStringEnumerationImporterTests: XCTestCase {
         let fm = FileManager.default
         
         let sourceURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".swift")
-        try Seed.sourceCode.write(to: sourceURL, atomically: true, encoding: .utf8)
+        try Fixture.sourceCode.write(to: sourceURL, atomically: true, encoding: .utf8)
         defer { try? fm.removeItem(at: sourceURL) }
         
         let sut = SwiftStringEnumerationImporter()

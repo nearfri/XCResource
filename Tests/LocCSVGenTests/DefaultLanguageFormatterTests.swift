@@ -2,7 +2,7 @@ import XCTest
 import LocStringCore
 @testable import LocCSVGen
 
-private enum Seed {
+private enum Fixture {
     static let language: LanguageID = "ko"
 }
 
@@ -14,7 +14,7 @@ final class DefaultLanguageFormatterTests: XCTestCase {
         sut.style = .short
         
         // When
-        let languageAsString = sut.string(from: Seed.language)
+        let languageAsString = sut.string(from: Fixture.language)
         
         // Then
         XCTAssertEqual(languageAsString, "ko")
@@ -25,7 +25,7 @@ final class DefaultLanguageFormatterTests: XCTestCase {
         sut.style = .long(Locale(identifier: "en"))
         
         // When
-        let languageAsString = sut.string(from: Seed.language)
+        let languageAsString = sut.string(from: Fixture.language)
         
         // Then
         XCTAssertEqual(languageAsString, "Korean (ko)")
@@ -39,7 +39,7 @@ final class DefaultLanguageFormatterTests: XCTestCase {
         let language = sut.language(from: "ko")
         
         // Then
-        XCTAssertEqual(language, Seed.language)
+        XCTAssertEqual(language, Fixture.language)
     }
     
     func test_languageFromString_longStyle() {
@@ -50,6 +50,6 @@ final class DefaultLanguageFormatterTests: XCTestCase {
         let language = sut.language(from: "Korean (ko)")
         
         // Then
-        XCTAssertEqual(language, Seed.language)
+        XCTAssertEqual(language, Fixture.language)
     }
 }

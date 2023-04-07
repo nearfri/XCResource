@@ -91,6 +91,13 @@ private let manifestTemplate = """
             "swiftPath": "<#swift file path#>"
         },
         {
+            "commandName": "stringsdict2swift",
+            "resourcesPath": "<#resources path#>",
+            "tableName": "Localizable",
+            "language": "en",
+            "swiftPath": "<#swift file path#>"
+        },
+        {
             "commandName": "strings2csv",
             "resourcesPath": "<#resources path#>",
             "tableName": "Localizable",

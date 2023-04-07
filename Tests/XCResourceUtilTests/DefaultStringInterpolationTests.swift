@@ -7,7 +7,7 @@ private struct GroceryProduct: Codable {
     var description: String?
 }
 
-private enum Seed {
+private enum Fixture {
     static let productJSON = """
     {
       "name" : "Pear",
@@ -25,6 +25,6 @@ final class DefaultStringInterpolationTests: XCTestCase {
         let json = try "\(json: product)"
         
         // Then
-        XCTAssertEqual(json, Seed.productJSON)
+        XCTAssertEqual(json, Fixture.productJSON)
     }
 }

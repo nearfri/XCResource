@@ -2,7 +2,7 @@ import XCTest
 import TestUtil
 @testable import AssetKeyGen
 
-private enum Seed {
+private enum Fixture {
     static let catalog = AssetCatalog(
         name: "Media.xcassets",
         assets: [
@@ -33,7 +33,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
         let sut = DefaultKeyDeclarationGenerator()
         
         // When
-        let actualDeclations = sut.generate(catalog: Seed.catalog,
+        let actualDeclations = sut.generate(catalog: Fixture.catalog,
                                             keyTypeName: "ImageKey",
                                             accessLevel: nil)
         
@@ -58,7 +58,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
         let sut = DefaultKeyDeclarationGenerator()
         
         // When
-        let actualDeclations = sut.generate(catalog: Seed.catalog,
+        let actualDeclations = sut.generate(catalog: Fixture.catalog,
                                             keyTypeName: "ImageKey",
                                             accessLevel: "public")
         
