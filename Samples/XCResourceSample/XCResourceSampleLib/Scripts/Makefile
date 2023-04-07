@@ -2,7 +2,7 @@ XCRESOURCE_DEBUG = xcrun --sdk macosx swift run --package-path ../../../../ xcre
 XCRESOURCE_RELEASE = xcresource
 XCRESOURCE_MINT = xcrun --sdk macosx mint run xcresource
 
-XCRESOURCE ?= $(XCRESOURCE_DEBUG)
+XCRESOURCE = $(XCRESOURCE_DEBUG)
 
 PROJECT_NAME = XCResourceSample
 PROJECT_DIR = ../Sources/Resource
@@ -120,6 +120,13 @@ $(SWIFT2STRINGS_LASTRUN_FILE): $(STRINGKEY_FILE)
 .PHONY: strings2swift
 strings2swift:
 	$(XCRESOURCE) strings2swift \
+	--resources-path $(RESOURCES_DIR) \
+	--language $(LOCALIZATION_DEV_LANGUAGE) \
+	--swift-path $(STRINGKEY_FILE)
+
+.PHONY: stringsdict2swift
+stringsdict2swift:
+	$(XCRESOURCE) stringsdict2swift \
 	--resources-path $(RESOURCES_DIR) \
 	--language $(LOCALIZATION_DEV_LANGUAGE) \
 	--swift-path $(STRINGKEY_FILE)

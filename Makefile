@@ -1,17 +1,16 @@
+TEMP_DIR=release_temp
 EXECUTABLE_NAME = xcresource
-EXECUTABLE_DIR = $(shell swift build $(SWIFT_BUILD_FLAGS) --show-bin-path | sed "s|^$$PWD/||")
-EXECUTABLE_PATH = $(EXECUTABLE_DIR)/$(EXECUTABLE_NAME)
 
-ARCHIVE_PATH = $(EXECUTABLE_NAME).xcarchive
-ARTIFACTBUNDLE_PATH = $(EXECUTABLE_NAME).artifactbundle
+ARCHIVE_PATH = $(TEMP_DIR)/$(EXECUTABLE_NAME).xcarchive
+ARTIFACTBUNDLE = $(EXECUTABLE_NAME).artifactbundle
+ARTIFACTBUNDLE_PATH = $(TEMP_DIR)/$(ARTIFACTBUNDLE)
+ARTIFACTBUNDLE_ZIP = $(ARTIFACTBUNDLE).zip
+ARTIFACTBUNDLE_ZIP_PATH = $(TEMP_DIR)/$(ARTIFACTBUNDLE_ZIP)
 EXECUTABLE_ZIP = $(EXECUTABLE_NAME).zip
-ARTIFACTBUNDLE_ZIP = $(ARTIFACTBUNDLE_PATH).zip
+EXECUTABLE_ZIP_PATH = $(TEMP_DIR)/$(EXECUTABLE_ZIP)
 ARCHIVED_EXECUTABLE_PATH = $(ARCHIVE_PATH)/Products/usr/local/bin/$(EXECUTABLE_NAME)
-RELEASE_NOTES_FILE = release_notes.md
-RELEASE_NOTES_JSON_FILE = release_notes.json
-
-INSTALL_DIR = /usr/local/bin
-INSTALL_PATH = $(INSTALL_DIR)/$(EXECUTABLE_NAME)
+RELEASE_NOTES_PATH = $(TEMP_DIR)/release_notes.md
+RELEASE_NOTES_JSON_PATH = $(TEMP_DIR)/release_notes.json
 
 SWIFT_BUILD_FLAGS = -c release
 # SWIFT_BUILD_FLAGS = --product $(EXECUTABLE_NAME) -c release --disable-sandbox --arch arm64 --arch x86_64
@@ -19,24 +18,25 @@ SWIFT_BUILD_FLAGS = -c release
 ROOT_CMD_PATH = Sources/XCResourceCommand/Commands/XCResource.swift
 MINTFILE_PATH = Samples/XCResourceSample/XCResourceSampleLib/Scripts/Mintfile
 
+SAMPLEAPP_MANIFEST_PATH = Samples/XCResourceSample/XCResourceSampleLib/Package.swift
+
 # Invoke make with GIT_CHECK=false to override this value.
-GIT_CHECK ?= true
+GIT_CHECK = true
 
 VERSION = $(shell sed -En 's/.*version: "(.*)".*/\1/p' $(ROOT_CMD_PATH))
-RELEASE_TAG = $(shell git describe --tags --abbrev=0)
 GITHUB_TOKEN = $(shell security find-generic-password -w -s GITHUB_TOKEN)
 
-EXECUTABLE_CHECKSUM = $(shell swift package compute-checksum $(EXECUTABLE_ZIP))
-ARTIFACTBUNDLE_CHECKSUM = $(shell swift package compute-checksum $(ARTIFACTBUNDLE_ZIP))
+EXECUTABLE_CHECKSUM = $(shell swift package compute-checksum $(EXECUTABLE_ZIP_PATH))
+ARTIFACTBUNDLE_CHECKSUM = $(shell swift package compute-checksum $(ARTIFACTBUNDLE_ZIP_PATH))
 
-RELEASE_RESPONSE_PATH = release_response.json
-RELEASE_NOTES_RESPONSE_PATH = release_notes_response.json
+RELEASE_RESPONSE_PATH = $(TEMP_DIR)/release_response.json
+RELEASE_NOTES_RESPONSE_PATH = $(TEMP_DIR)/release_notes_response.json
 
 RELEASE_ID = $(shell cat $(RELEASE_RESPONSE_PATH) \
 	| python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
 
-RELEASE_NOTES_BODY = $(shell cat $(RELEASE_NOTES_FILE) \
-	| sed -e 's/"/\\"/g' | sed -e 's/$$/\\n/g' | tr -d '\n')
+RELEASE_NOTES_BODY = $(shell cat $(RELEASE_NOTES_PATH) \
+	| sed -E 's/"/\\"/g' | sed -E 's/$$/\\n/g' | tr -d '\n')
 
 EXECUTABLE_UPLOAD_URL = $(shell cat $(RELEASE_RESPONSE_PATH) \
 	| python3 -c "import sys, json; print(json.load(sys.stdin)['upload_url'])" \
@@ -60,7 +60,7 @@ define ARTIFACTBUNDLE_INFO_TEMPLATE
 ```swift
 .binaryTarget(
     name: "$(EXECUTABLE_NAME)",
-    url: "https://github.com/nearfri/XCResource/releases/download/$(RELEASE_TAG)/$(ARTIFACTBUNDLE_ZIP)",
+    url: "https://github.com/nearfri/XCResource/releases/download/$(VERSION)/$(ARTIFACTBUNDLE_ZIP)",
     checksum: "$(ARTIFACTBUNDLE_CHECKSUM)"
 )
 ```
@@ -69,7 +69,7 @@ ARTIFACTBUNDLE_INFO = $(subst $(NEWLINE),\n,$(ARTIFACTBUNDLE_INFO_TEMPLATE))
 
 define RELEASE_NOTES_TEMPLATE
 {
-	"tag_name": "$(RELEASE_TAG)",
+	"tag_name": "$(VERSION)",
 	"target_commitish": "main",
 	"body": "$(subst ','\'',$(subst \n,\\n,$(RELEASE_NOTES_BODY)))"
 }
@@ -97,100 +97,90 @@ export ARTIFACTBUNDLE_MANIFEST
 
 ####################################################################################################
 
-.PHONY: all
-all: build
+.PHONY: default
+default: release
 
 .PHONY: build
 build:
 	swift build $(SWIFT_BUILD_FLAGS)
 
-.PHONY: archive
-archive:
-# Use xcodebuild due to https://bugs.swift.org/browse/SR-15802
-	xcodebuild -scheme $(EXECUTABLE_NAME) -destination generic/platform=macOS \
-	-archivePath $(ARCHIVE_PATH) archive
+.PHONY: release
+release: release-local-process release-remote-process
 
-.PHONY: zip
-zip: _zip-executable _zip-artifactbundle
+.PHONY: release-local-process
+release-local-process: new-version artifactbundle _update-sampleapp-manifest
 
-.PHONY: _zip-executable
-_zip-executable:
-	zip -jr $(EXECUTABLE_ZIP) $(ARCHIVED_EXECUTABLE_PATH)
-
-.PHONY: _zip-artifactbundle
-_zip-artifactbundle:
-	mkdir -p $(ARTIFACTBUNDLE_PATH)/$(EXECUTABLE_NAME)-macos/bin/
-	cp $(ARCHIVED_EXECUTABLE_PATH) $(ARTIFACTBUNDLE_PATH)/$(EXECUTABLE_NAME)-macos/bin/
-	echo "$$ARTIFACTBUNDLE_MANIFEST" > $(ARTIFACTBUNDLE_PATH)/info.json
-	zip -mr $(ARTIFACTBUNDLE_ZIP) $(ARTIFACTBUNDLE_PATH)
-
-.PHONY: test
-test:
-	swift test
-
-.PHONY: install
-install:
-	install $(EXECUTABLE_PATH) $(INSTALL_PATH)
-
-.PHONY: uninstall
-uninstall:
-	rm -f $(INSTALL_PATH)
-
-.PHONY: clean
-clean:
-	swift package clean
-
-.PHONY: reset
-reset:
-	swift package reset
+.PHONY: version
+version:
+	@echo Current Version: $(VERSION)
 
 .PHONY: new-version
-new-version: version
-	@if [ $(GIT_CHECK) == true ]; then \
-		if ! git diff-index --quiet HEAD --; then \
-			echo "You have uncommitted changes."; \
-			git status -s; \
-			echo "If you want to ignore git status, invoke make with \"GIT_CHECK=false\""; \
-			exit 10; \
-		fi; \
-	fi
-	
+new-version: _check_git version
 # .ONESHELL은 make 3.82부터 지원하므로 NEW_VERSION 정의를 위해 eval을 이용한다.
 # https://superuser.com/a/1285748
-# Bug: eval이 위의 git 체크보다 먼저 실행되는 문제가 있다.
 	$(eval NEW_VERSION=$(shell read -p "Enter New Version: " NEW_VER; echo $$NEW_VER))
 	
 	@if [ -z $(NEW_VERSION) ]; then \
 		exit 11; \
 	fi
 
-	$(MAKE) set-version NEW_VERSION=$(NEW_VERSION)
-
-	git add .
-	git commit -m "Update to $(NEW_VERSION)"
-	git tag $(NEW_VERSION)
-	git push origin $(NEW_VERSION)
-
-.PHONY: set-version
-set-version:
-	@if [ -z $(NEW_VERSION) ]; then \
-		echo "Invoke make with \"NEW_VERSION=x.y.z\""; \
-		exit 11; \
-	fi
-	
 	@sed -E -i '' 's/(version: ")(.*)(",)/\1$(NEW_VERSION)\3/' $(ROOT_CMD_PATH)
 	@sed -E -i '' 's/(@)(.*)/\1$(NEW_VERSION)/' $(MINTFILE_PATH)
 
-.PHONY: version
-version:
-	@echo Current Version: $(VERSION)
+.PHONY: _check_git
+_check_git:
+	@if [ $(GIT_CHECK) == true ]; then \
+		if ! git diff-index --quiet HEAD --; then \
+			echo "You have uncommitted changes:"; \
+			git status -s; \
+			echo "If you want to ignore git status, invoke make with \"GIT_CHECK=false\""; \
+			exit 10; \
+		fi; \
+	fi
 
-.PHONY: distribute
-distribute: archive zip create-release upload update-release-notes _open-release-page
+.PHONY: artifactbundle
+artifactbundle: _archive _zip-assets
 
-.PHONY: create-release
-create-release:
-	@echo Create a release $(RELEASE_TAG)
+.PHONY: _archive
+_archive:
+	mkdir -p $(TEMP_DIR)
+# Use xcodebuild due to https://bugs.swift.org/browse/SR-15802
+	xcodebuild -scheme $(EXECUTABLE_NAME) -destination generic/platform=macOS \
+	-archivePath $(ARCHIVE_PATH) archive
+
+.PHONY: _zip-assets
+_zip-assets: _zip-executable _zip-artifactbundle
+
+.PHONY: _zip-executable
+_zip-executable:
+	mkdir -p $(TEMP_DIR)
+	cd $(TEMP_DIR); zip -jr $(EXECUTABLE_ZIP) ../$(ARCHIVED_EXECUTABLE_PATH)
+
+.PHONY: _zip-artifactbundle
+_zip-artifactbundle:
+	mkdir -p $(ARTIFACTBUNDLE_PATH)/$(EXECUTABLE_NAME)-macos/bin/
+	cp $(ARCHIVED_EXECUTABLE_PATH) $(ARTIFACTBUNDLE_PATH)/$(EXECUTABLE_NAME)-macos/bin/
+	echo "$$ARTIFACTBUNDLE_MANIFEST" > $(ARTIFACTBUNDLE_PATH)/info.json
+	cd $(TEMP_DIR); zip -mr $(ARTIFACTBUNDLE_ZIP) $(ARTIFACTBUNDLE)
+
+.PHONY: _update-sampleapp-manifest
+_update-sampleapp-manifest:
+	@sed -E -i '' "s/(.*url: .*download\/)(.+)(\/xcresource\.artifact.*)/\1$(VERSION)\3/" $(SAMPLEAPP_MANIFEST_PATH); \
+	sed -E -i '' "s/(.*checksum: \")([^\"]+)(\".*)/\1$(ARTIFACTBUNDLE_CHECKSUM)\3/" $(SAMPLEAPP_MANIFEST_PATH)
+
+.PHONY: release-remote-process
+release-remote-process: _commit _create-release _upload _update-release-notes _open-release-page
+
+.PHONY: _commit
+_commit:
+	git add .
+	git commit -m "Update to $(VERSION)"
+	git tag $(VERSION)
+	git push origin $(VERSION)
+
+.PHONY: _create-release
+_create-release:
+	@echo Create a release $(VERSION)
 	
 	@if [ -z $(GITHUB_TOKEN) ]; then \
 		echo "GITHUB_TOKEN not found in the keychain."; \
@@ -201,21 +191,44 @@ create-release:
 		-H "Authorization: token $(GITHUB_TOKEN)" \
 		-H "Accept: application/vnd.github.v3+json" \
 		-H "Content-Type:application/json" \
-		-d '{"tag_name":"$(RELEASE_TAG)","target_commitish":"main","draft":true,"generate_release_notes":true}' \
+		-d '{"tag_name":"$(VERSION)","target_commitish":"main","draft":true,"generate_release_notes":true}' \
 		-o "$(RELEASE_RESPONSE_PATH)" \
 		https://api.github.com/repos/nearfri/XCResource/releases
 
-.PHONY: update-release-notes
-update-release-notes: _generate-release-notes-file
+.PHONY: _upload
+_upload:
+	@if [ ! -f $(RELEASE_RESPONSE_PATH) ]; then \
+		echo "$(RELEASE_RESPONSE_PATH) file not found."; \
+		exit 30; \
+	fi
+
+	curl -X POST \
+		-T "$(EXECUTABLE_ZIP_PATH)" \
+		-H "Content-Type: $(shell file -b --mime-type $(EXECUTABLE_ZIP_PATH))" \
+		-H "Authorization: token $(GITHUB_TOKEN)" \
+		-H "Accept: application/vnd.github.v3+json" \
+		"$(EXECUTABLE_UPLOAD_URL)" \
+	| cat
+
+	curl -X POST \
+		-T "$(ARTIFACTBUNDLE_ZIP_PATH)" \
+		-H "Content-Type: $(shell file -b --mime-type $(ARTIFACTBUNDLE_ZIP_PATH))" \
+		-H "Authorization: token $(GITHUB_TOKEN)" \
+		-H "Accept: application/vnd.github.v3+json" \
+		"$(ARTIFACTBUNDLE_UPLOAD_URL)" \
+	| cat
+
+.PHONY: _update-release-notes
+_update-release-notes: _generate-release-notes-file
 	@echo Update a release notes
 
-	@echo '$(RELEASE_NOTES)' > $(RELEASE_NOTES_JSON_FILE)
+	@echo '$(RELEASE_NOTES)' > $(RELEASE_NOTES_JSON_PATH)
 
 	curl -X PATCH \
 		-H "Authorization: token $(GITHUB_TOKEN)" \
 		-H "Accept: application/vnd.github.v3+json" \
-		-H "Content-Type:application/json" \
-		--data-binary @$(RELEASE_NOTES_JSON_FILE) \
+		-H "Content-Type: application/json" \
+		--data-binary @$(RELEASE_NOTES_JSON_PATH) \
 		-o "$(RELEASE_NOTES_RESPONSE_PATH)" \
 		https://api.github.com/repos/nearfri/XCResource/releases/$(RELEASE_ID)
 
@@ -225,32 +238,9 @@ _generate-release-notes-file:
 	@cat $(RELEASE_RESPONSE_PATH) \
 	| python3 -c "import sys, json; print(json.load(sys.stdin)['body'])" \
 	| tr -d '\r' \
-	> $(RELEASE_NOTES_FILE)
+	> $(RELEASE_NOTES_PATH)
 
-	@echo '\n$(ARTIFACTBUNDLE_INFO)' >> $(RELEASE_NOTES_FILE)
-
-.PHONY: upload
-upload:
-	@if [ ! -f $(RELEASE_RESPONSE_PATH) ]; then \
-		echo "$(RELEASE_RESPONSE_PATH) file not found."; \
-		exit 30; \
-	fi
-
-	curl -X POST \
-		-T "$(EXECUTABLE_ZIP)" \
-		-H "Content-Type: $(shell file -b --mime-type $(EXECUTABLE_ZIP))" \
-		-H "Authorization: token $(GITHUB_TOKEN)" \
-		-H "Accept: application/vnd.github.v3+json" \
-		"$(EXECUTABLE_UPLOAD_URL)" \
-	| cat
-
-	curl -X POST \
-		-T "$(ARTIFACTBUNDLE_ZIP)" \
-		-H "Content-Type: $(shell file -b --mime-type $(ARTIFACTBUNDLE_ZIP))" \
-		-H "Authorization: token $(GITHUB_TOKEN)" \
-		-H "Accept: application/vnd.github.v3+json" \
-		"$(ARTIFACTBUNDLE_UPLOAD_URL)" \
-	| cat
+	@echo '\n$(ARTIFACTBUNDLE_INFO)' >> $(RELEASE_NOTES_PATH)
 
 .PHONY: _open-release-page
 _open-release-page:
