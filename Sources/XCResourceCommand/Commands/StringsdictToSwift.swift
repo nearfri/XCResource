@@ -3,12 +3,12 @@ import ArgumentParser
 import LocStringKeyGen
 import XCResourceUtil
 
-struct StringsToSwift: ParsableCommand {
+struct StringsdictToSwift: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
-        commandName: "strings2swift",
-        abstract: "strings를 Swift 소스 코드로 변환",
+        commandName: "stringsdict2swift",
+        abstract: "stringsdict를 Swift 소스 코드로 변환",
         discussion: """
-            Localizable.strings 파일로 Swift enum 코드를 생성한다.
+            Localizable.stringsdict 파일로 Swift enum 코드를 생성한다.
             """)
     
     // MARK: - Default values
@@ -37,14 +37,16 @@ struct StringsToSwift: ParsableCommand {
     }
     
     private func generateCode() throws -> String {
-        let stringsFileURL = URL(fileURLWithExpandingTildeInPath: resourcesPath)
-            .appendingPathComponents(language: language, tableName: tableName)
+        let tableType = StringTableType.stringsdict
+        
+        let stringsdictFileURL = URL(fileURLWithExpandingTildeInPath: resourcesPath)
+            .appendingPathComponents(language: language, tableName: tableName, tableType: tableType)
         
         let request = StringKeyGenerator.Request(
-            stringsFileURL: stringsFileURL,
+            stringsFileURL: stringsdictFileURL,
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftPath))
         
-        let generator = StringKeyGenerator.stringsToStringKey()
+        let generator = StringKeyGenerator.stringsdictToStringKey()
         
         return try generator.generate(for: request)
     }
