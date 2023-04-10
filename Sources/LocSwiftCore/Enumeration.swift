@@ -25,5 +25,12 @@ extension Enumeration {
         public var joinedDocumentComment: String? {
             return comments.joinedDocumentText
         }
+        
+        public func hasCommandName(_ commandName: String) -> Bool {
+            return comments
+                .filter(\.isForDeveloper)
+                .map(\.text)
+                .contains(where: { $0.hasPrefix(commandName) })
+        }
     }
 }

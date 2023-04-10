@@ -76,6 +76,7 @@ public class StringKeyToStringsGenerator {
     }
     
     public convenience init() {
+        // TODO: Maybe it needs to apply LocalizationItemImporterFormatLabelRemovalDecorator
         self.init(
             languageDetector: DefaultLanguageDetector(),
             sourceCodeImporter: LocalizationItemImporterFilterDecorator(
