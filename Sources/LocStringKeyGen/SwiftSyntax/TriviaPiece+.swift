@@ -31,7 +31,9 @@ extension TriviaPiece {
     
     var containsText: Bool {
         switch self {
-        case .lineComment, .blockComment, .docLineComment, .docBlockComment, .garbageText:
+        case .lineComment, .blockComment, .docLineComment, .docBlockComment:
+            return true
+        case .unexpectedText, .shebang:
             return true
         default:
             return false

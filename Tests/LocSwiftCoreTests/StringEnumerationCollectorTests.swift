@@ -33,7 +33,7 @@ private enum Fixture {
 final class StringEnumerationCollectorTests: XCTestCase {
     func test_walk() throws {
         // Given
-        let sut = StringEnumerationCollector()
+        let sut = StringEnumerationCollector(viewMode: .sourceAccurate)
         let syntaxTree: SourceFileSyntax = try SyntaxParser.parse(source: Fixture.stringKeyEnum)
         
         let expectedEnum = Enumeration<String>(identifier: "StringKey", cases: [

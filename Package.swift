@@ -4,12 +4,6 @@
 import PackageDescription
 import Foundation
 
-private let swiftSyntax = SwiftSyntaxPackage(
-    version: "0.50700.1",
-    internalParser: .init(
-        version: "5.7.1",
-        checksum: "feb332ba0a027812b1ee7f552321d6069a46207e5cd0f64fa9bb78e2a261b366"))
-
 let package = Package(
     name: "XCResource",
     defaultLocalization: "en",
@@ -26,9 +20,9 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.4"),
+        .package(url: "https://github.com/apple/swift-syntax", from: "508.0.0"),
         .package(url: "https://github.com/apple/swift-collections", from: "1.0.3"),
         .package(url: "https://github.com/nearfri/Strix", from: "2.3.7"),
-        swiftSyntax.packageDependency,
     ],
     targets: [
         // MARK: - XCResourceCLI
@@ -83,13 +77,20 @@ let package = Package(
             dependencies: [
                 "LocStringCore",
                 "LocSwiftCore",
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxParser", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
-            ] + swiftSyntax.targetDependencies),
+            ]),
         .testTarget(
             name: "LocStringKeyGenTests",
             dependencies: [
-                "LocStringKeyGen", "TestUtil"
-            ] + swiftSyntax.targetDependencies),
+                "LocStringKeyGen",
+                "TestUtil",
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxParser", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+            ]),
         
         // MARK: - LocStringsGen
         
@@ -103,8 +104,9 @@ let package = Package(
         .testTarget(
             name: "LocStringsGenTests",
             dependencies: [
-                "LocStringsGen", "TestUtil"
-            ] + swiftSyntax.targetDependencies),
+                "LocStringsGen",
+                "TestUtil",
+            ]),
         
         // MARK: - LocStringFormGen
         
@@ -118,8 +120,9 @@ let package = Package(
         .testTarget(
             name: "LocStringFormGenTests",
             dependencies: [
-                "LocStringFormGen", "TestUtil"
-            ] + swiftSyntax.targetDependencies),
+                "LocStringFormGen",
+                "TestUtil",
+            ]),
         
         // MARK: - LocCSVGen
         
@@ -153,11 +156,20 @@ let package = Package(
         
         .target(
             name: "LocSwiftCore",
-            dependencies: ["LocStringCore"] + swiftSyntax.targetDependencies,
-            linkerSettings: swiftSyntax.linkerSettings),
+            dependencies: [
+                "LocStringCore",
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxParser", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+            ]),
         .testTarget(
             name: "LocSwiftCoreTests",
-            dependencies: ["LocSwiftCore"] + swiftSyntax.targetDependencies),
+            dependencies: [
+                "LocSwiftCore",
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxParser", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+            ]),
         
         // MARK: - XCResourceUtil
         
@@ -183,47 +195,5 @@ let package = Package(
         .target(
             name: "TestUtil",
             path: "Tests/_TestUtil"),
-        
-        // MARK: - lib_InternalSwiftSyntaxParser
-        
-        swiftSyntax.internalParserTarget,
     ]
 )
-
-private struct SwiftSyntaxPackage {
-    struct InternalParser {
-        var version: String
-        var checksum: String
-    }
-    
-    var version: Version
-    var internalParser: InternalParser
-    
-    var packageDependency: Package.Dependency {
-        return .package(url: "https://github.com/apple/swift-syntax", exact: version)
-    }
-    
-    var targetDependencies: [Target.Dependency] {
-        return [
-            .product(name: "SwiftSyntax", package: "swift-syntax"),
-            .product(name: "SwiftSyntaxParser", package: "swift-syntax"),
-            .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
-            "lib_InternalSwiftSyntaxParser",
-        ]
-    }
-    
-    // Pass `-dead_strip_dylibs` to ignore the dynamic version of `lib_InternalSwiftSyntaxParser`
-    // that ships with SwiftSyntax because we want the static version from
-    // `StaticInternalSwiftSyntaxParser`.
-    var linkerSettings: [LinkerSetting] {
-        return [.unsafeFlags(["-Xlinker", "-dead_strip_dylibs"])]
-    }
-    
-    var internalParserTarget: Target {
-        return .binaryTarget(
-            name: "lib_InternalSwiftSyntaxParser",
-            url: "https://github.com/keith/StaticInternalSwiftSyntaxParser/releases/download/"
-            + "\(internalParser.version)/lib_InternalSwiftSyntaxParser.xcframework.zip",
-            checksum: internalParser.checksum)
-    }
-}

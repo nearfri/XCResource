@@ -22,28 +22,29 @@ extension EnumCaseDeclSyntax {
             return pieces
         }()
         
-        let leadingTrivia = Trivia(pieces: triviaPieces)
-        
-        let builder = EnumCaseDecl(elementsBuilder:  {
+        self = EnumCaseDecl(leadingTrivia: Trivia(pieces: triviaPieces), elementsBuilder: {
             if localizationItem.id == localizationItem.key {
-                EnumCaseElement(identifier: localizationItem.id)
+                EnumCaseElement(leadingTrivia: .space, identifier: localizationItem.id)
             } else {
                 EnumCaseElement(
+                    leadingTrivia: .space,
                     identifier: localizationItem.id,
-                    rawValue: InitializerClause(value: StringLiteralExpr(localizationItem.key)))
+                    rawValue: InitializerClause(
+                        equal: .equalToken(leadingTrivia: .space, trailingTrivia: .space),
+                        value: StringLiteralExpr(content: localizationItem.key)))
             }
         })
-        
-        self = builder.buildDecl(format: .init(), leadingTrivia: leadingTrivia).as(Self.self)!
     }
     
     func applying(_ localizationItem: LocalizationItem) -> Self {
         func checkID() -> Bool {
-            return localizationItem.id == EnumCaseIdentifierExtractor().extract(from: self)
+            let extractor = EnumCaseIdentifierExtractor(viewMode: .sourceAccurate)
+            return localizationItem.id == extractor.extract(from: self)
         }
         
         func checkKey() -> Bool {
-            guard let rawValue = EnumCaseRawValueExtractor().extract(from: self) else {
+            let extractor = EnumCaseRawValueExtractor(viewMode: .sourceAccurate)
+            guard let rawValue = extractor.extract(from: self) else {
                 return true
             }
             return localizationItem.key == rawValue

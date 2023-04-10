@@ -3,8 +3,14 @@ import SwiftSyntax
 
 class StringEnumerationCollector: SyntaxVisitor {
     private let commentsExtractor: CommentsExtractor = .init()
-    private let caseIdentifierExtractor: EnumCaseIdentifierExtractor = .init()
-    private let caseRawValueExtractor: EnumCaseRawValueExtractor = .init()
+    
+    private let caseIdentifierExtractor: EnumCaseIdentifierExtractor = {
+        .init(viewMode: .sourceAccurate)
+    }()
+    
+    private let caseRawValueExtractor: EnumCaseRawValueExtractor = {
+        .init(viewMode: .sourceAccurate)
+    }()
     
     private(set) var enumerations: [Enumeration<String>] = []
     private var currentEnumeraion: Enumeration<String> = .init(identifier: "", cases: [])
