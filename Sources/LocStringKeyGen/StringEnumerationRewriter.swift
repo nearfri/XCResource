@@ -3,19 +3,21 @@ import LocSwiftCore
 import SwiftSyntax
 
 class StringEnumerationRewriter: SyntaxRewriter {
-    private let caseIdentifierExtractor: EnumCaseIdentifierExtractor = .init()
-    private let caseRawValueExtractor: EnumCaseRawValueExtractor = .init()
+    private let caseIdentifierExtractor: EnumCaseIdentifierExtractor
+    private let caseRawValueExtractor: EnumCaseRawValueExtractor
     
     private let difference: LocalizationDifference
     
     init(difference: LocalizationDifference) {
+        self.caseIdentifierExtractor = .init(viewMode: .sourceAccurate)
+        self.caseRawValueExtractor = .init(viewMode: .sourceAccurate)
         self.difference = difference
     }
     
-    override func visit(_ node: MemberDeclListSyntax) -> Syntax {
+    override func visit(_ node: MemberDeclListSyntax) -> MemberDeclListSyntax {
         let indent = calculateEnumCaseIndent(from: node) ?? .spaces(4)
         
-        var newNode = super.visit(node).as(MemberDeclListSyntax.self)!
+        var newNode = super.visit(node)
         
         newNode = removingBlankEnumCaseItems(from: newNode)
         
@@ -23,7 +25,7 @@ class StringEnumerationRewriter: SyntaxRewriter {
         
         newNode = trimmingEmptyLinePrefixOfFirstItem(of: newNode)
         
-        return Syntax(newNode)
+        return newNode
     }
     
     private func calculateEnumCaseIndent(from node: MemberDeclListSyntax) -> TriviaPiece? {
@@ -57,9 +59,8 @@ class StringEnumerationRewriter: SyntaxRewriter {
                 result = result.replacing(childAt: 0, with: firstItem.withLeadingTrivia(trivia))
             }
             
-            let enumCase = SyntaxFactory.makeMemberDeclListItem(
-                decl: DeclSyntax(EnumCaseDeclSyntax(localizationItem: item, indent: indent)),
-                semicolon: nil)
+            let enumCase = MemberDeclListItemSyntax(
+                decl: EnumCaseDeclSyntax(localizationItem: item, indent: indent))
             
             result = result.inserting(enumCase, at: index)
         }
@@ -86,7 +87,7 @@ class StringEnumerationRewriter: SyntaxRewriter {
         let identifier = caseIdentifierExtractor.extract(from: node)
         
         if difference.removals.contains(identifier) {
-            node = SyntaxFactory.makeBlankEnumCaseDecl()
+            node = EnumCaseDeclSyntax(caseKeyword: .caseKeyword(presence: .missing))
         }
         
         if let item = difference.modifications[identifier] {
