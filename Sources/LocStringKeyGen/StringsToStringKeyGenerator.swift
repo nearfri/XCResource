@@ -2,6 +2,10 @@ import Foundation
 import LocStringCore
 import LocSwiftCore
 
+protocol LocalizationItemFilter: AnyObject {
+    func isIncluded(_ item: LocalizationItem) -> Bool
+}
+
 protocol LocalizationDifferenceCalculator: AnyObject {
     func calculate(
         targetItems: [LocalizationItem],
@@ -42,16 +46,19 @@ extension StringsToStringKeyGenerator {
 public class StringsToStringKeyGenerator {
     private let stringsImporter: LocalizationItemImporter
     private let sourceCodeImporter: LocalizationItemImporter
+    private let sourceCodeFilter: LocalizationItemFilter
     private let differenceCalculator: LocalizationDifferenceCalculator
     private let sourceCodeRewriter: LocalizationSourceCodeRewriter
     
     init(stringsImporter: LocalizationItemImporter,
          sourceCodeImporter: LocalizationItemImporter,
+         sourceCodeFilter: LocalizationItemFilter,
          differenceCalculator: LocalizationDifferenceCalculator,
          sourceCodeRewriter: LocalizationSourceCodeRewriter
     ) {
         self.stringsImporter = stringsImporter
         self.sourceCodeImporter = sourceCodeImporter
+        self.sourceCodeFilter = sourceCodeFilter
         self.differenceCalculator = differenceCalculator
         self.sourceCodeRewriter = sourceCodeRewriter
     }
@@ -64,6 +71,7 @@ public class StringsToStringKeyGenerator {
             sourceCodeImporter: LocalizationItemImporterFormatLabelRemovalDecorator(
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter())),
+            sourceCodeFilter: StringsItemFilter(),
             differenceCalculator: DefaultLocalizationDifferenceCalculator(),
             sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
     }
@@ -73,8 +81,7 @@ public class StringsToStringKeyGenerator {
         
         let itemsInSourceCode = try sourceCodeImporter.import(at: request.sourceCodeURL)
         
-        let filteredItemsInSourceCode = itemsInSourceCode
-            .filter({ !$0.commentContainsPluralVariables })
+        let filteredItemsInSourceCode = itemsInSourceCode.filter(sourceCodeFilter.isIncluded(_:))
         
         let difference = differenceCalculator.calculate(
             targetItems: itemsInStrings,

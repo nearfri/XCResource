@@ -20,16 +20,19 @@ extension StringsdictToStringKeyGenerator {
 public class StringsdictToStringKeyGenerator {
     private let stringsdictImporter: LocalizationItemImporter
     private let sourceCodeImporter: LocalizationItemImporter
+    private let sourceCodeFilter: LocalizationItemFilter
     private let differenceCalculator: LocalizationDifferenceCalculator
     private let sourceCodeRewriter: LocalizationSourceCodeRewriter
     
     init(stringsdictImporter: LocalizationItemImporter,
          sourceCodeImporter: LocalizationItemImporter,
+         sourceCodeFilter: LocalizationItemFilter,
          differenceCalculator: LocalizationDifferenceCalculator,
          sourceCodeRewriter: LocalizationSourceCodeRewriter
     ) {
         self.stringsdictImporter = stringsdictImporter
         self.sourceCodeImporter = sourceCodeImporter
+        self.sourceCodeFilter = sourceCodeFilter
         self.differenceCalculator = differenceCalculator
         self.sourceCodeRewriter = sourceCodeRewriter
     }
@@ -42,6 +45,7 @@ public class StringsdictToStringKeyGenerator {
             sourceCodeImporter: LocalizationItemImporterFormatLabelRemovalDecorator(
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter())),
+            sourceCodeFilter: StringsdictItemFilter(),
             differenceCalculator: DefaultLocalizationDifferenceCalculator(),
             sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
     }
@@ -51,8 +55,7 @@ public class StringsdictToStringKeyGenerator {
         
         let itemsInSourceCode = try sourceCodeImporter.import(at: request.sourceCodeURL)
         
-        let filteredItemsInSourceCode = itemsInSourceCode
-            .filter({ $0.commentContainsPluralVariables })
+        let filteredItemsInSourceCode = itemsInSourceCode.filter(sourceCodeFilter.isIncluded(_:))
         
         let difference = differenceCalculator.calculate(
             targetItems: itemsInStringsdict,
