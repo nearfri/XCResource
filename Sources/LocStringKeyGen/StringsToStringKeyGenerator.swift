@@ -24,7 +24,7 @@ extension LocalizationSourceCodeRewriter {
     }
 }
 
-extension StringKeyGenerator {
+extension StringsToStringKeyGenerator {
     public struct Request {
         public var stringsFileURL: URL
         public var sourceCodeURL: URL
@@ -39,50 +39,31 @@ extension StringKeyGenerator {
     }
 }
 
-public class StringKeyGenerator {
+public class StringsToStringKeyGenerator {
     private let stringsImporter: LocalizationItemImporter
     private let sourceCodeImporter: LocalizationItemImporter
-    private let sourceCodeFilter: (LocalizationItem) -> Bool
     private let differenceCalculator: LocalizationDifferenceCalculator
     private let sourceCodeRewriter: LocalizationSourceCodeRewriter
     
     init(stringsImporter: LocalizationItemImporter,
          sourceCodeImporter: LocalizationItemImporter,
-         sourceCodeFilter: @escaping (LocalizationItem) -> Bool,
          differenceCalculator: LocalizationDifferenceCalculator,
          sourceCodeRewriter: LocalizationSourceCodeRewriter
     ) {
         self.stringsImporter = stringsImporter
         self.sourceCodeImporter = sourceCodeImporter
-        self.sourceCodeFilter = sourceCodeFilter
         self.differenceCalculator = differenceCalculator
         self.sourceCodeRewriter = sourceCodeRewriter
     }
     
-    public static func stringsToStringKey() -> StringKeyGenerator {
-        return make(
-            stringsImporter: StringsImporter(),
-            sourceCodeFilter: { !$0.commentContainsPluralVariables })
-    }
-    
-    public static func stringsdictToStringKey() -> StringKeyGenerator {
-        return make(
-            stringsImporter: StringsdictImporter(),
-            sourceCodeFilter: { $0.commentContainsPluralVariables })
-    }
-    
-    private static func make(
-        stringsImporter: LocalizationItemImporter,
-        sourceCodeFilter: @escaping (LocalizationItem) -> Bool
-    ) -> StringKeyGenerator {
-        return StringKeyGenerator(
+    public convenience init() {
+        self.init(
             stringsImporter: LocalizationItemImporterCommentWithValueDecorator(
                 decoratee: LocalizationItemImporterIDDecorator(
-                    decoratee: stringsImporter)),
+                    decoratee: StringsImporter())),
             sourceCodeImporter: LocalizationItemImporterFormatLabelRemovalDecorator(
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter())),
-            sourceCodeFilter: sourceCodeFilter,
             differenceCalculator: DefaultLocalizationDifferenceCalculator(),
             sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
     }
@@ -91,7 +72,9 @@ public class StringKeyGenerator {
         let itemsInStrings = try stringsImporter.import(at: request.stringsFileURL)
         
         let itemsInSourceCode = try sourceCodeImporter.import(at: request.sourceCodeURL)
-        let filteredItemsInSourceCode = itemsInSourceCode.filter(sourceCodeFilter)
+        
+        let filteredItemsInSourceCode = itemsInSourceCode
+            .filter({ !$0.commentContainsPluralVariables })
         
         let difference = differenceCalculator.calculate(
             targetItems: itemsInStrings,

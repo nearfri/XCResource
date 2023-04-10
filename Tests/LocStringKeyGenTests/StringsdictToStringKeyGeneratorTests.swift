@@ -18,36 +18,6 @@ private enum Fixture {
         
         """
     
-    static let strings = """
-        /* Greeting */
-        "greeting" = "Hello %@";
-        
-        /* Cancel */
-        "common_cancel" = "Cancel";
-        
-        /* Confirm */
-        "common_confirm" = "Confirm";
-        
-        """
-    
-    static let stringsAppliedSourceCode = """
-        import Foundation
-        
-        enum StringKey: String, CaseIterable {
-            /// Hello %@
-            case greeting
-            
-            // MARK: - Common
-            
-            /// Cancel
-            case cancel = "common_cancel"
-            
-            /// Confirm
-            case confirm = "common_confirm"
-        }
-        
-        """
-    
     static let stringsdict = """
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -96,36 +66,8 @@ private enum Fixture {
     
 }
 
-final class StringKeyGeneratorTests: XCTestCase {
-    func test_stringsToStringKey() throws {
-        // Given
-        let fm = FileManager.default
-        
-        let sourceCodeURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-        let stringsURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-        
-        try Fixture.oldSourceCode.write(to: sourceCodeURL, atomically: false, encoding: .utf8)
-        try Fixture.strings.write(to: stringsURL, atomically: false, encoding: .utf8)
-        
-        defer {
-            try? fm.removeItem(at: stringsURL)
-            try? fm.removeItem(at: sourceCodeURL)
-        }
-        
-        let sut = StringKeyGenerator.stringsToStringKey()
-        
-        let request = StringKeyGenerator.Request(
-            stringsFileURL: stringsURL,
-            sourceCodeURL: sourceCodeURL)
-        
-        // When
-        let generatedCode = try sut.generate(for: request)
-        
-        // Then
-        XCTAssertEqual(generatedCode, Fixture.stringsAppliedSourceCode)
-    }
-    
-    func test_stringsdictToSwift() throws {
+final class StringsdictToStringKeyGeneratorTests: XCTestCase {
+    func test_generate() throws {
         // Given
         let fm = FileManager.default
         
@@ -140,10 +82,10 @@ final class StringKeyGeneratorTests: XCTestCase {
             try? fm.removeItem(at: sourceCodeURL)
         }
         
-        let sut = StringKeyGenerator.stringsdictToStringKey()
+        let sut = StringsdictToStringKeyGenerator()
         
-        let request = StringKeyGenerator.Request(
-            stringsFileURL: stringsdictURL,
+        let request = StringsdictToStringKeyGenerator.Request(
+            stringsdictFileURL: stringsdictURL,
             sourceCodeURL: sourceCodeURL)
         
         // When
