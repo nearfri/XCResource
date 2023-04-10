@@ -26,11 +26,12 @@ extension Enumeration {
             return comments.joinedDocumentText
         }
         
+        public var developerComments: [String] {
+            return comments.filter(\.isForDeveloper).map(\.text)
+        }
+        
         public func hasCommandName(_ commandName: String) -> Bool {
-            return comments
-                .filter(\.isForDeveloper)
-                .map(\.text)
-                .contains(where: { $0.hasPrefix(commandName) })
+            return developerComments.contains(where: { $0.hasPrefix(commandName) })
         }
     }
 }

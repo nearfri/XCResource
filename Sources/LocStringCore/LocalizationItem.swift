@@ -5,12 +5,20 @@ public struct LocalizationItem: Equatable, Identifiable, SettableByKeyPath {
     public let id: String
     public var key: String
     public var value: String
+    public var developerComments: [String]
     public var comment: String?
     
-    public init(id: String? = nil, key: String, value: String, comment: String? = nil) {
+    public init(
+        id: String? = nil,
+        key: String,
+        value: String,
+        developerComments: [String] = [],
+        comment: String? = nil
+    ) {
         self.id = id ?? key
         self.key = key
         self.value = value
+        self.developerComments = developerComments
         self.comment = comment
     }
 }
@@ -36,6 +44,7 @@ extension LocalizationItem {
             id: newID,
             key: key,
             value: value,
+            developerComments: developerComments,
             comment: comment)
     }
     
