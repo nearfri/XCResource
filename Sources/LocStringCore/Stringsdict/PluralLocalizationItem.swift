@@ -66,8 +66,12 @@ extension PluralLocalizationItem {
     }
     
     public var suggestedFormat: String {
-        // TODO: variable 키만으로 만들어진 format이면 variable 가지고 포맷 제안 만들기
-        return format
+        guard variables.count == 1, let (key, variable) = variables.first,
+              format == "%#@\(key)@", variable.other.contains("%\(variable.valueType)")
+        else { return format }
+        
+        return variable.other.replacingOccurrences(
+            of: "%\(variable.valueType)",
+            with: "%#@\(key)@")
     }
 }
-
