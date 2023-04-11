@@ -37,7 +37,9 @@ final class StringEnumerationRewriterTests: XCTestCase {
             comment: "Hello")
         
         let diff = LocalizationDifference(insertions: [(index: 0, item: localizationItem)])
-        let sut = StringEnumerationRewriter(difference: diff)
+        let sut = StringEnumerationRewriter(
+            difference: diff,
+            lineCommentForLocalizationItem: { _ in nil })
         
         // When
         let modifiedNode = sut.visit(fileNode)
@@ -68,7 +70,9 @@ final class StringEnumerationRewriterTests: XCTestCase {
             comment: "Hello")
         
         let diff = LocalizationDifference(insertions: [(index: 1, item: localizationItem)])
-        let sut = StringEnumerationRewriter(difference: diff)
+        let sut = StringEnumerationRewriter(
+            difference: diff,
+            lineCommentForLocalizationItem: { _ in nil })
         
         // When
         let modifiedNode = sut.visit(fileNode)
@@ -90,12 +94,48 @@ final class StringEnumerationRewriterTests: XCTestCase {
             """)
     }
     
+    func test_insertWithAdditionalLineComment() throws {
+        // Given
+        let localizationItem = LocalizationItem(
+            id: "hello",
+            key: "greeting_hello",
+            value: "",
+            comment: "Hello")
+        
+        let diff = LocalizationDifference(insertions: [(index: 0, item: localizationItem)])
+        let sut = StringEnumerationRewriter(
+            difference: diff,
+            lineCommentForLocalizationItem: { _ in "xcresource:target:stringsdict" })
+        
+        // When
+        let modifiedNode = sut.visit(fileNode)
+        
+        // Then
+        XCTAssertEqual(modifiedNode.description, """
+            enum StringKey: String, CaseIterable {
+                // xcresource:target:stringsdict
+                /// Hello
+                case hello = "greeting_hello"
+                
+                // MARK: - Common
+                
+                /// Cancel
+                case cancel = "common_cancel"
+                
+                /// Confirm
+                case confirm = "common_confirm"
+            }
+            """)
+    }
+    
     // MARK: - remove
     
     func test_removeMiddleCase() throws {
         // Given
         let diff = LocalizationDifference(removals: ["confirm"])
-        let sut = StringEnumerationRewriter(difference: diff)
+        let sut = StringEnumerationRewriter(
+            difference: diff,
+            lineCommentForLocalizationItem: { _ in nil })
         
         // When
         let modifiedNode = sut.visit(fileNode)
@@ -114,7 +154,9 @@ final class StringEnumerationRewriterTests: XCTestCase {
     func test_removeStartCase() throws {
         // Given
         let diff = LocalizationDifference(removals: ["cancel"])
-        let sut = StringEnumerationRewriter(difference: diff)
+        let sut = StringEnumerationRewriter(
+            difference: diff,
+            lineCommentForLocalizationItem: { _ in nil })
         
         // When
         let modifiedNode = sut.visit(fileNode)
@@ -139,7 +181,9 @@ final class StringEnumerationRewriterTests: XCTestCase {
                 value: "",
                 comment: "Cancel Text")
         ])
-        let sut = StringEnumerationRewriter(difference: diff)
+        let sut = StringEnumerationRewriter(
+            difference: diff,
+            lineCommentForLocalizationItem: { _ in nil })
         
         // When
         let modifiedNode = sut.visit(fileNode)
@@ -167,7 +211,9 @@ final class StringEnumerationRewriterTests: XCTestCase {
                 value: "",
                 comment: nil)
         ])
-        let sut = StringEnumerationRewriter(difference: diff)
+        let sut = StringEnumerationRewriter(
+            difference: diff,
+            lineCommentForLocalizationItem: { _ in nil })
         
         // When
         let modifiedNode = sut.visit(fileNode)
@@ -177,6 +223,37 @@ final class StringEnumerationRewriterTests: XCTestCase {
             enum StringKey: String, CaseIterable {
                 // MARK: - Common
                 
+                case cancel = "common_cancel"
+                
+                /// Confirm
+                case confirm = "common_confirm"
+            }
+            """)
+    }
+    
+    func test_modifyWithAdditionalLineComment() throws {
+        // Given
+        let diff = LocalizationDifference(modifications: [
+            "cancel": LocalizationItem(
+                id: "cancel",
+                key: "common_cancel",
+                value: "",
+                comment: "Cancel Text")
+        ])
+        let sut = StringEnumerationRewriter(
+            difference: diff,
+            lineCommentForLocalizationItem: { _ in "xcresource:target:stringsdict" })
+        
+        // When
+        let modifiedNode = sut.visit(fileNode)
+        
+        // Then
+        XCTAssertEqual(modifiedNode.description, """
+            enum StringKey: String, CaseIterable {
+                // MARK: - Common
+                
+                // xcresource:target:stringsdict
+                /// Cancel Text
                 case cancel = "common_cancel"
                 
                 /// Confirm

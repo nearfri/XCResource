@@ -1,4 +1,5 @@
 import Foundation
+import LocStringCore
 import LocSwiftCore
 import SwiftSyntax
 
@@ -7,11 +8,15 @@ class StringEnumerationRewriter: SyntaxRewriter {
     private let caseRawValueExtractor: EnumCaseRawValueExtractor
     
     private let difference: LocalizationDifference
+    private let lineCommentForLocalizationItem: (LocalizationItem) -> String?
     
-    init(difference: LocalizationDifference) {
+    init(difference: LocalizationDifference,
+         lineCommentForLocalizationItem: @escaping (LocalizationItem) -> String?
+    ) {
         self.caseIdentifierExtractor = .init(viewMode: .sourceAccurate)
         self.caseRawValueExtractor = .init(viewMode: .sourceAccurate)
         self.difference = difference
+        self.lineCommentForLocalizationItem = lineCommentForLocalizationItem
     }
     
     override func visit(_ node: MemberDeclListSyntax) -> MemberDeclListSyntax {
@@ -53,16 +58,17 @@ class StringEnumerationRewriter: SyntaxRewriter {
     ) -> MemberDeclListSyntax {
         var result = node
         
-        for (index, item) in difference.insertions {
+        for (index, var item) in difference.insertions {
             if index == 0, let firstItem = node.first {
                 let trivia: Trivia = [.newlines(1), indent] + (firstItem.leadingTrivia ?? [])
                 result = result.replacing(childAt: 0, with: firstItem.withLeadingTrivia(trivia))
             }
             
-            let enumCase = MemberDeclListItemSyntax(
-                decl: EnumCaseDeclSyntax(localizationItem: item, indent: indent))
+            item.developerComments = lineCommentForLocalizationItem(item).map({ [$0] }) ?? []
             
-            result = result.inserting(enumCase, at: index)
+            let enumCase = EnumCaseDeclSyntax(localizationItem: item, indent: indent)
+            
+            result = result.inserting(MemberDeclListItemSyntax(decl: enumCase), at: index)
         }
         
         return result
@@ -90,7 +96,8 @@ class StringEnumerationRewriter: SyntaxRewriter {
             node = EnumCaseDeclSyntax(caseKeyword: .caseKeyword(presence: .missing))
         }
         
-        if let item = difference.modifications[identifier] {
+        if var item = difference.modifications[identifier] {
+            item.developerComments = lineCommentForLocalizationItem(item).map({ [$0] }) ?? []
             node = node.applying(item)
         }
         

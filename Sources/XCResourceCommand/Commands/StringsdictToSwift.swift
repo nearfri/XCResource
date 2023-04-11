@@ -42,11 +42,12 @@ struct StringsdictToSwift: ParsableCommand {
         let stringsdictFileURL = URL(fileURLWithExpandingTildeInPath: resourcesPath)
             .appendingPathComponents(language: language, tableName: tableName, tableType: tableType)
         
-        let request = StringKeyGenerator.Request(
-            stringsFileURL: stringsdictFileURL,
+        let request = StringsdictToStringKeyGenerator.Request(
+            stringsdictFileURL: stringsdictFileURL,
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftPath))
         
-        let generator = StringKeyGenerator.stringsdictToStringKey()
+        let generator = StringsdictToStringKeyGenerator(
+            commandNameSet: .init(include: "xcresource:target:stringsdict"))
         
         return try generator.generate(for: request)
     }

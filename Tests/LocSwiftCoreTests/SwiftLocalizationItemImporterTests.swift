@@ -36,9 +36,11 @@ final class SwiftLocalizationItemImporterTests: XCTestCase {
         let expectedItems: [LocalizationItem] = [
             .init(key: "common_cancel",
                   value: "",
+                  developerComments: ["line - cancel 1.", "line - cancel 2."],
                   comment: "document line - cancel 1. document line - cancel 2."),
             .init(key: "common_confirm",
                   value: "",
+                  developerComments: ["block - confirm 1.", "block - confirm 2."],
                   comment: "document block - confirm 1. document block - confirm 2."),
         ]
         

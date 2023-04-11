@@ -17,6 +17,7 @@ public class SwiftLocalizationItemImporter: LocalizationItemImporter {
                 id: enumCase.identifier,
                 key: enumCase.rawValue,
                 value: "",
+                developerComments: enumCase.developerComments,
                 comment: enumCase.joinedDocumentComment)
         }
     }

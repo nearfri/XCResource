@@ -2,6 +2,12 @@ import Foundation
 import LocStringCore
 import LocSwiftCore
 
+protocol LocalizationItemFilter: AnyObject {
+    func isIncluded(_ item: LocalizationItem) -> Bool
+    
+    func lineComment(for item: LocalizationItem) -> String?
+}
+
 protocol LocalizationDifferenceCalculator: AnyObject {
     func calculate(
         targetItems: [LocalizationItem],
@@ -24,7 +30,15 @@ extension LocalizationSourceCodeRewriter {
     }
 }
 
-extension StringKeyGenerator {
+extension StringsToStringKeyGenerator {
+    public struct CommandNameSet {
+        public var exclude: String
+        
+        public init(exclude: String) {
+            self.exclude = exclude
+        }
+    }
+    
     public struct Request {
         public var stringsFileURL: URL
         public var sourceCodeURL: URL
@@ -39,16 +53,16 @@ extension StringKeyGenerator {
     }
 }
 
-public class StringKeyGenerator {
+public class StringsToStringKeyGenerator {
     private let stringsImporter: LocalizationItemImporter
     private let sourceCodeImporter: LocalizationItemImporter
-    private let sourceCodeFilter: (LocalizationItem) -> Bool
+    private let sourceCodeFilter: LocalizationItemFilter
     private let differenceCalculator: LocalizationDifferenceCalculator
     private let sourceCodeRewriter: LocalizationSourceCodeRewriter
     
     init(stringsImporter: LocalizationItemImporter,
          sourceCodeImporter: LocalizationItemImporter,
-         sourceCodeFilter: @escaping (LocalizationItem) -> Bool,
+         sourceCodeFilter: LocalizationItemFilter,
          differenceCalculator: LocalizationDifferenceCalculator,
          sourceCodeRewriter: LocalizationSourceCodeRewriter
     ) {
@@ -59,39 +73,29 @@ public class StringKeyGenerator {
         self.sourceCodeRewriter = sourceCodeRewriter
     }
     
-    public static func stringsToStringKey() -> StringKeyGenerator {
-        return make(
-            stringsImporter: StringsImporter(),
-            sourceCodeFilter: { !$0.commentContainsPluralVariables })
-    }
-    
-    public static func stringsdictToStringKey() -> StringKeyGenerator {
-        return make(
-            stringsImporter: StringsdictImporter(),
-            sourceCodeFilter: { $0.commentContainsPluralVariables })
-    }
-    
-    private static func make(
-        stringsImporter: LocalizationItemImporter,
-        sourceCodeFilter: @escaping (LocalizationItem) -> Bool
-    ) -> StringKeyGenerator {
-        return StringKeyGenerator(
+    public convenience init(commandNameSet: CommandNameSet) {
+        let sourceCodeItemFilter = StringsItemFilter(
+            commandNameForExclusion: commandNameSet.exclude)
+        
+        self.init(
             stringsImporter: LocalizationItemImporterCommentWithValueDecorator(
                 decoratee: LocalizationItemImporterIDDecorator(
-                    decoratee: stringsImporter)),
+                    decoratee: StringsImporter())),
             sourceCodeImporter: LocalizationItemImporterFormatLabelRemovalDecorator(
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter())),
-            sourceCodeFilter: sourceCodeFilter,
+            sourceCodeFilter: sourceCodeItemFilter,
             differenceCalculator: DefaultLocalizationDifferenceCalculator(),
-            sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
+            sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter(
+                lineCommentForItem: sourceCodeItemFilter.lineComment(for:)))
     }
     
     public func generate(for request: Request) throws -> String {
         let itemsInStrings = try stringsImporter.import(at: request.stringsFileURL)
         
         let itemsInSourceCode = try sourceCodeImporter.import(at: request.sourceCodeURL)
-        let filteredItemsInSourceCode = itemsInSourceCode.filter(sourceCodeFilter)
+        
+        let filteredItemsInSourceCode = itemsInSourceCode.filter(sourceCodeFilter.isIncluded(_:))
         
         let difference = differenceCalculator.calculate(
             targetItems: itemsInStrings,
