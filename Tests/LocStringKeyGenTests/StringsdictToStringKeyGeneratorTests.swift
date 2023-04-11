@@ -41,6 +41,18 @@ private enum Fixture {
                     <string>%ld apples</string>
                 </dict>
             </dict>
+            <key>hello</key>
+            <dict>
+                <key>NSStringVariableWidthRuleType</key>
+                <dict>
+                    <key>1</key>
+                    <string>Hi</string>
+                    <key>22</key>
+                    <string>Hello</string>
+                    <key>53</key>
+                    <string>Greetings and Salutations</string>
+                </dict>
+            </dict>
         </dict>
         </plist>
         
@@ -52,6 +64,10 @@ private enum Fixture {
         enum StringKey: String, CaseIterable {
             /// %@ ate %#@appleCount@ today!
             case dog_eating_apples
+            
+            // xcresource:target:stringsdict
+            /// Greetings and Salutations
+            case hello
             
             // MARK: - Common
             
@@ -82,7 +98,8 @@ final class StringsdictToStringKeyGeneratorTests: XCTestCase {
             try? fm.removeItem(at: sourceCodeURL)
         }
         
-        let sut = StringsdictToStringKeyGenerator()
+        let sut = StringsdictToStringKeyGenerator(
+            commandNameSet: .init(include: "xcresource:target:stringsdict"))
         
         let request = StringsdictToStringKeyGenerator.Request(
             stringsdictFileURL: stringsdictURL,

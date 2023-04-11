@@ -81,7 +81,7 @@ final class TriviaTests: XCTestCase {
         let sut = Trivia(pieces: [
             .newlines(1),
             .spaces(4), .newlines(1),
-            .spaces(4), .lineComment("Whatever"), .newlines(1),
+            .spaces(4), .lineComment("// Whatever"), .newlines(1),
             .spaces(4), .docLineComment("/// Confirm"), .newlines(1),
             .spaces(4),
         ])
@@ -93,7 +93,7 @@ final class TriviaTests: XCTestCase {
         let expectedCommented = Trivia(pieces: [
             .newlines(1),
             .spaces(4), .newlines(1),
-            .spaces(4), .lineComment("Whatever"), .newlines(1),
+            .spaces(4), .lineComment("// Whatever"), .newlines(1),
             .spaces(4), .docLineComment("/// Cancel"), .newlines(1),
             .spaces(4),
         ])
@@ -128,7 +128,7 @@ final class TriviaTests: XCTestCase {
         let sut = Trivia(pieces: [
             .newlines(1),
             .spaces(4), .newlines(1),
-            .spaces(4), .lineComment("Whatever"), .newlines(1),
+            .spaces(4), .lineComment("// Whatever"), .newlines(1),
             .spaces(4),
         ])
         
@@ -139,7 +139,7 @@ final class TriviaTests: XCTestCase {
         let expectedCommented = Trivia(pieces: [
             .newlines(1),
             .spaces(4), .newlines(1),
-            .spaces(4), .lineComment("Whatever"), .newlines(1),
+            .spaces(4), .lineComment("// Whatever"), .newlines(1),
             .spaces(4), .docLineComment("/// Cancel"), .newlines(1),
             .spaces(4),
         ])
@@ -152,7 +152,7 @@ final class TriviaTests: XCTestCase {
         let sut = Trivia(pieces: [
             .newlines(1),
             .spaces(4), .newlines(1),
-            .spaces(4), .lineComment("Whatever"), .newlines(1),
+            .spaces(4), .lineComment("// Whatever"), .newlines(1),
             .spaces(4), .docLineComment("/// Confirm"), .newlines(1),
             .spaces(4),
         ])
@@ -164,7 +164,7 @@ final class TriviaTests: XCTestCase {
         let expectedCommented = Trivia(pieces: [
             .newlines(1),
             .spaces(4), .newlines(1),
-            .spaces(4), .lineComment("Whatever"), .newlines(1),
+            .spaces(4), .lineComment("// Whatever"), .newlines(1),
             .spaces(4),
         ])
         
@@ -176,12 +176,83 @@ final class TriviaTests: XCTestCase {
         let sut = Trivia(pieces: [
             .newlines(1),
             .spaces(4), .newlines(1),
-            .spaces(4), .lineComment("Whatever"), .newlines(1),
+            .spaces(4), .lineComment("// Whatever"), .newlines(1),
             .spaces(4),
         ])
         
         // When
         let actualCommented = sut.replacingDocumentComment(with: nil)
+        
+        // Then
+        let expectedCommented = sut
+        
+        XCTAssertEqual(actualCommented, expectedCommented)
+    }
+    
+    // MARK: - addingLineComment
+    
+    func test_addingLineComment_insertAfterOriginalDeveloperComments() throws {
+        // Given
+        let sut = Trivia(pieces: [
+            .newlines(1),
+            .spaces(4), .newlines(1),
+            .spaces(4), .lineComment("// Whatever"), .newlines(1),
+            .spaces(4),
+        ])
+        
+        // When
+        let actualCommented = sut.addingLineComment("Cancel")
+        
+        // Then
+        let expectedCommented = Trivia(pieces: [
+            .newlines(1),
+            .spaces(4), .newlines(1),
+            .spaces(4), .lineComment("// Whatever"), .newlines(1),
+            .spaces(4), .lineComment("// Cancel"), .newlines(1),
+            .spaces(4),
+        ])
+        
+        XCTAssertEqual(actualCommented, expectedCommented)
+    }
+    
+    func test_addingLineComment_insertBeforeOriginalDocumentComments() throws {
+        // Given
+        let sut = Trivia(pieces: [
+            .newlines(1),
+            .spaces(4), .newlines(1),
+            .spaces(4), .lineComment("// Whatever"), .newlines(1),
+            .spaces(4), .docLineComment("/// Confirm"), .newlines(1),
+            .spaces(4),
+        ])
+        
+        // When
+        let actualCommented = sut.addingLineComment("Cancel")
+        
+        // Then
+        let expectedCommented = Trivia(pieces: [
+            .newlines(1),
+            .spaces(4), .newlines(1),
+            .spaces(4), .lineComment("// Whatever"), .newlines(1),
+            .spaces(4), .lineComment("// Cancel"), .newlines(1),
+            .spaces(4), .docLineComment("/// Confirm"), .newlines(1),
+            .spaces(4),
+        ])
+        
+        XCTAssertEqual(actualCommented, expectedCommented)
+    }
+    
+    func test_addingLineComment_alreadyContaining_returnsOriginal() throws {
+        // Given
+        let sut = Trivia(pieces: [
+            .newlines(1),
+            .spaces(4), .newlines(1),
+            .spaces(4), .lineComment("// Whatever"), .newlines(1),
+            .spaces(4), .docLineComment("/// Confirm"), .newlines(1),
+            .spaces(4),
+        ])
+        
+        // When
+        let actualCommented = sut.addingLineComment("Whatever")
         
         // Then
         let expectedCommented = sut

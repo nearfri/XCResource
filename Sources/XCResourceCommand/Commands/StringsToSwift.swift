@@ -44,7 +44,8 @@ struct StringsToSwift: ParsableCommand {
             stringsFileURL: stringsFileURL,
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftPath))
         
-        let generator = StringsToStringKeyGenerator()
+        let generator = StringsToStringKeyGenerator(
+            commandNameSet: .init(exclude: "xcresource:target:stringsdict"))
         
         return try generator.generate(for: request)
     }

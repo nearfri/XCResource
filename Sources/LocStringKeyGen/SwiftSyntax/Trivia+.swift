@@ -29,7 +29,7 @@ extension Trivia {
     
     func replacingDocumentComment(with comment: String?) -> Self {
         let docComment = comment.map({ TriviaPiece.docLineComment("/// \($0)") })
-        let docComments = docComment.map({ [$0] }) ?? []
+        let docComments: [TriviaPiece] = docComment.map({ [$0] }) ?? []
         
         var pieces = pieces
         
@@ -52,6 +52,28 @@ extension Trivia {
                 pieces.append(contentsOf: docComments + [.newlines(1)])
                 indent.map({ pieces.append($0) })
             }
+        }
+        
+        return Trivia(pieces: pieces)
+    }
+    
+    func addingLineComment(_ comment: String) -> Self {
+        let lineComment = TriviaPiece.lineComment("// \(comment)")
+        
+        if pieces.contains(lineComment) {
+            return self
+        }
+        
+        var pieces = pieces
+        
+        if let firstDocIndex = pieces.firstIndex(where: { $0.isDocumentComment }) {
+            let indent = firstDocIndex > 0 ? pieces[firstDocIndex - 1] : nil
+            pieces.insert(contentsOf: [lineComment, .newlines(1)], at: firstDocIndex)
+            indent.map({ pieces.insert($0, at: firstDocIndex + 2) })
+        } else {
+            let indent = pieces.last
+            pieces.append(contentsOf: [lineComment, .newlines(1)])
+            indent.map({ pieces.append($0) })
         }
         
         return Trivia(pieces: pieces)

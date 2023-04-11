@@ -4,6 +4,8 @@ import LocSwiftCore
 
 protocol LocalizationItemFilter: AnyObject {
     func isIncluded(_ item: LocalizationItem) -> Bool
+    
+    func lineComment(for item: LocalizationItem) -> String?
 }
 
 protocol LocalizationDifferenceCalculator: AnyObject {
@@ -29,6 +31,14 @@ extension LocalizationSourceCodeRewriter {
 }
 
 extension StringsToStringKeyGenerator {
+    public struct CommandNameSet {
+        public var exclude: String
+        
+        public init(exclude: String) {
+            self.exclude = exclude
+        }
+    }
+    
     public struct Request {
         public var stringsFileURL: URL
         public var sourceCodeURL: URL
@@ -63,7 +73,10 @@ public class StringsToStringKeyGenerator {
         self.sourceCodeRewriter = sourceCodeRewriter
     }
     
-    public convenience init() {
+    public convenience init(commandNameSet: CommandNameSet) {
+        let sourceCodeItemFilter = StringsItemFilter(
+            commandNameForExclusion: commandNameSet.exclude)
+        
         self.init(
             stringsImporter: LocalizationItemImporterCommentWithValueDecorator(
                 decoratee: LocalizationItemImporterIDDecorator(
@@ -71,9 +84,10 @@ public class StringsToStringKeyGenerator {
             sourceCodeImporter: LocalizationItemImporterFormatLabelRemovalDecorator(
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter())),
-            sourceCodeFilter: StringsItemFilter(),
+            sourceCodeFilter: sourceCodeItemFilter,
             differenceCalculator: DefaultLocalizationDifferenceCalculator(),
-            sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
+            sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter(
+                lineCommentForItem: sourceCodeItemFilter.lineComment(for:)))
     }
     
     public func generate(for request: Request) throws -> String {

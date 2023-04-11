@@ -27,6 +27,30 @@ final class EnumCaseDeclSyntaxTests: XCTestCase {
             """)
     }
     
+    func test_initWithLocalizationItem_withDeveloperComments() throws {
+        // Given
+        let localizationItem = LocalizationItem(
+            id: "confirm",
+            key: "common_confirm",
+            value: "",
+            developerComments: ["xcresource:target:stringsdict"],
+            comment: "Confirm")
+        
+        // When
+        let enumCaseDecl = EnumCaseDeclSyntax(
+            localizationItem: localizationItem,
+            indent: .spaces(4))
+        
+        // Then
+        XCTAssertEqual(enumCaseDecl.description, """
+            
+                
+                // xcresource:target:stringsdict
+                /// Confirm
+                case confirm = "common_confirm"
+            """)
+    }
+    
     func test_initWithLocalizationItem_withoutComment() throws {
         // Given
         let localizationItem = LocalizationItem(
@@ -81,6 +105,35 @@ final class EnumCaseDeclSyntaxTests: XCTestCase {
         XCTAssertEqual(modifiedEnumCaseDecl.description, """
             
                 
+                /// New comment
+                case confirm = "common_confirm"
+            """)
+    }
+    
+    func test_applyingLocalizationItem_withDeveloperComments() throws {
+        // Given
+        var localizationItem = LocalizationItem(
+            id: "confirm",
+            key: "common_confirm",
+            value: "",
+            developerComments: ["hello world"],
+            comment: "Confirm")
+        
+        let enumCaseDecl = EnumCaseDeclSyntax(localizationItem: localizationItem,
+                                              indent: .spaces(4))
+        
+        localizationItem.comment = "New comment"
+        localizationItem.developerComments = ["xcresource:target:stringsdict"]
+        
+        // When
+        let modifiedEnumCaseDecl = enumCaseDecl.applying(localizationItem)
+        
+        // Then
+        XCTAssertEqual(modifiedEnumCaseDecl.description, """
+            
+                
+                // hello world
+                // xcresource:target:stringsdict
                 /// New comment
                 case confirm = "common_confirm"
             """)

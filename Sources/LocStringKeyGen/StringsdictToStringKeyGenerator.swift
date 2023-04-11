@@ -3,6 +3,14 @@ import LocStringCore
 import LocSwiftCore
 
 extension StringsdictToStringKeyGenerator {
+    public struct CommandNameSet {
+        public var include: String
+        
+        public init(include: String) {
+            self.include = include
+        }
+    }
+    
     public struct Request {
         public var stringsdictFileURL: URL
         public var sourceCodeURL: URL
@@ -37,7 +45,10 @@ public class StringsdictToStringKeyGenerator {
         self.sourceCodeRewriter = sourceCodeRewriter
     }
     
-    public convenience init() {
+    public convenience init(commandNameSet: CommandNameSet) {
+        let sourceCodeItemFilter = StringsdictItemFilter(
+            commandNameForInclusion: commandNameSet.include)
+        
         self.init(
             stringsdictImporter: LocalizationItemImporterCommentWithValueDecorator(
                 decoratee: LocalizationItemImporterIDDecorator(
@@ -45,9 +56,10 @@ public class StringsdictToStringKeyGenerator {
             sourceCodeImporter: LocalizationItemImporterFormatLabelRemovalDecorator(
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter())),
-            sourceCodeFilter: StringsdictItemFilter(),
+            sourceCodeFilter: sourceCodeItemFilter,
             differenceCalculator: DefaultLocalizationDifferenceCalculator(),
-            sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
+            sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter(
+                lineCommentForItem: sourceCodeItemFilter.lineComment(for:)))
     }
     
     public func generate(for request: Request) throws -> String {

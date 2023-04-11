@@ -7,6 +7,13 @@ private enum Fixture {
         import Foundation
         
         enum StringKey: String, CaseIterable {
+            /// %@ ate %#@appleCount@ today!
+            case dog_eating_apples
+            
+            // xcresource:target:stringsdict
+            /// Greetings and Salutations
+            case hello
+            
             // MARK: - Common
             
             /// Cancel
@@ -34,6 +41,13 @@ private enum Fixture {
         import Foundation
         
         enum StringKey: String, CaseIterable {
+            /// %@ ate %#@appleCount@ today!
+            case dog_eating_apples
+            
+            // xcresource:target:stringsdict
+            /// Greetings and Salutations
+            case hello
+            
             /// Hello %@
             case greeting
             
@@ -65,7 +79,8 @@ final class StringsToStringKeyGeneratorTests: XCTestCase {
             try? fm.removeItem(at: sourceCodeURL)
         }
         
-        let sut = StringsToStringKeyGenerator()
+        let sut = StringsToStringKeyGenerator(
+            commandNameSet: .init(exclude: "xcresource:target:stringsdict"))
         
         let request = StringsToStringKeyGenerator.Request(
             stringsFileURL: stringsURL,
