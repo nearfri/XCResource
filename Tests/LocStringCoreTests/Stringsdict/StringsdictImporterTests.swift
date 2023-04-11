@@ -64,7 +64,7 @@ final class StringsdictImporterTests: XCTestCase {
         // Then
         XCTAssertEqual(items, [
             LocalizationItem(key: "dog_eating_apples", value: "%@ ate %#@appleCount@ today!"),
-            LocalizationItem(key: "remove_file_dialog", value: "%#@files@"),
+            LocalizationItem(key: "remove_file_dialog", value: "Remove %#@files@ selected files"),
         ])
     }
 }

@@ -46,4 +46,42 @@ final class PluralLocalizationItemTests: XCTestCase {
                     other: "%ld apples")
             ]))
     }
+    
+    func test_suggestedFormat_normalFormat_returnsOriginalFormat() throws {
+        // Given
+        let item = PluralLocalizationItem(
+            key: "dog_eating_apples",
+            format: "%@ ate %#@appleCount@ today!",
+            variables: [
+                "appleCount": PluralLocalizationItem.Variable(
+                    specType: "NSStringPluralRuleType",
+                    valueType: "ld",
+                    other: "%ld apples")
+            ])
+        
+        // When
+        let suggestedFormat = item.suggestedFormat
+        
+        // Then
+        XCTAssertEqual(suggestedFormat, "%@ ate %#@appleCount@ today!")
+    }
+    
+    func test_suggestedFormat_simpleFormat_returnsAdjustedFormat() throws {
+        // Given
+        let item = PluralLocalizationItem(
+            key: "dog_eating_apples",
+            format: "%#@appleCount@",
+            variables: [
+                "appleCount": PluralLocalizationItem.Variable(
+                    specType: "NSStringPluralRuleType",
+                    valueType: "ld",
+                    other: "%@ ate %ld apples today!")
+            ])
+        
+        // When
+        let suggestedFormat = item.suggestedFormat
+        
+        // Then
+        XCTAssertEqual(suggestedFormat, "%@ ate %#@appleCount@ apples today!")
+    }
 }
