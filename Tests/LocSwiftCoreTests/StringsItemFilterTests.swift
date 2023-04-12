@@ -1,6 +1,6 @@
 import XCTest
 import LocStringCore
-@testable import LocStringKeyGen
+@testable import LocSwiftCore
 
 final class StringsItemFilterTests: XCTestCase {
     private var sut: StringsItemFilter!

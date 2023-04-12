@@ -55,4 +55,8 @@ extension LocalizationItem {
     private func isIdentifierBody(_ character: Character) -> Bool {
         return isIdentifierHead(character) || character.isNumber
     }
+    
+    public func hasCommandName(_ commandName: String) -> Bool {
+        return developerComments.contains(where: { $0.hasPrefix(commandName) })
+    }
 }

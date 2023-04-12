@@ -2,12 +2,6 @@ import Foundation
 import LocStringCore
 import LocSwiftCore
 
-protocol LocalizationItemFilter: AnyObject {
-    func isIncluded(_ item: LocalizationItem) -> Bool
-    
-    func lineComment(for item: LocalizationItem) -> String?
-}
-
 protocol LocalizationDifferenceCalculator: AnyObject {
     func calculate(
         targetItems: [LocalizationItem],

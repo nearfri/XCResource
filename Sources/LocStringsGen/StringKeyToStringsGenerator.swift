@@ -4,6 +4,14 @@ import LocSwiftCore
 import XCResourceUtil
 
 extension StringKeyToStringsGenerator {
+    public struct CommandNameSet {
+        public var exclude: String
+        
+        public init(exclude: String) {
+            self.exclude = exclude
+        }
+    }
+    
     public struct Request {
         public var sourceCodeURL: URL
         public var resourcesURL: URL
@@ -75,14 +83,13 @@ public class StringKeyToStringsGenerator {
         self.stringsGenerator = stringsGenerator
     }
     
-    public convenience init() {
-        // TODO: Maybe it needs to apply LocalizationItemImporterFormatLabelRemovalDecorator
+    public convenience init(commandNameSet: CommandNameSet) {
         self.init(
             languageDetector: DefaultLanguageDetector(),
             sourceCodeImporter: LocalizationItemImporterFilterDecorator(
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter()),
-                filter: { !$0.commentContainsPluralVariables }),
+                filter: StringsItemFilter(commandNameForExclusion: commandNameSet.exclude)),
             stringsImporter: LocalizationItemImporterIDDecorator(
                 decoratee: StringsImporter()),
             stringsGenerator: DefaultStringsGenerator())

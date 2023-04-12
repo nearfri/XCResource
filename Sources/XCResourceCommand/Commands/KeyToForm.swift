@@ -57,7 +57,7 @@ struct KeyToForm: ParsableCommand {
             accessLevel: accessLevel?.rawValue)
         
         let generator = StringFormGenerator(
-            commandNameSet: .init(exclude: "xcresource:key2form:exclude"))
+            commandNameSet: .init(exclude: CommentCommandName.key2formExclude))
         
         generator.issueReporterType = issueReporterType
         
