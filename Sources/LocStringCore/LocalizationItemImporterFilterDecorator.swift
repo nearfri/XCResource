@@ -1,11 +1,10 @@
 import Foundation
-import LocStringCore
 
 public class LocalizationItemImporterFilterDecorator: LocalizationItemImporter {
     private let decoratee: LocalizationItemImporter
-    private let filter: (LocalizationItem) -> Bool
+    private let filter: LocalizationItemFilter
     
-    public init(decoratee: LocalizationItemImporter, filter: @escaping (LocalizationItem) -> Bool) {
+    public init(decoratee: LocalizationItemImporter, filter: LocalizationItemFilter) {
         self.decoratee = decoratee
         self.filter = filter
     }
@@ -13,6 +12,6 @@ public class LocalizationItemImporterFilterDecorator: LocalizationItemImporter {
     public func `import`(at url: URL) throws -> [LocalizationItem] {
         return try decoratee
             .import(at: url)
-            .filter(filter)
+            .filter(filter.isIncluded(_:))
     }
 }

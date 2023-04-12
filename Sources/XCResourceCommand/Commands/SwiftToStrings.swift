@@ -73,7 +73,8 @@ struct SwiftToStrings: ParsableCommand {
             includesComments: !omitsComments,
             sortOrder: sortsByKey ? .key : .occurrence)
         
-        let generator = StringKeyToStringsGenerator()
+        let generator = StringKeyToStringsGenerator(
+            commandNameSet: .init(exclude: CommentCommandName.targetStringsdict))
         
         return try generator.generate(for: request)
     }

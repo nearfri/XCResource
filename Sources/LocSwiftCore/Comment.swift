@@ -34,7 +34,7 @@ public enum Comment: Equatable {
     }
 }
 
-extension Array where Element == Comment {
+extension Array<Comment> {
     public var joinedDocumentText: String? {
         let result = self
             .filter(\.isForDocument)

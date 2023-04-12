@@ -58,4 +58,32 @@ final class LocalizationItemTests: XCTestCase {
         // Then
         XCTAssertEqual(fixed, expected)
     }
+    
+    func test_hasCommandName_commentsHaveCommand_returnsTrue() throws {
+        // Given
+        let sut = LocalizationItem(
+            key: "key",
+            value: "value",
+            developerComments: ["xcresource:target:stringsdict"])
+        
+        // When
+        let hasCommandName = sut.hasCommandName("xcresource:target:stringsdict")
+        
+        // Then
+        XCTAssertTrue(hasCommandName)
+    }
+    
+    func test_hasCommandName_commentsDoNotHaveCommand_returnsFalse() throws {
+        // Given
+        let sut = LocalizationItem(
+            key: "key",
+            value: "value",
+            developerComments: ["xcresource:other:command"])
+        
+        // When
+        let hasCommandName = sut.hasCommandName("xcresource:target:stringsdict")
+        
+        // Then
+        XCTAssertFalse(hasCommandName)
+    }
 }

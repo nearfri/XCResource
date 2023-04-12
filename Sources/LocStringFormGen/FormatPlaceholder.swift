@@ -26,7 +26,7 @@ extension FormatPlaceholder {
     typealias DynamicPrecision = DynamicWidth
 }
 
-extension Array where Element == FormatPlaceholder {
+extension Array<FormatPlaceholder> {
     func toFunctionParameters() throws -> [FunctionParameter] {
         var converter = PlaceholderToParameterConverter(placeholders: self)
         return try converter.convert()

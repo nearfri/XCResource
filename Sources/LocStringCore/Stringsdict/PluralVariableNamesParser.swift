@@ -2,7 +2,7 @@ import Foundation
 import Strix
 import StrixParsers
 
-extension Parser where T == [String] {
+extension Parser<[String]> {
     static var pluralVariableNames: Parser<[String]> {
         return ParserGenerator().pluralVariableNames
     }

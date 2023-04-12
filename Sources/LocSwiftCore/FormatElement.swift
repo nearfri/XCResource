@@ -7,19 +7,19 @@ public enum FormatElement: Equatable {
     case placeholder(StrixParsers.FormatPlaceholder, labels: [String])
 }
 
-extension Parser where T == [FormatElement] {
+extension Parser<[FormatElement]> {
     public static var formatElements: Parser<[FormatElement]> {
         return ParserGenerator().formatElements
     }
 }
 
-extension Parser where T == String {
+extension Parser<String> {
     public static var formatLabelRemoval: Parser<String> {
         return ParserGenerator().formatLabelRemoval
     }
 }
 
-extension Parser where T == Bool {
+extension Parser<Bool> {
     static var containsPluralVariables: Parser<Bool> {
         return Parser.formatPlaceholders.map { placeholders in
             return placeholders.contains(where: { $0.isPluralVariable })

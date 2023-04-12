@@ -2,7 +2,7 @@ import XCTest
 import Strix
 @testable import LocSwiftCore
 
-private extension Array where Element == FormatElement {
+private extension Array<FormatElement> {
     func filterPlaceholder() -> Self {
         return filter {
             if case .placeholder = $0 { return true }

@@ -1,9 +1,14 @@
 import XCTest
-import LocStringCore
-@testable import LocSwiftCore
+@testable import LocStringCore
+
+private class FakeLocalizationItemFilter: LocalizationItemFilter {
+    func isIncluded(_ item: LocalizationItem) -> Bool {
+        return item.comment?.contains("%#@") == false
+    }
+}
 
 final class LocalizationItemImporterFilterDecoratorTests: XCTestCase {
-    func test_import_excludePlurals() throws {
+    func test_import_usesFilter() throws {
         // Given
         class StubSourceCodeImporter: LocalizationItemImporter {
             static let singularItem = LocalizationItem(
@@ -23,7 +28,7 @@ final class LocalizationItemImporterFilterDecoratorTests: XCTestCase {
         
         let sut = LocalizationItemImporterFilterDecorator(
             decoratee: StubSourceCodeImporter(),
-            filter: { !$0.commentContainsPluralVariables })
+            filter: FakeLocalizationItemFilter())
         
         // When
         let importedItems = try sut.import(at: URL(fileURLWithPath: ""))
