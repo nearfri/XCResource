@@ -2,7 +2,7 @@ import XCTest
 import LocStringCore
 @testable import LocStringsGen
 
-private class StubLanguageDetector: LanguageDetector {
+private class StubLanguageDetector: LocStringCore.LanguageDetector {
     func detect(at url: URL) throws -> [LanguageID] {
         return ["en", "ko"]
     }
@@ -54,7 +54,7 @@ final class StringKeyToStringsGeneratorTests: XCTestCase {
         let stringsGenerator = StubStringsGenerator()
         
         let sut = StringKeyToStringsGenerator(
-            languageDetector: StubLanguageDetector(),
+            languageDetector: DefaultLanguageDetector(detector: StubLanguageDetector()),
             sourceCodeImporter: StubSourceCodeImporter(),
             stringsImporter: stringsImporter,
             stringsGenerator: stringsGenerator)
@@ -97,7 +97,7 @@ final class StringKeyToStringsGeneratorTests: XCTestCase {
         let stringsGenerator = StubStringsGenerator()
         
         let sut = StringKeyToStringsGenerator(
-            languageDetector: StubLanguageDetector(),
+            languageDetector: DefaultLanguageDetector(detector: StubLanguageDetector()),
             sourceCodeImporter: StubSourceCodeImporter(),
             stringsImporter: stringsImporter,
             stringsGenerator: stringsGenerator)
@@ -134,7 +134,7 @@ final class StringKeyToStringsGeneratorTests: XCTestCase {
         let stringsGenerator = StubStringsGenerator()
         
         let sut = StringKeyToStringsGenerator(
-            languageDetector: StubLanguageDetector(),
+            languageDetector: DefaultLanguageDetector(detector: StubLanguageDetector()),
             sourceCodeImporter: StubSourceCodeImporter(),
             stringsImporter: stringsImporter,
             stringsGenerator: stringsGenerator)

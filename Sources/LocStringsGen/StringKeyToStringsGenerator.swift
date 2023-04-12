@@ -3,6 +3,10 @@ import LocStringCore
 import LocSwiftCore
 import XCResourceUtil
 
+protocol LanguageDetector: AnyObject {
+    func detect<S: Sequence<LanguageID>>(at url: URL, allowedLanguages: S) throws -> [LanguageID]
+}
+
 extension StringKeyToStringsGenerator {
     public struct CommandNameSet {
         public var exclude: String
@@ -85,7 +89,8 @@ public class StringKeyToStringsGenerator {
     
     public convenience init(commandNameSet: CommandNameSet) {
         self.init(
-            languageDetector: DefaultLanguageDetector(),
+            languageDetector: DefaultLanguageDetector(
+                detector: LocStringCore.DefaultLanguageDetector()),
             sourceCodeImporter: LocalizationItemImporterFilterDecorator(
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter()),
@@ -98,7 +103,9 @@ public class StringKeyToStringsGenerator {
     public func generate(for request: Request) throws -> [LanguageID: String] {
         let itemsInSourceCode = try sourceCodeImporter.import(at: request.sourceCodeURL)
         
-        let languages = try determineLanguages(for: request)
+        let languages = try languageDetector.detect(
+            at: request.resourcesURL,
+            allowedLanguages: request.configurationsByLanguage.keys)
         
         return try languages.reduce(into: [:]) { result, language in
             let configs = request.configurationsByLanguage
@@ -129,16 +136,5 @@ public class StringKeyToStringsGenerator {
             
             result[language] = stringsGenerator.generate(from: outputItems)
         }
-    }
-    
-    private func determineLanguages(for request: Request) throws -> [LanguageID] {
-        let availableLanguages = try languageDetector.detect(at: request.resourcesURL)
-        let requestedLanguages = Set(request.configurationsByLanguage.keys)
-        
-        if requestedLanguages.contains(.all) {
-            return availableLanguages
-        }
-        
-        return availableLanguages.filter(requestedLanguages.contains(_:))
     }
 }
