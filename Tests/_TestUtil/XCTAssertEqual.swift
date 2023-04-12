@@ -1,12 +1,12 @@
 import XCTest
 
-private func SystemAssertEqual<T>(
+private func SystemAssertEqual<T: Equatable>(
     _ expression1: @autoclosure () throws -> T,
     _ expression2: @autoclosure () throws -> T,
     _ message: @autoclosure () -> String = "",
     file: StaticString = #filePath,
     line: UInt = #line
-) where T: Equatable {
+) {
     XCTAssertEqual(try expression1(), try expression2(), message(), file: file, line: line)
 }
 

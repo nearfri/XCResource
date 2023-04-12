@@ -25,7 +25,7 @@ extension LanguageID: CustomStringConvertible {
     public var description: String { rawValue }
 }
 
-extension Array where Element == LanguageID {
+extension Array<LanguageID> {
     public func sorted(usingPreferredLanguages languages: [LanguageID]) -> [LanguageID] {
         return sorted { lhs, rhs in
             switch (languages.firstIndex(of: lhs), languages.firstIndex(of: rhs)) {

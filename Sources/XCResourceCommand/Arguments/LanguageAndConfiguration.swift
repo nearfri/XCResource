@@ -35,7 +35,7 @@ struct LanguageAndConfiguration: ExpressibleByArgument {
     }
 }
 
-extension Array where Element == LanguageAndConfiguration {
+extension Array<LanguageAndConfiguration> {
     var configurationsByLanguage: [LanguageID: LocalizationConfiguration] {
         return reduce(into: [:]) { result, each in
             result[LanguageID(each.language)] = each.configuration

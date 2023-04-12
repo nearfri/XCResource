@@ -7,6 +7,15 @@ protocol LanguageDetector: AnyObject {
     func detect<S: Sequence<LanguageID>>(at url: URL, allowedLanguages: S) throws -> [LanguageID]
 }
 
+protocol StringsLocalizationItemMerger: AnyObject {
+    func itemsByMerging(
+        itemsInSourceCode: [LocalizationItem],
+        itemsInStrings: [LocalizationItem],
+        mergeStrategy: MergeStrategy,
+        verifiesComments: Bool
+    ) -> [LocalizationItem]
+}
+
 extension StringKeyToStringsGenerator {
     public struct CommandNameSet {
         public var exclude: String
@@ -52,38 +61,25 @@ extension StringKeyToStringsGenerator {
             self.verifiesComments = verifiesComments
         }
     }
-    
-    public enum MergeStrategy: Equatable {
-        case add(AddingMethod)
-        case doNotAdd
-        
-        public enum AddingMethod: Equatable {
-            case comment
-            case key
-            case label(String)
-        }
-    }
-    
-    public enum SortOrder {
-        case occurrence
-        case key
-    }
 }
 
 public class StringKeyToStringsGenerator {
     private let languageDetector: LanguageDetector
     private let sourceCodeImporter: LocalizationItemImporter
     private let stringsImporter: LocalizationItemImporter
+    private let localizationMerger: StringsLocalizationItemMerger
     private let stringsGenerator: StringsGenerator
     
     init(languageDetector: LanguageDetector,
          sourceCodeImporter: LocalizationItemImporter,
          stringsImporter: LocalizationItemImporter,
+         localizationMerger: StringsLocalizationItemMerger,
          stringsGenerator: StringsGenerator
     ) {
         self.languageDetector = languageDetector
         self.sourceCodeImporter = sourceCodeImporter
         self.stringsImporter = stringsImporter
+        self.localizationMerger = localizationMerger
         self.stringsGenerator = stringsGenerator
     }
     
@@ -97,6 +93,7 @@ public class StringKeyToStringsGenerator {
                 filter: StringsItemFilter(commandNameForExclusion: commandNameSet.exclude)),
             stringsImporter: LocalizationItemImporterIDDecorator(
                 decoratee: StringsImporter()),
+            localizationMerger: DefaultStringsLocalizationItemMerger(),
             stringsGenerator: DefaultStringsGenerator())
     }
     
@@ -114,25 +111,19 @@ public class StringKeyToStringsGenerator {
             let stringsFileURL = request.resourcesURL
                 .appendingPathComponents(language: language.rawValue, tableName: request.tableName)
             
-            let baseItems = try stringsImporter.import(at: stringsFileURL)
+            let itemsInStrings = try stringsImporter.import(at: stringsFileURL)
             
-            var outputItems = { () -> [LocalizationItem] in
-                switch config.mergeStrategy {
-                case .add(let addingMethod):
-                    return itemsInSourceCode
-                        .map({ $0.applying(addingMethod) })
-                        .combined(with: baseItems, verifyingComments: config.verifiesComments)
-                case .doNotAdd:
-                    return itemsInSourceCode
-                        .combinedIntersection(baseItems, verifyingComments: config.verifiesComments)
-                }
-            }()
+            var outputItems = localizationMerger.itemsByMerging(
+                itemsInSourceCode: itemsInSourceCode,
+                itemsInStrings: itemsInStrings,
+                mergeStrategy: config.mergeStrategy,
+                verifiesComments: config.verifiesComments)
+            
+            outputItems = outputItems.sorted(by: request.sortOrder)
             
             if !request.includesComments {
                 outputItems = outputItems.map({ $0.setting(\.comment, nil) })
             }
-            
-            outputItems = outputItems.sorted(by: request.sortOrder)
             
             result[language] = stringsGenerator.generate(from: outputItems)
         }

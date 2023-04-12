@@ -2,13 +2,13 @@ import XCTest
 import LocStringCore
 @testable import LocStringsGen
 
-private class StubLanguageDetector: LocStringCore.LanguageDetector {
+private class FakeLanguageDetector: LocStringCore.LanguageDetector {
     func detect(at url: URL) throws -> [LanguageID] {
         return ["en", "ko"]
     }
 }
 
-private class StubSourceCodeImporter: LocalizationItemImporter {
+private class FakeSourceCodeImporter: LocalizationItemImporter {
     func `import`(at url: URL) throws -> [LocalizationItem] {
         return [
             .init(key: "confirm", value: "", comment: "확인 주석"),
@@ -17,7 +17,7 @@ private class StubSourceCodeImporter: LocalizationItemImporter {
     }
 }
 
-private class StubStringsImporter: LocalizationItemImporter {
+private class FakeStringsImporter: LocalizationItemImporter {
     var importParamURLs: [URL] = []
     
     func `import`(at url: URL) throws -> [LocalizationItem] {
@@ -37,7 +37,7 @@ private class StubStringsImporter: LocalizationItemImporter {
     }
 }
 
-private class StubStringsGenerator: StringsGenerator {
+private class FakeStringsGenerator: StringsGenerator {
     var generateParamItemsList: [[LocalizationItem]] = []
     
     func generate(from items: [LocalizationItem]) -> String {
@@ -48,17 +48,25 @@ private class StubStringsGenerator: StringsGenerator {
 }
 
 final class StringKeyToStringsGeneratorTests: XCTestCase {
+    private var sut: StringKeyToStringsGenerator!
+    private var stringsImporter: FakeStringsImporter!
+    private var stringsGenerator: FakeStringsGenerator!
+    
+    override func setUp() {
+        stringsImporter = FakeStringsImporter()
+        
+        stringsGenerator = FakeStringsGenerator()
+        
+        sut = StringKeyToStringsGenerator(
+            languageDetector: DefaultLanguageDetector(detector: FakeLanguageDetector()),
+            sourceCodeImporter: FakeSourceCodeImporter(),
+            stringsImporter: stringsImporter,
+            localizationMerger: DefaultStringsLocalizationItemMerger(),
+            stringsGenerator: stringsGenerator)
+    }
+    
     func test_generate_allLanguages() throws {
         // Given
-        let stringsImporter = StubStringsImporter()
-        let stringsGenerator = StubStringsGenerator()
-        
-        let sut = StringKeyToStringsGenerator(
-            languageDetector: DefaultLanguageDetector(detector: StubLanguageDetector()),
-            sourceCodeImporter: StubSourceCodeImporter(),
-            stringsImporter: stringsImporter,
-            stringsGenerator: stringsGenerator)
-        
         let request = StringKeyToStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
@@ -93,15 +101,6 @@ final class StringKeyToStringsGeneratorTests: XCTestCase {
     
     func test_generate_oneLanguage() throws {
         // Given
-        let stringsImporter = StubStringsImporter()
-        let stringsGenerator = StubStringsGenerator()
-        
-        let sut = StringKeyToStringsGenerator(
-            languageDetector: DefaultLanguageDetector(detector: StubLanguageDetector()),
-            sourceCodeImporter: StubSourceCodeImporter(),
-            stringsImporter: stringsImporter,
-            stringsGenerator: stringsGenerator)
-        
         let request = StringKeyToStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
@@ -130,15 +129,6 @@ final class StringKeyToStringsGeneratorTests: XCTestCase {
     
     func test_generate_notIncludeComments() throws {
         // Given
-        let stringsImporter = StubStringsImporter()
-        let stringsGenerator = StubStringsGenerator()
-        
-        let sut = StringKeyToStringsGenerator(
-            languageDetector: DefaultLanguageDetector(detector: StubLanguageDetector()),
-            sourceCodeImporter: StubSourceCodeImporter(),
-            stringsImporter: stringsImporter,
-            stringsGenerator: stringsGenerator)
-        
         let request = StringKeyToStringsGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
             resourcesURL: URL(fileURLWithPath: "Resources"),
@@ -159,6 +149,34 @@ final class StringKeyToStringsGeneratorTests: XCTestCase {
         XCTAssertEqual(stringsGenerator.generateParamItemsList[0], [
             .init(key: "cancel", value: "취소", comment: nil),
             .init(key: "confirm", value: "확인 주석", comment: nil),
+        ])
+    }
+    
+    func test_generate_sort() throws {
+        // Given
+        let request = StringKeyToStringsGenerator.Request(
+            sourceCodeURL: URL(fileURLWithPath: "Sources/MyStringKey.swift"),
+            resourcesURL: URL(fileURLWithPath: "Resources"),
+            configurationsByLanguage: [
+                "ko": .init(mergeStrategy: .add(.comment), verifiesComments: true),
+            ],
+            includesComments: true,
+            sortOrder: .occurrence)
+        
+        // When
+        let result = try sut.generate(for: request)
+        
+        // Then
+        XCTAssertNil(result["en"])
+        XCTAssertNotNil(result["ko"])
+        
+        XCTAssertEqual(stringsImporter.importParamURLs, [
+            URL(fileURLWithPath: "Resources/ko.lproj/Localizable.strings"),
+        ])
+        
+        XCTAssertEqual(stringsGenerator.generateParamItemsList[0], [
+            .init(key: "confirm", value: "확인 주석", comment: "확인 주석"),
+            .init(key: "cancel", value: "취소", comment: "취소 주석"),
         ])
     }
 }
