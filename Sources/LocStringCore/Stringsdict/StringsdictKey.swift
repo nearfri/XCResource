@@ -1,13 +1,16 @@
 import Foundation
 
-enum StringsdictKey {
-    static let format: String = "NSStringLocalizedFormatKey"
-    static let widthRuleType: String = "NSStringVariableWidthRuleType"
-    static let deviceRuleType: String = "NSStringDeviceSpecificRuleType"
+public enum StringsdictKey {
+    public static let format: String = "NSStringLocalizedFormatKey"
+    public static let widthRuleType: String = "NSStringVariableWidthRuleType"
+    public static let deviceRuleType: String = "NSStringDeviceSpecificRuleType"
     
-    enum Plural {
-        static let specType: String = "NSStringFormatSpecTypeKey"
-        static let valueType: String = "NSStringFormatValueTypeKey"
-        static let categoryOther: String = "other"
+    public enum Plural {
+        public static let specType: String = "NSStringFormatSpecTypeKey"
+        public static let ruleType: String = "NSStringPluralRuleType"
+        public static let valueType: String = "NSStringFormatValueTypeKey"
+        public static let categoryOther: String = "other"
+        public static let categoryZero: String = "zero"
+        public static let categoryOne: String = "one"
     }
 }

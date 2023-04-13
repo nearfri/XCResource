@@ -52,7 +52,7 @@ public class StringsdictToStringKeyGenerator {
         self.init(
             stringsdictImporter: LocalizationItemImporterCommentWithValueDecorator(
                 decoratee: LocalizationItemImporterIDDecorator(
-                    decoratee: StringsdictImporter())),
+                    decoratee: DefaultStringsdictImporter())),
             sourceCodeImporter: LocalizationItemImporterFormatLabelRemovalDecorator(
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter())),

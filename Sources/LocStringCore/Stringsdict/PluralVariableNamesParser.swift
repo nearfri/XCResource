@@ -3,7 +3,7 @@ import Strix
 import StrixParsers
 
 extension Parser<[String]> {
-    static var pluralVariableNames: Parser<[String]> {
+    public static var pluralVariableNames: Parser<[String]> {
         return ParserGenerator().pluralVariableNames
     }
 }

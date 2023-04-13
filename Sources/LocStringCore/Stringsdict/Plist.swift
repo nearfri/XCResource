@@ -1,8 +1,10 @@
 import Foundation
 import OrderedCollections
 
+public typealias PlistDictionary = OrderedDictionary<String, Plist>
+
 public enum Plist: Equatable {
-    case dictionary(OrderedDictionary<String, Plist>)
+    case dictionary(PlistDictionary)
     case array([Plist])
     case string(String)
     case number(NSNumber)
@@ -25,7 +27,7 @@ public enum Plist: Equatable {
         return nil
     }
     
-    public var dictionaryValue: OrderedDictionary<String, Plist>? {
+    public var dictionaryValue: PlistDictionary? {
         if case .dictionary(let dictionary) = self {
             return dictionary
         }
@@ -102,8 +104,6 @@ public enum Plist: Equatable {
     }
 }
 
-public typealias PlistDictionary = OrderedDictionary<String, Plist>
-
 extension PlistDictionary {
     public func value<T>(forKey key: String, type: T.Type) throws -> T {
         guard let plist = self[key] else {
@@ -121,7 +121,7 @@ extension PlistDictionary {
 
 extension Plist {
     public enum KeyValueError: Error {
-        case keyNotFound(String, in: OrderedDictionary<String, Plist>)
+        case keyNotFound(String, in: PlistDictionary)
         case typeMismatch(expected: Any.Type, actual: Any.Type)
     }
 }
@@ -133,12 +133,30 @@ extension Plist: CustomStringConvertible {
 }
 
 extension Plist {
+    public init(contentsOf url: URL, options mask: XMLNode.Options = []) throws {
+        let xmlDocument = try XMLDocument(contentsOf: url, options: mask)
+        
+        try self.init(xmlDocument: xmlDocument)
+    }
+    
+    public init(xmlDocumentString: String, options mask: XMLNode.Options = []) throws {
+        let xmlDocument = try XMLDocument(xmlString: xmlDocumentString, options: mask)
+        
+        try self.init(xmlDocument: xmlDocument)
+    }
+    
     public init(xmlDocument: XMLDocument) throws {
         guard let root = xmlDocument.rootElement(), root.localName == "plist",
               root.childCount == 1, let child = root.child(at: 0) as? XMLElement
         else { throw DecodingError.invalidRootElement }
         
         self = try Plist(xmlElement: child)
+    }
+    
+    public init(xmlElementString: String) throws {
+        let xmlElement = try XMLElement(xmlString: xmlElementString)
+        
+        try self.init(xmlElement: xmlElement)
     }
     
     public init(xmlElement: XMLElement) throws {
@@ -179,7 +197,7 @@ extension Plist {
     private static func dictionary(
         from elements: [XMLElement]?,
         xPath: String?
-    ) throws -> OrderedDictionary<String, Plist> {
+    ) throws -> PlistDictionary {
         guard let elements else { return [:] }
         
         guard elements.count.isMultiple(of: 2) else {
@@ -380,7 +398,7 @@ private struct XMLPlistEncoder {
         }
     }
     
-    private mutating func write(_ dictionary: OrderedDictionary<String, Plist>) {
+    private mutating func write(_ dictionary: PlistDictionary) {
         if dictionary.isEmpty {
             text += "<\(Tag.dict)/>\n"
             return

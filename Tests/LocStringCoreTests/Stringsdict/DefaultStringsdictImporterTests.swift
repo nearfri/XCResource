@@ -1,7 +1,7 @@
 import XCTest
 @testable import LocStringCore
 
-final class StringsdictImporterTests: XCTestCase {
+final class DefaultStringsdictImporterTests: XCTestCase {
     func test_import() throws {
         // Given
         let plistString = """
@@ -56,7 +56,7 @@ final class StringsdictImporterTests: XCTestCase {
         try plistString.write(to: stringsdictURL, atomically: true, encoding: .utf8)
         defer { try? fm.removeItem(at: stringsdictURL) }
         
-        let sut = StringsdictImporter()
+        let sut = DefaultStringsdictImporter()
         
         // When
         let items = try sut.import(at: stringsdictURL)

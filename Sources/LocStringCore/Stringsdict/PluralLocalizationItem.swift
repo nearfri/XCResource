@@ -3,12 +3,12 @@ import OrderedCollections
 import Strix
 import StrixParsers
 
-public struct PluralLocalizationItem: Equatable {
-    public var key: String
-    public var format: String
-    public var variables: [String: Variable]
+struct PluralLocalizationItem: Equatable {
+    var key: String
+    var format: String
+    var variables: [String: Variable]
     
-    public init(key: String, format: String, variables: [String: Variable]) {
+    init(key: String, format: String, variables: [String: Variable]) {
         self.key = key
         self.format = format
         self.variables = variables
@@ -16,12 +16,12 @@ public struct PluralLocalizationItem: Equatable {
 }
 
 extension PluralLocalizationItem {
-    public struct Variable: Equatable {
-        public var specType: String
-        public var valueType: String
-        public var other: String
+    struct Variable: Equatable {
+        var specType: String
+        var valueType: String
+        var other: String
         
-        public init(specType: String, valueType: String, other: String) {
+        init(specType: String, valueType: String, other: String) {
             self.specType = specType
             self.valueType = valueType
             self.other = other
@@ -30,7 +30,7 @@ extension PluralLocalizationItem {
 }
 
 extension PluralLocalizationItem {
-    public init(
+    init(
         key: String,
         info: PlistDictionary,
         variablesUsing variableNamesParser: Parser<[String]>
@@ -61,11 +61,11 @@ extension PluralLocalizationItem {
         }
     }
     
-    public func toLocalizationItem() -> LocalizationItem {
+    func toLocalizationItem() -> LocalizationItem {
         return LocalizationItem(key: key, value: suggestedFormat)
     }
     
-    public var suggestedFormat: String {
+    var suggestedFormat: String {
         guard variables.count == 1, let (key, variable) = variables.first,
               format == "%#@\(key)@", variable.other.contains("%\(variable.valueType)")
         else { return format }
