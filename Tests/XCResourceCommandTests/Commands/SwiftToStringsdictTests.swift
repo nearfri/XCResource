@@ -8,7 +8,7 @@ private enum Fixture {
         import Foundation
         
         enum StringKey: String, CaseIterable {
-            /// %@ ate %#@appleCount@ today!
+            /// %{dogName}@ ate %#@appleCount@ today!
             case dog_eating_apples
             
             // xcresource:target:stringsdict

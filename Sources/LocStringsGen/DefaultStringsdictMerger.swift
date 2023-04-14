@@ -28,12 +28,10 @@ class DefaultStringsdictMerger: StringsdictMerger {
     }
     
     private func makePluralFormatPlist(item: LocalizationItem) throws -> Plist {
-        guard let comment = item.comment else { preconditionFailure() }
-        
-        let variableNames = try pluralVariableNamesParser.run(comment)
+        let variableNames = try pluralVariableNamesParser.run(item.value)
         
         let info: PlistDictionary = variableNames
-            .reduce(into: [StringsdictKey.format: .string(comment)]) { partialResult, name in
+            .reduce(into: [StringsdictKey.format: .string(item.value)]) { partialResult, name in
                 partialResult[name] = .dictionary([
                     StringsdictKey.Plural.specType: .string(StringsdictKey.Plural.ruleType),
                     StringsdictKey.Plural.valueType: .string("ld"),
@@ -47,13 +45,11 @@ class DefaultStringsdictMerger: StringsdictMerger {
     }
     
     private func makeDeviceSpecificRulePlist(item: LocalizationItem) -> Plist {
-        guard let comment = item.comment else { preconditionFailure() }
-        
         return .dictionary([
             StringsdictKey.deviceRuleType: .dictionary([
-                "iphone": .string(comment),
-                "mac": .string(comment),
-                "appletv": .string(comment),
+                "iphone": .string(item.value),
+                "mac": .string(item.value),
+                "appletv": .string(item.value),
             ])
         ])
     }

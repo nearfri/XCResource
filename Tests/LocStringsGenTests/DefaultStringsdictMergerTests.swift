@@ -9,8 +9,8 @@ final class DefaultStringsdictMergerTests: XCTestCase {
         // Given
         let localizationItem = LocalizationItem(
             key: "dog_eating_apples",
-            value: "",
-            comment: "%@ ate %#@appleCount@ and %#@carrotCount@ today!")
+            value: "%@ ate %#@appleCount@ and %#@carrotCount@ today!",
+            comment: "%{dogName}@ ate %#@appleCount@ and %#@carrotCount@ today!")
         
         let originalPlist = Plist.dictionary([:])
         
@@ -63,7 +63,7 @@ final class DefaultStringsdictMergerTests: XCTestCase {
         // Given
         let localizationItem = LocalizationItem(
             key: "user_instructions",
-            value: "",
+            value: "Tap here",
             comment: "Tap here")
         
         let originalPlist = Plist.dictionary([:])
@@ -98,7 +98,7 @@ final class DefaultStringsdictMergerTests: XCTestCase {
         // Given
         let localizationItem = LocalizationItem(
             key: "dog_eating_apples",
-            value: "",
+            value: "My dog ate %#@appleCount@ and %#@carrotCount@ today!",
             comment: "My dog ate %#@appleCount@ and %#@carrotCount@ today!")
         
         let originalPlist = try Plist(xmlElementString: """
