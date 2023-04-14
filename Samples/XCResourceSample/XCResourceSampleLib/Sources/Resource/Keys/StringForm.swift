@@ -31,12 +31,14 @@ public extension StringForm {
     
     /// "%{fileName}@" will be deleted.\n
     /// This action cannot be undone.
-    static func alert_deleteFile(fileName: String) -> StringForm {
-        return StringForm(key: StringKey.alert_deleteFile.rawValue, arguments: [fileName])
+    static func alert_delete_file(fileName: String) -> StringForm {
+        return StringForm(key: StringKey.alert_delete_file.rawValue, arguments: [fileName])
     }
     
     /// %{dogName}@ ate %#@appleCount@ today!
-    static func dogEatingApples(dogName: String, appleCount: Int) -> StringForm {
-        return StringForm(key: StringKey.dogEatingApples.rawValue, arguments: [dogName, appleCount])
+    static func dog_eating_apples(dogName: String, appleCount: Int) -> StringForm {
+        return StringForm(
+            key: StringKey.dog_eating_apples.rawValue,
+            arguments: [dogName, appleCount])
     }
 }

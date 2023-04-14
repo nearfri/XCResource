@@ -36,6 +36,7 @@ FONTS_DIR = $(RESOURCES_DIR)/Fonts
 FONTS_DIR_FILES := $(shell find $(FONTS_DIR) | sed 's/ /\\ /g')
 
 SWIFT2STRINGS_LANGUAGE_CONFIG = en:comment:verify-comments all:dont-add
+SWIFT2STRINGSDICT_LANGUAGE_CONFIG = en:comment all:dont-add
 SWIFT2STRINGS_LASTRUN_FILE = ./swift2strings-lastrun
 
 LOCALIZABLE_STRINGS_FILES = $(wildcard $(RESOURCES_DIR)/*.lproj/Localizable.strings)
@@ -112,6 +113,11 @@ $(SWIFT2STRINGS_LASTRUN_FILE): $(STRINGKEY_FILE)
 	--swift-path $< \
 	--resources-path $(RESOURCES_DIR) \
 	--language-config $(SWIFT2STRINGS_LANGUAGE_CONFIG)
+
+	$(XCRESOURCE) swift2stringsdict \
+	--swift-path $< \
+	--resources-path $(RESOURCES_DIR) \
+	--language-config $(SWIFT2STRINGSDICT_LANGUAGE_CONFIG)
 	
 	@touch $@
 

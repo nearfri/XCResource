@@ -49,6 +49,19 @@
                     "verifiesComments": false
                 }
             }
+        },
+        {
+            "commandName": "swift2stringsdict",
+            "swiftPath": "../Sources/Resource/Keys/StringKey.swift",
+            "resourcesPath": "../Sources/Resource/Resources",
+            "configurationsByLanguage": {
+                "ko": {
+                    "mergeStrategy": "comment"
+                },
+                "all": {
+                    "mergeStrategy": "dont-add"
+                }
+            }
         }
     ]
 }

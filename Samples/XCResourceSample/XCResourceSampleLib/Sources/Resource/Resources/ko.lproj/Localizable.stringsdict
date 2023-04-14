@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>dogEatingApples</key>
+	<key>dog_eating_apples</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%@은(는) 오늘 사과를 %#@appleCount@ 먹었다!</string>

@@ -61,6 +61,18 @@ let package = Package(
                 ]),
             dependencies: ["xcresource"]),
         
+        // MARK: - StringsdictToSwift
+        
+        .plugin(
+            name: "StringsdictToSwiftPlugin",
+            capability: .command(
+                intent: .custom(verb: "stringsdict2swift",
+                                description: "Convert stringsdict to swift"),
+                permissions: [
+                    .writeToPackageDirectory(reason: "Converts stringsdict to swift")
+                ]),
+            dependencies: ["xcresource"]),
+        
         // MARK: - StringsToCSV
         
         .plugin(
