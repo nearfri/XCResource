@@ -4,24 +4,24 @@ import LocStringsGen
 import LocStringCore
 import XCResourceUtil
 
-struct SwiftToStrings: ParsableCommand {
+struct SwiftToStringsdict: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
-        commandName: "swift2strings",
-        abstract: "Swift 소스 코드를 strings로 변환",
+        commandName: "swift2stringsdict",
+        abstract: "Swift 소스 코드를 stringsdict로 변환",
         discussion: """
-            enum 타입을 담고 있는 소스 코드에서 case와 주석을 추출해 Localizable.strings 파일을 생성한다.
+            enum 타입을 담고 있는 소스 코드에서 case와 주석을 추출해 Localizable.stringsdict 파일을 생성한다.
             
             - case의 rawValue를 key로 하고, --localization-config 옵션에 따라 value를 결정한다.
-            - 소스 코드에 없는 key는 strings 파일에서 제거된다.
+            - 소스 코드에 없는 key는 stringsdict 파일에서 제거된다.
             """)
     
     // MARK: - Default values
     
     enum Default {
         static let tableName: String = "Localizable"
-        static let configurations: [LanguageAndStringsConfiguration] = [
+        static let configurations: [LanguageAndStringsdictConfiguration] = [
             .init(language: LanguageID.allSymbol,
-                  configuration: .init(mergeStrategy: .doNotAdd, verifiesComments: false))
+                  configuration: .init(mergeStrategy: .doNotAdd))
         ]
         static let omitsComments: Bool = false
         static let sortsByKey: Bool = false
@@ -42,14 +42,9 @@ struct SwiftToStrings: ParsableCommand {
                 discussion: """
                     If "\(LanguageID.allSymbol)" is specified at language position, \
                     all languages are converted.
-                    If "\(KeyToStringsConfiguration.Name.verifiesComments)" is specied \
-                    and the comments are not equal, the key-value pair is reset.
                     """,
-                valueName: LanguageAndStringsConfiguration.usageDescription))
-    var configurations: [LanguageAndStringsConfiguration] = Default.configurations
-    
-    @Flag(name: .customLong("omit-comments"))
-    var omitsComments: Bool = Default.omitsComments
+                valueName: LanguageAndStringsdictConfiguration.usageDescription))
+    var configurations: [LanguageAndStringsdictConfiguration] = Default.configurations
     
     @Flag(name: .customLong("sort-by-key"))
     var sortsByKey: Bool = Default.sortsByKey
@@ -57,38 +52,39 @@ struct SwiftToStrings: ParsableCommand {
     // MARK: - Run
     
     mutating func run() throws {
-        let stringsByLanguage = try generateStrings()
+        let stringsdictsByLanguage = try generateStringsdicts()
         
-        for (language, strings) in stringsByLanguage {
-            try writeStrings(strings, for: language)
+        for (language, stringsdict) in stringsdictsByLanguage {
+            try writeStringsdict(stringsdict, for: language)
         }
     }
     
-    private func generateStrings() throws -> [LanguageID: String] {
-        let request = StringKeyToStringsGenerator.Request(
+    private func generateStringsdicts() throws -> [LanguageID: String] {
+        let request = StringKeyToStringsdictGenerator.Request(
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftPath),
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
             configurationsByLanguage: configurations.configurationsByLanguage,
-            includesComments: !omitsComments,
             sortOrder: sortsByKey ? .key : .occurrence)
         
-        let generator = StringKeyToStringsGenerator(
-            commandNameSet: .init(exclude: CommentCommandName.targetStringsdict))
+        let generator = StringKeyToStringsdictGenerator(
+            commandNameSet: .init(include: CommentCommandName.targetStringsdict))
         
         return try generator.generate(for: request)
     }
     
-    private func writeStrings(_ strings: String, for language: LanguageID) throws {
+    private func writeStringsdict(_ stringsdict: String, for language: LanguageID) throws {
         let tempFileURL = FileManager.default.makeTemporaryItemURL()
-        let outputFileURL = stringsFileURL(for: language)
+        let outputFileURL = stringsdictFileURL(for: language)
         
-        try (strings + "\n").write(to: tempFileURL, atomically: false, encoding: .utf8)
+        try (stringsdict + "\n").write(to: tempFileURL, atomically: false, encoding: .utf8)
         try FileManager.default.compareAndReplaceItem(at: outputFileURL, withItemAt: tempFileURL)
     }
     
-    private func stringsFileURL(for language: LanguageID) -> URL {
+    private func stringsdictFileURL(for language: LanguageID) -> URL {
         return URL(fileURLWithExpandingTildeInPath: resourcesPath)
-            .appendingPathComponents(language: language.rawValue, tableName: tableName)
+            .appendingPathComponents(language: language.rawValue,
+                                     tableName: tableName,
+                                     tableType: .stringsdict)
     }
 }

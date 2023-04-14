@@ -7,7 +7,7 @@ final class LocalizationConfigurationTests: XCTestCase {
         let argument = "comment:verify-comments"
         
         // When
-        let config = try XCTUnwrap(LocalizationConfiguration(argument: argument))
+        let config = try XCTUnwrap(KeyToStringsConfiguration(argument: argument))
         
         // Then
         XCTAssertEqual(config.mergeStrategy, .add(.comment))
@@ -19,7 +19,7 @@ final class LocalizationConfigurationTests: XCTestCase {
         let argument = "comment:"
         
         // When
-        let config = try XCTUnwrap(LocalizationConfiguration(argument: argument))
+        let config = try XCTUnwrap(KeyToStringsConfiguration(argument: argument))
         
         // Then
         XCTAssertEqual(config.mergeStrategy, .add(.comment))
@@ -31,7 +31,7 @@ final class LocalizationConfigurationTests: XCTestCase {
         let argument = "comment"
         
         // When
-        let config = try XCTUnwrap(LocalizationConfiguration(argument: argument))
+        let config = try XCTUnwrap(KeyToStringsConfiguration(argument: argument))
         
         // Then
         XCTAssertEqual(config.mergeStrategy, .add(.comment))
@@ -43,6 +43,6 @@ final class LocalizationConfigurationTests: XCTestCase {
         let argument = "comment:unknown-value"
         
         // When, Then
-        XCTAssertNil(LocalizationConfiguration(argument: argument))
+        XCTAssertNil(KeyToStringsConfiguration(argument: argument))
     }
 }
