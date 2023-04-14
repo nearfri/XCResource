@@ -63,7 +63,12 @@ public enum StringKey: String, CaseIterable {
     /// 100% success
     case success100
     
-    // If %#@variable@ format is included, it is implicitly excluded from .strings file.
+    // If %#@variable@ format is included,
+    // it is implicitly excluded from .strings file and included in .stringsdict file.
     /// %{dogName}@ ate %#@appleCount@ today!
     case dog_eating_apples
+    
+    // xcresource:target:stringsdict - Include in .stringsdict
+    /// Tap here
+    case user_instructions
 }

@@ -20,5 +20,17 @@
 			<string>%ld apples</string>
 		</dict>
 	</dict>
+	<key>user_instructions</key>
+	<dict>
+		<key>NSStringDeviceSpecificRuleType</key>
+		<dict>
+			<key>iphone</key>
+			<string>Tap here</string>
+			<key>mac</key>
+			<string>Click here</string>
+			<key>appletv</key>
+			<string>Press here</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

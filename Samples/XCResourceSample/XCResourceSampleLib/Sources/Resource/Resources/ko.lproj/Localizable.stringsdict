@@ -18,5 +18,17 @@
 			<string>%ld개</string>
 		</dict>
 	</dict>
+	<key>user_instructions</key>
+	<dict>
+		<key>NSStringDeviceSpecificRuleType</key>
+		<dict>
+			<key>iphone</key>
+			<string>여기를 탭하세요</string>
+			<key>mac</key>
+			<string>여기를 클릭하세요</string>
+			<key>appletv</key>
+			<string>여기를 누르세요</string>
+		</dict>
+	</dict>
 </dict>
 </plist>
