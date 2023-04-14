@@ -113,11 +113,11 @@ $(SWIFT2STRINGS_LASTRUN_FILE): $(STRINGKEY_FILE)
 	--swift-path $< \
 	--resources-path $(RESOURCES_DIR) \
 	--language-config $(SWIFT2STRINGS_LANGUAGE_CONFIG)
-
-	$(XCRESOURCE) swift2stringsdict \
-	--swift-path $< \
-	--resources-path $(RESOURCES_DIR) \
-	--language-config $(SWIFT2STRINGSDICT_LANGUAGE_CONFIG)
+	
+#	$(XCRESOURCE) swift2stringsdict \
+#	--swift-path $< \
+#	--resources-path $(RESOURCES_DIR) \
+#	--language-config $(SWIFT2STRINGSDICT_LANGUAGE_CONFIG)
 	
 	@touch $@
 

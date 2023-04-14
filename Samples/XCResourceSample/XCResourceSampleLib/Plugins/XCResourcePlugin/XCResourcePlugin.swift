@@ -2,7 +2,7 @@ import Foundation
 import PackagePlugin
 
 @main
-struct GenerateResourceKeysPlugin: BuildToolPlugin {
+struct XCResourcePlugin: BuildToolPlugin {
     func createBuildCommands(context: PluginContext, target: Target) throws -> [Command] {
         let xcresource = try context.tool(named: "xcresource").path
         
