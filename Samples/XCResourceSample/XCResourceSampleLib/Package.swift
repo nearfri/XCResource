@@ -12,14 +12,14 @@ let package = Package(
             name: "XCResourceSampleLib",
             targets: ["View", "Resource"]),
         .plugin(
-            name: "StringsToSwift",
-            targets: ["StringsToSwift"]),
+            name: "StringsToSwiftPlugin",
+            targets: ["StringsToSwiftPlugin"]),
         .plugin(
-            name: "StringsToCSV",
-            targets: ["StringsToCSV"]),
+            name: "StringsToCSVPlugin",
+            targets: ["StringsToCSVPlugin"]),
         .plugin(
-            name: "CSVToStrings",
-            targets: ["CSVToStrings"]),
+            name: "CSVToStringsPlugin",
+            targets: ["CSVToStringsPlugin"]),
     ],
     dependencies: [
         // .package(url: /* package url */, from: "1.0.0"),
@@ -37,23 +37,23 @@ let package = Package(
             name: "Resource",
             dependencies: [],
             resources: [.copy("Resources/Fonts")],
-            plugins: [.plugin(name: "GenerateResourceKeys")]),
+            plugins: [.plugin(name: "XCResourcePlugin")]),
         
         .testTarget(
             name: "ResourceTests",
             dependencies: ["Resource"]),
         
-        // MARK: - GenerateResourceKeys
+        // MARK: - XCResourcePlugin
         
         .plugin(
-            name: "GenerateResourceKeys",
+            name: "XCResourcePlugin",
             capability: .buildTool(),
             dependencies: ["xcresource"]),
         
-        // MARK: - StringsToSwift
+        // MARK: - StringsToSwiftPlugin
         
         .plugin(
-            name: "StringsToSwift",
+            name: "StringsToSwiftPlugin",
             capability: .command(
                 intent: .custom(verb: "strings2swift", description: "Convert strings to swift"),
                 permissions: [
@@ -61,10 +61,22 @@ let package = Package(
                 ]),
             dependencies: ["xcresource"]),
         
-        // MARK: - StringsToCSV
+        // MARK: - StringsdictToSwiftPlugin
         
         .plugin(
-            name: "StringsToCSV",
+            name: "StringsdictToSwiftPlugin",
+            capability: .command(
+                intent: .custom(verb: "stringsdict2swift",
+                                description: "Convert stringsdict to swift"),
+                permissions: [
+                    .writeToPackageDirectory(reason: "Converts stringsdict to swift")
+                ]),
+            dependencies: ["xcresource"]),
+        
+        // MARK: - StringsToCSVPlugin
+        
+        .plugin(
+            name: "StringsToCSVPlugin",
             capability: .command(
                 intent: .custom(verb: "strings2csv", description: "Convert strings to csv"),
                 permissions: [
@@ -72,10 +84,10 @@ let package = Package(
                 ]),
             dependencies: ["xcresource"]),
         
-        // MARK: - CSVToStrings
+        // MARK: - CSVToStringsPlugin
         
         .plugin(
-            name: "CSVToStrings",
+            name: "CSVToStringsPlugin",
             capability: .command(
                 intent: .custom(verb: "csv2strings", description: "Convert csv to strings"),
                 permissions: [

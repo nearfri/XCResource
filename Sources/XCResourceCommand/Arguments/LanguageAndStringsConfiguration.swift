@@ -3,11 +3,11 @@ import ArgumentParser
 import LocStringsGen
 import LocStringCore
 
-struct LanguageAndConfiguration: ExpressibleByArgument {
+struct LanguageAndStringsConfiguration: ExpressibleByArgument {
     var language: String
-    var configuration: LocalizationConfiguration
+    var configuration: KeyToStringsConfiguration
     
-    init(language: String, configuration: LocalizationConfiguration) {
+    init(language: String, configuration: KeyToStringsConfiguration) {
         self.language = language
         self.configuration = configuration
     }
@@ -19,7 +19,7 @@ struct LanguageAndConfiguration: ExpressibleByArgument {
         if language.isEmpty { return nil }
         
         let argumentRemaining = argument[argument.index(after: separatorIndex)...]
-        guard let configuration = LocalizationConfiguration(argument: String(argumentRemaining))
+        guard let configuration = KeyToStringsConfiguration(argument: String(argumentRemaining))
         else { return nil }
         
         self.language = String(language)
@@ -31,12 +31,12 @@ struct LanguageAndConfiguration: ExpressibleByArgument {
     }
     
     static var usageDescription: String {
-        return "language:\(LocalizationConfiguration.usageDescription)"
+        return "language:\(KeyToStringsConfiguration.usageDescription)"
     }
 }
 
-extension Array<LanguageAndConfiguration> {
-    var configurationsByLanguage: [LanguageID: LocalizationConfiguration] {
+extension Array<LanguageAndStringsConfiguration> {
+    var configurationsByLanguage: [LanguageID: KeyToStringsConfiguration] {
         return reduce(into: [:]) { result, each in
             result[LanguageID(each.language)] = each.configuration
         }

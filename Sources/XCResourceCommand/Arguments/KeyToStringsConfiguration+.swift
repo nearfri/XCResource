@@ -2,15 +2,15 @@ import Foundation
 import ArgumentParser
 import LocStringsGen
 
-typealias LocalizationConfiguration = StringKeyToStringsGenerator.LocalizationConfiguration
+typealias KeyToStringsConfiguration = StringKeyToStringsGenerator.LocalizationConfiguration
 
-extension LocalizationConfiguration {
+extension KeyToStringsConfiguration {
     enum Name {
         static let verifiesComments: String = "verify-comments"
     }
 }
 
-extension LocalizationConfiguration: ExpressibleByArgument {
+extension KeyToStringsConfiguration: ExpressibleByArgument {
     public init?(argument: String) {
         let configValues = argument.split(separator: ":", omittingEmptySubsequences: false)
         
@@ -40,6 +40,6 @@ extension LocalizationConfiguration: ExpressibleByArgument {
     }
     
     static var usageDescription: String {
-        return "<\(LocalizationMergeStrategy.joinedAllValuesString)>[:\(Name.verifiesComments)]"
+        return "(\(LocalizationMergeStrategy.joinedAllValuesString))[:\(Name.verifiesComments)]"
     }
 }

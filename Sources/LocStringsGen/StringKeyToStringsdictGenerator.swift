@@ -3,21 +3,24 @@ import LocStringCore
 import LocSwiftCore
 import XCResourceUtil
 
-protocol StringsLocalizationItemMerger: AnyObject {
+protocol StringsdictLocalizationItemMerger: AnyObject {
     func itemsByMerging(
         itemsInSourceCode: [LocalizationItem],
-        itemsInStrings: [LocalizationItem],
-        mergeStrategy: MergeStrategy,
-        verifiesComments: Bool
+        itemsInStringsdict: [LocalizationItem],
+        mergeStrategy: MergeStrategy
     ) -> [LocalizationItem]
 }
 
-extension StringKeyToStringsGenerator {
+protocol StringsdictMerger: AnyObject {
+    func plistByMerging(localizationItems: [LocalizationItem], plist: Plist) throws -> Plist
+}
+
+extension StringKeyToStringsdictGenerator {
     public struct CommandNameSet {
-        public var exclude: String
+        public var include: String
         
-        public init(exclude: String) {
-            self.exclude = exclude
+        public init(include: String) {
+            self.include = include
         }
     }
     
@@ -26,7 +29,6 @@ extension StringKeyToStringsGenerator {
         public var resourcesURL: URL
         public var tableName: String
         public var configurationsByLanguage: [LanguageID: LocalizationConfiguration]
-        public var includesComments: Bool
         public var sortOrder: SortOrder
         
         public init(
@@ -34,49 +36,45 @@ extension StringKeyToStringsGenerator {
             resourcesURL: URL,
             tableName: String = "Localizable",
             configurationsByLanguage: [LanguageID: LocalizationConfiguration] = [
-                .all: .init(mergeStrategy: .doNotAdd, verifiesComments: true)
+                .all: .init(mergeStrategy: .doNotAdd)
             ],
-            includesComments: Bool = true,
             sortOrder: SortOrder = .occurrence
         ) {
             self.sourceCodeURL = sourceCodeURL
             self.resourcesURL = resourcesURL
             self.tableName = tableName
             self.configurationsByLanguage = configurationsByLanguage
-            self.includesComments = includesComments
             self.sortOrder = sortOrder
         }
     }
     
     public struct LocalizationConfiguration {
         public var mergeStrategy: MergeStrategy
-        public var verifiesComments: Bool
         
-        public init(mergeStrategy: MergeStrategy, verifiesComments: Bool) {
+        public init(mergeStrategy: MergeStrategy) {
             self.mergeStrategy = mergeStrategy
-            self.verifiesComments = verifiesComments
         }
     }
 }
 
-public class StringKeyToStringsGenerator {
+public class StringKeyToStringsdictGenerator {
     private let languageDetector: LanguageDetector
     private let sourceCodeImporter: LocalizationItemImporter
-    private let stringsImporter: LocalizationItemImporter
-    private let localizationItemMerger: StringsLocalizationItemMerger
-    private let stringsGenerator: StringsGenerator
+    private let stringsdictImporter: StringsdictImporter
+    private let localizationItemMerger: StringsdictLocalizationItemMerger
+    private let stringsdictMerger: StringsdictMerger
     
     init(languageDetector: LanguageDetector,
          sourceCodeImporter: LocalizationItemImporter,
-         stringsImporter: LocalizationItemImporter,
-         localizationItemMerger: StringsLocalizationItemMerger,
-         stringsGenerator: StringsGenerator
+         stringsdictImporter: StringsdictImporter,
+         localizationItemMerger: StringsdictLocalizationItemMerger,
+         stringsdictMerger: StringsdictMerger
     ) {
         self.languageDetector = languageDetector
         self.sourceCodeImporter = sourceCodeImporter
-        self.stringsImporter = stringsImporter
+        self.stringsdictImporter = stringsdictImporter
         self.localizationItemMerger = localizationItemMerger
-        self.stringsGenerator = stringsGenerator
+        self.stringsdictMerger = stringsdictMerger
     }
     
     public convenience init(commandNameSet: CommandNameSet) {
@@ -86,11 +84,11 @@ public class StringKeyToStringsGenerator {
             sourceCodeImporter: LocalizationItemImporterFilterDecorator(
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter()),
-                filter: StringsItemFilter(commandNameForExclusion: commandNameSet.exclude)),
-            stringsImporter: LocalizationItemImporterIDDecorator(
-                decoratee: StringsImporter()),
-            localizationItemMerger: DefaultStringsLocalizationItemMerger(),
-            stringsGenerator: DefaultStringsGenerator())
+                filter: StringsdictItemFilter(commandNameForInclusion: commandNameSet.include)),
+            stringsdictImporter: StringsdictImporterIDDecorator(
+                decoratee: DefaultStringsdictImporter()),
+            localizationItemMerger: DefaultStringsdictLocalizationItemMerger(),
+            stringsdictMerger: DefaultStringsdictMerger())
     }
     
     public func generate(for request: Request) throws -> [LanguageID: String] {
@@ -106,22 +104,25 @@ public class StringKeyToStringsGenerator {
             let configs = request.configurationsByLanguage
             let config = configs[language] ?? configs[.all]!
             
-            let stringsFileURL = request.resourcesURL
-                .appendingPathComponents(language: language.rawValue, tableName: request.tableName)
+            let stringsdictFileURL = request.resourcesURL
+                .appendingPathComponents(
+                    language: language.rawValue,
+                    tableName: request.tableName,
+                    tableType: .stringsdict)
             
-            let itemsInStrings = try stringsImporter.import(at: stringsFileURL)
+            let plist = try Plist(contentsOf: stringsdictFileURL)
+            let itemsInStringsdict = try stringsdictImporter.import(from: plist)
             
-            var mergedItems = localizationItemMerger.itemsByMerging(
+            let mergedItems = localizationItemMerger.itemsByMerging(
                 itemsInSourceCode: itemsInSourceCode,
-                itemsInStrings: itemsInStrings,
-                mergeStrategy: config.mergeStrategy,
-                verifiesComments: config.verifiesComments)
+                itemsInStringsdict: itemsInStringsdict,
+                mergeStrategy: config.mergeStrategy)
             
-            if !request.includesComments {
-                mergedItems = mergedItems.map({ $0.setting(\.comment, nil) })
-            }
+            let mergedPlist = try stringsdictMerger.plistByMerging(
+                localizationItems: mergedItems,
+                plist: plist)
             
-            result[language] = stringsGenerator.generate(from: mergedItems)
+            result[language] = mergedPlist.xmlDocumentString
         }
     }
 }

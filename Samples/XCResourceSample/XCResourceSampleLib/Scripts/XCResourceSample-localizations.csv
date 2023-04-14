@@ -13,7 +13,7 @@ text_italic,Italic,Italic,이탤릭
 text_underline,Underline,Underline,밑줄
 text_strikethrough,Strikethrough,Strikethrough,취소선
 fileList_fileCount,%{_ fileCount}ld files,%ld files,%ld개의 파일
-alert_deleteFile,"""%{fileName}@"" will be deleted.\nThis action cannot be undone.","""%@"" will be deleted.
+alert_delete_file,"""%{fileName}@"" will be deleted.\nThis action cannot be undone.","""%@"" will be deleted.
 This action cannot be undone.","""%@"" 파일은 삭제됩니다.
 이 동작은 취소할 수 없습니다."
 success100,100% success,100% success,100% 성공

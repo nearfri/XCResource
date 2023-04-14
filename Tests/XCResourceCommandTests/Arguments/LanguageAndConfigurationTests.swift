@@ -7,7 +7,7 @@ final class LanguageAndConfigurationTests: XCTestCase {
         let argument = "ko:comment:verify-comments"
         
         // When
-        let langAndConfig = try XCTUnwrap(LanguageAndConfiguration(argument: argument))
+        let langAndConfig = try XCTUnwrap(LanguageAndStringsConfiguration(argument: argument))
         
         // Then
         XCTAssertEqual(langAndConfig.language, "ko")

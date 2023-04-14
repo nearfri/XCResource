@@ -84,6 +84,18 @@ private let manifestTemplate = """
             "sortsByKey": false
         },
         {
+            "commandName": "swift2stringsdict",
+            "swiftPath": "<#swift file path#>",
+            "resourcesPath": "<#resources path#>",
+            "tableName": "Localizable",
+            "configurationsByLanguage": {
+                "<#language#>": {
+                    "mergeStrategy": "<#comment|key|custom-string|dont-add#>"
+                }
+            },
+            "sortsByKey": false
+        },
+        {
             "commandName": "strings2swift",
             "resourcesPath": "<#resources path#>",
             "tableName": "Localizable",

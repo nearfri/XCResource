@@ -61,7 +61,7 @@ final class StringKeyToStringsGeneratorTests: XCTestCase {
             languageDetector: DefaultLanguageDetector(detector: FakeLanguageDetector()),
             sourceCodeImporter: FakeSourceCodeImporter(),
             stringsImporter: stringsImporter,
-            localizationMerger: DefaultStringsLocalizationItemMerger(),
+            localizationItemMerger: DefaultStringsLocalizationItemMerger(),
             stringsGenerator: stringsGenerator)
     }
     

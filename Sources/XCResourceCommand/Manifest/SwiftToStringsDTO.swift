@@ -1,12 +1,12 @@
 import Foundation
 import ArgumentParser
 
-struct LocalizationConfigurationDTO: Codable {
+struct KeyToStringsConfigurationDTO: Codable {
     var mergeStrategy: String
     var verifiesComments: Bool
     
-    func toArgument() -> LocalizationConfiguration {
-        return LocalizationConfiguration(
+    func toArgument() -> KeyToStringsConfiguration {
+        return KeyToStringsConfiguration(
             mergeStrategy: LocalizationMergeStrategy(argument: mergeStrategy),
             verifiesComments: verifiesComments)
     }
@@ -18,7 +18,7 @@ struct SwiftToStringsDTO: CommandDTO {
     var swiftPath: String
     var resourcesPath: String
     var tableName: String?
-    var configurationsByLanguage: [String: LocalizationConfigurationDTO]?
+    var configurationsByLanguage: [String: KeyToStringsConfigurationDTO]?
     var omitsComments: Bool?
     var sortsByKey: Bool?
     
@@ -26,14 +26,14 @@ struct SwiftToStringsDTO: CommandDTO {
         typealias Default = SwiftToStrings.Default
         
         let langAndConfigs = configurationsByLanguage?.map({
-            return LanguageAndConfiguration(language: $0, configuration: $1.toArgument())
+            return LanguageAndStringsConfiguration(language: $0, configuration: $1.toArgument())
         })
         
         var command = SwiftToStrings()
         command.swiftPath = swiftPath
         command.resourcesPath = resourcesPath
         command.tableName = tableName ?? Default.tableName
-        command.languageAndConfigurations = langAndConfigs ?? Default.languageAndConfigurations
+        command.configurations = langAndConfigs ?? Default.configurations
         command.omitsComments = omitsComments ?? Default.omitsComments
         command.sortsByKey = sortsByKey ?? Default.sortsByKey
         

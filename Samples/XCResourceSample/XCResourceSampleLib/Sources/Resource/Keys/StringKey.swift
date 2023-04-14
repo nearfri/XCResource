@@ -55,7 +55,7 @@ public enum StringKey: String, CaseIterable {
     
     /// "%{fileName}@" will be deleted.\n
     /// This action cannot be undone.
-    case alert_deleteFile
+    case alert_delete_file
     
     // MARK: - etc.
     
@@ -65,5 +65,5 @@ public enum StringKey: String, CaseIterable {
     
     // If %#@variable@ format is included, it is implicitly excluded from .strings file.
     /// %{dogName}@ ate %#@appleCount@ today!
-    case dogEatingApples
+    case dog_eating_apples
 }
