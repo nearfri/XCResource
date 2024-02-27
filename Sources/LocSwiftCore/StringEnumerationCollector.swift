@@ -16,8 +16,7 @@ class StringEnumerationCollector: SyntaxVisitor {
     private var currentEnumeraion: Enumeration<String> = .init(identifier: "", cases: [])
     
     override func visitPost(_ node: EnumDeclSyntax) {
-        let id: TokenSyntax = node.identifier
-        currentEnumeraion.identifier = id.text
+        currentEnumeraion.identifier = node.name.text
         
         enumerations.append(currentEnumeraion)
         currentEnumeraion = .init(identifier: "", cases: [])

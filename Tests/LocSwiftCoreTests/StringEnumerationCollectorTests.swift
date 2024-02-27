@@ -1,6 +1,6 @@
 import XCTest
 import SwiftSyntax
-import SwiftSyntaxParser
+import SwiftParser
 @testable import LocSwiftCore
 
 private enum Fixture {
@@ -34,7 +34,7 @@ final class StringEnumerationCollectorTests: XCTestCase {
     func test_walk() throws {
         // Given
         let sut = StringEnumerationCollector(viewMode: .sourceAccurate)
-        let syntaxTree: SourceFileSyntax = try SyntaxParser.parse(source: Fixture.stringKeyEnum)
+        let syntaxTree: SourceFileSyntax = Parser.parse(source: Fixture.stringKeyEnum)
         
         let expectedEnum = Enumeration<String>(identifier: "StringKey", cases: [
             .init(comments: [.line("MARK: - Common"), .documentLine("취소")],

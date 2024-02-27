@@ -11,6 +11,6 @@ public class EnumCaseIdentifierExtractor: SyntaxVisitor {
     }
     
     public override func visitPost(_ node: EnumCaseElementSyntax) {
-        result = node.identifier.text
+        result = node.name.text
     }
 }

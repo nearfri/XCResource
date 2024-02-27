@@ -19,7 +19,7 @@ class StringEnumerationRewriter: SyntaxRewriter {
         self.lineCommentForLocalizationItem = lineCommentForLocalizationItem
     }
     
-    override func visit(_ node: MemberDeclListSyntax) -> MemberDeclListSyntax {
+    override func visit(_ node: MemberBlockItemListSyntax) -> MemberBlockItemListSyntax {
         let indent = calculateEnumCaseIndent(from: node) ?? .spaces(4)
         
         var newNode = super.visit(node)
@@ -33,58 +33,51 @@ class StringEnumerationRewriter: SyntaxRewriter {
         return newNode
     }
     
-    private func calculateEnumCaseIndent(from node: MemberDeclListSyntax) -> TriviaPiece? {
+    private func calculateEnumCaseIndent(from node: MemberBlockItemListSyntax) -> TriviaPiece? {
         let firstTrivia = node.first?.leadingTrivia
         return firstTrivia?.first(where: { $0.isHorizontalWhitespaces })
     }
     
     private func removingBlankEnumCaseItems(
-        from node: MemberDeclListSyntax
-    ) -> MemberDeclListSyntax {
-        var result = node
-        
-        let indicesToRemove = node.filter({ $0.totalLength == .zero }).map({ $0.indexInParent })
-        
-        for index in indicesToRemove.reversed() {
-            result = result.removing(childAt: index)
-        }
-        
-        return result
+        from node: MemberBlockItemListSyntax
+    ) -> MemberBlockItemListSyntax {
+        return node.filter({ $0.totalLength != .zero })
     }
     
     private func insertingNewEnumCaseItems(
-        to node: MemberDeclListSyntax,
+        to node: MemberBlockItemListSyntax,
         indent: TriviaPiece
-    ) -> MemberDeclListSyntax {
-        var result = node
+    ) -> MemberBlockItemListSyntax {
+        var blockItems: [MemberBlockItemSyntax] = Array(node)
         
         for (index, var item) in difference.insertions {
             if index == 0, let firstItem = node.first {
-                let trivia: Trivia = [.newlines(1), indent] + (firstItem.leadingTrivia ?? [])
-                result = result.replacing(childAt: 0, with: firstItem.withLeadingTrivia(trivia))
+                let trivia: Trivia = [.newlines(1), indent] + firstItem.leadingTrivia
+                blockItems[0] = firstItem.with(\.leadingTrivia, trivia)
             }
             
             item.developerComments = lineCommentForLocalizationItem(item).map({ [$0] }) ?? []
             
             let enumCase = EnumCaseDeclSyntax(localizationItem: item, indent: indent)
+            let blockItem = MemberBlockItemSyntax(decl: enumCase)
             
-            result = result.inserting(MemberDeclListItemSyntax(decl: enumCase), at: index)
+            blockItems.insert(blockItem, at: index)
         }
         
-        return result
+        return MemberBlockItemListSyntax(blockItems)
     }
     
     private func trimmingEmptyLinePrefixOfFirstItem(
-        of node: MemberDeclListSyntax
-    ) -> MemberDeclListSyntax {
-        guard let firstItem = node.first, let leadingTrivia = firstItem.leadingTrivia else {
+        of node: MemberBlockItemListSyntax
+    ) -> MemberBlockItemListSyntax {
+        guard let firstItem = node.first else {
             return node
         }
         
-        let newTrivia = leadingTrivia.trimmingEmptyLinePrefix()
-        let newItem = firstItem.withLeadingTrivia(newTrivia)
+        let newTrivia = firstItem.leadingTrivia.trimmingEmptyLinePrefix()
+        let newItem = firstItem.with(\.leadingTrivia, newTrivia)
         
-        return node.replacing(childAt: firstItem.indexInParent, with: newItem)
+        return node.with(\.[node.startIndex], newItem)
     }
     
     override func visit(_ node: EnumCaseDeclSyntax) -> DeclSyntax {
@@ -93,7 +86,8 @@ class StringEnumerationRewriter: SyntaxRewriter {
         let identifier = caseIdentifierExtractor.extract(from: node)
         
         if difference.removals.contains(identifier) {
-            node = EnumCaseDeclSyntax(caseKeyword: .caseKeyword(presence: .missing))
+            node = EnumCaseDeclSyntax(caseKeyword: .keyword(.case, presence: .missing),
+                                      elements: [])
         }
         
         if var item = difference.modifications[identifier] {

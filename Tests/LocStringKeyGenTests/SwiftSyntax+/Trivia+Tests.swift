@@ -1,6 +1,6 @@
 import XCTest
 import SwiftSyntax
-import SwiftSyntaxParser
+import SwiftParser
 @testable import LocStringKeyGen
 
 final class TriviaTests: XCTestCase {
