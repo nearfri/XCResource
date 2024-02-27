@@ -81,7 +81,7 @@ private struct MethodGenerator {
     }
     
     private func writeHeader(to target: inout String) {
-        let frontPart = "static func \(item.enumCase.identifier)("
+        let frontPart = "static func \(item.enumCase.name)("
         let backPart = ") -> \(formTypeName)"
         
         let paramParts = item.parameters.enumerated().map { index, parameter in
@@ -107,7 +107,7 @@ private struct MethodGenerator {
         target += " {\n"
         
         let frontPart = "\(tab1)return \(formTypeName)"
-        let keyPart = "key: \(keyTypeName).\(item.enumCase.identifier).rawValue"
+        let keyPart = "key: \(keyTypeName).\(item.enumCase.name).rawValue"
         
         let argParts = item.parameters.enumerated().map { index, parameter in
             return parameter.localName.isEmpty ? "param\(index + 1)" : parameter.localName

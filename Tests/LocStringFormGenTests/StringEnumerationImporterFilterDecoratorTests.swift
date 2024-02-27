@@ -7,20 +7,20 @@ final class StringEnumerationImporterFilterDecoratorTests: XCTestCase {
         // Given
         class StubStringEnumerationImporter: StringEnumerationImporter {
             static let enumeration = Enumeration<String>(
-                identifier: "StringKey",
+                name: "StringKey",
                 cases: [
                     .init(
                         comments: [
                             .documentLine("Cancel")
                         ],
-                        identifier: "common_cancel",
+                        name: "common_cancel",
                         rawValue: "common_cancel"),
                     .init(
                         comments: [
                             .line("xcresource:key2form:exclude"),
                             .documentLine("100% chance!!")
                         ],
-                        identifier: "chance100",
+                        name: "chance100",
                         rawValue: "chance100"),
                 ])
             
@@ -34,10 +34,10 @@ final class StringEnumerationImporterFilterDecoratorTests: XCTestCase {
             commandNameForExclusion: "xcresource:key2form:exclude")
         
         let expectedEnum = Enumeration<String>(
-            identifier: "StringKey",
+            name: "StringKey",
             cases: [
                 .init(comments: [.documentLine("Cancel")],
-                      identifier: "common_cancel",
+                      name: "common_cancel",
                       rawValue: "common_cancel"),
             ])
         
