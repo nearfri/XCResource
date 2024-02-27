@@ -5,19 +5,19 @@ import LocSwiftCore
 private class StubStringEnumerationImporter: StringEnumerationImporter {
     func `import`(at url: URL) throws -> Enumeration<String> {
         return Enumeration<String>(
-            identifier: "StringKey",
+            name: "StringKey",
             cases: [
                 .init(comments: [.documentLine("취소")],
-                      identifier: "cancel",
+                      name: "cancel",
                       rawValue: "cancel"),
                 .init(comments: [.line("영상은 최대 %@{duration}, %@{fileSize}까지만")],
-                      identifier: "notDocumentComment",
+                      name: "notDocumentComment",
                       rawValue: "notDocumentComment"),
                 .init(comments: [.documentLine("영상은 최대 %@{duration}, %@{fileSize}까지만")],
-                      identifier: "errorPopup_overMaximumSize",
+                      name: "errorPopup_overMaximumSize",
                       rawValue: "errorPopup_overMaximumSize"),
                 .init(comments: [.documentLine("%ld{fileCount}개의 파일을 로드하였습니다.")],
-                      identifier: "fileLoadSuccess",
+                      name: "fileLoadSuccess",
                       rawValue: "fileLoadSuccess"),
             ])
     }
@@ -123,7 +123,7 @@ final class StringFormGeneratorTests: XCTestCase {
             FunctionItem(
                 enumCase: .init(
                     comments: [.documentLine("영상은 최대 %@{duration}, %@{fileSize}까지만")],
-                    identifier: "errorPopup_overMaximumSize",
+                    name: "errorPopup_overMaximumSize",
                     rawValue: "errorPopup_overMaximumSize"),
                 parameters: [
                     .init(externalName: "", localName: "duration", type: String.self),
@@ -132,7 +132,7 @@ final class StringFormGeneratorTests: XCTestCase {
             FunctionItem(
                 enumCase: .init(
                     comments: [.documentLine("%ld{fileCount}개의 파일을 로드하였습니다.")],
-                    identifier: "fileLoadSuccess",
+                    name: "fileLoadSuccess",
                     rawValue: "fileLoadSuccess"),
                 parameters: [
                     .init(externalName: "", localName: "fileCount", type: Int.self),

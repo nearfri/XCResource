@@ -1,6 +1,6 @@
 import Foundation
 import SwiftSyntax
-import SwiftSyntaxParser
+import SwiftParser
 import LocStringCore
 
 class SwiftLocalizationSourceCodeRewriter: LocalizationSourceCodeRewriter {
@@ -18,7 +18,7 @@ class SwiftLocalizationSourceCodeRewriter: LocalizationSourceCodeRewriter {
             difference: difference,
             lineCommentForLocalizationItem: lineCommentForItem)
         
-        let sourceFileNode: SourceFileSyntax = try SyntaxParser.parse(source: sourceCode)
+        let sourceFileNode: SourceFileSyntax = Parser.parse(source: sourceCode)
         
         return enumRewriter.visit(sourceFileNode).description
     }

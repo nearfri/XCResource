@@ -4,7 +4,7 @@ import LocStringCore
 
 private class StubStringEnumerationImporter: StringEnumerationImporter {
     func `import`(at url: URL) throws -> Enumeration<String> {
-        return .init(identifier: "StringKey", cases: [
+        return .init(name: "StringKey", cases: [
             .init(
                 comments: [
                     .line("line - cancel 1."),
@@ -12,7 +12,7 @@ private class StubStringEnumerationImporter: StringEnumerationImporter {
                     .documentLine("document line - cancel 1."),
                     .documentLine("document line - cancel 2."),
                 ],
-                identifier: "common_cancel",
+                name: "common_cancel",
                 rawValue: "common_cancel"),
             .init(
                 comments: [
@@ -21,7 +21,7 @@ private class StubStringEnumerationImporter: StringEnumerationImporter {
                     .documentBlock("document block - confirm 1."),
                     .documentBlock("document block - confirm 2."),
                 ],
-                identifier: "common_confirm",
+                name: "common_confirm",
                 rawValue: "common_confirm"),
         ])
     }

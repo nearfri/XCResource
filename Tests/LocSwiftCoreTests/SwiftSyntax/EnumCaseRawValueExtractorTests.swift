@@ -8,13 +8,13 @@ final class EnumCaseRawValueExtractorTests: XCTestCase {
     
     func test_extract() throws {
         // Given
-        let enumCase = EnumCaseDecl(elementsBuilder:  {
-            EnumCaseElement(
+        let enumCase = EnumCaseDeclSyntax(elementsBuilder:  {
+            EnumCaseElementSyntax(
                 leadingTrivia: .space,
-                identifier: "hello",
-                rawValue: InitializerClause(
+                name: .identifier("hello"),
+                rawValue: InitializerClauseSyntax(
                     equal: .equalToken(leadingTrivia: .space, trailingTrivia: .space),
-                    value: StringLiteralExpr(content: "world")))
+                    value: StringLiteralExprSyntax(content: "world")))
         })
         
         // When

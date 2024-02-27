@@ -2,7 +2,7 @@ import XCTest
 import LocStringCore
 import TestUtil
 import SwiftSyntax
-import SwiftSyntaxParser
+import SwiftParser
 @testable import LocStringKeyGen
 
 private enum Fixture {
@@ -23,7 +23,7 @@ final class StringEnumerationRewriterTests: XCTestCase {
     private var fileNode: SourceFileSyntax!
     
     override func setUpWithError() throws {
-        fileNode = try SyntaxParser.parse(source: Fixture.sourceCode)
+        fileNode = Parser.parse(source: Fixture.sourceCode)
     }
     
     // MARK: - insert

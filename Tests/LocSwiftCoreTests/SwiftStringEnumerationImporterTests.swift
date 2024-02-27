@@ -27,10 +27,10 @@ final class SwiftStringEnumerationImporterTests: XCTestCase {
         let sut = SwiftStringEnumerationImporter()
         
         let expectedEnum = Enumeration<String>(
-            identifier: "StringKey",
+            name: "StringKey",
             cases: [
                 .init(comments: [.documentLine("Cancel")],
-                      identifier: "common_cancel",
+                      name: "common_cancel",
                       rawValue: "common_cancel"),
             ])
         

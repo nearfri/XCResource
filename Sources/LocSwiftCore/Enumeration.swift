@@ -1,11 +1,11 @@
 import Foundation
 
 public struct Enumeration<RawValue: Equatable>: Equatable {
-    public var identifier: String
+    public var name: String
     public var cases: [Case]
     
-    public init(identifier: String, cases: [Case]) {
-        self.identifier = identifier
+    public init(name: String, cases: [Case]) {
+        self.name = name
         self.cases = cases
     }
 }
@@ -13,12 +13,12 @@ public struct Enumeration<RawValue: Equatable>: Equatable {
 extension Enumeration {
     public struct Case: Equatable {
         public var comments: [Comment]
-        public var identifier: String
+        public var name: String
         public var rawValue: RawValue
         
-        public init(comments: [Comment] = [], identifier: String, rawValue: RawValue) {
+        public init(comments: [Comment] = [], name: String, rawValue: RawValue) {
             self.comments = comments
-            self.identifier = identifier
+            self.name = name
             self.rawValue = rawValue
         }
         

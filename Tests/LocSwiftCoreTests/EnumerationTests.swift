@@ -6,7 +6,7 @@ final class EnumerationCaseTests: XCTestCase {
         // Given
         let sut = Enumeration.Case(
             comments: [.line("xcresource:customcommand"), .documentLine("hello world")],
-            identifier: "greeting",
+            name: "greeting",
             rawValue: "greeting")
         
         // When
@@ -20,7 +20,7 @@ final class EnumerationCaseTests: XCTestCase {
         // Given
         let sut = Enumeration.Case(
             comments: [.line("xcresource:customcommand"), .documentLine("hello world")],
-            identifier: "greeting",
+            name: "greeting",
             rawValue: "greeting")
         
         // When

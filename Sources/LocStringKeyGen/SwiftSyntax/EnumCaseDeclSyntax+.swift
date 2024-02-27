@@ -22,16 +22,16 @@ extension EnumCaseDeclSyntax {
             return pieces
         }()
         
-        self = EnumCaseDecl(leadingTrivia: Trivia(pieces: triviaPieces), elementsBuilder: {
+        self = EnumCaseDeclSyntax(leadingTrivia: Trivia(pieces: triviaPieces), elementsBuilder: {
             if localizationItem.id == localizationItem.key {
-                EnumCaseElement(leadingTrivia: .space, identifier: localizationItem.id)
+                EnumCaseElementSyntax(leadingTrivia: .space, name: .identifier(localizationItem.id))
             } else {
-                EnumCaseElement(
+                EnumCaseElementSyntax(
                     leadingTrivia: .space,
-                    identifier: localizationItem.id,
-                    rawValue: InitializerClause(
+                    name: .identifier(localizationItem.id),
+                    rawValue: InitializerClauseSyntax(
                         equal: .equalToken(leadingTrivia: .space, trailingTrivia: .space),
-                        value: StringLiteralExpr(content: localizationItem.key)))
+                        value: StringLiteralExprSyntax(content: localizationItem.key)))
             }
         })
     }
@@ -95,18 +95,10 @@ extension EnumCaseDeclSyntax {
     }
     
     private func addingLineComment(_ comment: String) -> Self {
-        var leadingTrivia = leadingTrivia ?? Trivia(pieces: [])
-        
-        leadingTrivia = leadingTrivia.addingLineComment(comment)
-        
-        return withLeadingTrivia(leadingTrivia)
+        return with(\.leadingTrivia, leadingTrivia.addingLineComment(comment))
     }
     
     private func replacingDocumentComment(with comment: String?) -> Self {
-        var leadingTrivia = leadingTrivia ?? Trivia(pieces: [])
-        
-        leadingTrivia = leadingTrivia.replacingDocumentComment(with: comment)
-        
-        return withLeadingTrivia(leadingTrivia)
+        return with(\.leadingTrivia, leadingTrivia.replacingDocumentComment(with: comment))
     }
 }

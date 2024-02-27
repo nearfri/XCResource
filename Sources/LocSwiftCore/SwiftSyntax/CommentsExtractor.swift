@@ -5,7 +5,7 @@ public class CommentsExtractor {
     public init() {}
     
     public func leadingComments(in node: SyntaxProtocol) -> [Comment] {
-        return node.leadingTrivia.map(extract(from:)) ?? []
+        return extract(from: node.leadingTrivia)
     }
     
     public func extract(from trivia: Trivia) -> [Comment] {

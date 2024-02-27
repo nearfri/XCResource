@@ -122,7 +122,7 @@ public class StringFormGenerator {
         return methodDeclationGenerator.generate(
             formTypeName: request.formTypeName,
             accessLevel: request.accessLevel,
-            keyTypeName: enumeration.identifier,
+            keyTypeName: enumeration.name,
             items: functionItems)
     }
     

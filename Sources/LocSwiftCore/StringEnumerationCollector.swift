@@ -13,14 +13,13 @@ class StringEnumerationCollector: SyntaxVisitor {
     }()
     
     private(set) var enumerations: [Enumeration<String>] = []
-    private var currentEnumeraion: Enumeration<String> = .init(identifier: "", cases: [])
+    private var currentEnumeraion: Enumeration<String> = .init(name: "", cases: [])
     
     override func visitPost(_ node: EnumDeclSyntax) {
-        let id: TokenSyntax = node.identifier
-        currentEnumeraion.identifier = id.text
+        currentEnumeraion.name = node.name.text
         
         enumerations.append(currentEnumeraion)
-        currentEnumeraion = .init(identifier: "", cases: [])
+        currentEnumeraion = .init(name: "", cases: [])
     }
     
     override func visitPost(_ node: EnumCaseDeclSyntax) {
@@ -29,7 +28,7 @@ class StringEnumerationCollector: SyntaxVisitor {
         let rawValue = caseRawValueExtractor.extract(from: node) ?? identifier
         
         currentEnumeraion.cases.append(
-            .init(comments: comments, identifier: identifier, rawValue: rawValue)
+            .init(comments: comments, name: identifier, rawValue: rawValue)
         )
     }
 }

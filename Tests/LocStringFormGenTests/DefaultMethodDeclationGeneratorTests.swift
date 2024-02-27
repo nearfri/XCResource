@@ -13,7 +13,7 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                 comments: [
                     .documentLine("%ld{fileCount}개의 파일을 로드하였습니다.")
                 ],
-                identifier: "fileLoadSuccess",
+                name: "fileLoadSuccess",
                 rawValue: "fileLoadSuccess"),
             parameters: [
                 .init(externalName: "", localName: "fileCount", type: Int.self),
@@ -45,7 +45,7 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                     .documentLine(
                         "영상은 최대 %@{videoDuration}, %@{videoFileSize}까지 가능합니다.\\n길이를 수정하세요.")
                 ],
-                identifier: "errorPopup_overMaximumSize",
+                name: "errorPopup_overMaximumSize",
                 rawValue: "errorPopup_overMaximumSize"),
             parameters: [
                 .init(externalName: "", localName: "videoDuration", type: String.self),
@@ -82,7 +82,7 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                 comments: [
                     .documentLine("영상은 최대 %@, %@까지 가능합니다.\\n길이를 수정하세요.")
                 ],
-                identifier: "errorPopup_overMaximumSize",
+                name: "errorPopup_overMaximumSize",
                 rawValue: "errorPopup_overMaximumSize"),
             parameters: [
                 .init(externalName: "", localName: "", type: String.self),
@@ -115,7 +115,7 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                 comments: [
                     .documentLine("%ld %@ %d %f %ld %@ %d %f %ld %@ %d %f")
                 ],
-                identifier: "manyMany",
+                name: "manyMany",
                 rawValue: "manyMany"),
             parameters: [
                 .init(externalName: "", localName: "", type: Int.self),
@@ -178,7 +178,7 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                             길이를 수정하세요.
                             """)
                 ],
-                identifier: "errorPopup_overMaximumSize",
+                name: "errorPopup_overMaximumSize",
                 rawValue: "errorPopup_overMaximumSize"),
             parameters: [
                 .init(externalName: "", localName: "duration", type: String.self),
@@ -217,7 +217,7 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                         .documentLine(
                             "영상은 최대 %@{duration}, %@{fileSize}까지 가능합니다.\\n길이를 수정하세요.")
                     ],
-                    identifier: "errorPopup_overMaximumSize",
+                    name: "errorPopup_overMaximumSize",
                     rawValue: "errorPopup_overMaximumSize"),
                 parameters: [
                     .init(externalName: "", localName: "duration", type: String.self),
@@ -228,7 +228,7 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                     comments: [
                         .documentLine("%ld{fileCount}개의 파일을 로드하였습니다.")
                     ],
-                    identifier: "fileLoadSuccess",
+                    name: "fileLoadSuccess",
                     rawValue: "fileLoadSuccess"),
                 parameters: [
                     .init(externalName: "", localName: "fileCount", type: Int.self),
@@ -272,7 +272,7 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                 comments: [
                     .documentLine("%ld{fileCount}개의 파일을 로드하였습니다.")
                 ],
-                identifier: "fileLoadSuccess",
+                name: "fileLoadSuccess",
                 rawValue: "fileLoadSuccess"),
             parameters: [
                 .init(externalName: "", localName: "fileCount", type: Int.self),

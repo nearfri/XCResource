@@ -33,7 +33,7 @@ extension TriviaPiece {
         switch self {
         case .lineComment, .blockComment, .docLineComment, .docBlockComment:
             return true
-        case .unexpectedText, .shebang:
+        case .unexpectedText:
             return true
         default:
             return false

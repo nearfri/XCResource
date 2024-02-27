@@ -14,7 +14,7 @@ public class SwiftLocalizationItemImporter: LocalizationItemImporter {
         
         return enumeration.cases.map { enumCase in
             LocalizationItem(
-                id: enumCase.identifier,
+                id: enumCase.name,
                 key: enumCase.rawValue,
                 value: "",
                 developerComments: enumCase.developerComments,
