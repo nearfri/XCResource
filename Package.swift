@@ -9,6 +9,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [.macOS(.v13)],
     products: [
+        .executable(name: "xcresource-bin", targets: ["xcresource"]),
         .executable(name: "xcresource", targets: ["XCResourceCLI"]),
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
@@ -195,5 +196,13 @@ let package = Package(
         .target(
             name: "TestUtil",
             path: "Tests/_TestUtil"),
+        
+        // MARK: - Released xcresource
+        
+        .binaryTarget(
+            name: "xcresource",
+            url: "https://github.com/nearfri/XCResource/releases/download/0.9.25/xcresource.artifactbundle.zip",
+            checksum: "b4a297dea6b6c8df93dc7149d7d548e38ec699cdcfd2477b33c013da52fd7249"
+        ),
     ]
 )

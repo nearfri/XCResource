@@ -6,8 +6,7 @@ ARTIFACTBUNDLE = $(EXECUTABLE_NAME).artifactbundle
 ARTIFACTBUNDLE_PATH = $(TEMP_DIR)/$(ARTIFACTBUNDLE)
 ARTIFACTBUNDLE_ZIP = $(ARTIFACTBUNDLE).zip
 ARTIFACTBUNDLE_ZIP_PATH = $(TEMP_DIR)/$(ARTIFACTBUNDLE_ZIP)
-EXECUTABLE_ZIP = $(EXECUTABLE_NAME).zip
-EXECUTABLE_ZIP_PATH = $(TEMP_DIR)/$(EXECUTABLE_ZIP)
+ARTIFACTBUNDLE_URL = https://github.com/nearfri/XCResource/releases/download/$(VERSION)/$(ARTIFACTBUNDLE_ZIP)
 ARCHIVED_EXECUTABLE_PATH = $(ARCHIVE_PATH)/Products/usr/local/bin/$(EXECUTABLE_NAME)
 RELEASE_NOTES_PATH = $(TEMP_DIR)/release_notes.md
 RELEASE_NOTES_JSON_PATH = $(TEMP_DIR)/release_notes.json
@@ -18,7 +17,7 @@ SWIFT_BUILD_FLAGS = -c release
 ROOT_CMD_PATH = Sources/XCResourceCommand/Commands/XCResource.swift
 MINTFILE_PATH = Samples/XCResourceSample/XCResourceSampleLib/Scripts/Mintfile
 
-SAMPLEAPP_MANIFEST_PATH = Samples/XCResourceSample/XCResourceSampleLib/Package.swift
+MANIFEST_PATH = ./Package.swift
 
 # Invoke make with GIT_CHECK=false to override this value.
 GIT_CHECK = true
@@ -26,7 +25,6 @@ GIT_CHECK = true
 VERSION = $(shell sed -En 's/.*version: "(.*)".*/\1/p' $(ROOT_CMD_PATH))
 GITHUB_TOKEN = $(shell security find-generic-password -w -s GITHUB_TOKEN)
 
-EXECUTABLE_CHECKSUM = $(shell swift package compute-checksum $(EXECUTABLE_ZIP_PATH))
 ARTIFACTBUNDLE_CHECKSUM = $(shell swift package compute-checksum $(ARTIFACTBUNDLE_ZIP_PATH))
 
 RELEASE_RESPONSE_PATH = $(TEMP_DIR)/release_response.json
@@ -37,10 +35,6 @@ RELEASE_ID = $(shell cat $(RELEASE_RESPONSE_PATH) \
 
 RELEASE_NOTES_BODY = $(shell cat $(RELEASE_NOTES_PATH) \
 	| sed -E 's/"/\\"/g' | sed -E 's/$$/\\n/g' | tr -d '\n')
-
-EXECUTABLE_UPLOAD_URL = $(shell cat $(RELEASE_RESPONSE_PATH) \
-	| python3 -c "import sys, json; print(json.load(sys.stdin)['upload_url'])" \
-	| sed -E 's/{.*}/?name=$(EXECUTABLE_ZIP)/')
 
 ARTIFACTBUNDLE_UPLOAD_URL = $(shell cat $(RELEASE_RESPONSE_PATH) \
 	| python3 -c "import sys, json; print(json.load(sys.stdin)['upload_url'])" \
@@ -53,14 +47,13 @@ endef
 
 define ARTIFACTBUNDLE_INFO_TEMPLATE
 ### Asset Checksums
-- $(EXECUTABLE_ZIP): `$(EXECUTABLE_CHECKSUM)`
 - $(ARTIFACTBUNDLE_ZIP): `$(ARTIFACTBUNDLE_CHECKSUM)`
 
 ### Swift Package Manager snippet
 ```swift
 .binaryTarget(
     name: "$(EXECUTABLE_NAME)",
-    url: "https://github.com/nearfri/XCResource/releases/download/$(VERSION)/$(ARTIFACTBUNDLE_ZIP)",
+    url: "$(ARTIFACTBUNDLE_URL)",
     checksum: "$(ARTIFACTBUNDLE_CHECKSUM)"
 )
 ```
@@ -97,8 +90,8 @@ export ARTIFACTBUNDLE_MANIFEST
 
 ####################################################################################################
 
-.PHONY: default
-default: release
+.PHONY: default-release
+default-release: release
 
 .PHONY: build
 build:
@@ -108,14 +101,14 @@ build:
 release: release-local-process release-remote-process _finish_release
 
 .PHONY: release-local-process
-release-local-process: new-version artifactbundle _update-sampleapp-manifest
+release-local-process: _ask-new-version _archive _zip-artifactbundle _update-manifest
 
-.PHONY: version
-version:
+.PHONY: print-version
+print-version:
 	@echo Current Version: $(VERSION)
 
-.PHONY: new-version
-new-version: _check_git version
+.PHONY: _ask-new-version
+_ask-new-version: _check_git print-version
 # .ONESHELL은 make 3.82부터 지원하므로 NEW_VERSION 정의를 위해 eval을 이용한다.
 # https://superuser.com/a/1285748
 	$(eval NEW_VERSION=$(shell read -p "Enter New Version: " NEW_VER; echo $$NEW_VER))
@@ -138,23 +131,12 @@ _check_git:
 		fi; \
 	fi
 
-.PHONY: artifactbundle
-artifactbundle: _archive _zip-assets
-
 .PHONY: _archive
 _archive:
 	mkdir -p $(TEMP_DIR)
 # Use xcodebuild due to https://bugs.swift.org/browse/SR-15802
 	xcodebuild -scheme $(EXECUTABLE_NAME) -destination generic/platform=macOS \
 	-archivePath $(ARCHIVE_PATH) archive
-
-.PHONY: _zip-assets
-_zip-assets: _zip-executable _zip-artifactbundle
-
-.PHONY: _zip-executable
-_zip-executable:
-	mkdir -p $(TEMP_DIR)
-	cd $(TEMP_DIR); zip -jr $(EXECUTABLE_ZIP) ../$(ARCHIVED_EXECUTABLE_PATH)
 
 .PHONY: _zip-artifactbundle
 _zip-artifactbundle:
@@ -163,16 +145,16 @@ _zip-artifactbundle:
 	echo "$$ARTIFACTBUNDLE_MANIFEST" > $(ARTIFACTBUNDLE_PATH)/info.json
 	cd $(TEMP_DIR); zip -mr $(ARTIFACTBUNDLE_ZIP) $(ARTIFACTBUNDLE)
 
-.PHONY: _update-sampleapp-manifest
-_update-sampleapp-manifest:
-	@sed -E -i '' "s/(.*url: .*download\/)(.+)(\/xcresource\.artifact.*)/\1$(VERSION)\3/" $(SAMPLEAPP_MANIFEST_PATH); \
-	sed -E -i '' "s/(.*checksum: \")([^\"]+)(\".*)/\1$(ARTIFACTBUNDLE_CHECKSUM)\3/" $(SAMPLEAPP_MANIFEST_PATH)
+.PHONY: _update-manifest
+_update-manifest:
+	@sed -E -i '' "s/(.*url: .*download\/)(.+)(\/xcresource\.artifact.*)/\1$(VERSION)\3/" $(MANIFEST_PATH); \
+	sed -E -i '' "s/(.*checksum: \")([^\"]+)(\".*)/\1$(ARTIFACTBUNDLE_CHECKSUM)\3/" $(MANIFEST_PATH)
 
 .PHONY: release-remote-process
-release-remote-process: _commit _create-release _upload _update-release-notes _open-release-page
+release-remote-process: _git-commit _create-release _upload _update-release-notes _open-release-page
 
-.PHONY: _commit
-_commit:
+.PHONY: _git-commit
+_git-commit:
 	git add .
 	git commit -m "Update to $(VERSION)"
 	git tag $(VERSION)
@@ -201,14 +183,6 @@ _upload:
 		echo "$(RELEASE_RESPONSE_PATH) file not found."; \
 		exit 30; \
 	fi
-
-	curl -X POST \
-		-T "$(EXECUTABLE_ZIP_PATH)" \
-		-H "Content-Type: $(shell file -b --mime-type $(EXECUTABLE_ZIP_PATH))" \
-		-H "Authorization: token $(GITHUB_TOKEN)" \
-		-H "Accept: application/vnd.github.v3+json" \
-		"$(EXECUTABLE_UPLOAD_URL)" \
-	| cat
 
 	curl -X POST \
 		-T "$(ARTIFACTBUNDLE_ZIP_PATH)" \
