@@ -2,9 +2,9 @@ name: Swift
 
 on:
   push:
-  
-  pull_request:
-  
+    branches: [ "**" ]
+    tags-ignore: [ "**" ]
+  pull_request_target:
   workflow_dispatch:
 
 jobs:
