@@ -173,7 +173,7 @@ _create-release:
 		-H "Authorization: token $(GITHUB_TOKEN)" \
 		-H "Accept: application/vnd.github.v3+json" \
 		-H "Content-Type:application/json" \
-		-d '{"tag_name":"$(VERSION)","target_commitish":"main","draft":true,"generate_release_notes":true}' \
+		-d '{"tag_name":"$(VERSION)","target_commitish":"main","prerelease":true,"generate_release_notes":true}' \
 		-o "$(RELEASE_RESPONSE_PATH)" \
 		https://api.github.com/repos/nearfri/XCResource/releases
 

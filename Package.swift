@@ -6,9 +6,9 @@ import Foundation
 
 let package = Package(
     name: "XCResource",
-    defaultLocalization: "en",
     platforms: [.macOS(.v13)],
     products: [
+        .plugin(name: "RunXCResource", targets: ["RunXCResource"]),
         .executable(name: "xcresource-bin", targets: ["xcresource"]),
         .executable(name: "xcresource", targets: ["XCResourceCLI"]),
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
@@ -26,16 +26,35 @@ let package = Package(
         .package(url: "https://github.com/nearfri/Strix", from: "2.3.7"),
     ],
     targets: [
-        // MARK: - XCResourceCLI
+        // MARK: - Released Binary
+        
+        .binaryTarget(
+            name: "xcresource",
+            url: "https://github.com/nearfri/XCResource/releases/download/0.9.26/xcresource.artifactbundle.zip",
+            checksum: "282d450a5c22d7f61b11f955aeacf651db60ddf574746eb4960409e5df9c0e5f"
+        ),
+        
+        // MARK: - Plugins
+        
+        .plugin(
+            name: "RunXCResource",
+            capability: .command(
+                intent: .custom(
+                    verb: "run-xcresource",
+                    description: "Run XCResource to generate symbols for assets or strings."),
+                permissions: [
+                    .writeToPackageDirectory(
+                        reason: "Write symbol files in the package direcotry")
+                ]),
+            dependencies: ["xcresource"]),
+        
+        // MARK: - Executables
         
         .executableTarget(
             name: "XCResourceCLI",
             dependencies: ["XCResourceCommand"]),
-        .testTarget(
-            name: "XCResourceCLITests",
-            dependencies: ["XCResourceCLI", "SampleData"]),
         
-        // MARK: - XCResourceCommand
+        // MARK: - Command Module
         
         .target(
             name: "XCResourceCommand",
@@ -49,30 +68,15 @@ let package = Package(
                 "XCResourceUtil",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]),
-        .testTarget(
-            name: "XCResourceCommandTests",
-            dependencies: ["XCResourceCommand", "SampleData", "TestUtil"]),
         
-        // MARK: - AssetKeyGen
+        // MARK: - Core Modules
         
         .target(
             name: "AssetKeyGen",
             dependencies: ["XCResourceUtil"]),
-        .testTarget(
-            name: "AssetKeyGenTests",
-            dependencies: ["AssetKeyGen", "SampleData", "TestUtil"]),
-        
-        // MARK: - FontKeyGen
-        
         .target(
             name: "FontKeyGen",
             dependencies: ["XCResourceUtil"]),
-        .testTarget(
-            name: "FontKeyGenTests",
-            dependencies: ["FontKeyGen", "SampleData", "TestUtil"]),
-        
-        // MARK: - LocStringKeyGen
-        
         .target(
             name: "LocStringKeyGen",
             dependencies: [
@@ -83,18 +87,6 @@ let package = Package(
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
             ]),
-        .testTarget(
-            name: "LocStringKeyGenTests",
-            dependencies: [
-                "LocStringKeyGen",
-                "TestUtil",
-                .product(name: "SwiftSyntax", package: "swift-syntax"),
-                .product(name: "SwiftParser", package: "swift-syntax"),
-                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
-            ]),
-        
-        // MARK: - LocStringsGen
-        
         .target(
             name: "LocStringsGen",
             dependencies: [
@@ -102,15 +94,6 @@ let package = Package(
                 "LocSwiftCore",
                 "XCResourceUtil",
             ]),
-        .testTarget(
-            name: "LocStringsGenTests",
-            dependencies: [
-                "LocStringsGen",
-                "TestUtil",
-            ]),
-        
-        // MARK: - LocStringFormGen
-        
         .target(
             name: "LocStringFormGen",
             dependencies: [
@@ -118,15 +101,6 @@ let package = Package(
                 "LocSwiftCore",
                 .product(name: "StrixParsers", package: "Strix"),
             ]),
-        .testTarget(
-            name: "LocStringFormGenTests",
-            dependencies: [
-                "LocStringFormGen",
-                "TestUtil",
-            ]),
-        
-        // MARK: - LocCSVGen
-        
         .target(
             name: "LocCSVGen",
             dependencies: [
@@ -134,14 +108,6 @@ let package = Package(
                 "XCResourceUtil",
                 .product(name: "StrixParsers", package: "Strix"),
             ]),
-        .testTarget(
-            name: "LocCSVGenTests",
-            dependencies: [
-                "LocCSVGen", "TestUtil"
-            ]),
-        
-        // MARK: - LocStringCore
-        
         .target(
             name: "LocStringCore",
             dependencies: [
@@ -149,12 +115,6 @@ let package = Package(
                 .product(name: "StrixParsers", package: "Strix"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
             ]),
-        .testTarget(
-            name: "LocStringCoreTests",
-            dependencies: ["LocStringCore", "SampleData", "TestUtil"]),
-        
-        // MARK: - LocSwiftCore
-        
         .target(
             name: "LocSwiftCore",
             dependencies: [
@@ -163,25 +123,47 @@ let package = Package(
                 .product(name: "SwiftParser", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
             ]),
-        .testTarget(
-            name: "LocSwiftCoreTests",
-            dependencies: [
-                "LocSwiftCore",
-                .product(name: "SwiftSyntax", package: "swift-syntax"),
-                .product(name: "SwiftParser", package: "swift-syntax"),
-                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
-            ]),
-        
-        // MARK: - XCResourceUtil
-        
         .target(
             name: "XCResourceUtil",
             dependencies: []),
+        
+        // MARK: - Tests
+        
+        .testTarget(
+            name: "XCResourceCLITests",
+            dependencies: ["XCResourceCLI", "SampleData"]),
+        .testTarget(
+            name: "XCResourceCommandTests",
+            dependencies: ["XCResourceCommand", "SampleData", "TestUtil"]),
+        .testTarget(
+            name: "AssetKeyGenTests",
+            dependencies: ["AssetKeyGen", "SampleData", "TestUtil"]),
+        .testTarget(
+            name: "FontKeyGenTests",
+            dependencies: ["FontKeyGen", "SampleData", "TestUtil"]),
+        .testTarget(
+            name: "LocStringKeyGenTests",
+            dependencies: ["LocStringKeyGen", "TestUtil"]),
+        .testTarget(
+            name: "LocStringsGenTests",
+            dependencies: ["LocStringsGen", "TestUtil"]),
+        .testTarget(
+            name: "LocStringFormGenTests",
+            dependencies: ["LocStringFormGen", "TestUtil"]),
+        .testTarget(
+            name: "LocCSVGenTests",
+            dependencies: ["LocCSVGen", "TestUtil"]),
+        .testTarget(
+            name: "LocStringCoreTests",
+            dependencies: ["LocStringCore", "SampleData", "TestUtil"]),
+        .testTarget(
+            name: "LocSwiftCoreTests",
+            dependencies: ["LocSwiftCore"]),
         .testTarget(
             name: "XCResourceUtilTests",
             dependencies: ["XCResourceUtil"]),
         
-        // MARK: - SampleData
+        // MARK: - Test Tools
         
         .target(
             name: "SampleData",
@@ -190,19 +172,8 @@ let package = Package(
                 // 테스트용 리소스 폴더로 쓰기 위해 통째로 복사한다.
                 .copy("Resources"),
             ]),
-        
-        // MARK: - TestUtil
-        
         .target(
             name: "TestUtil",
             path: "Tests/_TestUtil"),
-        
-        // MARK: - Released xcresource
-        
-        .binaryTarget(
-            name: "xcresource",
-            url: "https://github.com/nearfri/XCResource/releases/download/0.9.26/xcresource.artifactbundle.zip",
-            checksum: "282d450a5c22d7f61b11f955aeacf651db60ddf574746eb4960409e5df9c0e5f"
-        ),
     ]
 )
