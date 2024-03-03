@@ -6,9 +6,9 @@ import Foundation
 
 let package = Package(
     name: "XCResource",
-    defaultLocalization: "en",
     platforms: [.macOS(.v13)],
     products: [
+        .plugin(name: "RunXCResource", targets: ["RunXCResource"]),
         .executable(name: "xcresource-bin", targets: ["xcresource"]),
         .executable(name: "xcresource", targets: ["XCResourceCLI"]),
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
@@ -34,13 +34,27 @@ let package = Package(
             checksum: "282d450a5c22d7f61b11f955aeacf651db60ddf574746eb4960409e5df9c0e5f"
         ),
         
+        // MARK: - Plugins
+        
+        .plugin(
+            name: "RunXCResource",
+            capability: .command(
+                intent: .custom(
+                    verb: "run-xcresource",
+                    description: "Run XCResource to generate symbols for assets or strings."),
+                permissions: [
+                    .writeToPackageDirectory(
+                        reason: "Write symbol files in the package direcotry")
+                ]),
+            dependencies: ["xcresource"]),
+        
         // MARK: - Executables
         
         .executableTarget(
             name: "XCResourceCLI",
             dependencies: ["XCResourceCommand"]),
         
-        // MARK: - Command Library
+        // MARK: - Command Module
         
         .target(
             name: "XCResourceCommand",
@@ -55,7 +69,7 @@ let package = Package(
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]),
         
-        // MARK: - Core Libraries
+        // MARK: - Core Modules
         
         .target(
             name: "AssetKeyGen",

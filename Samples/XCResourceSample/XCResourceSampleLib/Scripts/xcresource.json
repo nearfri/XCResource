@@ -3,42 +3,42 @@
         {
             "commandName": "xcassets2swift",
             "xcassetsPaths": [
-                "../Sources/Resource/Resources/Assets.xcassets"
+                "Sources/Resource/Resources/Assets.xcassets"
             ],
             "assetTypes": ["imageset"],
-            "swiftPath": "../Sources/Resource/Keys/ImageKey.swift",
+            "swiftPath": "Sources/Resource/Keys/ImageKey.swift",
             "keyTypeName": "ImageKey",
             "accessLevel": "public"
         },
         {
             "commandName": "xcassets2swift",
             "xcassetsPaths": [
-                "../Sources/Resource/Resources/Assets.xcassets"
+                "Sources/Resource/Resources/Assets.xcassets"
             ],
             "assetTypes": ["colorset"],
-            "swiftPath": "../Sources/Resource/Keys/ColorKey.swift",
+            "swiftPath": "Sources/Resource/Keys/ColorKey.swift",
             "keyTypeName": "ColorKey",
             "accessLevel": "public"
         },
         {
             "commandName": "fonts2swift",
-            "fontsPath": "../Sources/Resource/Resources/Fonts",
-            "swiftPath": "../Sources/Resource/Keys/FontKey.swift",
+            "fontsPath": "Sources/Resource/Resources/Fonts",
+            "swiftPath": "Sources/Resource/Keys/FontKey.swift",
             "keyTypeName": "FontKey",
             "accessLevel": "public"
         },
         {
             "commandName": "key2form",
-            "keyFilePath": "../Sources/Resource/Keys/StringKey.swift",
-            "formFilePath": "../Sources/Resource/Keys/StringForm.swift",
+            "keyFilePath": "Sources/Resource/Keys/StringKey.swift",
+            "formFilePath": "Sources/Resource/Keys/StringForm.swift",
             "formTypeName": "StringForm",
             "issueReporter": "xcode",
             "accessLevel": "public"
         },
         {
             "commandName": "swift2strings",
-            "swiftPath": "../Sources/Resource/Keys/StringKey.swift",
-            "resourcesPath": "../Sources/Resource/Resources",
+            "swiftPath": "Sources/Resource/Keys/StringKey.swift",
+            "resourcesPath": "Sources/Resource/Resources",
             "configurationsByLanguage": {
                 "ko": {
                     "mergeStrategy": "comment",
@@ -52,8 +52,8 @@
         },
         {
             "commandName": "swift2stringsdict",
-            "swiftPath": "../Sources/Resource/Keys/StringKey.swift",
-            "resourcesPath": "../Sources/Resource/Resources",
+            "swiftPath": "Sources/Resource/Keys/StringKey.swift",
+            "resourcesPath": "Sources/Resource/Resources",
             "configurationsByLanguage": {
                 "ko": {
                     "mergeStrategy": "comment"
