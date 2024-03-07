@@ -14,14 +14,11 @@ let package = Package(
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
         .library(name: "FontKeyGen", targets: ["FontKeyGen"]),
-        .library(name: "LocStringKeyGen", targets: ["LocStringKeyGen"]),
-        .library(name: "LocStringsGen", targets: ["LocStringsGen"]),
-        .library(name: "LocStringFormGen", targets: ["LocStringFormGen"]),
-        .library(name: "LocCSVGen", targets: ["LocCSVGen"]),
+        .library(name: "LocStringResourceGen", targets: ["LocStringResourceGen"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.4"),
-        .package(url: "https://github.com/apple/swift-syntax", from: "509.0.0"),
+        .package(url: "https://github.com/apple/swift-syntax", from: "510.0.0"),
         .package(url: "https://github.com/apple/swift-collections", from: "1.0.3"),
         .package(url: "https://github.com/nearfri/Strix", from: "2.3.7"),
     ],
@@ -59,6 +56,7 @@ let package = Package(
         .target(
             name: "XCResourceCommand",
             dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 "AssetKeyGen",
                 "FontKeyGen",
                 "LocStringKeyGen",
@@ -66,7 +64,6 @@ let package = Package(
                 "LocStringFormGen",
                 "LocCSVGen",
                 "XCResourceUtil",
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ]),
         
         // MARK: - Core Modules
@@ -78,14 +75,22 @@ let package = Package(
             name: "FontKeyGen",
             dependencies: ["XCResourceUtil"]),
         .target(
+            name: "LocStringResourceGen",
+            dependencies: [
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftParser", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+                "XCResourceUtil",
+            ]),
+        .target(
             name: "LocStringKeyGen",
             dependencies: [
-                "LocStringCore",
-                "LocSwiftCore",
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftParser", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
+                "LocStringCore",
+                "LocSwiftCore",
             ]),
         .target(
             name: "LocStringsGen",
@@ -97,31 +102,31 @@ let package = Package(
         .target(
             name: "LocStringFormGen",
             dependencies: [
+                .product(name: "StrixParsers", package: "Strix"),
                 "LocStringCore",
                 "LocSwiftCore",
-                .product(name: "StrixParsers", package: "Strix"),
             ]),
         .target(
             name: "LocCSVGen",
             dependencies: [
+                .product(name: "StrixParsers", package: "Strix"),
                 "LocStringCore",
                 "XCResourceUtil",
-                .product(name: "StrixParsers", package: "Strix"),
             ]),
         .target(
             name: "LocStringCore",
             dependencies: [
-                "XCResourceUtil",
                 .product(name: "StrixParsers", package: "Strix"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
+                "XCResourceUtil",
             ]),
         .target(
             name: "LocSwiftCore",
             dependencies: [
-                "LocStringCore",
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftParser", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+                "LocStringCore",
             ]),
         .target(
             name: "XCResourceUtil",
@@ -141,6 +146,9 @@ let package = Package(
         .testTarget(
             name: "FontKeyGenTests",
             dependencies: ["FontKeyGen", "SampleData", "TestUtil"]),
+        .testTarget(
+            name: "LocStringResourceGenTests",
+            dependencies: ["LocStringResourceGen", "TestUtil"]),
         .testTarget(
             name: "LocStringKeyGenTests",
             dependencies: ["LocStringKeyGen", "TestUtil"]),

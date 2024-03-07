@@ -17,6 +17,8 @@ class StringEnumerationRewriter: SyntaxRewriter {
         self.caseRawValueExtractor = .init(viewMode: .sourceAccurate)
         self.difference = difference
         self.lineCommentForLocalizationItem = lineCommentForLocalizationItem
+        
+        super.init()
     }
     
     override func visit(_ node: MemberBlockItemListSyntax) -> MemberBlockItemListSyntax {

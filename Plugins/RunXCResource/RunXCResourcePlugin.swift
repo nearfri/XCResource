@@ -43,9 +43,8 @@ struct RunXCResourcePlugin: CommandPlugin {
         
         for candidate in candidates {
             let path = directory.appending(subpath: candidate)
-            let url = URL(fileURLWithPath: path.string)
             
-            if (try? url.checkResourceIsReachable()) ?? false {
+            if FileManager.default.fileExists(atPath: path.string) {
                 return path.string
             }
         }

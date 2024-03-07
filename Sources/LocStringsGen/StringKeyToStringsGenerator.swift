@@ -118,7 +118,7 @@ public class StringKeyToStringsGenerator {
                 verifiesComments: config.verifiesComments)
             
             if !request.includesComments {
-                mergedItems = mergedItems.map({ $0.setting(\.comment, nil) })
+                mergedItems = mergedItems.map({ $0.with(\.comment, nil) })
             }
             
             result[language] = stringsGenerator.generate(from: mergedItems)

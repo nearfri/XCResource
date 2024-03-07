@@ -1,15 +1,15 @@
 import XCTest
 import XCResourceUtil
 
-private struct Person: SettableByKeyPath {
+private struct Person: CopyableWithKeyPath {
     var name: String
 }
 
-final class SettableByKeyPathTests: XCTestCase {
+final class CopyableWithKeyPathTests: XCTestCase {
     func test_setting() {
         let person = Person(name: "Larry Wachowski")
         
-        let renamedPerson = person.setting(\.name, "Lana Wachowski")
+        let renamedPerson = person.with(\.name, "Lana Wachowski")
         
         XCTAssertEqual(renamedPerson.name, "Lana Wachowski")
     }
