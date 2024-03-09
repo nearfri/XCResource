@@ -8,14 +8,21 @@ extension LocalizationItem {
     }
     
     public struct Parameter: Hashable {
-        public let label: String?
-        public let name: String
+        public let firstName: String
+        public let secondName: String?
         public let type: String
+        public let defaultValue: String?
         
-        public init(label: String? = nil, name: String, type: String) {
-            self.label = label
-            self.name = name
+        public init(
+            firstName: String,
+            secondName: String? = nil,
+            type: String,
+            defaultValue: String? = nil
+        ) {
+            self.firstName = firstName
+            self.secondName = secondName
             self.type = type
+            self.defaultValue = defaultValue
         }
     }
     
