@@ -28,40 +28,10 @@
             "accessLevel": "public"
         },
         {
-            "commandName": "key2form",
-            "keyFilePath": "Sources/Resource/Keys/StringKey.swift",
-            "formFilePath": "Sources/Resource/Keys/StringForm.swift",
-            "formTypeName": "StringForm",
-            "issueReporter": "xcode",
-            "accessLevel": "public"
-        },
-        {
-            "commandName": "swift2strings",
-            "swiftPath": "Sources/Resource/Keys/StringKey.swift",
-            "resourcesPath": "Sources/Resource/Resources",
-            "configurationsByLanguage": {
-                "ko": {
-                    "mergeStrategy": "comment",
-                    "verifiesComments": true
-                },
-                "all": {
-                    "mergeStrategy": "dont-add",
-                    "verifiesComments": false
-                }
-            }
-        },
-        {
-            "commandName": "swift2stringsdict",
-            "swiftPath": "Sources/Resource/Keys/StringKey.swift",
-            "resourcesPath": "Sources/Resource/Resources",
-            "configurationsByLanguage": {
-                "ko": {
-                    "mergeStrategy": "comment"
-                },
-                "all": {
-                    "mergeStrategy": "dont-add"
-                }
-            }
+            "commandName": "xcstrings2swift",
+            "catalogPath": "Sources/Resource/Resources/Localizable.xcstrings",
+            "bundle": "for-class:BundleFinder.self",
+            "swiftPath": "Sources/Resource/Keys/LocalizedStringResource+.swift"
         }
     ]
 }
