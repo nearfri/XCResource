@@ -61,6 +61,13 @@ private let manifestTemplate = """
             "excludesTypeDeclation": false
         },
         {
+            "commandName": "xcstrings2swift",
+            "catalogPath": "<#xcstrings file path#>",
+            "bundle": "<#main|at-url<url-getter>|for-class<class-type>#>",
+            "swiftPath": "<#swift file path#>",
+            "resourceTypeName": "LocalizedStringResource"
+        },
+        {
             "commandName": "key2form",
             "keyFilePath": "<#key file path#>",
             "formFilePath": "<#form file path#>",
