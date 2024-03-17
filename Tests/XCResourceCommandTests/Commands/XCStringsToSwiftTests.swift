@@ -45,7 +45,9 @@ private enum Fixture {
             /// Cancel
             static var cancel: Self {
                 .init("cancel",
-                      defaultValue: "Cancel")
+                      defaultValue: "Cancel",
+                      table: "CustomLocalizable",
+                      bundle: .forClass(BundleFinder.self))
             }
         }
         
@@ -57,7 +59,7 @@ final class XCStringsToSwiftTests: XCTestCase {
         // Given
         let fm = FileManager.default
         
-        let catalogURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let catalogURL = fm.temporaryDirectory.appendingPathComponent("CustomLocalizable.xcstrings")
         
         let sourceCodeURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         
@@ -73,6 +75,7 @@ final class XCStringsToSwiftTests: XCTestCase {
         try XCStringsToSwift.runAsRoot(arguments: [
             "--catalog-path", catalogURL.path,
             "--swift-path", sourceCodeURL.path,
+            "--bundle", "for-class:BundleFinder.self",
         ])
         
         // Then

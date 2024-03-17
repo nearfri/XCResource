@@ -10,108 +10,126 @@ extension LocalizedStringResource {
               defaultValue: """
                 "\(param1)" will be deleted.
                 This action cannot be undone.
-                """)
+                """,
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// Cancel
     static var common_cancel: Self {
         .init("common_cancel",
-              defaultValue: "Cancel")
+              defaultValue: "Cancel",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// Confirm
     static var common_confirm: Self {
         .init("common_confirm",
-              defaultValue: "Confirm")
+              defaultValue: "Confirm",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// Done
     static var common_done: Self {
         .init("common_done",
-              defaultValue: "Done")
+              defaultValue: "Done",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// \\(param1) ate \\(appleCount) today!
     static func dog_eating_apples(_ param1: String, appleCount: Int) -> Self {
         .init("dog_eating_apples",
-              defaultValue: "\(param1) ate \(appleCount) today!")
+              defaultValue: "\(param1) ate \(appleCount) today!",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// Copy
     static var editMenu_copy: Self {
         .init("editMenu_copy",
-              defaultValue: "Copy")
+              defaultValue: "Copy",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// Cut
     static var editMenu_cut: Self {
         .init("editMenu_cut",
-              defaultValue: "Cut")
+              defaultValue: "Cut",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// Paste
     static var editMenu_paste: Self {
         .init("editMenu_paste",
-              defaultValue: "Paste")
+              defaultValue: "Paste",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// Redo \\(param1)
     static func editMenu_redo(_ param1: String) -> Self {
         .init("editMenu_redo",
-              defaultValue: "Redo \(param1)")
+              defaultValue: "Redo \(param1)",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// Text Style
     static var editMenu_textStyle: Self {
         .init("editMenu_textStyle",
-              defaultValue: "Text Style")
+              defaultValue: "Text Style",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// Undo \\(param1)
     static func editMenu_undo(_ param1: String) -> Self {
         .init("editMenu_undo",
-              defaultValue: "Undo \(param1)")
+              defaultValue: "Undo \(param1)",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// \\(param1) files
     static func fileList_fileCount(_ param1: Int) -> Self {
         .init("fileList_fileCount",
-              defaultValue: "\(param1) files")
+              defaultValue: "\(param1) files",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// 100\\(param1)uccess
-    static func success100(_ param1: UnsafePointer<UInt8>) -> Self {
-        .init("success100",
-              defaultValue: "100\(param1)uccess")
-    }
+//    static func success100(_ param1: UnsafePointer<UInt8>) -> Self {
+//        .init("success100",
+//              defaultValue: "100\(param1)uccess",
+//              bundle: .forClass(BundleFinder.self))
+//    }
     
     /// Bold
     static var text_bold: Self {
         .init("text_bold",
-              defaultValue: "Bold")
+              defaultValue: "Bold",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// Italic
     static var text_italic: Self {
         .init("text_italic",
-              defaultValue: "Italic")
+              defaultValue: "Italic",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// Strikethrough
     static var text_strikethrough: Self {
         .init("text_strikethrough",
-              defaultValue: "Strikethrough")
+              defaultValue: "Strikethrough",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// Underline
     static var text_underline: Self {
         .init("text_underline",
-              defaultValue: "Underline")
+              defaultValue: "Underline",
+              bundle: .forClass(BundleFinder.self))
     }
     
     /// Tap here
     static var user_instructions: Self {
         .init("user_instructions",
-              defaultValue: "Tap here")
+              defaultValue: "Tap here",
+              bundle: .forClass(BundleFinder.self))
     }
 }

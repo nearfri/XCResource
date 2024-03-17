@@ -46,7 +46,12 @@ public class LocalizedStringResourceGenerator {
     }
     
     public func generate(for request: Request) throws -> String {
-        let itemsInCatalog = try catalogLoader.load(source: request.catalogFileContents)
+        let itemsInCatalog = try catalogLoader
+            .load(source: request.catalogFileContents)
+            .map({ item in
+                item.with(\.table, request.table)
+                    .with(\.bundle, request.bundle)
+            })
         
         return sourceCodeRewriter.rewrite(
             sourceCode: request.sourceCode,
