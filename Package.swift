@@ -59,6 +59,7 @@ let package = Package(
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 "AssetKeyGen",
                 "FontKeyGen",
+                "LocStringResourceGen",
                 "LocStringKeyGen",
                 "LocStringsGen",
                 "LocStringFormGen",
@@ -80,6 +81,7 @@ let package = Package(
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftParser", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+                .product(name: "StrixParsers", package: "Strix"),
                 "XCResourceUtil",
             ]),
         .target(

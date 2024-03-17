@@ -3,20 +3,20 @@ import Foundation
 struct StringCatalogDTO: Codable, Hashable {
     var version: String
     var sourceLanguage: String
-    var strings: [String: StringDTO]
+    var strings: [String: StringDTO] // key: localized string key
 }
 
 struct StringDTO: Codable, Hashable {
     var comment: String?
-    var extractionState: String? // extracted_with_value, migrated
-    var localizations: [String: LocalizationDTO] // key: locale-id
+    var extractionState: String? // extracted_with_value, manual, migrated
+    var localizations: [String: LocalizationDTO] // key: language
 }
 
 // required: stringUnit or variations
 // optional: substitutions
 struct LocalizationDTO: Codable, Hashable {
     var stringUnit: StringUnitDTO?
-    var variations: VariationsDTO? // device variations
+    var variations: DeviceVariationsDTO?
     var substitutions: [String: SubstitutionDTO]? // %#@key@
 }
 
@@ -28,15 +28,18 @@ struct StringUnitDTO: Codable, Hashable {
 struct SubstitutionDTO: Codable, Hashable {
     var argNum: Int?
     var formatSpecifier: String // lld, lf
-    var variations: VariationsDTO // plural variations
+    var variations: PluralVariationsDTO
 }
 
-struct VariationsDTO: Codable, Hashable {
-    var device: [String: StringUnitContainerDTO]? // key: DeviceDTO
-    var plural: [String: StringUnitContainerDTO]? // key: PluralDTO
+struct DeviceVariationsDTO: Codable, Hashable {
+    var device: [String: VariationValueDTO] // key: DeviceDTO
 }
 
-struct StringUnitContainerDTO: Codable, Hashable {
+struct PluralVariationsDTO: Codable, Hashable {
+    var plural: [String: VariationValueDTO] // key: PluralDTO
+}
+
+struct VariationValueDTO: Codable, Hashable {
     var stringUnit: StringUnitDTO
 }
 

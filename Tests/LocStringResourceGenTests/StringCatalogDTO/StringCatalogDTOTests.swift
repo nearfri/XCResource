@@ -97,11 +97,11 @@ final class StringCatalogDTOTests: XCTestCase {
                     substitutions: [
                         "appleCount": SubstitutionDTO(
                             formatSpecifier: "lld",
-                            variations: VariationsDTO(plural: [
-                                "one": StringUnitContainerDTO(
+                            variations: PluralVariationsDTO(plural: [
+                                "one": VariationValueDTO(
                                     stringUnit: StringUnitDTO(state: "translated",
                                                               value: "one apple")),
-                                "other": StringUnitContainerDTO(
+                                "other": VariationValueDTO(
                                     stringUnit: StringUnitDTO(state: "translated",
                                                               value: "%arg apples")),
                             ]))
@@ -151,14 +151,14 @@ final class StringCatalogDTOTests: XCTestCase {
         let expectedDTO = StringDTO(
             localizations: [
                 "en": LocalizationDTO(
-                    variations: VariationsDTO(device: [
-                        "appletv": StringUnitContainerDTO(
+                    variations: DeviceVariationsDTO(device: [
+                        "appletv": VariationValueDTO(
                             stringUnit: StringUnitDTO(state: "translated",
                                                       value: "Press here")),
-                        "iphone": StringUnitContainerDTO(
+                        "iphone": VariationValueDTO(
                             stringUnit: StringUnitDTO(state: "translated",
                                                       value: "Tap here")),
-                        "mac": StringUnitContainerDTO(
+                        "mac": VariationValueDTO(
                             stringUnit: StringUnitDTO(state: "translated",
                                                       value: "Click here")),
                     ])),
