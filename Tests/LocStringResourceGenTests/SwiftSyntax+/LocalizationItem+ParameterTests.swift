@@ -140,4 +140,35 @@ final class LocalizationItem_ParameterTests: XCTestCase {
         // When, Then
         XCTAssertThrowsError(try item.replaceInterpolations(with: otherItem))
     }
+    
+    func test_replaceInterpolations_multiline() throws {
+        // Given
+        var item = LocalizationItem(
+            key: "key",
+            defaultValue: "Hello, \\(param1)!!\nWorld!!",
+            rawDefaultValue: "Hello, %@\nWorld!!",
+            memberDeclation: .method("key", [
+                .init(firstName: "_", secondName: "param1", type: "String")
+            ]))
+        
+        let otherItem = LocalizationItem(
+            key: "key",
+            defaultValue: "Hi, \\(name).",
+            rawDefaultValue: "",
+            memberDeclation: .method("key", [
+                .init(firstName: "name", type: "String")
+            ]))
+        
+        // When
+        try item.replaceInterpolations(with: otherItem)
+        
+        // Then
+        XCTAssertEqual(item, LocalizationItem(
+            key: "key",
+            defaultValue: "Hello, \\(name)!!\nWorld!!",
+            rawDefaultValue: "Hello, %@\nWorld!!",
+            memberDeclation: .method("key", [
+                .init(firstName: "_", secondName: "param1", type: "String")
+            ])))
+    }
 }

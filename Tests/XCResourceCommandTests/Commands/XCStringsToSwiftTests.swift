@@ -7,6 +7,16 @@ private enum Fixture {
         {
           "sourceLanguage" : "en",
           "strings" : {
+            "alert_delete_file" : {
+              "localizations" : {
+                "en" : {
+                  "stringUnit" : {
+                    "state" : "translated",
+                    "value" : "\\"%@\\" will be deleted.\\nThis action cannot be undone."
+                  }
+                }
+              }
+            },
             "cancel" : {
               "comment" : "Cancel",
               "extractionState" : "migrated",
@@ -34,6 +44,17 @@ private enum Fixture {
         import Foundation
         
         public extension LocalizedStringResource {
+            /// "\\\\(filename)" will be deleted.\\
+            /// This action cannot be undone.
+            static func alert_delete_file(filename: String) -> Self {
+                .init("alert_delete_file",
+                      defaultValue: \"\"\"
+                        "\\(filename)" will be deleted.
+                        This action cannot be undone.
+                        \"\"\",
+                      table: "CustomLocalizable",
+                      bundle: .forClass(BundleFinder.self))
+            }
         }
         
         """
@@ -42,6 +63,18 @@ private enum Fixture {
         import Foundation
         
         public extension LocalizedStringResource {
+            /// "\\\\(filename)" will be deleted.\\
+            /// This action cannot be undone.
+            static func alert_delete_file(filename: String) -> Self {
+                .init("alert_delete_file",
+                      defaultValue: \"\"\"
+                        "\\(filename)" will be deleted.
+                        This action cannot be undone.
+                        \"\"\",
+                      table: "CustomLocalizable",
+                      bundle: .forClass(BundleFinder.self))
+            }
+            
             /// Cancel
             static var cancel: Self {
                 .init("cancel",

@@ -60,7 +60,7 @@ extension LocalizationItem {
         
         newDefaultValueSyntax.segments = .init(newSegments)
         
-        defaultValue = newDefaultValueSyntax.segments.description
+        defaultValue = newDefaultValueSyntax.segments.trimmedDescription
     }
     
     private var defaultValueSyntax: StringLiteralExprSyntax {
