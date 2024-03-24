@@ -6,7 +6,6 @@ ARTIFACTBUNDLE = $(EXECUTABLE_NAME).artifactbundle
 ARTIFACTBUNDLE_PATH = $(TEMP_DIR)/$(ARTIFACTBUNDLE)
 ARTIFACTBUNDLE_ZIP = $(ARTIFACTBUNDLE).zip
 ARTIFACTBUNDLE_ZIP_PATH = $(TEMP_DIR)/$(ARTIFACTBUNDLE_ZIP)
-ARTIFACTBUNDLE_URL = https://github.com/nearfri/XCResource/releases/download/$(VERSION)/$(ARTIFACTBUNDLE_ZIP)
 ARCHIVED_EXECUTABLE_PATH = $(ARCHIVE_PATH)/Products/usr/local/bin/$(EXECUTABLE_NAME)
 RELEASE_NOTES_PATH = $(TEMP_DIR)/release_notes.md
 RELEASE_NOTES_JSON_PATH = $(TEMP_DIR)/release_notes.json
@@ -15,7 +14,6 @@ SWIFT_BUILD_FLAGS = -c release
 # SWIFT_BUILD_FLAGS = --product $(EXECUTABLE_NAME) -c release --disable-sandbox --arch arm64 --arch x86_64
 
 ROOT_CMD_PATH = Sources/XCResourceCommand/Commands/XCResource.swift
-MINTFILE_PATH = Samples/XCResourceSample/XCResourceSampleLib/Scripts/Mintfile
 
 MANIFEST_PATH = ./Package.swift
 
@@ -51,11 +49,9 @@ define ARTIFACTBUNDLE_INFO_TEMPLATE
 
 ### Swift Package Manager snippet
 ```swift
-.binaryTarget(
-    name: "$(EXECUTABLE_NAME)",
-    url: "$(ARTIFACTBUNDLE_URL)",
-    checksum: "$(ARTIFACTBUNDLE_CHECKSUM)"
-)
+dependencies: [
+	.package(url: "https://github.com/nearfri/XCResource-plugin.git", from: "$(VERSION)"),
+],
 ```
 endef
 ARTIFACTBUNDLE_INFO = $(subst $(NEWLINE),\n,$(ARTIFACTBUNDLE_INFO_TEMPLATE))
@@ -118,7 +114,6 @@ _ask-new-version: _check_git print-version
 	fi
 
 	@sed -E -i '' 's/(version: ")(.*)(",)/\1$(NEW_VERSION)\3/' $(ROOT_CMD_PATH)
-	@sed -E -i '' 's/(@)(.*)/\1$(NEW_VERSION)/' $(MINTFILE_PATH)
 
 .PHONY: _check_git
 _check_git:
