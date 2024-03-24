@@ -29,11 +29,13 @@ final class SwiftLocalizationSourceCodeRewriterTests: XCTestCase {
         let items: [LocalizationItem] = [
             .init(key: "italic",
                   defaultValue: "Italic",
+                  rawDefaultValue: "",
                   table: "TextSystem",
                   bundle: .forClass("ResourceBundleClass.self"), 
                   memberDeclation: .property("italic")),
             .init(key: "underline",
                   defaultValue: "Underline",
+                  rawDefaultValue: "",
                   table: "TextSystem",
                   bundle: .forClass("ResourceBundleClass.self"),
                   memberDeclation: .property("underline")),
@@ -93,6 +95,7 @@ final class SwiftLocalizationSourceCodeRewriterTests: XCTestCase {
         let items: [LocalizationItem] = [
             .init(key: "italic",
                   defaultValue: "Italic",
+                  rawDefaultValue: "",
                   table: "TextSystem",
                   bundle: .forClass("ResourceBundleClass.self"),
                   memberDeclation: .property("italic")),

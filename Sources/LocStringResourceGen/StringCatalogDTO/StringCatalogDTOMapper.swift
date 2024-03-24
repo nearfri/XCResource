@@ -68,6 +68,7 @@ struct StringCatalogDTOMapper {
         return LocalizationItem(
             key: key,
             defaultValue: defaultValue,
+            rawDefaultValue: stringUnitDTO.value,
             memberDeclation: memberDeclation)
     }
     

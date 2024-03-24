@@ -22,6 +22,7 @@ final class StringCatalogDTOMapperTests: XCTestCase {
             LocalizationItem(
                 key: "greeting",
                 defaultValue: "Hello",
+                rawDefaultValue: "Hello",
                 memberDeclation: .property("greeting"))
         ])
     }
@@ -49,6 +50,7 @@ final class StringCatalogDTOMapperTests: XCTestCase {
             LocalizationItem(
                 key: "tutorial1",
                 defaultValue: "Tap here",
+                rawDefaultValue: "Tap here",
                 memberDeclation: .property("tutorial1"))
         ])
     }
@@ -71,6 +73,7 @@ final class StringCatalogDTOMapperTests: XCTestCase {
             LocalizationItem(
                 key: "greeting",
                 defaultValue: "Hello, \\(param1)",
+                rawDefaultValue: "Hello, %@",
                 memberDeclation: .method("greeting", [
                     LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "String")
                 ]))
@@ -95,6 +98,7 @@ final class StringCatalogDTOMapperTests: XCTestCase {
             LocalizationItem(
                 key: "profile",
                 defaultValue: "\\(param1) \\(param2)\nname: %2$@, age: %1$lld",
+                rawDefaultValue: "name: %2$@, age: %1$lld",
                 memberDeclation: .method("profile", [
                     LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "Int"),
                     LocalizationItem.Parameter(firstName: "_", secondName: "param2", type: "String")
@@ -133,6 +137,7 @@ final class StringCatalogDTOMapperTests: XCTestCase {
             LocalizationItem(
                 key: "eating_apples",
                 defaultValue: "\\(param1) ate \\(appleCount).",
+                rawDefaultValue: "%@ ate %#@appleCount@.",
                 memberDeclation: .method("eating_apples", [
                     .init(firstName: "_", secondName: "param1", type: "String"),
                     .init(firstName: "appleCount", type: "Int")

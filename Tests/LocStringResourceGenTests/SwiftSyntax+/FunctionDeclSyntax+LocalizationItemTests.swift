@@ -7,6 +7,7 @@ final class FunctionDeclSyntaxTests: XCTestCase {
         let localizationItem = LocalizationItem(
             key: "some_key",
             defaultValue: "Hello world",
+            rawDefaultValue: "",
             table: "LocalizableSystem",
             bundle: .forClass("ResourceBundleClass.self"),
             memberDeclation: .method("someFunction", [
@@ -29,6 +30,7 @@ final class FunctionDeclSyntaxTests: XCTestCase {
         let localizationItem = LocalizationItem(
             key: "some_key",
             defaultValue: "Hello world",
+            rawDefaultValue: "",
             table: "LocalizableSystem",
             bundle: .forClass("ResourceBundleClass.self"),
             memberDeclation: .method("someFunction", [

@@ -7,6 +7,7 @@ final class VariableDeclSyntaxTests: XCTestCase {
         let localizationItem = LocalizationItem(
             key: "some_key",
             defaultValue: "Hello world",
+            rawDefaultValue: "",
             table: "LocalizableSystem",
             bundle: .forClass("ResourceBundleClass.self"),
             memberDeclation: .property("someVariable"))

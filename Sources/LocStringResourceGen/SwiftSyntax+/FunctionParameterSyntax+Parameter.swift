@@ -4,8 +4,10 @@ import SwiftSyntaxBuilder
 
 extension FunctionParameterSyntax {
     init(_ parameter: LocalizationItem.Parameter) {
+        let firstName = parameter.firstName
+        
         self.init(
-            firstName: .identifier(parameter.firstName),
+            firstName: firstName == "_" ? .wildcardToken() : .identifier(firstName),
             secondName: parameter.secondName.map {
                 .identifier($0).with(\.leadingTrivia, .space)
             },

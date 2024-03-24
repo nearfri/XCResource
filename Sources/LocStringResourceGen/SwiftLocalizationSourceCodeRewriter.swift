@@ -17,7 +17,7 @@ class SwiftLocalizationSourceCodeRewriter: LocalizationSourceCodeRewriter {
         
         let rewriter = SourceCodeRewriter(resourceTypeName: resourceTypeName, items: items)
         
-        return rewriter.visit(sourceFile).description
+        return rewriter.rewrite(sourceFile).description
     }
 }
 

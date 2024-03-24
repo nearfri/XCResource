@@ -5,13 +5,20 @@ extension LocalizationItem {
     public enum MemberDeclation: Hashable {
         case property(String)
         case method(String, [Parameter])
+        
+        public var id: String {
+            switch self {
+            case .property(let id), .method(let id, _):
+                return id
+            }
+        }
     }
     
     public struct Parameter: Hashable {
-        public let firstName: String
-        public let secondName: String?
-        public let type: String
-        public let defaultValue: String?
+        public var firstName: String
+        public var secondName: String?
+        public var type: String
+        public var defaultValue: String?
         
         public init(
             firstName: String,
@@ -34,8 +41,9 @@ extension LocalizationItem {
 }
 
 public struct LocalizationItem: Hashable, CopyableWithKeyPath {
-    public let key: String
+    public var key: String
     public var defaultValue: String
+    public var rawDefaultValue: String
     public var table: String?
     public var bundle: BundleDescription
     
@@ -45,6 +53,7 @@ public struct LocalizationItem: Hashable, CopyableWithKeyPath {
     public init(
         key: String,
         defaultValue: String,
+        rawDefaultValue: String,
         table: String? = nil,
         bundle: BundleDescription = .main,
         developerComments: [String] = [],
@@ -52,6 +61,7 @@ public struct LocalizationItem: Hashable, CopyableWithKeyPath {
     ) {
         self.key = key
         self.defaultValue = defaultValue
+        self.rawDefaultValue = rawDefaultValue
         self.table = table
         self.bundle = bundle
         self.developerComments = developerComments

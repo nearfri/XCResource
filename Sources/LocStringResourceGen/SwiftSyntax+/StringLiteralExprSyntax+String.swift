@@ -3,7 +3,7 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 
 extension StringLiteralExprSyntax {
-    init(escapedContent: String, indentInMultiline: Int = 4) {
+    init(escapedContent: String) {
         if !escapedContent.contains("\n") {
             self.init(
                 openingQuote: .stringQuoteToken(),

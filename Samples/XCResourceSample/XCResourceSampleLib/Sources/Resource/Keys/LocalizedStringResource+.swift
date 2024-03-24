@@ -4,12 +4,14 @@ private class BundleFinder {}
 
 extension LocalizedStringResource {
     /// "\\(param1)" will be deleted.\
-    /// This action cannot be undone.
+    /// This action cannot be undone.\
+    /// 
     static func alert_delete_file(_ param1: String) -> Self {
         .init("alert_delete_file",
               defaultValue: """
                 "\(param1)" will be deleted.
                 This action cannot be undone.
+                
                 """,
               bundle: .forClass(BundleFinder.self))
     }
@@ -91,12 +93,13 @@ extension LocalizedStringResource {
               bundle: .forClass(BundleFinder.self))
     }
     
-    /// 100\\(param1)uccess
-//    static func success100(_ param1: UnsafePointer<UInt8>) -> Self {
-//        .init("success100",
-//              defaultValue: "100\(param1)uccess",
-//              bundle: .forClass(BundleFinder.self))
-//    }
+    // xcresource:use-raw
+    /// 100% success
+    static var success100: Self {
+        .init("success100",
+              defaultValue: "100% success",
+              bundle: .forClass(BundleFinder.self))
+    }
     
     /// Bold
     static var text_bold: Self {

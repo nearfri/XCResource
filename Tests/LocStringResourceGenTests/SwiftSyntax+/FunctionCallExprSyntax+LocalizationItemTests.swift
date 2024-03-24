@@ -7,6 +7,7 @@ final class FunctionCallExprSyntaxTests: XCTestCase {
         let localizationItem = LocalizationItem(
             key: "some_key",
             defaultValue: #"This file is \(fileSize) bytes."#,
+            rawDefaultValue: "",
             memberDeclation: .method("some_key", [.init(firstName: "fileSize", type: "Int")]))
         
         XCTAssertEqual(FunctionCallExprSyntax(localizationItem).description, #"""
@@ -19,6 +20,7 @@ final class FunctionCallExprSyntaxTests: XCTestCase {
         let localizationItem = LocalizationItem(
             key: "some_key",
             defaultValue: #"This file is \(fileSize) bytes."#,
+            rawDefaultValue: "",
             table: "LocalizableSystem",
             memberDeclation: .method("some_key", [.init(firstName: "fileSize", type: "Int")]))
         
@@ -33,6 +35,7 @@ final class FunctionCallExprSyntaxTests: XCTestCase {
         let localizationItem = LocalizationItem(
             key: "some_key",
             defaultValue: #"This file is \(fileSize) bytes."#,
+            rawDefaultValue: "",
             bundle: .forClass("ResourceBundleClass.self"),
             memberDeclation: .method("some_key", [.init(firstName: "fileSize", type: "Int")]))
         
@@ -47,6 +50,7 @@ final class FunctionCallExprSyntaxTests: XCTestCase {
         let localizationItem = LocalizationItem(
             key: "some_key",
             defaultValue: "Hello\nWorld!",
+            rawDefaultValue: "",
             bundle: .forClass("ResourceBundleClass.self"),
             memberDeclation: .property("some_key"))
         

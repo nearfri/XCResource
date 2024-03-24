@@ -10,6 +10,7 @@ final class LocalizationItemTests: XCTestCase {
         ) {
             let sut = LocalizationItem(key: "",
                                        defaultValue: defaultValue,
+                                       rawDefaultValue: "",
                                        memberDeclation: .property(""))
             XCTAssertEqual(sut.documentComments, expectedComments, message, line: line)
         }
@@ -28,6 +29,7 @@ final class LocalizationItemTests: XCTestCase {
         let sut = LocalizationItem(
             key: "",
             defaultValue: "localized string1.\nlocalized string2.",
+            rawDefaultValue: "",
             developerComments: ["cmt1", "cmt2"],
             memberDeclation: .property(""))
         

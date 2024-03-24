@@ -1,6 +1,29 @@
 import Foundation
 
+protocol CatalogLocalizationItemLoader: AnyObject {
+    func load(source: String) throws -> [LocalizationItem]
+}
+
+protocol SourceCodeLocalizationItemLoader: AnyObject {
+    func load(source: String, resourceTypeName: String) throws -> [LocalizationItem]
+}
+
+protocol LocalizationItemMerger: AnyObject {
+    func itemsByMerging(
+        itemsInCatalog: [LocalizationItem],
+        itemsInSourceCode: [LocalizationItem]
+    ) -> [LocalizationItem]
+}
+
 extension LocalizedStringResourceGenerator {
+    public struct CommentCommandNames {
+        public var useRaw: String
+        
+        public init(useRaw: String) {
+            self.useRaw = useRaw
+        }
+    }
+    
     public struct Request {
         public var catalogFileContents: String
         public var table: String?
@@ -25,23 +48,28 @@ extension LocalizedStringResourceGenerator {
 }
 
 public class LocalizedStringResourceGenerator {
-    private let catalogLoader: LocalizationItemLoader
-    private let sourceCodeLoader: LocalizationItemLoader
+    private let catalogLoader: CatalogLocalizationItemLoader
+    private let sourceCodeLoader: SourceCodeLocalizationItemLoader
+    private let localizationItemMerger: LocalizationItemMerger
     private let sourceCodeRewriter: LocalizationSourceCodeRewriter
     
-    init(catalogLoader: LocalizationItemLoader,
-         sourceCodeLoader: LocalizationItemLoader,
+    init(catalogLoader: CatalogLocalizationItemLoader,
+         sourceCodeLoader: SourceCodeLocalizationItemLoader,
+         localizationItemMerger: LocalizationItemMerger,
          sourceCodeRewriter: LocalizationSourceCodeRewriter
     ) {
         self.catalogLoader = catalogLoader
         self.sourceCodeLoader = sourceCodeLoader
+        self.localizationItemMerger = localizationItemMerger
         self.sourceCodeRewriter = sourceCodeRewriter
     }
     
-    public convenience init() {
+    public convenience init(commentCommandNames: CommentCommandNames) {
         self.init(
             catalogLoader: StringCatalogLoader(),
             sourceCodeLoader: SwiftLocalizationItemLoader(),
+            localizationItemMerger: DefaultLocalizationItemMerger(
+                commentCommandNames: .init(useRaw: commentCommandNames.useRaw)),
             sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
     }
     
@@ -53,9 +81,16 @@ public class LocalizedStringResourceGenerator {
                     .with(\.bundle, request.bundle)
             })
         
+        let itemsInSourceCode = try sourceCodeLoader
+            .load(source: request.sourceCode, resourceTypeName: request.resourceTypeName)
+        
+        let mergedItems = localizationItemMerger.itemsByMerging(
+            itemsInCatalog: itemsInCatalog,
+            itemsInSourceCode: itemsInSourceCode)
+        
         return sourceCodeRewriter.rewrite(
             sourceCode: request.sourceCode,
-            with: itemsInCatalog,
+            with: mergedItems,
             resourceTypeName: request.resourceTypeName)
     }
 }
