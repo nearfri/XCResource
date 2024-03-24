@@ -144,4 +144,31 @@ final class StringCatalogDTOMapperTests: XCTestCase {
                 ]))
         ])
     }
+    
+    func test_localizationItems_escaping() throws {
+        // Given
+        let dto = StringCatalogDTO(
+            version: "1.0",
+            sourceLanguage: "en",
+            strings: ["alert_delete_file": StringDTO(localizations: [
+                "en": LocalizationDTO(
+                    stringUnit: StringUnitDTO(
+                        state: "translated",
+                        value: "\"%@\" will be deleted."))
+            ])])
+        
+        // When
+        let items = try sut.localizationItems(from: dto)
+        
+        // Then
+        XCTAssertEqual(items, [
+            LocalizationItem(
+                key: "alert_delete_file",
+                defaultValue: "\\\"\\(param1)\\\" will be deleted.",
+                rawDefaultValue: "\\\"%@\\\" will be deleted.",
+                memberDeclation: .method("alert_delete_file", [
+                    .init(firstName: "_", secondName: "param1", type: "String")
+                ]))
+        ])
+    }
 }

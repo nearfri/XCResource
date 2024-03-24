@@ -69,7 +69,10 @@ public struct LocalizationItem: Hashable, CopyableWithKeyPath {
     }
     
     public var documentComments: [String] {
-        let escaped = defaultValue.replacingOccurrences(of: #"\("#, with: #"\\("#)
+        let escaped = defaultValue
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: #"\("#, with: #"\\("#)
+        
         let splitted = escaped
             .replacingOccurrences(of: "\n", with: "\\\n")
             .split(separator: "\n", omittingEmptySubsequences: false)

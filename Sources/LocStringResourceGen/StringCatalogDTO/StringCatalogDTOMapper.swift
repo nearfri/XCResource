@@ -68,7 +68,7 @@ struct StringCatalogDTOMapper {
         return LocalizationItem(
             key: key,
             defaultValue: defaultValue,
-            rawDefaultValue: stringUnitDTO.value,
+            rawDefaultValue: stringUnitDTO.escapedValue,
             memberDeclation: memberDeclation)
     }
     
@@ -103,7 +103,7 @@ struct StringCatalogDTOMapper {
         from dto: StringUnitDTO,
         substitutions: [String: SubstitutionDTO]
     ) throws -> FormatInfo {
-        let formatUnits = try formatUnitsParser.run(dto.value)
+        let formatUnits = try formatUnitsParser.run(dto.escapedValue)
         
         let substitutedFormatUnits = try formatUnits.map { formatUnit in
             guard let variableName = formatUnit.placeholder.variableName,
@@ -125,7 +125,7 @@ struct StringCatalogDTOMapper {
         let sortedFormatUnits = formatInfo.sortedFormatUnits
         
         if sortedFormatUnits == substitutedFormatUnits {
-            var result = dto.value
+            var result = dto.escapedValue
             for index in substitutedFormatUnits.indices.reversed() {
                 let formatUnit = substitutedFormatUnits[index]
                 let variableName = formatUnit.placeholder.variableName ?? "param\(index + 1)"
@@ -137,7 +137,7 @@ struct StringCatalogDTOMapper {
                 let variableName = formatUnit.placeholder.variableName ?? "param\(index + 1)"
                 return "\\(\(variableName))"
             }
-            return "\(interpolations.joined(separator: " "))\n\(dto.value)"
+            return "\(interpolations.joined(separator: " "))\n\(dto.escapedValue)"
         }
     }
     
@@ -152,5 +152,13 @@ struct StringCatalogDTOMapper {
                 secondName: secondName,
                 type: type)
         }
+    }
+}
+
+private extension StringUnitDTO {
+    var escapedValue: String {
+        return value
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "\"", with: "\\\"")
     }
 }

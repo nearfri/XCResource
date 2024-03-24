@@ -63,12 +63,12 @@ private enum Fixture {
         import Foundation
         
         public extension LocalizedStringResource {
-            /// "\\\\(filename)" will be deleted.\\
+            /// \\"\\\\(filename)\\" will be deleted.\\
             /// This action cannot be undone.
             static func alert_delete_file(filename: String) -> Self {
                 .init("alert_delete_file",
                       defaultValue: \"\"\"
-                        "\\(filename)" will be deleted.
+                        \\"\\(filename)\\" will be deleted.
                         This action cannot be undone.
                         \"\"\",
                       table: "CustomLocalizable",
