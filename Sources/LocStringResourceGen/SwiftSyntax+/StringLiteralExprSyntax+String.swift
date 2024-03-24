@@ -4,7 +4,7 @@ import SwiftSyntaxBuilder
 
 extension StringLiteralExprSyntax {
     init(escapedContent: String) {
-        if !escapedContent.contains("\n") {
+        if !escapedContent.contains(where: { $0.isNewline }) {
             self.init(
                 openingQuote: .stringQuoteToken(),
                 segments: StringLiteralSegmentListSyntax {
@@ -12,7 +12,8 @@ extension StringLiteralExprSyntax {
                 },
                 closingQuote: .stringQuoteToken())
         } else {
-            let lines = escapedContent.split(separator: "\n", omittingEmptySubsequences: false)
+            let lines = escapedContent.split(omittingEmptySubsequences: false,
+                                             whereSeparator: { $0.isNewline })
             self.init(
                 openingQuote: .multilineStringQuoteToken(),
                 segments: StringLiteralSegmentListSyntax {

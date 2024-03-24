@@ -1,4 +1,5 @@
 import Foundation
+import RegexBuilder
 import XCResourceUtil
 
 extension LocalizationItem {
@@ -74,7 +75,7 @@ public struct LocalizationItem: Hashable, CopyableWithKeyPath {
             .replacingOccurrences(of: #"\("#, with: #"\\("#)
         
         let splitted = escaped
-            .replacingOccurrences(of: "\n", with: "\\\n")
+            .replacing(.newlineSequence, with: "\\\n")
             .split(separator: "\n", omittingEmptySubsequences: false)
         
         return splitted.map({ String($0) })

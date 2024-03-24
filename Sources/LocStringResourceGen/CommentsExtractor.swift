@@ -34,7 +34,7 @@ public class CommentsExtractor {
     
     private func adjustBlockCommentText(_ text: String) -> String {
         return text
-            .split(separator: "\n")
+            .split(whereSeparator: { $0.isNewline })
             .map(adjustLineCommentText(_:))
             .joined(separator: "\n")
             .trimmingCharacters(in: .newlines)

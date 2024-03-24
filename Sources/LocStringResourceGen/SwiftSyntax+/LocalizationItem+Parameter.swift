@@ -64,7 +64,7 @@ extension LocalizationItem {
     }
     
     private var defaultValueSyntax: StringLiteralExprSyntax {
-        let input = if defaultValue.contains("\n") {
+        let input = if defaultValue.contains(where: { $0.isNewline }) {
             "\"\"\"\n\(defaultValue)\n\"\"\""
         } else {
             "\"\(defaultValue)\""
