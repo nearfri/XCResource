@@ -25,7 +25,7 @@ extension FunctionDeclSyntax {
                         name: TokenSyntax.identifier("Self")),
                     trailingTrivia: .space)),
             bodyBuilder: {
-                Indenter.indent(
+                IndentIncreaser.indent(
                     FunctionCallExprSyntax(item).with(\.leadingTrivia, .newline),
                     indentation: .spaces(4)
                 )

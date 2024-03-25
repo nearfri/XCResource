@@ -10,7 +10,7 @@ extension VariableDeclSyntax {
         
         do {
             self = try VariableDeclSyntax("static var \(raw: propertyName): Self") {
-                Indenter.indent(
+                IndentIncreaser.indent(
                     FunctionCallExprSyntax(item).with(\.leadingTrivia, .newline),
                     indentation: .spaces(4)
                 )

@@ -13,8 +13,8 @@ extension FunctionCallExprSyntax {
             
             LabeledExprSyntax(
                 label: "defaultValue",
-                expression: Indenter.indent(
-                    StringLiteralExprSyntax(escapedContent: item.defaultValue),
+                expression: IndentIncreaser.indent(
+                    item.defaultValueSyntax,
                     indentation: indentInMultilineString)
             )
             .with(\.leadingTrivia, leadingTrivia)

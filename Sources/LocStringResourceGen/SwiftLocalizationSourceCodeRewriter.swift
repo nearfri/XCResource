@@ -90,7 +90,7 @@ private class SourceCodeRewriter: SyntaxRewriter {
         let newlines: [TriviaPiece] = isFirstMember ? [.newlines(1)] : [.newlines(1), .newlines(1)]
         let leadingTrivia = Trivia(pieces: newlines + node.leadingTrivia.pieces)
         
-        let indentedNode = Indenter.indent(
+        let indentedNode = IndentIncreaser.indent(
             node.with(\.leadingTrivia, leadingTrivia),
             indentation: .spaces(4))
         
