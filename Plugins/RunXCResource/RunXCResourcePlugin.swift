@@ -3,6 +3,8 @@ import PackagePlugin
 
 private enum OptionName {
     static let manifestPath: String = "manifest-path"
+    static let version: String = "version"
+    static let help: String = "help"
 }
 
 @main
@@ -28,6 +30,12 @@ struct RunXCResourcePlugin: CommandPlugin {
             appendManifestPath(manifestPath)
         } else if let manifestPath = manifestPath(inDirectory: context.package.directory) {
             appendManifestPath(manifestPath)
+        }
+        
+        for flag in [OptionName.version, OptionName.help] {
+            if argExtractor.extractFlag(named: flag) > 0 {
+                result.append("--\(flag)")
+            }
         }
         
         return result
