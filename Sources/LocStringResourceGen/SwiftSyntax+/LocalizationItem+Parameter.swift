@@ -1,4 +1,5 @@
 import Foundation
+import RegexBuilder
 import SwiftSyntax
 import SwiftParser
 
@@ -64,7 +65,7 @@ extension LocalizationItem {
     }
     
     var defaultValueSyntax: StringLiteralExprSyntax {
-        let input = if defaultValue.contains(where: { $0.isNewline }) {
+        let input = if defaultValue.contains(.newlineSequence) {
             "\"\"\"\n\(defaultValue)\n\"\"\""
         } else {
             "\"\(defaultValue)\""

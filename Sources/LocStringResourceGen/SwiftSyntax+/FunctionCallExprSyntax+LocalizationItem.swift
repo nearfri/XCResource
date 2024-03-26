@@ -14,7 +14,9 @@ extension FunctionCallExprSyntax {
             LabeledExprSyntax(
                 label: "defaultValue",
                 expression: IndentIncreaser.indent(
-                    item.defaultValueSyntax,
+                    StringLiteralFormatter.refactor(
+                        syntax: item.defaultValueSyntax,
+                        in: StringLiteralFormatter.Context()),
                     indentation: indentInMultilineString)
             )
             .with(\.leadingTrivia, leadingTrivia)

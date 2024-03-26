@@ -81,8 +81,12 @@ let package = Package(
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftParser", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+                .product(name: "SwiftRefactor", package: "swift-syntax"),
                 .product(name: "StrixParsers", package: "Strix"),
                 "XCResourceUtil",
+            ],
+            swiftSettings: [
+                .enableUpcomingFeature("BareSlashRegexLiterals"),
             ]),
         .target(
             name: "LocStringKeyGen",

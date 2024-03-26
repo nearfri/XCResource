@@ -4,11 +4,12 @@ private class BundleFinder {}
 
 extension LocalizedStringResource {
     /// "\\(param1)" will be deleted.\
+    /// \"\\(param1)\" will be deleted.\
     /// This action cannot be undone.
     static func alert_delete_file(_ param1: String) -> Self {
         .init("alert_delete_file",
               defaultValue: """
-                "\(param1)" will be deleted.
+                \"\(param1)\" will be deleted.
                 This action cannot be undone.
                 """,
               bundle: .forClass(BundleFinder.self))

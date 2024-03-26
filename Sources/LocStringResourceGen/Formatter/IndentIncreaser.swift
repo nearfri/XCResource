@@ -1,4 +1,5 @@
 import Foundation
+import RegexBuilder
 import SwiftSyntax
 
 // SwiftSyntaxBuilder.Indenter가 multiline string literal을 처리하지 못하는 문제를 해결하기 위해 만들었다.
@@ -43,7 +44,7 @@ class IndentIncreaser: SyntaxRewriter {
     }
     
     public override func visit(_ node: StringSegmentSyntax) -> StringSegmentSyntax {
-        guard node.description.contains(where: { $0.isNewline }) else {
+        guard node.description.contains(.newlineSequence) else {
             return node
         }
         return node.with(\.trailingTrivia, .init(pieces: node.trailingTrivia + indentation))

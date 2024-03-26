@@ -1,4 +1,5 @@
 import Foundation
+import RegexBuilder
 import SwiftSyntax
 
 public class CommentsExtractor {
@@ -34,7 +35,7 @@ public class CommentsExtractor {
     
     private func adjustBlockCommentText(_ text: String) -> String {
         return text
-            .split(whereSeparator: { $0.isNewline })
+            .split(separator: .newlineSequence)
             .map(adjustLineCommentText(_:))
             .joined(separator: "\n")
             .trimmingCharacters(in: .newlines)

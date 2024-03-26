@@ -1,10 +1,11 @@
 import Foundation
+import RegexBuilder
 import SwiftSyntax
 import SwiftSyntaxBuilder
 
 extension StringLiteralExprSyntax {
     init(escapedContent: String) {
-        if !escapedContent.contains(where: { $0.isNewline }) {
+        if !escapedContent.contains(.newlineSequence) {
             self.init(
                 openingQuote: .stringQuoteToken(),
                 segments: StringLiteralSegmentListSyntax {
