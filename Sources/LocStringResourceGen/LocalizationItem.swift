@@ -70,15 +70,7 @@ public struct LocalizationItem: Hashable, CopyableWithKeyPath {
     }
     
     public var documentComments: [String] {
-        let escaped = defaultValue
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .replacingOccurrences(of: #"\("#, with: #"\\("#)
-        
-        let splitted = escaped
-            .replacing(.newlineSequence, with: "\\\n")
-            .split(separator: "\n", omittingEmptySubsequences: false)
-        
-        return splitted.map({ String($0) })
+        return CommentsFormatter.comments(from: defaultValue)
     }
     
     public var commentsSourceCode: String {

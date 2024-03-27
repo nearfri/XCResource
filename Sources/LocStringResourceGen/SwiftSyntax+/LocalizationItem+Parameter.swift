@@ -65,18 +65,7 @@ extension LocalizationItem {
     }
     
     var defaultValueSyntax: StringLiteralExprSyntax {
-        let input = if defaultValue.contains(.newlineSequence) {
-            "\"\"\"\n\(defaultValue)\n\"\"\""
-        } else {
-            "\"\(defaultValue)\""
-        }
-        
-        var parser = Parser(input)
-        guard let result = StringLiteralExprSyntax(ExprSyntax.parse(from: &parser)) else {
-            preconditionFailure()
-        }
-        
-        return result
+        return StringLiteralExprSyntax(contentLiteral: defaultValue)
     }
 }
 
