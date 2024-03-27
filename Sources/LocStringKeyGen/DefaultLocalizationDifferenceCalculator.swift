@@ -61,7 +61,7 @@ private class CalculatorInternal {
             guard let targetItem = targetItemsByKey[baseItem.key] else { return }
             
             if baseItem.comment != targetItem.comment {
-                partialResult[baseItem.id] = baseItem.setting(\.comment, targetItem.comment)
+                partialResult[baseItem.id] = baseItem.with(\.comment, targetItem.comment)
             }
         }
     }

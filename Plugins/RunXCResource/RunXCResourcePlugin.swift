@@ -3,6 +3,8 @@ import PackagePlugin
 
 private enum OptionName {
     static let manifestPath: String = "manifest-path"
+    static let version: String = "version"
+    static let help: String = "help"
 }
 
 @main
@@ -30,6 +32,12 @@ struct RunXCResourcePlugin: CommandPlugin {
             appendManifestPath(manifestPath)
         }
         
+        for flag in [OptionName.version, OptionName.help] {
+            if argExtractor.extractFlag(named: flag) > 0 {
+                result.append("--\(flag)")
+            }
+        }
+        
         return result
     }
     
@@ -43,9 +51,8 @@ struct RunXCResourcePlugin: CommandPlugin {
         
         for candidate in candidates {
             let path = directory.appending(subpath: candidate)
-            let url = URL(fileURLWithPath: path.string)
             
-            if (try? url.checkResourceIsReachable()) ?? false {
+            if FileManager.default.fileExists(atPath: path.string) {
                 return path.string
             }
         }

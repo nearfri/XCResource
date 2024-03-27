@@ -49,7 +49,7 @@ LOCALIZATION_CSV_EMPTY_ENCODING = "\#EMPTY"
 .SUFFIXES:
 
 .PHONY: default
-default: xcassets2swift fonts2swift key2form swift2strings
+default: xcassets2swift fonts2swift
 
 .PHONY: xcassets2swift
 xcassets2swift: images2swift colors2swift
@@ -92,6 +92,8 @@ $(FONTKEY_FILE): $(FONTS_DIR_FILES)
 	
 	@touch $@
 
+# Non-default targets
+
 .PHONY: key2form
 key2form: $(STRINGFORM_FILE)
 
@@ -120,8 +122,6 @@ $(SWIFT2STRINGS_LASTRUN_FILE): $(STRINGKEY_FILE)
 	--language-config $(SWIFT2STRINGSDICT_LANGUAGE_CONFIG)
 	
 	@touch $@
-
-# Non-default targets
 
 .PHONY: strings2swift
 strings2swift:

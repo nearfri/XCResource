@@ -21,7 +21,7 @@ public struct ContentView: View {
                 .aspectRatio(contentMode: .fit)
                 .layoutPriority(1)
             
-            Text(form: .dog_eating_apples(dogName: "Charlie", appleCount: 1))
+            Text(.dog_eating_apples(dogName: "Charlie", appleCount: 1))
                 .font(.custom(key: .openSans_regular, size: 16))
                 .ifTrue(isBold, then: { $0.bold() })
                 .ifTrue(isItalic, then: { $0.italic() })
@@ -32,7 +32,7 @@ public struct ContentView: View {
             
             textStyleControl
             
-            Text(key: .editMenu_textStyle)
+            Text(.editMenu_textStyle)
             
             Spacer().frame(maxHeight: 10)
         }
@@ -41,9 +41,9 @@ public struct ContentView: View {
     @ViewBuilder
     private var textStyleControl: some View {
         HStack {
-            ForEach(textStyles, id: \.titleKey) { style in
+            ForEach(textStyles, id: \.title.key) { style in
                 Toggle(isOn: style.isOn) {
-                    Label(titleKey: style.titleKey, imageKey: style.imageKey)
+                    Label(title: style.title, imageKey: style.imageKey)
                 }
             }
         }
@@ -59,19 +59,19 @@ public struct ContentView: View {
         return [
             TextStyleData(
                 isOn: $isBold,
-                titleKey: .text_bold,
+                title: .text_bold,
                 imageKey: .textFormattingBold),
             TextStyleData(
                 isOn: $isItalic,
-                titleKey: .text_italic,
+                title: .text_italic,
                 imageKey: .textFormattingItalic),
             TextStyleData(
                 isOn: $isUnderline,
-                titleKey: .text_underline,
+                title: .text_underline,
                 imageKey: .textFormattingUnderline),
             TextStyleData(
                 isOn: $isStrikethrough,
-                titleKey: .text_strikethrough,
+                title: .text_strikethrough,
                 imageKey: .textFormattingStrikethrough),
         ]
     }
@@ -79,7 +79,7 @@ public struct ContentView: View {
 
 private struct TextStyleData {
     var isOn: Binding<Bool>
-    var titleKey: StringKey
+    var title: LocalizedStringResource
     var imageKey: ImageKey
 }
 
