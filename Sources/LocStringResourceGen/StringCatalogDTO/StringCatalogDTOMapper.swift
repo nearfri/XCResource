@@ -1,4 +1,5 @@
 import Foundation
+import RegexBuilder
 import Strix
 import StrixParsers
 
@@ -131,13 +132,14 @@ struct StringCatalogDTOMapper {
                 let variableName = formatUnit.placeholder.variableName ?? "param\(index + 1)"
                 result.replaceSubrange(formatUnit.range, with: "\\(\(variableName))")
             }
-            return result
+            return result.replacing(.newlineSequence, with: "\n")
         } else {
             let interpolations = sortedFormatUnits.enumerated().map { index, formatUnit in
                 let variableName = formatUnit.placeholder.variableName ?? "param\(index + 1)"
                 return "\\(\(variableName))"
             }
             return "\(interpolations.joined(separator: " "))\n\(dto.escapedValue)"
+                .replacing(.newlineSequence, with: "\n")
         }
     }
     
