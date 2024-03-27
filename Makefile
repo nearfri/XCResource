@@ -50,7 +50,7 @@ define ARTIFACTBUNDLE_INFO_TEMPLATE
 ### Swift Package Manager snippet
 ```swift
 dependencies: [
-	.package(url: "https://github.com/nearfri/XCResource-plugin.git", from: "$(VERSION)"),
+    .package(url: "https://github.com/nearfri/XCResource-plugin.git", from: "$(VERSION)"),
 ],
 ```
 endef
