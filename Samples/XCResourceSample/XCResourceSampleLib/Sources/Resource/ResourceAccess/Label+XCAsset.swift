@@ -10,9 +10,9 @@ public extension Label where Title == Text, Icon == Image {
         }
     }
     
-    init(titleKey: StringKey, imageKey: ImageKey) {
+    init(title: LocalizedStringResource, imageKey: ImageKey) {
         self.init {
-            Text(key: titleKey)
+            Text(title)
         } icon: {
             Image(key: imageKey)
         }

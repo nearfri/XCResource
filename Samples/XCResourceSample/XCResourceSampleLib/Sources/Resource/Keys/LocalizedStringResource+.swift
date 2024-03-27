@@ -2,13 +2,13 @@ import Foundation
 
 private class BundleFinder {}
 
-extension LocalizedStringResource {
-    /// \"\\(param1)\" will be deleted.\
+package extension LocalizedStringResource {
+    /// \"\\(fileName)\" will be deleted.\
     /// This action cannot be undone.
-    static func alert_delete_file(_ param1: String) -> Self {
+    static func alert_delete_file(named fileName: String) -> Self {
         .init("alert_delete_file",
               defaultValue: """
-                \"\(param1)\" will be deleted.
+                \"\(fileName)\" will be deleted.
                 This action cannot be undone.
                 """,
               bundle: .forClass(BundleFinder.self))
@@ -35,10 +35,10 @@ extension LocalizedStringResource {
               bundle: .forClass(BundleFinder.self))
     }
     
-    /// \\(param1) ate \\(appleCount) today!
-    static func dog_eating_apples(_ param1: String, appleCount: Int) -> Self {
+    /// \\(dogName) ate \\(appleCount) today!
+    static func dog_eating_apples(dogName: String, appleCount: Int) -> Self {
         .init("dog_eating_apples",
-              defaultValue: "\(param1) ate \(appleCount) today!",
+              defaultValue: "\(dogName) ate \(appleCount) today!",
               bundle: .forClass(BundleFinder.self))
     }
     
@@ -63,10 +63,10 @@ extension LocalizedStringResource {
               bundle: .forClass(BundleFinder.self))
     }
     
-    /// Redo \\(param1)
-    static func editMenu_redo(_ param1: String) -> Self {
+    /// Redo \\(command)
+    static func editMenu_redo(command: String) -> Self {
         .init("editMenu_redo",
-              defaultValue: "Redo \(param1)",
+              defaultValue: "Redo \(command)",
               bundle: .forClass(BundleFinder.self))
     }
     
@@ -77,17 +77,17 @@ extension LocalizedStringResource {
               bundle: .forClass(BundleFinder.self))
     }
     
-    /// Undo \\(param1)
-    static func editMenu_undo(_ param1: String) -> Self {
+    /// Undo \\(command)
+    static func editMenu_undo(command: String) -> Self {
         .init("editMenu_undo",
-              defaultValue: "Undo \(param1)",
+              defaultValue: "Undo \(command)",
               bundle: .forClass(BundleFinder.self))
     }
     
-    /// \\(param1) files
-    static func fileList_fileCount(_ param1: Int) -> Self {
+    /// \\(fileCount) files
+    static func fileList_fileCount(_ fileCount: Int) -> Self {
         .init("fileList_fileCount",
-              defaultValue: "\(param1) files",
+              defaultValue: "\(fileCount) files",
               bundle: .forClass(BundleFinder.self))
     }
     
