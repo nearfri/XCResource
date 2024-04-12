@@ -1,8 +1,6 @@
 import Foundation
 
-private class BundleFinder {}
-
-package extension LocalizedStringResource {
+public extension LocalizedStringResource {
     /// \"\\(fileName)\" will be deleted.\
     /// This action cannot be undone.
     static func alert_delete_file(named fileName: String) -> Self {
@@ -11,84 +9,84 @@ package extension LocalizedStringResource {
                 \"\(fileName)\" will be deleted.
                 This action cannot be undone.
                 """,
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Cancel
     static var common_cancel: Self {
         .init("common_cancel",
               defaultValue: "Cancel",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Confirm
     static var common_confirm: Self {
         .init("common_confirm",
               defaultValue: "Confirm",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Done
     static var common_done: Self {
         .init("common_done",
               defaultValue: "Done",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// \\(dogName) ate \\(appleCount) today!
     static func dog_eating_apples(dogName: String, appleCount: Int) -> Self {
         .init("dog_eating_apples",
               defaultValue: "\(dogName) ate \(appleCount) today!",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Copy
     static var editMenu_copy: Self {
         .init("editMenu_copy",
               defaultValue: "Copy",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Cut
     static var editMenu_cut: Self {
         .init("editMenu_cut",
               defaultValue: "Cut",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Paste
     static var editMenu_paste: Self {
         .init("editMenu_paste",
               defaultValue: "Paste",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Redo \\(command)
     static func editMenu_redo(command: String) -> Self {
         .init("editMenu_redo",
               defaultValue: "Redo \(command)",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Text Style
     static var editMenu_textStyle: Self {
         .init("editMenu_textStyle",
               defaultValue: "Text Style",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Undo \\(command)
     static func editMenu_undo(command: String) -> Self {
         .init("editMenu_undo",
               defaultValue: "Undo \(command)",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// \\(fileCount) files
     static func fileList_fileCount(_ fileCount: Int) -> Self {
         .init("fileList_fileCount",
               defaultValue: "\(fileCount) files",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     // xcresource:use-raw
@@ -96,41 +94,41 @@ package extension LocalizedStringResource {
     static var success100: Self {
         .init("success100",
               defaultValue: "100% success",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Bold
     static var text_bold: Self {
         .init("text_bold",
               defaultValue: "Bold",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Italic
     static var text_italic: Self {
         .init("text_italic",
               defaultValue: "Italic",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Strikethrough
     static var text_strikethrough: Self {
         .init("text_strikethrough",
               defaultValue: "Strikethrough",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Underline
     static var text_underline: Self {
         .init("text_underline",
               defaultValue: "Underline",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
     /// Tap here
     static var user_instructions: Self {
         .init("user_instructions",
               defaultValue: "Tap here",
-              bundle: .forClass(BundleFinder.self))
+              bundle: .atURL(Bundle.module.bundleURL))
     }
 }

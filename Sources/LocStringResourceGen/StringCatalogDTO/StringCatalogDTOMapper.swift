@@ -70,7 +70,7 @@ struct StringCatalogDTOMapper {
             key: key,
             defaultValue: defaultValue,
             rawDefaultValue: stringUnitDTO.escapedValue,
-            memberDeclation: memberDeclation)
+            memberDeclation: memberDeclation.fixingID())
     }
     
     private func stringUnitDTO(from dto: LocalizationDTO) -> StringUnitDTO? {
