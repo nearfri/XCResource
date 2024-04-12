@@ -13,6 +13,38 @@ extension LocalizationItem {
                 return id
             }
         }
+        
+        public func fixingID() -> MemberDeclation {
+            if id.isEmpty { return self }
+            
+            var newID = ""
+            
+            let firstChar = id[id.startIndex]
+            if isIdentifierHead(firstChar) {
+                newID = String(firstChar)
+            } else {
+                newID = firstChar.isNumber ? "_\(firstChar)" : "_"
+            }
+            
+            for char in id.dropFirst() {
+                newID.append(isIdentifierBody(char) ? char : "_")
+            }
+            
+            switch self {
+            case .property:
+                return .property(newID)
+            case .method(_, let parameters):
+                return .method(newID, parameters)
+            }
+        }
+        
+        private func isIdentifierHead(_ character: Character) -> Bool {
+            return character.isLetter || character == "_"
+        }
+        
+        private func isIdentifierBody(_ character: Character) -> Bool {
+            return isIdentifierHead(character) || character.isNumber
+        }
     }
     
     public struct Parameter: Hashable {
