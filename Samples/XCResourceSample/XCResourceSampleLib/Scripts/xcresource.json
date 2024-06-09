@@ -23,8 +23,8 @@
         {
             "commandName": "fonts2swift",
             "fontsPath": "Sources/Resource/Resources/Fonts",
-            "swiftPath": "Sources/Resource/Keys/FontKey.swift",
-            "keyTypeName": "FontKey",
+            "swiftPath": "Sources/Resource/Keys/FontResource.swift",
+            "keyTypeName": "FontResource",
             "accessLevel": "public"
         },
         {

@@ -36,7 +36,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
         // Then
         XCTAssertEqual(code, """
             public extension FontKey {
-                static let allKeys: [FontKey] = [
+                static let all: [FontKey] = [
                     // Avenir
                     .avenir_heavy,
                     .avenir_light,

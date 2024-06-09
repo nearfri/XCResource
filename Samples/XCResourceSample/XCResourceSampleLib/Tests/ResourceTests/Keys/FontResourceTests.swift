@@ -9,15 +9,15 @@ import AppKit.NSFont
 typealias NativeFont = NSFont
 #endif
 
-final class FontKeyTests: XCTestCase {
+final class FontResourceTests: XCTestCase {
     func test_fontsExist() throws {
         let registry = FontRegistry.shared
         
         registry.registerAllFonts()
         
-        for fontKey in FontKey.allKeys {
-            XCTAssertNotNil(NativeFont(name: fontKey.fontName, size: 10),
-                            "\(fontKey.fontName) loading failed")
+        for resource in FontResource.all {
+            XCTAssertNotNil(NativeFont(name: resource.fontName, size: 10),
+                            "\(resource.fontName) loading failed")
         }
     }
 }

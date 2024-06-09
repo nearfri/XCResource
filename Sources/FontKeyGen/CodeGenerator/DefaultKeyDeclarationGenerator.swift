@@ -8,7 +8,7 @@ class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
         
         result += """
             \(accessLevel)extension \(request.keyTypeName) {
-                static let allKeys: [\(request.keyTypeName)] = [
+                static let all: [\(request.keyTypeName)] = [
             
             """
         

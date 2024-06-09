@@ -14,26 +14,26 @@ public class FontRegistry {
     
     public static let shared: FontRegistry = .init()
     
-    public func hasRegisteredFont(for key: FontKey) -> Bool {
-        return NativeFont(name: key.fontName, size: 10) != nil
+    public func hasRegisteredFont(for resource: FontResource) -> Bool {
+        return NativeFont(name: resource.fontName, size: 10) != nil
     }
     
     public func registerAllFonts() {
-        let fontPaths = Set(FontKey.allKeys.map(\.path))
+        let fontPaths = Set(FontResource.all.map(\.path))
         
         for fontPath in fontPaths {
             registerFont(atPath: fontPath)
         }
     }
     
-    public func registerFontFamilyIfNeeded(for key: FontKey) {
-        if !hasRegisteredFont(for: key) {
-            registerFontFamily(name: key.familyName)
+    public func registerFontFamilyIfNeeded(for resource: FontResource) {
+        if !hasRegisteredFont(for: resource) {
+            registerFontFamily(name: resource.familyName)
         }
     }
     
     public func registerFontFamily(name familyName: String) {
-        let fontPaths = Set(FontKey.allKeys.filter({ $0.familyName == familyName }).map(\.path))
+        let fontPaths = Set(FontResource.all.filter({ $0.familyName == familyName }).map(\.path))
         
         for fontPath in fontPaths {
             registerFont(atPath: fontPath)

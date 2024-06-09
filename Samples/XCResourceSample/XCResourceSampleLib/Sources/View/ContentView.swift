@@ -22,7 +22,7 @@ public struct ContentView: View {
                 .layoutPriority(1)
             
             Text(.dog_eating_apples(dogName: "Charlie", appleCount: 1))
-                .font(.custom(key: .openSans_regular, size: 16))
+                .font(.custom(.openSans_regular, size: 16))
                 .ifTrue(isBold, then: { $0.bold() })
                 .ifTrue(isItalic, then: { $0.italic() })
                 .underline(isUnderline)

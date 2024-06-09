@@ -23,7 +23,7 @@ private enum Fixture {
     }
     
     public extension FontKey {
-        static let allKeys: [FontKey] = [
+        static let all: [FontKey] = [
             // Avenir
             .avenir_book,
             .avenir_bookOblique,
