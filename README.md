@@ -30,7 +30,7 @@ let text = String(localized: .alert_delete_file(named: filename))
 ### Swift Package Manager
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nearfri/XCResource-plugin.git", from: "0.10.0"),
+    .package(url: "https://github.com/nearfri/XCResource-plugin", from: "0.10.1"),
 ],
 ```
 
@@ -99,7 +99,7 @@ imageView.image = .named(.settings)
 ```
 
 ### 커스텀 폰트 로딩하기
-https://github.com/nearfri/XCResource/assets/323940/3d0ff09c-9704-43bb-8ba7-2607db26e408
+https://github.com/nearfri/XCResource/assets/323940/aada31e4-9b04-4467-b8bb-0f5786171c45
 
 `xcresource.json`에 아래와 같은 커맨드를 추가하고 `RunXCResource` 플러그인을 실행합니다:
 ```json
