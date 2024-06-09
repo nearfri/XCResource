@@ -18,7 +18,7 @@ let package = Package(
         // MARK: - Plugins
         
         .plugin(
-            name: "RunXCResource-Local",
+            name: "RunXCResource-Dev",
             capability: .command(
                 intent: .custom(
                     verb: "run-xcresource",
