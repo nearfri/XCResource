@@ -8,14 +8,16 @@ XCResource는 xcassets 리소스 로딩과 다국어 지원을 도와주는 커�
 ```swift
 let image = UIImage.named(.settings)
 let color = UIColor.named(.coralPink)
-let string = String.localized(.done)
-let text = String.formatted(.alert_deleteFile(fileName: fileName))
+let font = UIFont(.openSans_bold, size: 12)
+let string = String(localized: .done)
+let text = String(localized: .alert_delete_file(named: filename))
 ```
 
 ## 제공기능
 `xcresource`는 다음의 하위 커맨드를 가지고 있습니다:
 - `xcassets2swift`: xcassets을 위한 Swift 코드를 생성합니다.
 - `fonts2swift`: font를 위한 Swift 코드를 생성합니다.
+- `xcstrings2swift`: xcstrings 파일로 `LocalizedStringResource` 코드를 생성합니다.
 - `strings2swift`: strings 파일로 Swift enum을 생성합니다.
 - `swift2strings`: Swift enum으로 strings 파일을 생성합니다.
 - `key2form`: Swift enum으로 format string 코드를 생성합니다.
@@ -25,30 +27,34 @@ let text = String.formatted(.alert_deleteFile(fileName: fileName))
 - `run (default)`: Manifest 파일에 나열된 하위 커맨드들을 실행합니다.
 
 ## 설치
-[Mint](https://github.com/yonaskolb/Mint)
-```sh
-mint install nearfri/XCResource
-```
-
-Make
-```sh
-git clone https://github.com/nearfri/XCResource.git
-cd XCResource
-make build install
+### Swift Package Manager
+```swift
+dependencies: [
+    .package(url: "https://github.com/nearfri/XCResource-plugin.git", from: "0.10.0"),
+],
 ```
 
 ## 사용 예제
 
 ### xcassets 이미지 로딩하기
-https://user-images.githubusercontent.com/323940/202911680-3bb7bed7-ccaf-40c2-b136-439ff05b983b.mov
+https://github.com/nearfri/XCResource/assets/323940/1244845a-dea1-403c-ae5e-d2a37d24c14b
 
-`xcresource xcassets2swift`를 실행합니다:
-```sh
-xcrun --sdk macosx mint run xcresource xcassets2swift \
-    --xcassets-path ../SampleApp/Assets.xcassets \
-    --asset-type imageset \
-    --swift-path ../SampleApp/ResourceKeys/ImageKey.swift \
-    --key-type-name ImageKey
+`xcresource.json`에 아래와 같은 커맨드를 추가하고 `RunXCResource` 플러그인을 실행합니다:
+```json
+{
+    "commands": [
+        {
+            "commandName": "xcassets2swift",
+            "xcassetsPaths": [
+                "Sources/Resource/Resources/Assets.xcassets"
+            ],
+            "assetTypes": ["imageset"],
+            "swiftPath": "Sources/Resource/Keys/ImageKey.swift",
+            "keyTypeName": "ImageKey",
+            "accessLevel": "public"
+        }
+    ]
+}
 ```
 
 아래와 같은 코드가 생성됩니다:
@@ -93,19 +99,26 @@ imageView.image = .named(.settings)
 ```
 
 ### 커스텀 폰트 로딩하기
-https://user-images.githubusercontent.com/323940/209695591-92fd68f8-141e-4766-ab6d-bcfdd072ac74.mov
+https://github.com/nearfri/XCResource/assets/323940/3d0ff09c-9704-43bb-8ba7-2607db26e408
 
-`xcresource fonts2swift`를 실행합니다:
-```sh
-xcrun --sdk macosx mint run xcresource fonts2swift \
-    --fonts-path ../SampleApp/Fonts \
-    --swift-path ../SampleApp/ResourceKeys/FontKey.swift \
-    --key-type-name FontKey
+`xcresource.json`에 아래와 같은 커맨드를 추가하고 `RunXCResource` 플러그인을 실행합니다:
+```json
+{
+    "commands": [
+        {
+            "commandName": "fonts2swift",
+            "fontsPath": "Sources/Resource/Resources/Fonts",
+            "swiftPath": "Sources/Resource/Keys/FontResource.swift",
+            "keyTypeName": "FontResource",
+            "accessLevel": "public"
+        }
+    ]
+}
 ```
 
 아래와 같은 코드가 생성됩니다:
 ```swift
-public struct FontKey: Hashable {
+public struct FontResource: Hashable {
     public var fontName: String
     public var familyName: String
     public var style: String
@@ -119,18 +132,18 @@ public struct FontKey: Hashable {
     }
 }
 
-public extension FontKey {
-    static let allKeys: [FontKey] = [
+public extension FontResource {
+    static let all: [FontResource] = [
         // Open Sans
         .openSans_bold,
         .openSans_regular,
     ]
 }
 
-public extension FontKey {
+public extension FontResource {
     // MARK: Open Sans
     
-    static let openSans_bold: FontKey = .init(
+    static let openSans_bold: FontResource = .init(
         fontName: "OpenSans-Bold",
         familyName: "Open Sans",
         style: "Bold",
@@ -142,173 +155,62 @@ public extension FontKey {
 `UIFont`에 생성자를 추가해줍니다:
 ```swift
 extension UIFont {
-    static func named(_ key: FontKey, size: CGFloat) -> UIFont {
-        return UIFont(name: key.fontName, size: size)!
+    convenience init(_ resource: FontResource, size: CGFloat) {
+        self.init(name: resource.fontName, size: size)!
     }
 }
 ```
 
 이제 자동완성과 함께 폰트를 생성할 수 있습니다:
 ```swift
-label.font = .named(.openSans_bold)
+label.font = UIFont(.openSans_bold, size: 12)
 ```
 
-### strings 파일로 Swift enum 만들기
-https://user-images.githubusercontent.com/323940/202911792-bc48ef57-0ff3-404b-84b4-94931350e847.mov
+### 다국어 문자열 로딩하기
+https://github.com/nearfri/XCResource/assets/323940/8f7c0a85-f4fb-4c96-b6cb-0ed2d0f72698
 
-`enum` 타입의 빈 `StringKey`를 만들어줍니다:
-```swift
-enum StringKey: String, CaseIterable {
-
+`xcresource.json`에 아래와 같은 커맨드를 추가하고 `RunXCResource` 플러그인을 실행합니다:
+```json
+{
+    "commands": [
+        {
+            "commandName": "xcstrings2swift",
+            "catalogPath": "Sources/Resource/Resources/Localizable.xcstrings",
+            "bundle": "at-url:Bundle.module.bundleURL",
+            "swiftPath": "Sources/Resource/Keys/LocalizedStringResource+.swift"
+        }
+    ]
 }
-```
-
-`String`에 생성자를 추가합니다:
-```swift
-extension String {
-    static func localized(_ key: StringKey) -> String {
-        return NSLocalizedString(key.rawValue, bundle: .module, comment: "")
-    }
-}
-```
-
-strings 파일을 준비합니다:
-```
-"cancel" = "취소";
-"confirm" = "확인";
-```
-
-`xcresource strings2swift`를 실행합니다:
-```sh
-xcrun --sdk macosx mint run xcresource strings2swift \
-    --resources-path ../SampleApp \
-    --language ko \
-    --swift-path ../SampleApp/ResourceKeys/StringKey.swift \
-```
-
-아래와 같이 `StringKey`가 업데이트 됩니다:
-```swift
-enum StringKey: String, CaseIterable {
-    /// 취소
-    case cancel
-    
-    /// 확인
-    case confirm
-}
-```
-
-이제 자동완성과 함께 지역화된 문자열을 생성할 수 있습니다:
-```swift
-label.text = .localized(.cancel)
-```
-
-### Swift enum으로 strings 파일 만들기
-https://user-images.githubusercontent.com/323940/202911866-cbd49782-05c8-4908-8e34-5187ad867331.mov
-
-`swift2strings`는 `strings2swift`와는 반대로 `enum`을 strings로 변환해줍니다.
-```sh
-xcrun --sdk macosx mint run xcresource swift2strings \
-    --swift-path ../SampleApp/ResourceKeys/StringKey.swift \
-    --resources-path ../SampleApp \
-    --language-config ko:comment
-```
-
-아래와 같이 strings 파일이 업데이트 됩니다:
-```
-/* 취소 */
-"cancel" = "취소";
-
-/* 확인 */
-"confirm" = "확인";
-```
-
-### Swift enum으로 format string 코드 만들기
-https://user-images.githubusercontent.com/323940/202911913-b9603b3b-cac7-40c2-8573-75e7617edd9c.mov
-
-`StringKey`의 `case`에 format string 형식의 주석을 추가합니다:
-```swift
-enum StringKey: String, CaseIterable {
-    /// "%{fileName}" 파일은 삭제됩니다.\n이 동작은 취소할 수 없습니다.
-    case alert_deleteFile
-}
-```
-
-`xcresource key2form`을 실행합니다:
-```sh
-xcrun --sdk macosx mint run xcresource key2form \
-    --key-file-path ../SampleApp/ResourceKeys/StringKey.swift \
-    --form-file-path ../SampleApp/ResourceKeys/StringForm.swift \
-    --form-type-name StringForm \
-    --issue-reporter xcode
 ```
 
 아래와 같은 코드가 생성됩니다:
 ```swift
-struct StringForm {
-    var key: String
-    var arguments: [CVarArg]
-}
+public extension LocalizedStringResource {
+    /// \"\\(param1)\" will be deleted.\
+    /// This action cannot be undone.
+    static func alert_delete_file(_ param1: String) -> Self {
+        .init("alert_delete_file",
+              defaultValue: """
+                \"\(param1)\" will be deleted.
+                This action cannot be undone.
+                """,
+              bundle: .atURL(Bundle.module.bundleURL))
+    }
 
-extension StringForm {
-    /// "%{fileName}" 파일은 삭제됩니다.\n이 동작은 취소할 수 없습니다.
-    static func alert_deleteFile(fileName: String) -> StringForm {
-        return StringForm(key: StringKey.alert_deleteFile.rawValue, arguments: [fileName])
+    /// Done
+    static var common_done: Self {
+        .init("common_done",
+              defaultValue: "Done",
+              bundle: .atURL(Bundle.module.bundleURL))
     }
 }
 ```
 
-`String`에 생성자를 추가해줍니다:
-```swift
-extension String {
-    static func formatted(_ form: StringForm) -> String {
-        let format = NSLocalizedString(form.key, bundle: .module, comment: "")
-        return String(format: format, locale: .current, arguments: form.arguments)
-    }
-}
-```
+**함수 시그니처와 다국어 키가 동일하다면 함수명이나 파라미터명은 변경하더라도 계속 유지됩니다.**
 
 이제 자동완성과 함께 지역화된 문자열을 생성할 수 있습니다:
 ```swift
-label.text = .formatted(.alert_deleteFile(fileName: fileName))
-```
-
-### strings 파일로 CSV 파일 만들기
-https://user-images.githubusercontent.com/323940/202911933-e1041967-9fd1-4eb5-9c73-999cdbbb6a13.mov
-
-`xcresource strings2csv`를 실행합니다:
-```sh
-mint run xcresource strings2csv \
-    --resources-path ../SampleApp \
-    --development-language ko \
-    --csv-path ./localizations.csv \
-    --header-style long-ko \
-    --write-bom
-```
-
-아래와 같은 csv 파일이 만들어집니다:
-| Key | Comment | 한국어 (ko) | 영어 (en) |
-| --- | ------- | --------- | -------- |
-| cancel | 취소 | 취소 | |
-| confirm | 확인 | 확인 | |
-
-### CSV 파일로 strings 파일 만들기
-https://user-images.githubusercontent.com/323940/202911964-00ebcb96-90d8-430d-8385-e0cecbe8b181.mov
-
-`xcresource csv2strings`를 실행합니다:
-```sh
-mint run xcresource csv2strings \
-    --csv-path ./localizations.csv \
-    --header-style long-ko \
-    --resources-path ../SampleApp
-```
-
-아래와 같이 strings 파일이 만들어집니다:
-```
-/* 취소 */
-"cancel" = "취소";
-
-/* 확인 */
-"confirm" = "확인";
+label.text = String(localized: .common_done)
 ```
 
 `XCResourceSample.xcworkspace`에서 적용 예제를 볼 수 있습니다.
