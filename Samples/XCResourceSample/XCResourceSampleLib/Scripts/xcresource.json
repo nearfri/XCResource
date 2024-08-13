@@ -22,9 +22,12 @@
         },
         {
             "commandName": "fonts2swift",
-            "fontsPath": "Sources/Resource/Resources/Fonts",
+            "resourcesPath": "Sources/Resource/Resources",
+            "fontsRelativePath": "Fonts",
             "swiftPath": "Sources/Resource/Keys/FontResource.swift",
             "keyTypeName": "FontResource",
+            "keyListName": "all",
+            "bundle": "Bundle.module",
             "accessLevel": "public"
         },
         {

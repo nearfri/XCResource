@@ -7,30 +7,32 @@ private enum Fixture {
         Font(fontName: "Avenir-Heavy",
              familyName: "Avenir",
              style: "heavy",
-             path: "Avenir.ttc"),
+             relativePath: "Avenir.ttc"),
         Font(fontName: "Avenir-Light",
              familyName: "Avenir",
              style: "light",
-             path: "Avenir.ttc"),
+             relativePath: "Avenir.ttc"),
         Font(fontName: "ZapfDingbatsITC",
              familyName: "Zapf Dingbats",
              style: "regular",
-             path: "Zapf.ttf"),
+             relativePath: "Zapf.ttf"),
     ]
 }
 
 final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
     private let sut: DefaultKeyDeclarationGenerator = .init()
     
-    func test_generateAllKeysDeclaration() throws {
+    func test_generateKeyListDeclaration() throws {
         // Given
         let fonts: [Font] = Fixture.fonts
         
         // When
-        let code = sut.generateAllKeysDeclaration(
+        let code = sut.generateKeyListDeclaration(
             for: KeyDeclarationRequest(
                 fonts: fonts,
                 keyTypeName: "FontKey",
+                keyListName: "all",
+                bundle: "Bundle.main",
                 accessLevel: "public"))
         
         // Then
@@ -57,6 +59,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             for: KeyDeclarationRequest(
                 fonts: fonts,
                 keyTypeName: "FontKey",
+                bundle: "Bundle.main",
                 accessLevel: "public"))
         
         // Then
@@ -68,13 +71,15 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                     fontName: "Avenir-Heavy",
                     familyName: "Avenir",
                     style: "heavy",
-                    path: "Avenir.ttc")
+                    relativePath: "Avenir.ttc",
+                    bundle: Bundle.main)
                 
                 static let avenir_light: FontKey = .init(
                     fontName: "Avenir-Light",
                     familyName: "Avenir",
                     style: "light",
-                    path: "Avenir.ttc")
+                    relativePath: "Avenir.ttc",
+                    bundle: Bundle.main)
                 
                 // MARK: Zapf Dingbats
                 
@@ -82,7 +87,8 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                     fontName: "ZapfDingbatsITC",
                     familyName: "Zapf Dingbats",
                     style: "regular",
-                    path: "Zapf.ttf")
+                    relativePath: "Zapf.ttf",
+                    bundle: Bundle.main)
             }
             """)
     }

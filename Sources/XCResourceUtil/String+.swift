@@ -50,8 +50,8 @@ extension String {
         return "\"" + replacingOccurrences(of: "\"", with: "\"\"") + "\""
     }
     
-    public func appendingPathComponent(_ str: String) -> String {
-        if isEmpty { return str }
+    public func appendingPathComponent(_ str: some StringProtocol) -> String {
+        if isEmpty { return String(str) }
         if str.isEmpty { return self }
         
         switch (hasSuffix("/"), str.hasPrefix("/")) {

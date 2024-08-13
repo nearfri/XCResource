@@ -5,7 +5,7 @@ struct Font: Equatable {
     var fontName: String
     var familyName: String
     var style: String
-    var path: String
+    var relativePath: String
     
     var key: String {
         func normalize(_ string: String) -> String {
