@@ -20,7 +20,7 @@ class FontLoader {
             return Font(fontName: postScriptName,
                         familyName: familyName,
                         style: style,
-                        path: path)
+                        relativePath: path)
         }
     }
 }

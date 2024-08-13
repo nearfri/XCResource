@@ -11,35 +11,57 @@ protocol TypeDeclarationGenerator: AnyObject {
 struct KeyDeclarationRequest {
     var fonts: [Font]
     var keyTypeName: String
+    var keyListName: String?
+    var bundle: String
     var accessLevel: String?
 }
 
 protocol KeyDeclarationGenerator: AnyObject {
-    func generateAllKeysDeclaration(for request: KeyDeclarationRequest) -> String
+    func generateKeyListDeclaration(for request: KeyDeclarationRequest) -> String?
     func generateKeyDeclarations(for request: KeyDeclarationRequest) -> String
 }
 
 extension FontKeyGenerator {
     public struct Request {
-        public var fontsURL: URL
+        public var resourcesURL: URL
+        public var fontsRelativePath: String?
         public var keyTypeName: String
+        public var keyListName: String?
+        public var bundle: String
         public var accessLevel: String?
         
-        public init(fontsURL: URL, keyTypeName: String, accessLevel: String? = nil) {
-            self.fontsURL = fontsURL
+        public init(
+            resourcesURL: URL,
+            fontsRelativePath: String? = nil,
+            keyTypeName: String,
+            keyListName: String?,
+            bundle: String,
+            accessLevel: String? = nil
+        ) {
+            self.resourcesURL = resourcesURL
+            self.fontsRelativePath = fontsRelativePath
             self.keyTypeName = keyTypeName
+            self.keyListName = keyListName
+            self.bundle = bundle
             self.accessLevel = accessLevel
+        }
+        
+        public var fontsURL: URL {
+            if let fontsRelativePath {
+                return URL(filePath: fontsRelativePath, relativeTo: resourcesURL)
+            }
+            return resourcesURL
         }
     }
     
     public struct Result {
         public var typeDeclaration: String
-        public var allKeysDeclaration: String
+        public var keyListDeclaration: String?
         public var keyDeclarations: String
         
-        public init(typeDeclaration: String, allKeysDeclaration: String, keyDeclarations: String) {
+        public init(typeDeclaration: String, keyListDeclaration: String?, keyDeclarations: String) {
             self.typeDeclaration = typeDeclaration
-            self.allKeysDeclaration = allKeysDeclaration
+            self.keyListDeclaration = keyListDeclaration
             self.keyDeclarations = keyDeclarations
         }
     }
@@ -75,14 +97,16 @@ public class FontKeyGenerator {
         let keyRequest = KeyDeclarationRequest(
             fonts: fonts,
             keyTypeName: request.keyTypeName,
+            keyListName: request.keyListName,
+            bundle: request.bundle,
             accessLevel: request.accessLevel)
         
-        let allKeysDeclaration = keyDeclarationGenerator.generateAllKeysDeclaration(for: keyRequest)
+        let keyListDeclaration = keyDeclarationGenerator.generateKeyListDeclaration(for: keyRequest)
         
         let keyDeclarations = keyDeclarationGenerator.generateKeyDeclarations(for: keyRequest)
         
         return Result(typeDeclaration: typeDeclaration,
-                      allKeysDeclaration: allKeysDeclaration,
+                      keyListDeclaration: keyListDeclaration,
                       keyDeclarations: keyDeclarations)
     }
 }

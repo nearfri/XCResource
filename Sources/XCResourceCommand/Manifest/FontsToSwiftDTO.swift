@@ -5,9 +5,12 @@ import AssetKeyGen
 struct FontsToSwiftDTO: CommandDTO {
     static let commandType: ParsableCommand.Type = FontsToSwift.self
     
-    var fontsPath: String
+    var resourcesPath: String
+    var fontsRelativePath: String?
     var swiftPath: String
     var keyTypeName: String
+    var keyListName: String?
+    var bundle: String?
     var accessLevel: String?
     var excludesTypeDeclation: Bool?
     
@@ -25,9 +28,12 @@ struct FontsToSwiftDTO: CommandDTO {
         })
         
         var command = FontsToSwift()
-        command.fontsPath = fontsPath
+        command.resourcesPath = resourcesPath
+        command.fontsRelativePath = fontsRelativePath
         command.swiftPath = swiftPath
         command.keyTypeName = keyTypeName
+        command.keyListName = keyListName
+        command.bundle = bundle ?? Default.bundle
         command.accessLevel = accessLevel
         command.excludesTypeDeclation = excludesTypeDeclation ?? Default.excludesTypeDeclation
         

@@ -20,16 +20,23 @@ struct FontsToSwift: ParsableCommand {
     // MARK: - Default values
     
     enum Default {
+        static let bundle: String = "Bundle.main"
         static let excludesTypeDeclation: Bool = false
     }
     
     // MARK: - Arguments
     
-    @Option var fontsPath: String
+    @Option var resourcesPath: String
+    
+    @Option var fontsRelativePath: String?
     
     @Option var swiftPath: String
     
     @Option var keyTypeName: String
+    
+    @Option var keyListName: String?
+    
+    @Option var bundle: String = Default.bundle
     
     @Option(help: ArgumentHelp(valueName: AccessLevel.joinedAllValuesString))
     var accessLevel: AccessLevel?
@@ -47,8 +54,11 @@ struct FontsToSwift: ParsableCommand {
     
     private func generateCodes() throws -> FontKeyGenerator.Result {
         let request = FontKeyGenerator.Request(
-            fontsURL: URL(fileURLWithExpandingTildeInPath: fontsPath),
+            resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
+            fontsRelativePath: fontsRelativePath,
             keyTypeName: keyTypeName,
+            keyListName: keyListName,
+            bundle: bundle,
             accessLevel: accessLevel?.rawValue)
         
         return try FontKeyGenerator().generate(for: request)
@@ -60,11 +70,15 @@ struct FontsToSwift: ParsableCommand {
         
         print(headerComment, terminator: "\n\n", to: &stream)
         
+        print("import Foundation", terminator: "\n\n", to: &stream)
+        
         if !excludesTypeDeclation {
             print(codes.typeDeclaration, terminator: "\n\n", to: &stream)
         }
         
-        print(codes.allKeysDeclaration, terminator: "\n\n", to: &stream)
+        if let keyListDeclaration = codes.keyListDeclaration {
+            print(keyListDeclaration, terminator: "\n\n", to: &stream)
+        }
         
         print(codes.keyDeclarations, to: &stream)
         

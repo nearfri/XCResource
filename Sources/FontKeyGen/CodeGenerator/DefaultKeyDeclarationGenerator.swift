@@ -1,14 +1,16 @@
 import Foundation
 
 class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
-    func generateAllKeysDeclaration(for request: KeyDeclarationRequest) -> String {
+    func generateKeyListDeclaration(for request: KeyDeclarationRequest) -> String? {
+        guard let keyListName = request.keyListName else { return nil }
+        
         let accessLevel = request.accessLevel.map({ $0 + " " }) ?? ""
         
         var result = ""
         
         result += """
             \(accessLevel)extension \(request.keyTypeName) {
-                static let all: [\(request.keyTypeName)] = [
+                static let \(keyListName): [\(request.keyTypeName)] = [
             
             """
         
@@ -61,7 +63,8 @@ class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
                         fontName: "\(font.fontName)",
                         familyName: "\(font.familyName)",
                         style: "\(font.style)",
-                        path: "\(font.path)")
+                        relativePath: "\(font.relativePath)",
+                        bundle: \(request.bundle))
                 
                 """
         }
