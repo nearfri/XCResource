@@ -25,7 +25,11 @@ public struct FontResource: Hashable {
     }
     
     public var url: URL {
-        return URL(filePath: relativePath, relativeTo: bundle.resourceURL)
+        return URL(filePath: relativePath, relativeTo: bundle.resourceURL).standardizedFileURL
+    }
+    
+    public var path: String {
+        return url.path(percentEncoded: false)
     }
 }
 

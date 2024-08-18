@@ -1,5 +1,5 @@
 import XCTest
-@testable import AssetKeyGen
+@testable import XCResourceUtil
 
 final class TreeTests: XCTestCase {
     func test_addChild() throws {

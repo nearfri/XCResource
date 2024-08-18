@@ -2,13 +2,42 @@ import XCTest
 @testable import XCResourceUtil
 
 final class StringTests: XCTestCase {
+    func test_toIdentifier() throws {
+        XCTAssertEqual("Academy Engraved LET".toIdentifier(), "academyEngravedLET")
+        XCTAssertEqual("Academy engraved LET".toIdentifier(), "academyEngravedLET")
+        XCTAssertEqual("Academy-engraved-LET".toIdentifier(), "academyEngravedLET")
+        XCTAssertEqual("SF NS Display".toIdentifier(), "sfNSDisplay")
+        XCTAssertEqual(".SF NS Display".toIdentifier(), "sfNSDisplay")
+    }
+    
+    func test_toTypeIdentifier() throws {
+        XCTAssertEqual("Academy Engraved LET".toTypeIdentifier(), "AcademyEngravedLET")
+        XCTAssertEqual("Academy engraved LET".toTypeIdentifier(), "AcademyEngravedLET")
+        XCTAssertEqual("Academy-engraved-LET".toTypeIdentifier(), "AcademyEngravedLET")
+        XCTAssertEqual("SF NS Display".toTypeIdentifier(), "SFNSDisplay")
+        XCTAssertEqual(".SF NS Display".toTypeIdentifier(), "SFNSDisplay")
+    }
+    
     func test_camelCased() {
         XCTAssertEqual("helloWorld".camelCased(), "helloWorld")
         XCTAssertEqual("HelloWorld".camelCased(), "helloWorld")
         XCTAssertEqual("URL".camelCased(), "url")
         XCTAssertEqual("URLs".camelCased(), "urls")
         XCTAssertEqual("URLString".camelCased(), "urlString")
+        XCTAssertEqual("urlString".camelCased(), "urlString")
         XCTAssertEqual("downloadURL".camelCased(), "downloadURL")
+        XCTAssertEqual("downloadURLString".camelCased(), "downloadURLString")
+    }
+    
+    func test_pascalCased() {
+        XCTAssertEqual("helloWorld".pascalCased(), "HelloWorld")
+        XCTAssertEqual("HelloWorld".pascalCased(), "HelloWorld")
+        XCTAssertEqual("URL".pascalCased(), "URL")
+        XCTAssertEqual("URLs".pascalCased(), "URLs")
+        XCTAssertEqual("URLString".pascalCased(), "URLString")
+        XCTAssertEqual("urlString".pascalCased(), "UrlString")
+        XCTAssertEqual("downloadURL".pascalCased(), "DownloadURL")
+        XCTAssertEqual("downloadURLString".pascalCased(), "DownloadURLString")
     }
     
     func test_addingBackslashEncoding() {
@@ -56,5 +85,14 @@ final class StringTests: XCTestCase {
         XCTAssertEqual("/".deletingLastPathComponent, "/")
         XCTAssertEqual("".deletingLastPathComponent, "")
         XCTAssertEqual("scratch.tiff".deletingLastPathComponent, "")
+    }
+    
+    func test_lastPathComponent() throws {
+        XCTAssertEqual("/tmp/scratch.tiff".lastPathComponent, "scratch.tiff")
+        XCTAssertEqual("/tmp/scratch".lastPathComponent, "scratch")
+        XCTAssertEqual("/tmp/".lastPathComponent, "tmp")
+        XCTAssertEqual("scratch///".lastPathComponent, "scratch")
+        XCTAssertEqual("/".lastPathComponent, "/")
+        XCTAssertEqual("".lastPathComponent, "")
     }
 }

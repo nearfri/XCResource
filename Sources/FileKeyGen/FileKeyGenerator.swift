@@ -1,7 +1,7 @@
 import Foundation
 
-protocol FontImporter: AnyObject {
-    func `import`(at url: URL) throws -> [Font]
+protocol FileTreeGenerator: AnyObject {
+    func load(at url: URL) throws -> FileTree
 }
 
 protocol TypeDeclarationGenerator: AnyObject {
@@ -9,9 +9,8 @@ protocol TypeDeclarationGenerator: AnyObject {
 }
 
 struct KeyDeclarationRequest {
-    var fonts: [Font]
+    var fileTree: FileTree
     var keyTypeName: String
-    var keyListName: String?
     var preservesRelativePath: Bool
     var relativePathPrefix: String?
     var bundle: String
@@ -19,15 +18,14 @@ struct KeyDeclarationRequest {
 }
 
 protocol KeyDeclarationGenerator: AnyObject {
-    func generateKeyListDeclaration(for request: KeyDeclarationRequest) -> String?
     func generateKeyDeclarations(for request: KeyDeclarationRequest) -> String
 }
 
-extension FontKeyGenerator {
+extension FileKeyGenerator {
     public struct Request {
         public var resourcesURL: URL
+        public var filePattern: String
         public var keyTypeName: String
-        public var keyListName: String?
         public var preservesRelativePath: Bool
         public var relativePathPrefix: String?
         public var bundle: String
@@ -35,16 +33,16 @@ extension FontKeyGenerator {
         
         public init(
             resourcesURL: URL,
+            filePattern: String,
             keyTypeName: String,
-            keyListName: String?,
             preservesRelativePath: Bool,
             relativePathPrefix: String?,
             bundle: String,
             accessLevel: String? = nil
         ) {
             self.resourcesURL = resourcesURL
+            self.filePattern = filePattern
             self.keyTypeName = keyTypeName
-            self.keyListName = keyListName
             self.preservesRelativePath = preservesRelativePath
             self.relativePathPrefix = relativePathPrefix
             self.bundle = bundle
@@ -54,59 +52,54 @@ extension FontKeyGenerator {
     
     public struct Result {
         public var typeDeclaration: String
-        public var keyListDeclaration: String?
         public var keyDeclarations: String
         
-        public init(typeDeclaration: String, keyListDeclaration: String?, keyDeclarations: String) {
+        public init(typeDeclaration: String, keyDeclarations: String) {
             self.typeDeclaration = typeDeclaration
-            self.keyListDeclaration = keyListDeclaration
             self.keyDeclarations = keyDeclarations
         }
     }
 }
 
-public class FontKeyGenerator {
-    private let fontImporter: FontImporter
+public class FileKeyGenerator {
+    private let fileTreeGenerator: FileTreeGenerator
     private let typeDeclarationGenerator: TypeDeclarationGenerator
     private let keyDeclarationGenerator: KeyDeclarationGenerator
     
-    init(fontImporter: FontImporter,
+    init(fileTreeGenerator: FileTreeGenerator, 
          typeDeclarationGenerator: TypeDeclarationGenerator,
          keyDeclarationGenerator: KeyDeclarationGenerator
     ) {
-        self.fontImporter = fontImporter
+        self.fileTreeGenerator = fileTreeGenerator
         self.typeDeclarationGenerator = typeDeclarationGenerator
         self.keyDeclarationGenerator = keyDeclarationGenerator
     }
     
     public convenience init() {
-        self.init(fontImporter: DefaultFontImporter(),
+        self.init(fileTreeGenerator: DefaultFileTreeGenerator(),
                   typeDeclarationGenerator: DefaultTypeDeclarationGenerator(),
                   keyDeclarationGenerator: DefaultKeyDeclarationGenerator())
     }
     
     public func generate(for request: Request) throws -> Result {
-        let fonts = try fontImporter.import(at: request.resourcesURL)
+        let fileTree = try fileTreeGenerator.load(at: request.resourcesURL)
+        let filteredFileTree = fileTree.filter(try Regex(request.filePattern))
         
         let typeDeclaration = typeDeclarationGenerator.generate(
             keyTypeName: request.keyTypeName,
             accessLevel: request.accessLevel)
         
         let keyRequest = KeyDeclarationRequest(
-            fonts: fonts,
+            fileTree: filteredFileTree ?? FileTree(FileItem(url: request.resourcesURL)),
             keyTypeName: request.keyTypeName,
-            keyListName: request.keyListName,
             preservesRelativePath: request.preservesRelativePath,
             relativePathPrefix: request.relativePathPrefix,
             bundle: request.bundle,
             accessLevel: request.accessLevel)
         
-        let keyListDeclaration = keyDeclarationGenerator.generateKeyListDeclaration(for: keyRequest)
-        
         let keyDeclarations = keyDeclarationGenerator.generateKeyDeclarations(for: keyRequest)
         
         return Result(typeDeclaration: typeDeclaration,
-                      keyListDeclaration: keyListDeclaration,
                       keyDeclarations: keyDeclarations)
     }
 }

@@ -12,13 +12,8 @@ class DefaultFontImporter: FontImporter {
     func `import`(at url: URL) throws -> [Font] {
         let paths = try fontFinder.find(at: url)
         
-        guard let baseURL = url.baseURL else {
-            return try paths.flatMap({ try fontLoader.load(at: $0, relativeTo: url) })
-        }
+        let fonts = try paths.flatMap({ try fontLoader.load(at: $0, relativeTo: url) })
         
-        return try paths.flatMap({
-            try fontLoader.load(at: url.relativePath.appendingPathComponent($0),
-                                relativeTo: baseURL)
-        })
+        return fonts
     }
 }

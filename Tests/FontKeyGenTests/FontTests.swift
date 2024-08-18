@@ -23,29 +23,4 @@ final class FontTests: XCTestCase {
         // Then
         XCTAssertEqual(key, "arial_regular")
     }
-    
-    func test_key_hasSpace() throws {
-        // Given
-        let font = Font(fontName: "",
-                        familyName: "Academy Engraved LET",
-                        style: "",
-                        relativePath: "")
-        
-        // When
-        let key = font.key
-        
-        // Then
-        XCTAssertEqual(key, "academyEngravedLET")
-    }
-    
-    func test_key_hasPunctuation() throws {
-        // Given
-        let font = Font(fontName: "", familyName: ".SF NS Display", style: "", relativePath: "")
-        
-        // When
-        let key = font.key
-        
-        // Then
-        XCTAssertEqual(key, "sfnsDisplay")
-    }
 }

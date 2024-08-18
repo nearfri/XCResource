@@ -8,7 +8,7 @@ class DefaultLocalizationDifferenceCalculator: LocalizationDifferenceCalculator 
         baseItems: [LocalizationItem],
         allBaseItems: [LocalizationItem]
     ) -> LocalizationDifference {
-        let calculator = CalculatorInternal(
+        let calculator = CalculatorCore(
             targetItems: targetItems,
             baseItems: baseItems,
             allBaseItems: allBaseItems)
@@ -17,7 +17,7 @@ class DefaultLocalizationDifferenceCalculator: LocalizationDifferenceCalculator 
     }
 }
 
-private class CalculatorInternal {
+private class CalculatorCore {
     private let targetItems: [LocalizationItem]
     private let baseItems: [LocalizationItem]
     

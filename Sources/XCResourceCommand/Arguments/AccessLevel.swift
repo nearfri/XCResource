@@ -3,6 +3,7 @@ import ArgumentParser
 
 enum AccessLevel: String, CaseIterable, ExpressibleByArgument {
     case `public`
+    case package
     case `internal`
     
     public init?(argument: String) {

@@ -21,12 +21,23 @@
             "accessLevel": "public"
         },
         {
+            "commandName": "files2swift",
+            "resourcesPath": "Sources/Resource/Resources/Fonts",
+            "filePattern": "(?i)\\.(otf|ttf|ttc)$",
+            "swiftPath": "Sources/Resource/Keys/FileResource.swift",
+            "keyTypeName": "FileResource",
+            "preservesRelativePath": true,
+            "relativePathPrefix": "Fonts",
+            "bundle": "Bundle.module",
+            "accessLevel": "public"
+        },
+        {
             "commandName": "fonts2swift",
             "resourcesPath": "Sources/Resource/Resources",
-            "fontsRelativePath": "Fonts",
             "swiftPath": "Sources/Resource/Keys/FontResource.swift",
             "keyTypeName": "FontResource",
             "keyListName": "all",
+            "preservesRelativePath": true,
             "bundle": "Bundle.module",
             "accessLevel": "public"
         },

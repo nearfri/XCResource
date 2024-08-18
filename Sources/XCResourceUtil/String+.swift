@@ -1,6 +1,34 @@
 import Foundation
+import RegexBuilder
 
 extension String {
+    public func toIdentifier() -> String {
+        return toIdentifier(isForType: false)
+    }
+    
+    public func toTypeIdentifier() -> String {
+        return toIdentifier(isForType: true)
+    }
+    
+    private func toIdentifier(isForType: Bool) -> String {
+        let wordSeparator = CharacterClass.word.subtracting(.anyOf("_")).inverted
+        let components = split(separator: wordSeparator).map({ String($0) })
+        
+        if components.isEmpty {
+            return "_"
+        }
+        
+        let casedComponents = if isForType {
+            components.map({ $0.pascalCased() })
+        } else {
+            [components[0].camelCased()] + components.dropFirst().map({ $0.pascalCased() })
+        }
+        
+        let identifier = casedComponents.joined()
+        
+        return identifier.first?.isNumber == true ? "_" + identifier : identifier
+    }
+    
     public func camelCased() -> String {
         var result = ""
         
@@ -27,6 +55,10 @@ extension String {
         }
         
         return result
+    }
+    
+    public func pascalCased() -> String {
+        return (first?.uppercased() ?? "") + dropFirst()
     }
     
     public func addingBackslashEncoding() -> String {
@@ -76,5 +108,18 @@ extension String {
             return "/"
         }
         return String(truncatedPath)
+    }
+    
+    public var lastPathComponent: String {
+        let lastComponent = self            // /tmp/scratch.tiff/
+            .reversed()                     // /ffit.hctarcs/pmt/
+            .drop(while: { $0 == "/" })     // ffit.hctarcs/pmt/
+            .prefix(while: { $0 != "/" })   // ffit.hctarcs
+            .reversed()                     // scratch.tiff
+        
+        if lastComponent.isEmpty && hasPrefix("/") {
+            return "/"
+        }
+        return String(lastComponent)
     }
 }

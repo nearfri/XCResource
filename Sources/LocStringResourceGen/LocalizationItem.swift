@@ -73,7 +73,7 @@ extension LocalizationItem {
     }
 }
 
-public struct LocalizationItem: Hashable, CopyableWithKeyPath {
+public struct LocalizationItem: Hashable, SettableByKeyPath {
     public var key: String
     public var defaultValue: String
     public var rawDefaultValue: String

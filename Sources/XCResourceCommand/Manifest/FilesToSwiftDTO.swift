@@ -2,13 +2,13 @@ import Foundation
 import ArgumentParser
 import AssetKeyGen
 
-struct FontsToSwiftDTO: CommandDTO {
-    static let commandType: ParsableCommand.Type = FontsToSwift.self
+struct FilesToSwiftDTO: CommandDTO {
+    static let commandType: ParsableCommand.Type = FilesToSwift.self
     
     var resourcesPath: String
+    var filePattern: String
     var swiftPath: String
     var keyTypeName: String
-    var keyListName: String?
     var preservesRelativePath: Bool?
     var relativePathPrefix: String?
     var bundle: String?
@@ -16,7 +16,7 @@ struct FontsToSwiftDTO: CommandDTO {
     var excludesTypeDeclation: Bool?
     
     func toCommand() throws -> ParsableCommand {
-        typealias Default = FontsToSwift.Default
+        typealias Default = FilesToSwift.Default
         
         let accessLevel: AccessLevel? = try self.accessLevel.map({
             guard let level = AccessLevel(argument: $0) else {
@@ -28,11 +28,11 @@ struct FontsToSwiftDTO: CommandDTO {
             return level
         })
         
-        var command = FontsToSwift()
+        var command = FilesToSwift()
         command.resourcesPath = resourcesPath
+        command.filePattern = filePattern
         command.swiftPath = swiftPath
         command.keyTypeName = keyTypeName
-        command.keyListName = keyListName
         command.preservesRelativePath = preservesRelativePath ?? Default.preservesRelativePath
         command.relativePathPrefix = relativePathPrefix
         command.bundle = bundle ?? Default.bundle
