@@ -11,12 +11,14 @@ let color = UIColor.named(.coralPink)
 let font = UIFont(.openSans_bold, size: 12)
 let string = String(localized: .done)
 let text = String(localized: .alert_delete_file(named: filename))
+let data = Data(.model)
 ```
 
 ## 제공기능
 `xcresource`는 다음의 하위 커맨드를 가지고 있습니다:
 - `xcassets2swift`: xcassets을 위한 Swift 코드를 생성합니다.
-- `fonts2swift`: font를 위한 Swift 코드를 생성합니다.
+- `files2swift`: 파일을 리스팅하는 Swift 코드를 생성합니다.
+- `fonts2swift`: font를 리스팅하는 Swift 코드를 생성합니다.
 - `xcstrings2swift`: xcstrings 파일로 `LocalizedStringResource` 코드를 생성합니다.
 - `strings2swift`: strings 파일로 Swift enum을 생성합니다.
 - `swift2strings`: Swift enum으로 strings 파일을 생성합니다.
@@ -30,7 +32,7 @@ let text = String(localized: .alert_delete_file(named: filename))
 ### Swift Package Manager
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nearfri/XCResource-plugin", from: "0.10.1"),
+    .package(url: "https://github.com/nearfri/XCResource-plugin", from: "0.11.0"),
 ],
 ```
 
@@ -107,9 +109,12 @@ https://github.com/nearfri/XCResource/assets/323940/aada31e4-9b04-4467-b8bb-0f57
     "commands": [
         {
             "commandName": "fonts2swift",
-            "fontsPath": "Sources/Resource/Resources/Fonts",
+            "resourcesPath": "Sources/Resource/Resources",
             "swiftPath": "Sources/Resource/Keys/FontResource.swift",
             "keyTypeName": "FontResource",
+            "keyListName": "all",
+            "preservesRelativePath": true,
+            "bundle": "Bundle.module",
             "accessLevel": "public"
         }
     ]
@@ -122,13 +127,29 @@ public struct FontResource: Hashable {
     public var fontName: String
     public var familyName: String
     public var style: String
-    public var path: String
+    public var relativePath: String
+    public var bundle: Bundle
     
-    public init(fontName: String, familyName: String, style: String, path: String) {
+    public init(
+        fontName: String,
+        familyName: String,
+        style: String,
+        relativePath: String,
+        bundle: Bundle
+    ) {
         self.fontName = fontName
         self.familyName = familyName
         self.style = style
-        self.path = path
+        self.relativePath = relativePath
+        self.bundle = bundle
+    }
+    
+    public var url: URL {
+        return URL(filePath: relativePath, relativeTo: bundle.resourceURL).standardizedFileURL
+    }
+    
+    public var path: String {
+        return url.path(percentEncoded: false)
     }
 }
 
@@ -147,7 +168,8 @@ public extension FontResource {
         fontName: "OpenSans-Bold",
         familyName: "Open Sans",
         style: "Bold",
-        path: "OpenSans/OpenSans-Bold.ttf")
+        relativePath: "Fonts/OpenSans/OpenSans-Bold.ttf",
+        bundle: Bundle.module)
     
     ...
 ```
