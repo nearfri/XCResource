@@ -2,11 +2,11 @@ import Foundation
 
 class ContentTreeGenerator {
     func load(at url: URL) throws -> ContentTree {
-        return try GeneratorInternal(url: url).load()
+        return try ContentTreeGeneratorCore(url: url).load()
     }
 }
 
-private struct GeneratorInternal {
+private struct ContentTreeGeneratorCore {
     let url: URL
     
     func load() throws -> ContentTree {
@@ -18,7 +18,7 @@ private struct GeneratorInternal {
             else { continue }
             
             if isDirectory {
-                let childTree = try GeneratorInternal(url: childURL).load()
+                let childTree = try ContentTreeGeneratorCore(url: childURL).load()
                 tree.addChild(childTree)
             }
         }

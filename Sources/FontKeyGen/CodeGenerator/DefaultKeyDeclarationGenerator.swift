@@ -63,13 +63,27 @@ class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
                         fontName: "\(font.fontName)",
                         familyName: "\(font.familyName)",
                         style: "\(font.style)",
-                        relativePath: "\(font.relativePath)",
+                        relativePath: "\(relativePath(of: font, for: request))",
                         bundle: \(request.bundle))
                 
                 """
         }
         
         result += "}"
+        
+        return result
+    }
+    
+    private func relativePath(of font: Font, for request: KeyDeclarationRequest) -> String {
+        var result = font.relativePath
+        
+        if !request.preservesRelativePath {
+            result = result.lastPathComponent
+        }
+        
+        if let relativePathPrefix = request.relativePathPrefix {
+            result = relativePathPrefix.appendingPathComponent(result)
+        }
         
         return result
     }

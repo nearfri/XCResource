@@ -6,22 +6,10 @@ class DefaultTypeDeclarationGenerator: TypeDeclarationGenerator {
         
         return """
             \(accessLevel)struct \(keyTypeName): Hashable {
-                \(accessLevel)var fontName: String
-                \(accessLevel)var familyName: String
-                \(accessLevel)var style: String
                 \(accessLevel)var relativePath: String
                 \(accessLevel)var bundle: Bundle
                 
-                \(accessLevel)init(
-                    fontName: String,
-                    familyName: String,
-                    style: String,
-                    relativePath: String,
-                    bundle: Bundle
-                ) {
-                    self.fontName = fontName
-                    self.familyName = familyName
-                    self.style = style
+                \(accessLevel)init(relativePath: String, bundle: Bundle) {
                     self.relativePath = relativePath
                     self.bundle = bundle
                 }

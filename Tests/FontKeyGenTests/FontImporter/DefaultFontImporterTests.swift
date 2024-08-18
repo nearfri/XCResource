@@ -42,7 +42,7 @@ private class FakeFontLoader: FontLoader {
 }
 
 final class DefaultFontImporterTests: XCTestCase {
-    func test_import_withoutBaseURL() throws {
+    func test_import() throws {
         // Given
         let paths: [String] = [
             "Fonts/fontA.ttf",
@@ -56,30 +56,6 @@ final class DefaultFontImporterTests: XCTestCase {
         
         // When
         let fonts = try sut.import(at: resourcesURL)
-        
-        // Then
-        XCTAssertEqual(fonts, [
-            Font(fontName: "fontA", style: "regular", relativePath: "Fonts/fontA.ttf"),
-            Font(fontName: "fontB", style: "regular", relativePath: "Fonts/fontB.ttc"),
-            Font(fontName: "fontB", style: "bold", relativePath: "Fonts/fontB.ttc"),
-        ])
-    }
-    
-    func test_import_withBaseURL() throws {
-        // Given
-        let paths: [String] = [
-            "fontA.ttf",
-            "fontB.ttc",
-        ]
-        
-        let resourcesURL = URL(filePath: "/Resources")
-        let fontsURL = URL(filePath: "Fonts", relativeTo: resourcesURL)
-        
-        let sut = DefaultFontImporter(fontFinder: FakeFontFinder(paths: paths),
-                                      fontLoader: FakeFontLoader())
-        
-        // When
-        let fonts = try sut.import(at: fontsURL)
         
         // Then
         XCTAssertEqual(fonts, [

@@ -272,6 +272,20 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FileKeyGen"
+               BuildableName = "FileKeyGen"
+               BlueprintName = "FileKeyGen"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -397,6 +411,16 @@
                BlueprintIdentifier = "LocStringResourceGenTests"
                BuildableName = "LocStringResourceGenTests"
                BlueprintName = "LocStringResourceGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FileKeyGenTests"
+               BuildableName = "FileKeyGenTests"
+               BlueprintName = "FileKeyGenTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

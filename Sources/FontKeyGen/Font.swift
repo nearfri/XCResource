@@ -1,23 +1,17 @@
 import Foundation
+import System
 import XCResourceUtil
 
-struct Font: Equatable {
+struct Font: Equatable, SettableByKeyPath {
     var fontName: String
     var familyName: String
     var style: String
     var relativePath: String
     
     var key: String {
-        func normalize(_ string: String) -> String {
-            return string
-                .components(separatedBy: CharacterSet.alphanumerics.inverted)
-                .joined()
-                .camelCased()
-        }
-        
         if style.isEmpty {
-            return normalize(familyName)
+            return familyName.toIdentifier()
         }
-        return normalize(familyName) + "_" + normalize(style)
+        return familyName.toIdentifier() + "_" + style.toIdentifier()
     }
 }

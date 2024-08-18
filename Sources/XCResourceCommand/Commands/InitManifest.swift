@@ -53,10 +53,24 @@ private let manifestTemplate = """
             "excludesTypeDeclation": false
         },
         {
-            "commandName": "fonts2swift",
-            "fontsPath": "<#fonts path#>",
+            "commandName": "files2swift",
+            "resourcesPath": "<#resourcesPath#>",
+            "filePattern": "<#(?i)\\.(jpeg|jpg)$#>",
             "swiftPath": "<#swift file path#>",
             "keyTypeName": "<#key type name#>",
+            "bundle": "<#Bundle.main#>",
+            "accessLevel": null,
+            "excludesTypeDeclation": false
+        },
+        {
+            "commandName": "fonts2swift",
+            "resourcesPath": "<#resourcesPath#>",
+            "swiftPath": "<#swift file path#>",
+            "keyTypeName": "<#key type name#>",
+            "keyListName": null,
+            "preservesRelativePath": true,
+            "relativePathPrefix": null,
+            "bundle": "<#Bundle.main#>",
             "accessLevel": null,
             "excludesTypeDeclation": false
         },
