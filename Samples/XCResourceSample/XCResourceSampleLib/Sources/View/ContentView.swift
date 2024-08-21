@@ -21,7 +21,7 @@ public struct ContentView: View {
                 .aspectRatio(contentMode: .fit)
                 .layoutPriority(1)
             
-            Text(.dog_eating_apples(dogName: "Charlie", appleCount: 1))
+            Text(.dog_eating_apples(dogName: dogName, appleCount: 1))
                 .font(.custom(.openSans_regular, size: 16))
                 .ifTrue(isBold, then: { $0.bold() })
                 .ifTrue(isItalic, then: { $0.italic() })
@@ -36,6 +36,13 @@ public struct ContentView: View {
             
             Spacer().frame(maxHeight: 10)
         }
+    }
+    
+    private var dogName: AttributedString {
+        var result = AttributedString("Charlie")
+        result.foregroundColor = .green
+        result.font = .title2
+        return result
     }
     
     @ViewBuilder

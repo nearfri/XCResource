@@ -34,7 +34,7 @@ public extension LocalizedStringResource {
     }
     
     /// \\(dogName) ate \\(appleCount) today!
-    static func dog_eating_apples(dogName: String, appleCount: Int) -> Self {
+    static func dog_eating_apples(dogName: AttributedString, appleCount: Int) -> Self {
         .init("dog_eating_apples",
               defaultValue: "\(dogName) ate \(appleCount) today!",
               bundle: .atURL(Bundle.module.bundleURL))

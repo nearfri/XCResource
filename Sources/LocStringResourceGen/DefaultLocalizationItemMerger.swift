@@ -31,7 +31,7 @@ class DefaultLocalizationItemMerger: LocalizationItemMerger {
             if itemInSourceCode.hasCommentCommand(named: commentCommandNames.useRaw) {
                 newItem.defaultValue = newItem.rawDefaultValue
                 newItem.memberDeclation = .property(itemInSourceCode.memberDeclation.id)
-            } else if itemInSourceCode.hasResolvedParameterTypes(equalTo: itemInCatalog) {
+            } else if itemInSourceCode.hasResolvedParameterTypes(compatibleWith: itemInCatalog) {
                 do {
                     try newItem.replaceInterpolations(with: itemInSourceCode)
                     newItem.memberDeclation = itemInSourceCode.memberDeclation
@@ -52,7 +52,19 @@ private extension LocalizationItem {
         return developerComments.contains(name)
     }
     
-    func hasResolvedParameterTypes(equalTo other: LocalizationItem) -> Bool {
-        return resolvedParameterTypes == other.resolvedParameterTypes
+    func hasResolvedParameterTypes(compatibleWith other: LocalizationItem) -> Bool {
+        let lhs = resolvedParameterTypes
+        let rhs = other.resolvedParameterTypes
+        
+        guard lhs.count == rhs.count else { return false }
+        
+        return zip(lhs, rhs).allSatisfy {
+            switch ($0, $1) {
+            case ("AttributedString", "String"):
+                return true
+            default:
+                return $0 == $1
+            }
+        }
     }
 }
