@@ -87,6 +87,41 @@ final class DefaultLocalizationItemMergerTests: XCTestCase {
         ])
     }
     
+    func test_itemsByMerging_matchCompatibleParameterTypes_useParametersInSourceCode() throws {
+        // Given
+        let itemsInCatalog: [LocalizationItem] = [
+            .init(key: "hello",
+                  defaultValue: "Hello \\(param1)!!",
+                  rawDefaultValue: "Hello %@!!",
+                  memberDeclation: .method("hello", [
+                    .init(firstName: "_", secondName: "param1", type: "String"),
+                  ])),
+        ]
+        
+        let itemsInSourceCode: [LocalizationItem] = [
+            .init(key: "hello",
+                  defaultValue: "Hello \\(name)!!",
+                  rawDefaultValue: "",
+                  memberDeclation: .method("hello", [
+                    .init(firstName: "name", type: "AttributedString"),
+                  ])),
+        ]
+        
+        // When
+        let newItems = sut.itemsByMerging(itemsInCatalog: itemsInCatalog,
+                                          itemsInSourceCode: itemsInSourceCode)
+        
+        // Then
+        XCTAssertEqual(newItems, [
+            .init(key: "hello",
+                  defaultValue: "Hello \\(name)!!",
+                  rawDefaultValue: "Hello %@!!",
+                  memberDeclation: .method("hello", [
+                    .init(firstName: "name", type: "AttributedString"),
+                  ])),
+        ])
+    }
+    
     func test_itemsByMerging_hasUseRawComment_useRawDefaultValue() throws {
         // Given
         let itemsInCatalog: [LocalizationItem] = [
