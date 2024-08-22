@@ -21,8 +21,8 @@ public struct ContentView: View {
                 .aspectRatio(contentMode: .fit)
                 .layoutPriority(1)
             
-            Text(.dog_eating_apples(dogName: dogName, appleCount: 1))
-                .font(.custom(.openSans_regular, size: 16))
+            Text(.dogEatingApples(dogName: dogName, appleCount: 1))
+                .font(.custom(.openSansRegular, size: 16))
                 .ifTrue(isBold, then: { $0.bold() })
                 .ifTrue(isItalic, then: { $0.italic() })
                 .underline(isUnderline)
@@ -32,7 +32,7 @@ public struct ContentView: View {
             
             textStyleControl
             
-            Text(.editMenu_textStyle)
+            Text(.editMenuTextStyle)
             
             Spacer().frame(maxHeight: 10)
         }
@@ -66,19 +66,19 @@ public struct ContentView: View {
         return [
             TextStyleData(
                 isOn: $isBold,
-                title: .text_bold,
+                title: .textBold,
                 imageKey: .textFormattingBold),
             TextStyleData(
                 isOn: $isItalic,
-                title: .text_italic,
+                title: .textItalic,
                 imageKey: .textFormattingItalic),
             TextStyleData(
                 isOn: $isUnderline,
-                title: .text_underline,
+                title: .textUnderline,
                 imageKey: .textFormattingUnderline),
             TextStyleData(
                 isOn: $isStrikethrough,
-                title: .text_strikethrough,
+                title: .textStrikethrough,
                 imageKey: .textFormattingStrikethrough),
         ]
     }

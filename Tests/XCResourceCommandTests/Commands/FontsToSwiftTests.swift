@@ -43,40 +43,40 @@ private enum Fixture {
     public extension FontKey {
         static let all: [FontKey] = [
             // Avenir
-            .avenir_book,
-            .avenir_bookOblique,
-            .avenir_black,
-            .avenir_blackOblique,
-            .avenir_heavy,
-            .avenir_heavyOblique,
-            .avenir_light,
-            .avenir_lightOblique,
-            .avenir_medium,
-            .avenir_mediumOblique,
-            .avenir_oblique,
-            .avenir_roman,
+            .avenirBook,
+            .avenirBookOblique,
+            .avenirBlack,
+            .avenirBlackOblique,
+            .avenirHeavy,
+            .avenirHeavyOblique,
+            .avenirLight,
+            .avenirLightOblique,
+            .avenirMedium,
+            .avenirMediumOblique,
+            .avenirOblique,
+            .avenirRoman,
             
             // .SF NS Display
-            .sfNSDisplay_bold,
-            .sfNSDisplay_heavy,
-            .sfNSDisplay_regular,
+            .sfNSDisplayBold,
+            .sfNSDisplayHeavy,
+            .sfNSDisplayRegular,
             
             // Zapf Dingbats
-            .zapfDingbats_regular,
+            .zapfDingbatsRegular,
         ]
     }
     
     public extension FontKey {
         // MARK: Avenir
         
-        static let avenir_book: FontKey = .init(
+        static let avenirBook: FontKey = .init(
             fontName: "Avenir-Book",
             familyName: "Avenir",
             style: "Book",
             relativePath: "Fonts/Avenir.ttc",
             bundle: Bundle.main)
         
-        static let avenir_bookOblique: FontKey = .init(
+        static let avenirBookOblique: FontKey = .init(
             fontName: "Avenir-BookOblique",
             familyName: "Avenir",
             style: "Book Oblique",

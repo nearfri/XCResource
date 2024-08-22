@@ -46,7 +46,7 @@ private enum Fixture {
         public extension LocalizedStringResource {
             /// "\\\\(filename)" will be deleted.\\
             /// This action cannot be undone.
-            static func alert_delete_file(filename: String) -> Self {
+            static func alertDeleteFile(filename: String) -> Self {
                 .init("alert_delete_file",
                       defaultValue: \"\"\"
                         "\\(filename)" will be deleted.
@@ -65,7 +65,7 @@ private enum Fixture {
         public extension LocalizedStringResource {
             /// \\"\\\\(filename)\\" will be deleted.\\
             /// This action cannot be undone.
-            static func alert_delete_file(filename: String) -> Self {
+            static func alertDeleteFile(filename: String) -> Self {
                 .init("alert_delete_file",
                       defaultValue: \"\"\"
                         \\"\\(filename)\\" will be deleted.

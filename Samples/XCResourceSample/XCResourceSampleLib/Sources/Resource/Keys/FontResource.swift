@@ -36,31 +36,31 @@ public struct FontResource: Hashable {
 public extension FontResource {
     static let all: [FontResource] = [
         // Cambria
-        .cambria_regular,
+        .cambriaRegular,
         
         // Cambria Math
-        .cambriaMath_regular,
+        .cambriaMathRegular,
         
         // Open Sans
-        .openSans_bold,
-        .openSans_boldItalic,
-        .openSans_extraBold,
-        .openSans_extraBoldItalic,
-        .openSans_italic,
-        .openSans_light,
-        .openSans_lightItalic,
-        .openSans_medium,
-        .openSans_mediumItalic,
-        .openSans_regular,
-        .openSans_semiBold,
-        .openSans_semiBoldItalic,
+        .openSansBold,
+        .openSansBoldItalic,
+        .openSansExtraBold,
+        .openSansExtraBoldItalic,
+        .openSansItalic,
+        .openSansLight,
+        .openSansLightItalic,
+        .openSansMedium,
+        .openSansMediumItalic,
+        .openSansRegular,
+        .openSansSemiBold,
+        .openSansSemiBoldItalic,
     ]
 }
 
 public extension FontResource {
     // MARK: Cambria
     
-    static let cambria_regular: FontResource = .init(
+    static let cambriaRegular: FontResource = .init(
         fontName: "Cambria",
         familyName: "Cambria",
         style: "Regular",
@@ -69,7 +69,7 @@ public extension FontResource {
     
     // MARK: Cambria Math
     
-    static let cambriaMath_regular: FontResource = .init(
+    static let cambriaMathRegular: FontResource = .init(
         fontName: "CambriaMath",
         familyName: "Cambria Math",
         style: "Regular",
@@ -78,84 +78,84 @@ public extension FontResource {
     
     // MARK: Open Sans
     
-    static let openSans_bold: FontResource = .init(
+    static let openSansBold: FontResource = .init(
         fontName: "OpenSans-Bold",
         familyName: "Open Sans",
         style: "Bold",
         relativePath: "Fonts/OpenSans/OpenSans-Bold.ttf",
         bundle: Bundle.module)
     
-    static let openSans_boldItalic: FontResource = .init(
+    static let openSansBoldItalic: FontResource = .init(
         fontName: "OpenSans-BoldItalic",
         familyName: "Open Sans",
         style: "Bold Italic",
         relativePath: "Fonts/OpenSans/OpenSans-BoldItalic.ttf",
         bundle: Bundle.module)
     
-    static let openSans_extraBold: FontResource = .init(
+    static let openSansExtraBold: FontResource = .init(
         fontName: "OpenSans-ExtraBold",
         familyName: "Open Sans",
         style: "ExtraBold",
         relativePath: "Fonts/OpenSans/OpenSans-ExtraBold.ttf",
         bundle: Bundle.module)
     
-    static let openSans_extraBoldItalic: FontResource = .init(
+    static let openSansExtraBoldItalic: FontResource = .init(
         fontName: "OpenSans-ExtraBoldItalic",
         familyName: "Open Sans",
         style: "ExtraBold Italic",
         relativePath: "Fonts/OpenSans/OpenSans-ExtraBoldItalic.ttf",
         bundle: Bundle.module)
     
-    static let openSans_italic: FontResource = .init(
+    static let openSansItalic: FontResource = .init(
         fontName: "OpenSans-Italic",
         familyName: "Open Sans",
         style: "Italic",
         relativePath: "Fonts/OpenSans/OpenSans-Italic.ttf",
         bundle: Bundle.module)
     
-    static let openSans_light: FontResource = .init(
+    static let openSansLight: FontResource = .init(
         fontName: "OpenSans-Light",
         familyName: "Open Sans",
         style: "Light",
         relativePath: "Fonts/OpenSans/OpenSans-Light.ttf",
         bundle: Bundle.module)
     
-    static let openSans_lightItalic: FontResource = .init(
+    static let openSansLightItalic: FontResource = .init(
         fontName: "OpenSans-LightItalic",
         familyName: "Open Sans",
         style: "Light Italic",
         relativePath: "Fonts/OpenSans/OpenSans-LightItalic.ttf",
         bundle: Bundle.module)
     
-    static let openSans_medium: FontResource = .init(
+    static let openSansMedium: FontResource = .init(
         fontName: "OpenSans-Medium",
         familyName: "Open Sans",
         style: "Medium",
         relativePath: "Fonts/OpenSans/OpenSans-Medium.ttf",
         bundle: Bundle.module)
     
-    static let openSans_mediumItalic: FontResource = .init(
+    static let openSansMediumItalic: FontResource = .init(
         fontName: "OpenSans-MediumItalic",
         familyName: "Open Sans",
         style: "Medium Italic",
         relativePath: "Fonts/OpenSans/OpenSans-MediumItalic.ttf",
         bundle: Bundle.module)
     
-    static let openSans_regular: FontResource = .init(
+    static let openSansRegular: FontResource = .init(
         fontName: "OpenSans-Regular",
         familyName: "Open Sans",
         style: "Regular",
         relativePath: "Fonts/OpenSans/OpenSans-Regular.ttf",
         bundle: Bundle.module)
     
-    static let openSans_semiBold: FontResource = .init(
+    static let openSansSemiBold: FontResource = .init(
         fontName: "OpenSans-SemiBold",
         familyName: "Open Sans",
         style: "SemiBold",
         relativePath: "Fonts/OpenSans/OpenSans-SemiBold.ttf",
         bundle: Bundle.module)
     
-    static let openSans_semiBoldItalic: FontResource = .init(
+    static let openSansSemiBoldItalic: FontResource = .init(
         fontName: "OpenSans-SemiBoldItalic",
         familyName: "Open Sans",
         style: "SemiBold Italic",
