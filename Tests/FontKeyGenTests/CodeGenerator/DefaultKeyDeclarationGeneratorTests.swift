@@ -42,11 +42,11 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             public extension FontKey {
                 static let all: [FontKey] = [
                     // Avenir
-                    .avenir_heavy,
-                    .avenir_light,
+                    .avenirHeavy,
+                    .avenirLight,
                     
                     // Zapf Dingbats
-                    .zapfDingbats_regular,
+                    .zapfDingbatsRegular,
                 ]
             }
             """)
@@ -71,14 +71,14 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             public extension FontKey {
                 // MARK: Avenir
                 
-                static let avenir_heavy: FontKey = .init(
+                static let avenirHeavy: FontKey = .init(
                     fontName: "Avenir-Heavy",
                     familyName: "Avenir",
                     style: "heavy",
                     relativePath: "Fonts/Avenir.ttc",
                     bundle: Bundle.main)
                 
-                static let avenir_light: FontKey = .init(
+                static let avenirLight: FontKey = .init(
                     fontName: "Avenir-Light",
                     familyName: "Avenir",
                     style: "light",
@@ -87,7 +87,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                 
                 // MARK: Zapf Dingbats
                 
-                static let zapfDingbats_regular: FontKey = .init(
+                static let zapfDingbatsRegular: FontKey = .init(
                     fontName: "ZapfDingbatsITC",
                     familyName: "Zapf Dingbats",
                     style: "regular",
@@ -116,14 +116,14 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             public extension FontKey {
                 // MARK: Avenir
                 
-                static let avenir_heavy: FontKey = .init(
+                static let avenirHeavy: FontKey = .init(
                     fontName: "Avenir-Heavy",
                     familyName: "Avenir",
                     style: "heavy",
                     relativePath: "Avenir.ttc",
                     bundle: Bundle.main)
                 
-                static let avenir_light: FontKey = .init(
+                static let avenirLight: FontKey = .init(
                     fontName: "Avenir-Light",
                     familyName: "Avenir",
                     style: "light",
@@ -132,7 +132,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                 
                 // MARK: Zapf Dingbats
                 
-                static let zapfDingbats_regular: FontKey = .init(
+                static let zapfDingbatsRegular: FontKey = .init(
                     fontName: "ZapfDingbatsITC",
                     familyName: "Zapf Dingbats",
                     style: "regular",
@@ -161,14 +161,14 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             public extension FontKey {
                 // MARK: Avenir
                 
-                static let avenir_heavy: FontKey = .init(
+                static let avenirHeavy: FontKey = .init(
                     fontName: "Avenir-Heavy",
                     familyName: "Avenir",
                     style: "heavy",
                     relativePath: "Resources/Fonts/Avenir.ttc",
                     bundle: Bundle.main)
                 
-                static let avenir_light: FontKey = .init(
+                static let avenirLight: FontKey = .init(
                     fontName: "Avenir-Light",
                     familyName: "Avenir",
                     style: "light",
@@ -177,7 +177,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                 
                 // MARK: Zapf Dingbats
                 
-                static let zapfDingbats_regular: FontKey = .init(
+                static let zapfDingbatsRegular: FontKey = .init(
                     fontName: "ZapfDingbatsITC",
                     familyName: "Zapf Dingbats",
                     style: "regular",

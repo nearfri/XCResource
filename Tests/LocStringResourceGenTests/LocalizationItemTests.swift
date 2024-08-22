@@ -1,54 +1,6 @@
 import XCTest
 @testable import LocStringResourceGen
 
-final class LocalizationItemMemberDeclationTests: XCTestCase {
-    func test_fixingID_validPropertyID_returnsEqual() throws {
-        // Given
-        let sut = LocalizationItem.MemberDeclation.property("valid_key")
-        
-        // When
-        let fixed = sut.fixingID()
-        
-        // Then
-        XCTAssertEqual(fixed, sut)
-    }
-    
-    func test_fixingID_validMethodID_returnsEqual() throws {
-        // Given
-        let sut = LocalizationItem.MemberDeclation.method(
-            "valid_id",
-            [.init(firstName: "p1", type: "Int")])
-        
-        // When
-        let fixed = sut.fixingID()
-        
-        // Then
-        XCTAssertEqual(fixed, sut)
-    }
-    
-    func test_fixingID_invalidID_returnFixed() throws {
-        // Given
-        let sut = LocalizationItem.MemberDeclation.property("punctuation/key")
-        
-        // When
-        let fixed = sut.fixingID()
-        
-        // Then
-        XCTAssertEqual(fixed, .property("punctuation_key"))
-    }
-    
-    func test_fixingID_idStartsWithNumber_returnFixed() throws {
-        // Given
-        let sut = LocalizationItem.MemberDeclation.property("1number_key")
-        
-        // When
-        let fixed = sut.fixingID()
-        
-        // Then
-        XCTAssertEqual(fixed, .property("_1number_key"))
-    }
-}
-
 final class LocalizationItemTests: XCTestCase {
     func test_documentComments() throws {
         func test(defaultValue: String,

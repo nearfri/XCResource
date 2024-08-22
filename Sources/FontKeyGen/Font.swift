@@ -12,6 +12,6 @@ struct Font: Equatable, SettableByKeyPath {
         if style.isEmpty {
             return familyName.toIdentifier()
         }
-        return familyName.toIdentifier() + "_" + style.toIdentifier()
+        return familyName.toIdentifier() + style.toTypeIdentifier()
     }
 }

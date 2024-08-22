@@ -21,6 +21,6 @@ final class FontTests: XCTestCase {
         let key = font.key
         
         // Then
-        XCTAssertEqual(key, "arial_regular")
+        XCTAssertEqual(key, "arialRegular")
     }
 }

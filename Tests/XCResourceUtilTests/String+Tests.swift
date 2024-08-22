@@ -6,16 +6,22 @@ final class StringTests: XCTestCase {
         XCTAssertEqual("Academy Engraved LET".toIdentifier(), "academyEngravedLET")
         XCTAssertEqual("Academy engraved LET".toIdentifier(), "academyEngravedLET")
         XCTAssertEqual("Academy-engraved-LET".toIdentifier(), "academyEngravedLET")
+        XCTAssertEqual("Academy_engraved_LET".toIdentifier(), "academyEngravedLET")
+        XCTAssertEqual("1Academy_engraved_LET2".toIdentifier(), "_1AcademyEngravedLET2")
         XCTAssertEqual("SF NS Display".toIdentifier(), "sfNSDisplay")
         XCTAssertEqual(".SF NS Display".toIdentifier(), "sfNSDisplay")
+        XCTAssertEqual("SF_NS_Display".toIdentifier(), "sfNSDisplay")
     }
     
     func test_toTypeIdentifier() throws {
         XCTAssertEqual("Academy Engraved LET".toTypeIdentifier(), "AcademyEngravedLET")
         XCTAssertEqual("Academy engraved LET".toTypeIdentifier(), "AcademyEngravedLET")
         XCTAssertEqual("Academy-engraved-LET".toTypeIdentifier(), "AcademyEngravedLET")
+        XCTAssertEqual("Academy_engraved_LET".toTypeIdentifier(), "AcademyEngravedLET")
+        XCTAssertEqual("1Academy_engraved_LET2".toTypeIdentifier(), "_1AcademyEngravedLET2")
         XCTAssertEqual("SF NS Display".toTypeIdentifier(), "SFNSDisplay")
         XCTAssertEqual(".SF NS Display".toTypeIdentifier(), "SFNSDisplay")
+        XCTAssertEqual("SF_NS_Display".toTypeIdentifier(), "SFNSDisplay")
     }
     
     func test_camelCased() {

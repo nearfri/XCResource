@@ -27,6 +27,29 @@ final class StringCatalogDTOMapperTests: XCTestCase {
         ])
     }
     
+    func test_localizationItems_property_camelCase() throws {
+        // Given
+        let dto = StringCatalogDTO(
+            version: "1.0",
+            sourceLanguage: "en",
+            strings: ["common_greeting": StringDTO(localizations: [
+                "en": LocalizationDTO(
+                    stringUnit: StringUnitDTO(state: "translated", value: "Hello"))
+            ])])
+        
+        // When
+        let items = try sut.localizationItems(from: dto)
+        
+        // Then
+        XCTAssertEqual(items, [
+            LocalizationItem(
+                key: "common_greeting",
+                defaultValue: "Hello",
+                rawDefaultValue: "Hello",
+                memberDeclation: .property("commonGreeting"))
+        ])
+    }
+    
     func test_localizationItems_property_deviceVariations() throws {
         // Given
         let dto = StringCatalogDTO(
@@ -75,6 +98,31 @@ final class StringCatalogDTOMapperTests: XCTestCase {
                 defaultValue: "Hello, \\(param1)",
                 rawDefaultValue: "Hello, %@",
                 memberDeclation: .method("greeting", [
+                    LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "String")
+                ]))
+        ])
+    }
+    
+    func test_localizationItems_method_camelCase() throws {
+        // Given
+        let dto = StringCatalogDTO(
+            version: "1.0",
+            sourceLanguage: "en",
+            strings: ["common_greeting": StringDTO(localizations: [
+                "en": LocalizationDTO(
+                    stringUnit: StringUnitDTO(state: "translated", value: "Hello, %@"))
+            ])])
+        
+        // When
+        let items = try sut.localizationItems(from: dto)
+        
+        // Then
+        XCTAssertEqual(items, [
+            LocalizationItem(
+                key: "common_greeting",
+                defaultValue: "Hello, \\(param1)",
+                rawDefaultValue: "Hello, %@",
+                memberDeclation: .method("commonGreeting", [
                     LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "String")
                 ]))
         ])
@@ -138,7 +186,7 @@ final class StringCatalogDTOMapperTests: XCTestCase {
                 key: "eating_apples",
                 defaultValue: "\\(param1) ate \\(appleCount).",
                 rawDefaultValue: "%@ ate %#@appleCount@.",
-                memberDeclation: .method("eating_apples", [
+                memberDeclation: .method("eatingApples", [
                     .init(firstName: "_", secondName: "param1", type: "String"),
                     .init(firstName: "appleCount", type: "Int")
                 ]))
@@ -166,7 +214,7 @@ final class StringCatalogDTOMapperTests: XCTestCase {
                 key: "alert_delete_file",
                 defaultValue: "\\\"\\(param1)\\\" will be deleted.",
                 rawDefaultValue: "\\\"%@\\\" will be deleted.",
-                memberDeclation: .method("alert_delete_file", [
+                memberDeclation: .method("alertDeleteFile", [
                     .init(firstName: "_", secondName: "param1", type: "String")
                 ]))
         ])
