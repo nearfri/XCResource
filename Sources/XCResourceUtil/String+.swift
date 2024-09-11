@@ -61,6 +61,39 @@ extension String {
         return (first?.uppercased() ?? "") + dropFirst()
     }
     
+    public func latinCased() -> String {
+        struct Word {
+            var string: String
+            let isLatin: Bool
+            
+            func toLatin() -> String {
+                return string.applyingTransform(.toLatin, reverse: false) ?? string
+            }
+        }
+        
+        if self == applyingTransform(.toLatin, reverse: false) {
+            return self
+        }
+        
+        let words: [Word] = map({ String($0) }).reduce(into: []) { partialResult, char in
+            let latin = char.applyingTransform(.toLatin, reverse: false) ?? char
+            let isLatin = char == latin
+            if partialResult.last?.isLatin == isLatin {
+                partialResult[partialResult.count - 1].string += char
+            } else {
+                partialResult.append(Word(string: char, isLatin: isLatin))
+            }
+        }
+        
+        return words.reduce(into: "") { partialResult, word in
+            if partialResult.isEmpty {
+                partialResult.append(word.toLatin())
+            } else {
+                partialResult.append(word.toLatin().pascalCased())
+            }
+        }
+    }
+    
     public func addingBackslashEncoding() -> String {
         let backslashMap: [Character: String] = [
             "\"": #"\""#, "\n": #"\n"#, "\r": #"\r"#, "\t": #"\t"#,

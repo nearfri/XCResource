@@ -37,6 +37,8 @@
             "swiftPath": "Sources/Resource/Keys/FontResource.swift",
             "keyTypeName": "FontResource",
             "keyListName": "all",
+            "generatesLatinKey": true,
+            "stripsCombiningMarksFromKey": true,
             "preservesRelativePath": true,
             "bundle": "Bundle.module",
             "accessLevel": "public"
