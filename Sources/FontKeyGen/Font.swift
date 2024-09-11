@@ -8,10 +8,21 @@ struct Font: Equatable, SettableByKeyPath {
     var style: String
     var relativePath: String
     
-    var key: String {
-        if style.isEmpty {
-            return familyName.toIdentifier()
+    func key(asLatin: Bool, strippingCombiningMarks: Bool) -> String {
+        func refine(_ string: String) -> String {
+            var result = string
+            if asLatin {
+                result = result.latinCased()
+            }
+            if strippingCombiningMarks {
+                result = result.applyingTransform(.stripCombiningMarks, reverse: false) ?? result
+            }
+            return result
         }
-        return familyName.toIdentifier() + style.toTypeIdentifier()
+        
+        if style.isEmpty {
+            return refine(familyName).toIdentifier()
+        }
+        return refine(familyName).toIdentifier() + refine(style).toTypeIdentifier()
     }
 }

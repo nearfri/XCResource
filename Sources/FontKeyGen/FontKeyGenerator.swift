@@ -12,6 +12,8 @@ struct KeyDeclarationRequest {
     var fonts: [Font]
     var keyTypeName: String
     var keyListName: String?
+    var generatesLatinKey: Bool
+    var stripsCombiningMarksFromKey: Bool
     var preservesRelativePath: Bool
     var relativePathPrefix: String?
     var bundle: String
@@ -28,6 +30,8 @@ extension FontKeyGenerator {
         public var resourcesURL: URL
         public var keyTypeName: String
         public var keyListName: String?
+        public var generatesLatinKey: Bool
+        public var stripsCombiningMarksFromKey: Bool
         public var preservesRelativePath: Bool
         public var relativePathPrefix: String?
         public var bundle: String
@@ -37,6 +41,8 @@ extension FontKeyGenerator {
             resourcesURL: URL,
             keyTypeName: String,
             keyListName: String?,
+            generatesLatinKey: Bool,
+            stripsCombiningMarksFromKey: Bool,
             preservesRelativePath: Bool,
             relativePathPrefix: String?,
             bundle: String,
@@ -45,6 +51,8 @@ extension FontKeyGenerator {
             self.resourcesURL = resourcesURL
             self.keyTypeName = keyTypeName
             self.keyListName = keyListName
+            self.generatesLatinKey = generatesLatinKey
+            self.stripsCombiningMarksFromKey = stripsCombiningMarksFromKey
             self.preservesRelativePath = preservesRelativePath
             self.relativePathPrefix = relativePathPrefix
             self.bundle = bundle
@@ -96,6 +104,8 @@ public class FontKeyGenerator {
             fonts: fonts,
             keyTypeName: request.keyTypeName,
             keyListName: request.keyListName,
+            generatesLatinKey: request.generatesLatinKey,
+            stripsCombiningMarksFromKey: request.stripsCombiningMarksFromKey,
             preservesRelativePath: request.preservesRelativePath,
             relativePathPrefix: request.relativePathPrefix,
             bundle: request.bundle,

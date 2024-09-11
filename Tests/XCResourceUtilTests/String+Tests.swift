@@ -46,6 +46,16 @@ final class StringTests: XCTestCase {
         XCTAssertEqual("downloadURLString".pascalCased(), "DownloadURLString")
     }
     
+    func test_latinCased() {
+        XCTAssertEqual("helloWorld".latinCased(), "helloWorld")
+        XCTAssertEqual("HelloWorld".latinCased(), "HelloWorld")
+        XCTAssertEqual("대한".latinCased(), "daehan")
+        XCTAssertEqual("hello대한".latinCased(), "helloDaehan")
+        XCTAssertEqual("대한hello".latinCased(), "daehanHello")
+        XCTAssertEqual("dh대한san만Regular".latinCased(), "dhDaehanSanManRegular")
+        XCTAssertEqual("DH대한san만Regular".latinCased(), "DHDaehanSanManRegular")
+    }
+    
     func test_addingBackslashEncoding() {
         XCTAssertEqual("ab\"cd".addingBackslashEncoding(), #"ab\"cd"#)
         XCTAssertEqual("ab\\cd".addingBackslashEncoding(), #"ab\cd"#)

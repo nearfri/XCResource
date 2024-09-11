@@ -68,6 +68,8 @@ private let manifestTemplate = """
             "swiftPath": "<#swift file path#>",
             "keyTypeName": "<#key type name#>",
             "keyListName": null,
+            "generatesLatinKey": false,
+            "stripsCombiningMarksFromKey": false,
             "preservesRelativePath": true,
             "relativePathPrefix": null,
             "bundle": "<#Bundle.main#>",

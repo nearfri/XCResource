@@ -9,6 +9,8 @@ struct FontsToSwiftDTO: CommandDTO {
     var swiftPath: String
     var keyTypeName: String
     var keyListName: String?
+    var generatesLatinKey: Bool?
+    var stripsCombiningMarksFromKey: Bool?
     var preservesRelativePath: Bool?
     var relativePathPrefix: String?
     var bundle: String?
@@ -33,6 +35,10 @@ struct FontsToSwiftDTO: CommandDTO {
         command.swiftPath = swiftPath
         command.keyTypeName = keyTypeName
         command.keyListName = keyListName
+        command.generatesLatinKey = generatesLatinKey ?? Default.generatesLatinKey
+        command.stripsCombiningMarksFromKey = {
+            stripsCombiningMarksFromKey ?? Default.stripsCombiningMarksFromKey
+        }()
         command.preservesRelativePath = preservesRelativePath ?? Default.preservesRelativePath
         command.relativePathPrefix = relativePathPrefix
         command.bundle = bundle ?? Default.bundle

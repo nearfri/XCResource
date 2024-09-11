@@ -21,6 +21,8 @@ struct FontsToSwift: ParsableCommand {
     
     enum Default {
         static let bundle: String = "Bundle.main"
+        static let generatesLatinKey: Bool = false
+        static let stripsCombiningMarksFromKey: Bool = false
         static let preservesRelativePath: Bool = true
         static let excludesTypeDeclation: Bool = false
     }
@@ -34,6 +36,12 @@ struct FontsToSwift: ParsableCommand {
     @Option var keyTypeName: String
     
     @Option var keyListName: String?
+    
+    @Flag(name: .customLong("generate-latin-key"))
+    var generatesLatinKey: Bool = Default.generatesLatinKey
+    
+    @Flag(name: .customLong("strip-combining-marks-from-key"))
+    var stripsCombiningMarksFromKey: Bool = Default.stripsCombiningMarksFromKey
     
     @Flag(name: .customLong("preserve-relative-path"), inversion: .prefixedNo)
     var preservesRelativePath: Bool = Default.preservesRelativePath
@@ -61,6 +69,8 @@ struct FontsToSwift: ParsableCommand {
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             keyTypeName: keyTypeName,
             keyListName: keyListName,
+            generatesLatinKey: generatesLatinKey,
+            stripsCombiningMarksFromKey: stripsCombiningMarksFromKey,
             preservesRelativePath: preservesRelativePath,
             relativePathPrefix: relativePathPrefix,
             bundle: bundle,

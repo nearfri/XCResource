@@ -17,6 +17,13 @@ private enum Fixture {
              style: "regular",
              relativePath: "Fonts/Zapf.ttf"),
     ]
+    
+    static let hangulFonts: [Font] = [
+        Font(fontName: "대한-Light",
+             familyName: "대한",
+             style: "light",
+             relativePath: "Fonts/대한.ttf"),
+    ]
 }
 
 final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
@@ -32,6 +39,8 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                 fonts: fonts,
                 keyTypeName: "FontKey",
                 keyListName: "all",
+                generatesLatinKey: false,
+                stripsCombiningMarksFromKey: false,
                 preservesRelativePath: true,
                 relativePathPrefix: nil,
                 bundle: "Bundle.main",
@@ -52,6 +61,124 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             """)
     }
     
+    func test_generateKeyListDeclaration_latinKey_false() throws {
+        // Given
+        let fonts: [Font] = Fixture.hangulFonts
+        
+        // When
+        let code = sut.generateKeyListDeclaration(
+            for: KeyDeclarationRequest(
+                fonts: fonts,
+                keyTypeName: "FontKey",
+                keyListName: "all",
+                generatesLatinKey: false,
+                stripsCombiningMarksFromKey: false,
+                preservesRelativePath: true,
+                relativePathPrefix: nil,
+                bundle: "Bundle.main",
+                accessLevel: "public"))
+        
+        // Then
+        XCTAssertEqual(code, """
+            public extension FontKey {
+                static let all: [FontKey] = [
+                    // 대한
+                    .대한Light,
+                ]
+            }
+            """)
+    }
+    
+    func test_generateKeyListDeclaration_latinKey_true() throws {
+        // Given
+        let fonts: [Font] = Fixture.hangulFonts
+        
+        // When
+        let code = sut.generateKeyListDeclaration(
+            for: KeyDeclarationRequest(
+                fonts: fonts,
+                keyTypeName: "FontKey",
+                keyListName: "all",
+                generatesLatinKey: true,
+                stripsCombiningMarksFromKey: false,
+                preservesRelativePath: true,
+                relativePathPrefix: nil,
+                bundle: "Bundle.main",
+                accessLevel: "public"))
+        
+        // Then
+        XCTAssertEqual(code, """
+            public extension FontKey {
+                static let all: [FontKey] = [
+                    // 대한
+                    .daehanLight,
+                ]
+            }
+            """)
+    }
+    
+    func test_generateKeyDeclarations_latinKey_false() throws {
+        // Given
+        let fonts: [Font] = Fixture.hangulFonts
+        
+        // When
+        let code = sut.generateKeyDeclarations(
+            for: KeyDeclarationRequest(
+                fonts: fonts,
+                keyTypeName: "FontKey",
+                generatesLatinKey: false,
+                stripsCombiningMarksFromKey: false,
+                preservesRelativePath: false,
+                relativePathPrefix: nil,
+                bundle: "Bundle.main",
+                accessLevel: "public"))
+        
+        // Then
+        XCTAssertEqual(code, """
+            public extension FontKey {
+                // MARK: 대한
+                
+                static let 대한Light: FontKey = .init(
+                    fontName: "대한-Light",
+                    familyName: "대한",
+                    style: "light",
+                    relativePath: "대한.ttf",
+                    bundle: Bundle.main)
+            }
+            """)
+    }
+    
+    func test_generateKeyDeclarations_latinKey_true() throws {
+        // Given
+        let fonts: [Font] = Fixture.hangulFonts
+        
+        // When
+        let code = sut.generateKeyDeclarations(
+            for: KeyDeclarationRequest(
+                fonts: fonts,
+                keyTypeName: "FontKey",
+                generatesLatinKey: true,
+                stripsCombiningMarksFromKey: false,
+                preservesRelativePath: false,
+                relativePathPrefix: nil,
+                bundle: "Bundle.main",
+                accessLevel: "public"))
+        
+        // Then
+        XCTAssertEqual(code, """
+            public extension FontKey {
+                // MARK: 대한
+                
+                static let daehanLight: FontKey = .init(
+                    fontName: "대한-Light",
+                    familyName: "대한",
+                    style: "light",
+                    relativePath: "대한.ttf",
+                    bundle: Bundle.main)
+            }
+            """)
+    }
+    
     func test_generateKeyDeclarations_preservesRelativePath_true() throws {
         // Given
         let fonts: [Font] = Fixture.fonts
@@ -61,6 +188,8 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             for: KeyDeclarationRequest(
                 fonts: fonts,
                 keyTypeName: "FontKey",
+                generatesLatinKey: false,
+                stripsCombiningMarksFromKey: false,
                 preservesRelativePath: true,
                 relativePathPrefix: nil,
                 bundle: "Bundle.main",
@@ -106,6 +235,8 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             for: KeyDeclarationRequest(
                 fonts: fonts,
                 keyTypeName: "FontKey",
+                generatesLatinKey: false,
+                stripsCombiningMarksFromKey: false,
                 preservesRelativePath: false,
                 relativePathPrefix: nil,
                 bundle: "Bundle.main",
@@ -151,6 +282,8 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             for: KeyDeclarationRequest(
                 fonts: fonts,
                 keyTypeName: "FontKey",
+                generatesLatinKey: false,
+                stripsCombiningMarksFromKey: false,
                 preservesRelativePath: true,
                 relativePathPrefix: "Resources",
                 bundle: "Bundle.main",

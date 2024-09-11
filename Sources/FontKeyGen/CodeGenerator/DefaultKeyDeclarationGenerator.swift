@@ -25,8 +25,11 @@ class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
                 currentFamilyName = font.familyName
             }
             
+            let fontKey = font.key(asLatin: request.generatesLatinKey,
+                                   strippingCombiningMarks: request.stripsCombiningMarksFromKey)
+            
             result += """
-                        .\(font.key),
+                        .\(fontKey),
                 
                 """
         }
@@ -57,9 +60,12 @@ class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
                 currentFamilyName = font.familyName
             }
             
+            let fontKey = font.key(asLatin: request.generatesLatinKey,
+                                   strippingCombiningMarks: request.stripsCombiningMarksFromKey)
+            
             result += """
                     
-                    static let \(font.key): \(request.keyTypeName) = .init(
+                    static let \(fontKey): \(request.keyTypeName) = .init(
                         fontName: "\(font.fontName)",
                         familyName: "\(font.familyName)",
                         style: "\(font.style)",
