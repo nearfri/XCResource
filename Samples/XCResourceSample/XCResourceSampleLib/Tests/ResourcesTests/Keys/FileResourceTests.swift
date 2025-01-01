@@ -1,5 +1,5 @@
 import XCTest
-@testable import Resource
+@testable import Resources
 
 final class FileResourceTests: XCTestCase {
     func test_filesExist() throws {

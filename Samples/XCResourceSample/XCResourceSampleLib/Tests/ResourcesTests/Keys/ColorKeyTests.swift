@@ -1,5 +1,5 @@
 import XCTest
-@testable import Resource
+@testable import Resources
 
 final class ColorKeyTests: XCTestCase {
     func test_colorsExist() throws {

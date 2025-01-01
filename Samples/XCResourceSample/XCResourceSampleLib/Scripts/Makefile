@@ -5,7 +5,7 @@ XCRESOURCE_MINT = xcrun --sdk macosx mint run xcresource
 XCRESOURCE = $(XCRESOURCE_DEBUG)
 
 PROJECT_NAME = XCResourceSample
-PROJECT_DIR = ../Sources/Resource
+PROJECT_DIR = ../Sources/Resources
 RESOURCES_DIR = $(PROJECT_DIR)/Resources
 RESOURCEKEYS_DIR = $(PROJECT_DIR)/Keys
 

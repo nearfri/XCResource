@@ -1,5 +1,5 @@
 import SwiftUI
-import Resource
+import Resources
 
 public struct ContentView: View {
     @State private var isBold: Bool = false

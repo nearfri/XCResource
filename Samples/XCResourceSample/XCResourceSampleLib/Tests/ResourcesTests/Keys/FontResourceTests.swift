@@ -1,5 +1,5 @@
 import XCTest
-@testable import Resource
+@testable import Resources
 
 #if os(iOS) || os(tvOS) || os(watchOS)
 import UIKit.UIFont

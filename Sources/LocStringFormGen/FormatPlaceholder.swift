@@ -8,11 +8,11 @@ struct FormatPlaceholder: Equatable {
     var labels: [String] = []
     
     static func == (lhs: FormatPlaceholder, rhs: FormatPlaceholder) -> Bool {
-        return lhs.index == rhs.index
-            && lhs.dynamicWidth == rhs.dynamicWidth
-            && lhs.dynamicPrecision == rhs.dynamicPrecision
-            && lhs.valueType == rhs.valueType
-            && lhs.labels == rhs.labels
+        return lhs.index == rhs.index &&
+        lhs.dynamicWidth == rhs.dynamicWidth &&
+        lhs.dynamicPrecision == rhs.dynamicPrecision &&
+        lhs.valueType == rhs.valueType &&
+        lhs.labels == rhs.labels
     }
 }
 

@@ -1,5 +1,5 @@
 import XCTest
-@testable import Resource
+@testable import Resources
 
 final class StringKeyTests: XCTestCase {
     private var bundle: Bundle!

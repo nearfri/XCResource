@@ -8,7 +8,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [.iOS(.v17), .macCatalyst(.v17), .macOS(.v14)],
     products: [
-        .library(name: "XCResourceSampleLib", targets: ["View", "Resource"]),
+        .library(name: "XCResourceSampleLib", targets: ["View", "Resources"]),
     ],
     dependencies: [
         // .package(url: /* package url */, from: "1.0.0"),
@@ -33,10 +33,10 @@ let package = Package(
         
         .target(
             name: "View",
-            dependencies: ["Resource"]),
+            dependencies: ["Resources"]),
         
         .target(
-            name: "Resource",
+            name: "Resources",
             dependencies: [],
             resources: [
                 .process("Resources/Assets.xcassets"),
@@ -48,7 +48,7 @@ let package = Package(
         // MARK: - Tests
         
         .testTarget(
-            name: "ResourceTests",
-            dependencies: ["Resource"]),
+            name: "ResourcesTests",
+            dependencies: ["Resources"]),
     ]
 )
