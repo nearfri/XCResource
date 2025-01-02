@@ -6,7 +6,7 @@ private enum Fixture {
     static let oldSourceCode = """
         import Foundation
         
-        enum StringKey: String, CaseIterable {
+        enum StringKey: String, CaseIterable, Sendable {
             // MARK: - Common
             
             /// Cancel
@@ -61,7 +61,7 @@ private enum Fixture {
     static let stringsdictAppliedSourceCode = """
         import Foundation
         
-        enum StringKey: String, CaseIterable {
+        enum StringKey: String, CaseIterable, Sendable {
             /// %@ ate %#@appleCount@ today!
             case dog_eating_apples
             

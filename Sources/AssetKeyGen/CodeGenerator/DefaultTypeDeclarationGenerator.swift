@@ -5,8 +5,8 @@ class DefaultTypeDeclarationGenerator: TypeDeclarationGenerator {
         let accessLevel = accessLevel.map({ $0 + " " }) ?? ""
         
         return """
-            \(accessLevel)struct \(keyTypeName): ExpressibleByStringLiteral, Hashable {
-                \(accessLevel)var rawValue: String
+            \(accessLevel)struct \(keyTypeName): ExpressibleByStringLiteral, Hashable, Sendable {
+                \(accessLevel)let rawValue: String
                 
                 \(accessLevel)init(_ rawValue: String) {
                     self.rawValue = rawValue

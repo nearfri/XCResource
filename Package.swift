@@ -1,4 +1,4 @@
-// swift-tools-version:5.10
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,7 +6,7 @@ import Foundation
 
 let package = Package(
     name: "XCResource",
-    platforms: [.macOS(.v14)],
+    platforms: [.macOS(.v15)],
     products: [
         .plugin(name: "RunXCResource", targets: ["RunXCResource"]),
         .executable(name: "xcresource-bin", targets: ["xcresource"]),
@@ -19,9 +19,9 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.4"),
-        .package(url: "https://github.com/apple/swift-syntax", from: "510.0.0"),
         .package(url: "https://github.com/apple/swift-collections", from: "1.0.3"),
-        .package(url: "https://github.com/nearfri/Strix", from: "2.3.7"),
+        .package(url: "https://github.com/swiftlang/swift-syntax", from: "600.0.1"),
+        .package(url: "https://github.com/nearfri/Strix", from: "2.4.6"),
     ],
     targets: [
         // MARK: - Released Binary
@@ -89,9 +89,6 @@ let package = Package(
                 .product(name: "SwiftRefactor", package: "swift-syntax"),
                 .product(name: "StrixParsers", package: "Strix"),
                 "XCResourceUtil",
-            ],
-            swiftSettings: [
-                .enableUpcomingFeature("BareSlashRegexLiterals"),
             ]),
         .target(
             name: "LocStringKeyGen",

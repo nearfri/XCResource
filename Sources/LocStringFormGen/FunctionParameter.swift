@@ -1,6 +1,6 @@
 import Foundation
 
-struct FunctionParameter: Equatable {
+struct FunctionParameter: Equatable, Sendable {
     var externalName: String
     var localName: String
     var type: Any.Type

@@ -2,7 +2,7 @@ import Foundation
 import System
 import XCResourceUtil
 
-struct Font: Equatable, SettableByKeyPath {
+struct Font: Equatable, Sendable, SettableByKeyPath {
     var fontName: String
     var familyName: String
     var style: String

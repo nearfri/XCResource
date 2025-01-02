@@ -91,7 +91,7 @@ final class RunManifestTests: XCTestCase {
         
         let stringsURL = resourcesURL
             .appendingPathComponent("Localization/ko.lproj/Localizable.strings")
-        let oldStrings = try String(contentsOf: stringsURL)
+        let oldStrings = try String(contentsOf: stringsURL, encoding: .utf8)
         
         let manifest = String(
             format: Fixture.generalManifestFormat,
@@ -121,7 +121,7 @@ final class RunManifestTests: XCTestCase {
         XCTAssert(fm.fileExists(atPath: imageKeyFileURL.path))
         XCTAssert(fm.fileExists(atPath: stringFormFileURL.path))
         
-        let newStrings = try String(contentsOf: stringsURL)
+        let newStrings = try String(contentsOf: stringsURL, encoding: .utf8)
         XCTAssertNotEqual(newStrings, oldStrings)
     }
     

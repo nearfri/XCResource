@@ -11,7 +11,6 @@ extension StringCatalogDTOMapper {
     
     enum Error: Swift.Error {
         case stringUnitDoesNotExist(key: String)
-        case invalidFormatSpecifier(String)
     }
 }
 
@@ -21,14 +20,15 @@ struct StringCatalogDTOMapper {
     private let formatPlaceholderParser: Parser<FormatPlaceholder>
     
     init() {
-        self.formatPlaceholderParser = Parser.formatSpecifierContent.map({ specifier in
-            switch specifier {
-            case .percentSign:
-                throw Error.invalidFormatSpecifier("%")
-            case .placeholder(let formatPlaceholder):
-                return formatPlaceholder
-            }
-        })
+        self.formatPlaceholderParser = Parser.formatSpecifierContent
+            .map({ specifier throws(ParseError) in
+                switch specifier {
+                case .percentSign:
+                    throw ParseError.generic(message: "invalid format specifier '%'")
+                case .placeholder(let formatPlaceholder):
+                    return formatPlaceholder
+                }
+            })
     }
     
     func localizationItems(from dto: StringCatalogDTO) throws -> [LocalizationItem] {

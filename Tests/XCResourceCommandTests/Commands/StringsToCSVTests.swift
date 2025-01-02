@@ -25,7 +25,7 @@ final class StringsToCSVTests: XCTestCase {
         ])
         
         // Then
-        XCTAssertEqual(try String(contentsOf: urlOfActualCSVFile),
-                       try String(contentsOf: urlOfExpectedCSVFile))
+        XCTAssertEqual(try String(contentsOf: urlOfActualCSVFile, encoding: .utf8),
+                       try String(contentsOf: urlOfExpectedCSVFile, encoding: .utf8))
     }
 }

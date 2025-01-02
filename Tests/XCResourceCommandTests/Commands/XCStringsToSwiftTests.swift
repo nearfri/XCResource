@@ -112,6 +112,7 @@ final class XCStringsToSwiftTests: XCTestCase {
         ])
         
         // Then
-        XCTAssertEqual(try String(contentsOf: sourceCodeURL), Fixture.newSourceCode)
+        XCTAssertEqual(try String(contentsOf: sourceCodeURL, encoding: .utf8),
+                       Fixture.newSourceCode)
     }
 }

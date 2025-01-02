@@ -28,7 +28,7 @@ struct RunXCResourcePlugin: CommandPlugin {
         
         if let manifestPath = argExtractor.extractOption(named: OptionName.manifestPath).first {
             appendManifestPath(manifestPath)
-        } else if let manifestPath = manifestPath(inDirectory: context.package.directory) {
+        } else if let manifestPath = manifestPath(inDirectory: context.package.directoryURL) {
             appendManifestPath(manifestPath)
         }
         
@@ -41,7 +41,7 @@ struct RunXCResourcePlugin: CommandPlugin {
         return result
     }
     
-    private func manifestPath(inDirectory directory: Path) -> String? {
+    private func manifestPath(inDirectory directory: URL) -> String? {
         let filename = "xcresource.json"
         
         let candidates: [String] = [
@@ -50,10 +50,10 @@ struct RunXCResourcePlugin: CommandPlugin {
         ]
         
         for candidate in candidates {
-            let path = directory.appending(subpath: candidate)
+            let path = directory.appending(path: candidate).path(percentEncoded: false)
             
-            if FileManager.default.fileExists(atPath: path.string) {
-                return path.string
+            if FileManager.default.fileExists(atPath: path) {
+                return path
             }
         }
         

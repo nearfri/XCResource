@@ -10,9 +10,9 @@ private enum Fixture {
     
     import Foundation
     
-    public struct FileResource: Hashable {
-        public var relativePath: String
-        public var bundle: Bundle
+    public struct FileResource: Hashable, Sendable {
+        public let relativePath: String
+        public let bundle: Bundle
         
         public init(relativePath: String, bundle: Bundle) {
             self.relativePath = relativePath
@@ -79,7 +79,7 @@ final class FilesToSwiftTests: XCTestCase {
         ])
         
         // Then
-        let generatedKey = try String(contentsOf: swiftFileURL)
+        let generatedKey = try String(contentsOf: swiftFileURL, encoding: .utf8)
         
         XCTAssertEqual(String(generatedKey), Fixture.generatedFile)
     }

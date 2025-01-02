@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Enumeration<RawValue: Equatable>: Equatable {
+public struct Enumeration<RawValue: Equatable>: Equatable, Sendable where RawValue: Sendable {
     public var name: String
     public var cases: [Case]
     
@@ -11,7 +11,7 @@ public struct Enumeration<RawValue: Equatable>: Equatable {
 }
 
 extension Enumeration {
-    public struct Case: Equatable {
+    public struct Case: Equatable, Sendable {
         public var comments: [Comment]
         public var name: String
         public var rawValue: RawValue

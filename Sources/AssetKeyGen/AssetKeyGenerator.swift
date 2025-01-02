@@ -13,7 +13,7 @@ protocol KeyDeclarationGenerator: AnyObject {
 }
 
 extension AssetKeyGenerator {
-    public struct Request {
+    public struct Request: Sendable {
         public var assetCatalogURLs: [URL]
         public var assetTypes: Set<AssetType>
         public var keyTypeName: String
@@ -31,7 +31,7 @@ extension AssetKeyGenerator {
         }
     }
     
-    public struct Result {
+    public struct Result: Sendable {
         public var typeDeclaration: String
         public var keyDeclarations: String
         

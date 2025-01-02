@@ -16,7 +16,7 @@ protocol StringsdictMerger: AnyObject {
 }
 
 extension StringKeyToStringsdictGenerator {
-    public struct CommandNameSet {
+    public struct CommandNameSet: Sendable {
         public var include: String
         
         public init(include: String) {
@@ -24,7 +24,7 @@ extension StringKeyToStringsdictGenerator {
         }
     }
     
-    public struct Request {
+    public struct Request: Sendable {
         public var sourceCodeURL: URL
         public var resourcesURL: URL
         public var tableName: String
@@ -48,7 +48,7 @@ extension StringKeyToStringsdictGenerator {
         }
     }
     
-    public struct LocalizationConfiguration {
+    public struct LocalizationConfiguration: Sendable {
         public var mergeStrategy: MergeStrategy
         
         public init(mergeStrategy: MergeStrategy) {

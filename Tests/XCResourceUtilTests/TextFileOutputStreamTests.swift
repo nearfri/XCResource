@@ -46,7 +46,7 @@ final class TextFileOutputStreamTests: XCTestCase {
         try sut.close()
         
         // Then
-        let fileText = try String(contentsOf: testFileURL)
+        let fileText = try String(contentsOf: testFileURL, encoding: .utf8)
         XCTAssertEqual(fileText, text)
     }
     
@@ -66,7 +66,7 @@ final class TextFileOutputStreamTests: XCTestCase {
         try sut.close()
         
         // Then
-        let fileText = try String(contentsOf: testFileURL)
+        let fileText = try String(contentsOf: testFileURL, encoding: .utf8)
         XCTAssertEqual(fileText, "hi")
     }
     
@@ -86,7 +86,7 @@ final class TextFileOutputStreamTests: XCTestCase {
         try sut.close()
         
         // Then
-        let fileText = try String(contentsOf: testFileURL)
+        let fileText = try String(contentsOf: testFileURL, encoding: .utf8)
         XCTAssertEqual(fileText, text + "hi")
     }
     
@@ -112,7 +112,9 @@ final class TextFileOutputStreamTests: XCTestCase {
         var data = Data()
         stdReadHandle.readabilityHandler = { handle in
             let newData = handle.availableData
-            data += newData
+            Task { @MainActor in
+                data += newData
+            }
             // 콘솔에도 출력하고 싶다면 아래 주석 제거
             // actualStdPipe.fileHandleForWriting.write(newData)
         }

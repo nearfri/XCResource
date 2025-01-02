@@ -4,7 +4,7 @@ import PackagePlugin
 extension PluginContext.Tool {
     func execute(arguments: [String]) async throws {
         let process = Process()
-        process.executableURL = URL(fileURLWithPath: path.string)
+        process.executableURL = url
         process.arguments = arguments
         
         try await withTaskCancellationHandler {

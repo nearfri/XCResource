@@ -3,7 +3,7 @@ import TestUtil
 @testable import FileKeyGen
 
 private enum Fixture {
-    static let fileTree: FileTree = {
+    @MainActor static let fileTree: FileTree = {
         let sfnsBold = FileTree(
             FileItem(url: URL(filePath: "/Fonts/SFNSDisplay/SFNSDisplay-Bold.ttf")))
         
@@ -22,6 +22,7 @@ private enum Fixture {
     }()
 }
 
+@MainActor
 final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
     private let sut: DefaultKeyDeclarationGenerator = .init()
     

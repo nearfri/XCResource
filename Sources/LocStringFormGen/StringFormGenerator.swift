@@ -47,7 +47,7 @@ extension StringFormGenerator {
         }
     }
     
-    public enum IssueReporterType: String, CaseIterable {
+    public enum IssueReporterType: String, CaseIterable, Sendable {
         case none
         case xcode
         

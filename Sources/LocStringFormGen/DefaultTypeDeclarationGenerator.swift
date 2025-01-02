@@ -6,8 +6,8 @@ class DefaultTypeDeclarationGenerator: TypeDeclarationGenerator {
         
         return """
             \(accessLevel)struct \(formTypeName) {
-                \(accessLevel)var key: String
-                \(accessLevel)var arguments: [CVarArg]
+                \(accessLevel)let key: String
+                \(accessLevel)let arguments: [CVarArg]
                 
                 \(accessLevel)init(key: String, arguments: [CVarArg]) {
                     self.key = key

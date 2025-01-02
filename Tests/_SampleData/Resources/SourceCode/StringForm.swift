@@ -2,8 +2,8 @@
 // Do Not Edit Directly!
 
 struct StringForm {
-    var key: String
-    var arguments: [CVarArg]
+    let key: String
+    let arguments: [CVarArg]
     
     init(key: String, arguments: [CVarArg]) {
         self.key = key

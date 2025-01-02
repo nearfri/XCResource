@@ -3,12 +3,12 @@
 
 import Foundation
 
-public struct FontResource: Hashable {
-    public var fontName: String
-    public var familyName: String
-    public var style: String
-    public var relativePath: String
-    public var bundle: Bundle
+public struct FontResource: Hashable, Sendable {
+    public let fontName: String
+    public let familyName: String
+    public let style: String
+    public let relativePath: String
+    public let bundle: Bundle
     
     public init(
         fontName: String,

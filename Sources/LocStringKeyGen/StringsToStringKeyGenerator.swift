@@ -19,7 +19,7 @@ protocol LocalizationSourceCodeRewriter: AnyObject {
 
 extension LocalizationSourceCodeRewriter {
     func applying(_ difference: LocalizationDifference, toSourceCodeAt url: URL) throws -> String {
-        let sourceCode = try String(contentsOf: url)
+        let sourceCode = try String(contentsOf: url, encoding: .utf8)
         return try applying(difference, toSourceCode: sourceCode)
     }
 }

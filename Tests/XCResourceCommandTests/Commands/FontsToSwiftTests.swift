@@ -10,12 +10,12 @@ private enum Fixture {
     
     import Foundation
     
-    public struct FontKey: Hashable {
-        public var fontName: String
-        public var familyName: String
-        public var style: String
-        public var relativePath: String
-        public var bundle: Bundle
+    public struct FontKey: Hashable, Sendable {
+        public let fontName: String
+        public let familyName: String
+        public let style: String
+        public let relativePath: String
+        public let bundle: Bundle
         
         public init(
             fontName: String,
@@ -108,7 +108,7 @@ final class FontsToSwiftTests: XCTestCase {
         ])
         
         // Then
-        let generatedKey = try String(contentsOf: swiftFileURL)
+        let generatedKey = try String(contentsOf: swiftFileURL, encoding: .utf8)
         
         XCTAssertEqual(String(generatedKey.prefix(Fixture.generatedFilePrefix.count)),
                        Fixture.generatedFilePrefix)

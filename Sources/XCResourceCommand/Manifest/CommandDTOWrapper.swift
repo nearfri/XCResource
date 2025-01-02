@@ -8,7 +8,7 @@ private let allCommandDTOTypes: [CommandDTO.Type] = [
     StringsToCSVDTO.self, CSVToStringsDTO.self,
 ]
 
-struct CommandDTOWrapper: Codable {
+struct CommandDTOWrapper: Codable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case commandName
     }

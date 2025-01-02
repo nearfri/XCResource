@@ -58,7 +58,7 @@ final class SwiftToStringsTests: XCTestCase {
         let enStringsURL = resourcesURL.appendingPathComponent("en.lproj/Localizable.strings")
         let koStringsURL = resourcesURL.appendingPathComponent("ko.lproj/Localizable.strings")
         
-        XCTAssertEqual(try String(contentsOf: enStringsURL), Fixture.enStrings)
-        XCTAssertEqual(try String(contentsOf: koStringsURL), Fixture.koStrings)
+        XCTAssertEqual(try String(contentsOf: enStringsURL, encoding: .utf8), Fixture.enStrings)
+        XCTAssertEqual(try String(contentsOf: koStringsURL, encoding: .utf8), Fixture.koStrings)
     }
 }

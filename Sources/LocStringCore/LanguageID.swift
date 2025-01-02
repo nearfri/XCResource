@@ -1,6 +1,6 @@
 import Foundation
 
-public struct LanguageID: Hashable, RawRepresentable, ExpressibleByStringLiteral {
+public struct LanguageID: Hashable, RawRepresentable, ExpressibleByStringLiteral, Sendable {
     public var rawValue: String
     
     public init(_ rawValue: String) {

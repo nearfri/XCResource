@@ -8,7 +8,7 @@ protocol TypeDeclarationGenerator: AnyObject {
     func generate(keyTypeName: String, accessLevel: String?) -> String
 }
 
-struct KeyDeclarationRequest {
+struct KeyDeclarationRequest: Sendable {
     var fonts: [Font]
     var keyTypeName: String
     var keyListName: String?
@@ -26,7 +26,7 @@ protocol KeyDeclarationGenerator: AnyObject {
 }
 
 extension FontKeyGenerator {
-    public struct Request {
+    public struct Request: Sendable {
         public var resourcesURL: URL
         public var keyTypeName: String
         public var keyListName: String?
@@ -60,7 +60,7 @@ extension FontKeyGenerator {
         }
     }
     
-    public struct Result {
+    public struct Result: Sendable {
         public var typeDeclaration: String
         public var keyListDeclaration: String?
         public var keyDeclarations: String

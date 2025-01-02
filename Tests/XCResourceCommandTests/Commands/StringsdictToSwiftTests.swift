@@ -7,7 +7,7 @@ private enum Fixture {
     static let oldSourceCode = """
         import Foundation
         
-        enum StringKey: String, CaseIterable {
+        enum StringKey: String, CaseIterable, Sendable {
             // MARK: - Common
             
             /// Cancel
@@ -50,7 +50,7 @@ private enum Fixture {
     static let newSourceCode = """
         import Foundation
         
-        enum StringKey: String, CaseIterable {
+        enum StringKey: String, CaseIterable, Sendable {
             /// %@ ate %#@appleCount@ today!
             case dog_eating_apples
             
@@ -98,6 +98,7 @@ final class StringsdictToSwiftTests: XCTestCase {
         ])
         
         // Then
-        XCTAssertEqual(try String(contentsOf: sourceCodeURL), Fixture.newSourceCode)
+        XCTAssertEqual(try String(contentsOf: sourceCodeURL, encoding: .utf8),
+                       Fixture.newSourceCode)
     }
 }

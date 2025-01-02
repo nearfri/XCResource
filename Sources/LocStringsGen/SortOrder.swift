@@ -1,6 +1,6 @@
 import Foundation
 
-public enum SortOrder {
+public enum SortOrder: Sendable {
     case occurrence
     case key
 }

@@ -2,7 +2,7 @@ import Foundation
 import Strix
 import StrixParsers
 
-public enum FormatElement: Equatable {
+public enum FormatElement: Equatable, Sendable {
     case character(Character)
     case placeholder(StrixParsers.FormatPlaceholder, labels: [String])
 }

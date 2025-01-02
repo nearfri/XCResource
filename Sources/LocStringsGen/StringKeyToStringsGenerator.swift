@@ -13,7 +13,7 @@ protocol StringsLocalizationItemMerger: AnyObject {
 }
 
 extension StringKeyToStringsGenerator {
-    public struct CommandNameSet {
+    public struct CommandNameSet: Sendable {
         public var exclude: String
         
         public init(exclude: String) {
@@ -21,7 +21,7 @@ extension StringKeyToStringsGenerator {
         }
     }
     
-    public struct Request {
+    public struct Request: Sendable {
         public var sourceCodeURL: URL
         public var resourcesURL: URL
         public var tableName: String
@@ -48,7 +48,7 @@ extension StringKeyToStringsGenerator {
         }
     }
     
-    public struct LocalizationConfiguration {
+    public struct LocalizationConfiguration: Sendable {
         public var mergeStrategy: MergeStrategy
         public var verifiesComments: Bool
         

@@ -6,7 +6,7 @@ public class SwiftStringEnumerationImporter: StringEnumerationImporter {
     public init() {}
     
     public func `import`(at url: URL) throws -> Enumeration<String> {
-        let source = try String(contentsOf: url)
+        let source = try String(contentsOf: url, encoding: .utf8)
         let sourceFileNode: SourceFileSyntax = Parser.parse(source: source)
         let enumCollector = StringEnumerationCollector(viewMode: .sourceAccurate)
         enumCollector.walk(sourceFileNode)

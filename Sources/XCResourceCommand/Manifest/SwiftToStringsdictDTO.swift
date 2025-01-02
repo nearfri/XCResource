@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-struct KeyToStringsdictConfigurationDTO: Codable {
+struct KeyToStringsdictConfigurationDTO: Codable, Sendable {
     var mergeStrategy: String
 
     func toArgument() -> KeyToStringsdictConfiguration {

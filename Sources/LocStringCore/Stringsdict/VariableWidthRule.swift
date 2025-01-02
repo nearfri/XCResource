@@ -2,7 +2,7 @@ import Foundation
 import OrderedCollections
 
 // https://developer.apple.com/documentation/xcode/creating-width-and-device-variants-of-strings#Provide-string-variants-for-different-widths
-struct VariableWidthRule: Equatable {
+struct VariableWidthRule: Equatable, Sendable {
     var key: String
     var stringsByWidth: OrderedDictionary<String, String>
 }

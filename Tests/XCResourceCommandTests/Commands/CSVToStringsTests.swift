@@ -33,10 +33,10 @@ final class CSVToStringsTests: XCTestCase {
         let expectedEnURL = resourcesURL.appendingPathComponent("en.lproj/Localizable.strings")
         let expectedKoURL = resourcesURL.appendingPathComponent("ko.lproj/Localizable.strings")
         
-        XCTAssertEqual(try String(contentsOf: actualEnURL),
-                       try String(contentsOf: expectedEnURL))
+        XCTAssertEqual(try String(contentsOf: actualEnURL, encoding: .utf8),
+                       try String(contentsOf: expectedEnURL, encoding: .utf8))
         
-        XCTAssertEqual(try String(contentsOf: actualKoURL),
-                       try String(contentsOf: expectedKoURL))
+        XCTAssertEqual(try String(contentsOf: actualKoURL, encoding: .utf8),
+                       try String(contentsOf: expectedKoURL, encoding: .utf8))
     }
 }

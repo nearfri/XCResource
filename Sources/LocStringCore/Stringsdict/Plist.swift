@@ -3,7 +3,7 @@ import OrderedCollections
 
 public typealias PlistDictionary = OrderedDictionary<String, Plist>
 
-public enum Plist: Equatable {
+public enum Plist: Equatable, Sendable {
     case dictionary(PlistDictionary)
     case array([Plist])
     case string(String)
@@ -192,7 +192,7 @@ extension Plist {
         }
     }
     
-    private static let dateFormatter: ISO8601DateFormatter = .init()
+    private static var dateFormat: Date.ISO8601FormatStyle { .iso8601 }
     
     private static func dictionary(
         from elements: [XMLElement]?,
@@ -246,7 +246,7 @@ extension Plist {
     }
     
     private static func date(from stringValue: String?, xPath: String?) throws -> Date {
-        guard let string = stringValue, let date = dateFormatter.date(from: string) else {
+        guard let string = stringValue, let date = try? dateFormat.parse(string) else {
             throw DecodingError.invalidElementValue(stringValue, xPath: xPath)
         }
         return date
@@ -326,7 +326,7 @@ extension Plist {
         case .bool(let bool):
             return XMLElement(name: bool ? Tag.true : Tag.false)
         case .date(let date):
-            return XMLElement(name: Tag.date, stringValue: Self.dateFormatter.string(from: date))
+            return XMLElement(name: Tag.date, stringValue: date.formatted(Self.dateFormat))
         case .data(let data):
             return XMLElement(name: Tag.data, stringValue: data.base64EncodedString())
         }

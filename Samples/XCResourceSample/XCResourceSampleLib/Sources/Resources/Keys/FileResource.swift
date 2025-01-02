@@ -3,9 +3,9 @@
 
 import Foundation
 
-public struct FileResource: Hashable {
-    public var relativePath: String
-    public var bundle: Bundle
+public struct FileResource: Hashable, Sendable {
+    public let relativePath: String
+    public let bundle: Bundle
     
     public init(relativePath: String, bundle: Bundle) {
         self.relativePath = relativePath

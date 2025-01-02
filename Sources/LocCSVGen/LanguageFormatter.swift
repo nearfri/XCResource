@@ -1,7 +1,7 @@
 import Foundation
 import LocStringCore
 
-public enum LanguageFormatterStyle: Equatable {
+public enum LanguageFormatterStyle: Equatable, Sendable {
     case short
     case long(Locale)
 }

@@ -9,8 +9,8 @@ private enum Fixture {
     // Do Not Edit Directly!
 
     public struct StringForm {
-        public var key: String
-        public var arguments: [CVarArg]
+        public let key: String
+        public let arguments: [CVarArg]
         
         public init(key: String, arguments: [CVarArg]) {
             self.key = key
@@ -62,8 +62,8 @@ final class KeyToFormTests: XCTestCase {
         
         // Then
         XCTAssertEqual(
-            try String(contentsOf: formFileURL),
-            try String(contentsOf: SampleData.sourceCodeURL("StringForm.swift"))
+            try String(contentsOf: formFileURL, encoding: .utf8),
+            try String(contentsOf: SampleData.sourceCodeURL("StringForm.swift"), encoding: .utf8)
         )
     }
     
@@ -86,6 +86,7 @@ final class KeyToFormTests: XCTestCase {
         ])
         
         // Then
-        XCTAssertEqual(try String(contentsOf: formFileURL), Fixture.publicStringForm)
+        XCTAssertEqual(try String(contentsOf: formFileURL, encoding: .utf8),
+                       Fixture.publicStringForm)
     }
 }

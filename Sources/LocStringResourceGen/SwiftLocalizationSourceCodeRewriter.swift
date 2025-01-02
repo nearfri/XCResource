@@ -41,7 +41,6 @@ private extension CodeBlockItemSyntax {
             
             extension \(raw: typeName) {
             }
-            
             """
     }
 }
