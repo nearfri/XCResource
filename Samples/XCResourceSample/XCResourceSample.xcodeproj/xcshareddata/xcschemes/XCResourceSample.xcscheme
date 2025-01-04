@@ -41,6 +41,17 @@
                ReferencedContainer = "container:XCResourceSample.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "086B7C942D2929FF00FEA63D"
+               BuildableName = "XCResourceSampleUITests.xctest"
+               BlueprintName = "XCResourceSampleUITests"
+               ReferencedContainer = "container:XCResourceSample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

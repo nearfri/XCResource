@@ -18,10 +18,10 @@ let package = Package(
         .library(name: "LocStringResourceGen", targets: ["LocStringResourceGen"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.4"),
-        .package(url: "https://github.com/apple/swift-collections", from: "1.0.3"),
-        .package(url: "https://github.com/swiftlang/swift-syntax", from: "600.0.1"),
-        .package(url: "https://github.com/nearfri/Strix", from: "2.4.6"),
+        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.1.4"),
+        .package(url: "https://github.com/apple/swift-collections.git", from: "1.0.3"),
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.1"),
+        .package(url: "https://github.com/nearfri/Strix.git", from: "2.4.6"),
     ],
     targets: [
         // MARK: - Released Binary
