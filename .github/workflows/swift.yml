@@ -13,7 +13,7 @@ jobs:
       PACKAGE_NAME: XCResource
       COVERAGE_FILE: ./coverage_report.lcov
       
-    runs-on: macos-14
+    runs-on: macos-15
 
     steps:
       - name: Checkout
