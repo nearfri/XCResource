@@ -31,7 +31,7 @@ dependencies: [
 ## 빠른 시작
 
 ### 1. 다국어 문자열 관리
-https://github.com/nearfri/XCResource/assets/323940/8f7c0a85-f4fb-4c96-b6cb-0ed2d0f72698
+https://github.com/user-attachments/assets/ce0122be-e0c5-42b6-abf6-4d1d8e0dcf4d
 
 #### 설정 파일 작성 (`xcresource.json`)  
 ```json
@@ -77,7 +77,7 @@ let greeting = String(localized: .commonDone)
 ```
 
 ### 2. 폰트 코드 생성
-https://github.com/nearfri/XCResource/assets/323940/aada31e4-9b04-4467-b8bb-0f5786171c45
+https://github.com/user-attachments/assets/83990542-0d9a-4c12-8f3f-74c47b8fe381
 
 #### 설정 파일 작성 (`xcresource.json`)  
 ```json
