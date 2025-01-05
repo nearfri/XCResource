@@ -132,7 +132,7 @@ private actor DataStorage {
         try? stdWriteHandle.synchronize()
         try? stdReadHandle.synchronize()
         
-        try await Task.sleep(for: .milliseconds(1))
+        try await Task.sleep(for: .milliseconds(10))
         
         // stdout을 /dev/stdout으로 되돌린다.
         dup2(actualStdWriteHandle.fileDescriptor, STDOUT_FILENO)
@@ -140,6 +140,8 @@ private actor DataStorage {
         
         // Then
         let dataString = try #require(String(data: await dataStorage.data, encoding: .utf8))
-        #expect(dataString == text)
+        
+        // 테스트가 병렬도 실행되다 보니 다른 테스트에서 출력한 내용이 섞일 수 있으므로 hasPrefix()로 비교
+        #expect(dataString.hasPrefix(text))
     }
 }

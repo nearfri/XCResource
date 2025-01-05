@@ -2,6 +2,8 @@ import Testing
 import Foundation
 import class Foundation.Bundle
 
+private class BundleFinder {}
+
 @Suite struct XCResourceCLITests {
     @Test func main() throws {
         let executableURL = productsDirectory.appendingPathComponent("xcresource")
@@ -25,13 +27,8 @@ import class Foundation.Bundle
     
     /// Returns path to the built products directory.
     var productsDirectory: URL {
-        #if os(macOS)
-        for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
-            return bundle.bundleURL.deletingLastPathComponent()
-        }
-        fatalError("couldn't find the products directory")
-        #else
-        return Bundle.main.bundleURL
-        #endif
+        let bundle = Bundle(for: BundleFinder.self)
+        assert(bundle.bundlePath.hasSuffix(".xctest"))
+        return bundle.bundleURL.deletingLastPathComponent()
     }
 }
