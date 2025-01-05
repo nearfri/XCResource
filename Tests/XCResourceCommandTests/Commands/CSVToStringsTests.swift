@@ -1,10 +1,11 @@
-import XCTest
+import Testing
+import Foundation
 import TestUtil
 import SampleData
 @testable import XCResourceCommand
 
-final class CSVToStringsTests: XCTestCase {
-    func test_runAsRoot() throws {
+@Suite struct CSVToStringsTests {
+    @Test func runAsRoot() throws {
         // Given
         let fm = FileManager.default
         
@@ -33,10 +34,10 @@ final class CSVToStringsTests: XCTestCase {
         let expectedEnURL = resourcesURL.appendingPathComponent("en.lproj/Localizable.strings")
         let expectedKoURL = resourcesURL.appendingPathComponent("ko.lproj/Localizable.strings")
         
-        XCTAssertEqual(try String(contentsOf: actualEnURL, encoding: .utf8),
-                       try String(contentsOf: expectedEnURL, encoding: .utf8))
+        expectEqual(try String(contentsOf: actualEnURL, encoding: .utf8),
+                    try String(contentsOf: expectedEnURL, encoding: .utf8))
         
-        XCTAssertEqual(try String(contentsOf: actualKoURL, encoding: .utf8),
-                       try String(contentsOf: expectedKoURL, encoding: .utf8))
+        expectEqual(try String(contentsOf: actualKoURL, encoding: .utf8),
+                    try String(contentsOf: expectedKoURL, encoding: .utf8))
     }
 }

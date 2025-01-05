@@ -1,29 +1,30 @@
-import XCTest
+import Testing
+import Foundation
 @testable import XCResourceUtil
 
-final class URLTests: XCTestCase {
-    func test_initWithFileURLWithExpandingTildeInPath() throws {
+@Suite struct URLTests {
+    @Test func initWithFileURLWithExpandingTildeInPath() throws {
         let homeURL = URL(fileURLWithPath: ("~" as NSString).expandingTildeInPath)
-        XCTAssert(homeURL.path.count > 1)
+        #expect(homeURL.path.count > 1)
         
-        XCTAssertEqual(URL(fileURLWithExpandingTildeInPath: "~"), homeURL)
+        #expect(URL(fileURLWithExpandingTildeInPath: "~") == homeURL)
         
-        XCTAssertEqual(URL(fileURLWithExpandingTildeInPath: "~/hello/world"),
-                       homeURL.appendingPathComponent("hello/world"))
+        #expect(URL(fileURLWithExpandingTildeInPath: "~/hello/world") ==
+                homeURL.appendingPathComponent("hello/world"))
         
-        XCTAssertEqual(URL(fileURLWithExpandingTildeInPath: "~hello/world"),
-                       URL(fileURLWithPath: "~hello/world"))
+        #expect(URL(fileURLWithExpandingTildeInPath: "~hello/world") ==
+                URL(fileURLWithPath: "~hello/world"))
         
-        XCTAssertEqual(URL(fileURLWithExpandingTildeInPath: "hello/world"),
-                       URL(fileURLWithPath: "hello/world"))
+        #expect(URL(fileURLWithExpandingTildeInPath: "hello/world") ==
+                URL(fileURLWithPath: "hello/world"))
         
-        XCTAssertEqual(URL(fileURLWithExpandingTildeInPath: "/hello/world"),
-                       URL(fileURLWithPath: "/hello/world"))
+        #expect(URL(fileURLWithExpandingTildeInPath: "/hello/world") ==
+                URL(fileURLWithPath: "/hello/world"))
         
-        XCTAssertEqual(URL(fileURLWithExpandingTildeInPath: "./hello/world"),
-                       URL(fileURLWithPath: "./hello/world"))
+        #expect(URL(fileURLWithExpandingTildeInPath: "./hello/world") ==
+                URL(fileURLWithPath: "./hello/world"))
         
-        XCTAssertEqual(URL(fileURLWithExpandingTildeInPath: "../hello/world"),
-                       URL(fileURLWithPath: "../hello/world"))
+        #expect(URL(fileURLWithExpandingTildeInPath: "../hello/world") ==
+                URL(fileURLWithPath: "../hello/world"))
     }
 }

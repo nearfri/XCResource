@@ -1,18 +1,24 @@
-import XCTest
+import Testing
 @testable import LocStringResourceGen
 
-final class LocalizationItemTests: XCTestCase {
-    func test_documentComments() throws {
+@Suite struct LocalizationItemTests {
+    private typealias Comment = Testing.Comment
+    
+    @Test func documentComments() throws {
         func test(defaultValue: String,
                   expectedComments: [String],
-                  _ message: String = "",
-                  line: UInt = #line
+                  _ comment: @autoclosure () -> Comment? = nil,
+                  sourceLocation: SourceLocation = #_sourceLocation
         ) {
             let sut = LocalizationItem(key: "",
                                        defaultValue: defaultValue,
                                        rawDefaultValue: "",
-                                       memberDeclation: .property(""))
-            XCTAssertEqual(sut.documentComments, expectedComments, message, line: line)
+                                       memberDeclaration: .property(""))
+            #expect(
+                sut.documentComments == expectedComments,
+                comment(),
+                sourceLocation: sourceLocation
+            )
         }
         
         test(defaultValue: "hello", expectedComments: ["hello"])
@@ -25,15 +31,15 @@ final class LocalizationItemTests: XCTestCase {
              "Backslash must be escaped")
     }
     
-    func test_commentsSourceCode() throws {
+    @Test func commentsSourceCode() throws {
         let sut = LocalizationItem(
             key: "",
             defaultValue: "localized string1.\nlocalized string2.",
             rawDefaultValue: "",
             developerComments: ["cmt1", "cmt2"],
-            memberDeclation: .property(""))
+            memberDeclaration: .property(""))
         
-        XCTAssertEqual(sut.commentsSourceCode, """
+        #expect(sut.commentsSourceCode == """
             // cmt1
             // cmt2
             /// localized string1.\\

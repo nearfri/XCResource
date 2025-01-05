@@ -1,8 +1,8 @@
-import XCTest
+import Testing
 @testable import FontKeyGen
 
-final class FontTests: XCTestCase {
-    func test_key_camelCased() throws {
+@Suite struct FontTests {
+    @Test func key_camelCased() throws {
         // Given
         let font = Font(fontName: "", familyName: "Arial", style: "", relativePath: "")
         
@@ -10,10 +10,10 @@ final class FontTests: XCTestCase {
         let key = font.key(asLatin: false, strippingCombiningMarks: false)
         
         // Then
-        XCTAssertEqual(key, "arial")
+        #expect(key == "arial")
     }
     
-    func test_key_appendStyle() throws {
+    @Test func key_appendStyle() throws {
         // Given
         let font = Font(fontName: "", familyName: "Arial", style: "Regular", relativePath: "")
         
@@ -21,11 +21,11 @@ final class FontTests: XCTestCase {
         let key = font.key(asLatin: false, strippingCombiningMarks: false)
         
         // Then
-        XCTAssertEqual(key, "arialRegular")
+        #expect(key == "arialRegular")
     }
     
     
-    func test_key_hangulToLatin() throws {
+    @Test func key_hangulToLatin() throws {
         // Given
         let font = Font(fontName: "", familyName: "Arial산토끼", style: "", relativePath: "")
         
@@ -33,10 +33,10 @@ final class FontTests: XCTestCase {
         let key = font.key(asLatin: true, strippingCombiningMarks: false)
         
         // Then
-        XCTAssertEqual(key, "arialSantokki")
+        #expect(key == "arialSantokki")
     }
     
-    func test_key_chineseToLatin() throws {
+    @Test func key_chineseToLatin() throws {
         // Given
         let font = Font(fontName: "", familyName: "Arial小野兔", style: "", relativePath: "")
         
@@ -44,10 +44,10 @@ final class FontTests: XCTestCase {
         let key = font.key(asLatin: true, strippingCombiningMarks: false)
         
         // Then
-        XCTAssertEqual(key, "arialXiǎoYěTù")
+        #expect(key == "arialXiǎoYěTù")
     }
     
-    func test_key_strippingCombiningMarks() throws {
+    @Test func key_strippingCombiningMarks() throws {
         // Given
         let font = Font(fontName: "", familyName: "café façade", style: "", relativePath: "")
         
@@ -55,10 +55,10 @@ final class FontTests: XCTestCase {
         let key = font.key(asLatin: false, strippingCombiningMarks: true)
         
         // Then
-        XCTAssertEqual(key, "cafeFacade")
+        #expect(key == "cafeFacade")
     }
     
-    func test_key_chineseToLatinAndStrippingCombiningMarks() throws {
+    @Test func key_chineseToLatinAndStrippingCombiningMarks() throws {
         // Given
         let font = Font(fontName: "", familyName: "Arial小野兔", style: "", relativePath: "")
         
@@ -66,6 +66,6 @@ final class FontTests: XCTestCase {
         let key = font.key(asLatin: true, strippingCombiningMarks: true)
         
         // Then
-        XCTAssertEqual(key, "arialXiaoYeTu")
+        #expect(key == "arialXiaoYeTu")
     }
 }

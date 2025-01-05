@@ -1,13 +1,14 @@
-import XCTest
+import Testing
+import Foundation
 @testable import XCResourceUtil
 
-final class FileManagerTests: XCTestCase {
-    func test_makeTemporaryItemURL() {
+@Suite struct FileManagerTests {
+    @Test func makeTemporaryItemURL() {
         let fm = FileManager.default
-        XCTAssertNotEqual(fm.makeTemporaryItemURL(), fm.makeTemporaryItemURL())
+        #expect(fm.makeTemporaryItemURL() != fm.makeTemporaryItemURL())
     }
     
-    func test_compareAndReplaceItem_notEqualFile_replaceItem() throws {
+    @Test func compareAndReplaceItem_notEqualFile_replaceItem() throws {
         // Given
         let fm = FileManager.default
         
@@ -30,13 +31,13 @@ final class FileManagerTests: XCTestCase {
         // Then
         let updatedAttributes = try fm.attributesOfItem(atPath: oriFileURL.path)
         
-        XCTAssertFalse(fm.fileExists(atPath: newFileURL.path))
-        XCTAssertEqual(try Data(contentsOf: oriFileURL), newData)
-        XCTAssertEqual(updatedAttributes[.creationDate] as! Date, creationDate)
-        XCTAssertNotEqual(updatedAttributes[.modificationDate] as! Date, modificationDate)
+        #expect(!fm.fileExists(atPath: newFileURL.path))
+        #expect(try Data(contentsOf: oriFileURL) == newData)
+        #expect(updatedAttributes[.creationDate] as! Date == creationDate)
+        #expect(updatedAttributes[.modificationDate] as! Date != modificationDate)
     }
     
-    func test_compareAndReplaceItem_equalFile_removeNewItemAndKeepOriginal() throws {
+    @Test func compareAndReplaceItem_equalFile_removeNewItemAndKeepOriginal() throws {
         // Given
         let fm = FileManager.default
         
@@ -59,9 +60,9 @@ final class FileManagerTests: XCTestCase {
         // Then
         let updatedAttributes = try fm.attributesOfItem(atPath: oriFileURL.path)
         
-        XCTAssertFalse(fm.fileExists(atPath: newFileURL.path))
-        XCTAssertEqual(try Data(contentsOf: oriFileURL), oriData)
-        XCTAssertEqual(updatedAttributes[.creationDate] as! Date, creationDate)
-        XCTAssertEqual(updatedAttributes[.modificationDate] as! Date, modificationDate)
+        #expect(!fm.fileExists(atPath: newFileURL.path))
+        #expect(try Data(contentsOf: oriFileURL) == oriData)
+        #expect(updatedAttributes[.creationDate] as! Date == creationDate)
+        #expect(updatedAttributes[.modificationDate] as! Date == modificationDate)
     }
 }

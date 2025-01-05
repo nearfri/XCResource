@@ -1,8 +1,9 @@
-import XCTest
+import Testing
+import Foundation
 @testable import AssetKeyGen
 
-final class ContentTreeTests: XCTestCase {
-    func test_fullName_noNamespace() {
+@Suite struct ContentTreeTests {
+    @Test func fullName_noNamespace() {
         // Given
         let root = ContentTree(
             Content(
@@ -24,12 +25,12 @@ final class ContentTreeTests: XCTestCase {
         child.addChild(grandchild)
         
         // Then
-        XCTAssertEqual(root.fullName, "root")
-        XCTAssertEqual(child.fullName, "child")
-        XCTAssertEqual(grandchild.fullName, "grandchild")
+        #expect(root.fullName == "root")
+        #expect(child.fullName == "child")
+        #expect(grandchild.fullName == "grandchild")
     }
     
-    func test_fullName_rootNamespace() {
+    @Test func fullName_rootNamespace() {
         // Given
         let root = ContentTree(
             Content(
@@ -51,45 +52,18 @@ final class ContentTreeTests: XCTestCase {
         child.addChild(grandchild)
         
         // Then
-        XCTAssertEqual(root.fullName, "root")
-        XCTAssertEqual(child.fullName, "root/child")
-        XCTAssertEqual(grandchild.fullName, "root/grandchild")
+        #expect(root.fullName == "root")
+        #expect(child.fullName == "root/child")
+        #expect(grandchild.fullName == "root/grandchild")
     }
     
-    func test_fullName_childNamespace() {
+    @Test func fullName_childNamespace() {
         // Given
         let root = ContentTree(
             Content(
                 url: URL(fileURLWithPath: "root"),
                 type: .group,
                 providesNamespace: false))
-        let child = ContentTree(
-            Content(
-                url: URL(fileURLWithPath: "child"),
-                type: .group,
-                providesNamespace: true))
-        let grandchild = ContentTree(
-            Content(
-                url: URL(fileURLWithPath: "grandchild.imageset"),
-                type: .asset(.imageSet),
-                providesNamespace: false))
-        
-        root.addChild(child)
-        child.addChild(grandchild)
-        
-        // Then
-        XCTAssertEqual(root.fullName, "root")
-        XCTAssertEqual(child.fullName, "child")
-        XCTAssertEqual(grandchild.fullName, "child/grandchild")
-    }
-    
-    func test_fullName_rootAndChildNamespace() {
-        // Given
-        let root = ContentTree(
-            Content(
-                url: URL(fileURLWithPath: "root"),
-                type: .group,
-                providesNamespace: true))
         let child = ContentTree(
             Content(
                 url: URL(fileURLWithPath: "child"),
@@ -105,12 +79,39 @@ final class ContentTreeTests: XCTestCase {
         child.addChild(grandchild)
         
         // Then
-        XCTAssertEqual(root.fullName, "root")
-        XCTAssertEqual(child.fullName, "root/child")
-        XCTAssertEqual(grandchild.fullName, "root/child/grandchild")
+        #expect(root.fullName == "root")
+        #expect(child.fullName == "child")
+        #expect(grandchild.fullName == "child/grandchild")
     }
     
-    func test_relativePath() {
+    @Test func fullName_rootAndChildNamespace() {
+        // Given
+        let root = ContentTree(
+            Content(
+                url: URL(fileURLWithPath: "root"),
+                type: .group,
+                providesNamespace: true))
+        let child = ContentTree(
+            Content(
+                url: URL(fileURLWithPath: "child"),
+                type: .group,
+                providesNamespace: true))
+        let grandchild = ContentTree(
+            Content(
+                url: URL(fileURLWithPath: "grandchild.imageset"),
+                type: .asset(.imageSet),
+                providesNamespace: false))
+        
+        root.addChild(child)
+        child.addChild(grandchild)
+        
+        // Then
+        #expect(root.fullName == "root")
+        #expect(child.fullName == "root/child")
+        #expect(grandchild.fullName == "root/child/grandchild")
+    }
+    
+    @Test func relativePath() {
         // Given
         let root = ContentTree(
             Content(
@@ -132,12 +133,12 @@ final class ContentTreeTests: XCTestCase {
         child.addChild(grandchild)
         
         // Then
-        XCTAssertEqual(root.relativePath, "")
-        XCTAssertEqual(child.relativePath, "child")
-        XCTAssertEqual(grandchild.relativePath, "child/grandchild.imageset")
+        #expect(root.relativePath == "")
+        #expect(child.relativePath == "child")
+        #expect(grandchild.relativePath == "child/grandchild.imageset")
     }
     
-    func test_toAsset_whenGroup_returnNil() {
+    @Test func toAsset_whenGroup_returnNil() {
         // Given
         let contentTree = ContentTree(
             Content(
@@ -149,10 +150,10 @@ final class ContentTreeTests: XCTestCase {
         let asset = contentTree.toAsset()
         
         // Then
-        XCTAssertNil(asset)
+        #expect(asset == nil)
     }
     
-    func test_toAsset_whenAsset_returnAsset() throws {
+    @Test func toAsset_whenAsset_returnAsset() throws {
         // Given
         let root = ContentTree(
             Content(
@@ -171,9 +172,9 @@ final class ContentTreeTests: XCTestCase {
         let asset = child.toAsset()
         
         // Then
-        let unwrappedAsset = try XCTUnwrap(asset)
-        XCTAssertEqual(unwrappedAsset.name, "child")
-        XCTAssertEqual(unwrappedAsset.path, "child.imageset")
-        XCTAssertEqual(unwrappedAsset.type, .imageSet)
+        let unwrappedAsset = try #require(asset)
+        #expect(unwrappedAsset.name == "child")
+        #expect(unwrappedAsset.path == "child.imageset")
+        #expect(unwrappedAsset.type == .imageSet)
     }
 }

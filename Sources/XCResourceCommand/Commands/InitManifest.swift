@@ -50,7 +50,7 @@ private let manifestTemplate = """
             "swiftPath": "<#swift file path#>",
             "keyTypeName": "<#key type name#>",
             "accessLevel": null,
-            "excludesTypeDeclation": false
+            "excludesTypeDeclaration": false
         },
         {
             "commandName": "files2swift",
@@ -60,7 +60,7 @@ private let manifestTemplate = """
             "keyTypeName": "<#key type name#>",
             "bundle": "<#Bundle.main#>",
             "accessLevel": null,
-            "excludesTypeDeclation": false
+            "excludesTypeDeclaration": false
         },
         {
             "commandName": "fonts2swift",
@@ -74,7 +74,7 @@ private let manifestTemplate = """
             "relativePathPrefix": null,
             "bundle": "<#Bundle.main#>",
             "accessLevel": null,
-            "excludesTypeDeclation": false
+            "excludesTypeDeclaration": false
         },
         {
             "commandName": "xcstrings2swift",
@@ -89,7 +89,7 @@ private let manifestTemplate = """
             "formFilePath": "<#form file path#>",
             "formTypeName": "<#form type name#>",
             "accessLevel": null,
-            "excludesTypeDeclation": false,
+            "excludesTypeDeclaration": false,
             "issueReporter": "<#none|xcode#>"
         },
         {

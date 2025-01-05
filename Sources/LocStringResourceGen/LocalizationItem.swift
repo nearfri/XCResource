@@ -3,7 +3,7 @@ import RegexBuilder
 import XCResourceUtil
 
 extension LocalizationItem {
-    public enum MemberDeclation: Hashable, Sendable {
+    public enum MemberDeclaration: Hashable, Sendable {
         case property(String)
         case method(String, [Parameter])
         
@@ -49,7 +49,7 @@ public struct LocalizationItem: Hashable, Sendable, SettableByKeyPath {
     public var bundle: BundleDescription
     
     public var developerComments: [String]
-    public var memberDeclation: MemberDeclation
+    public var memberDeclaration: MemberDeclaration
     
     public init(
         key: String,
@@ -58,7 +58,7 @@ public struct LocalizationItem: Hashable, Sendable, SettableByKeyPath {
         table: String? = nil,
         bundle: BundleDescription = .main,
         developerComments: [String] = [],
-        memberDeclation: MemberDeclation
+        memberDeclaration: MemberDeclaration
     ) {
         self.key = key
         self.defaultValue = defaultValue
@@ -66,7 +66,7 @@ public struct LocalizationItem: Hashable, Sendable, SettableByKeyPath {
         self.table = table
         self.bundle = bundle
         self.developerComments = developerComments
-        self.memberDeclation = memberDeclation
+        self.memberDeclaration = memberDeclaration
     }
     
     public var documentComments: [String] {

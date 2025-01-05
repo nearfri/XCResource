@@ -8,7 +8,7 @@ struct KeyToFormDTO: CommandDTO {
     var formFilePath: String
     var formTypeName: String
     var accessLevel: String?
-    var excludesTypeDeclation: Bool?
+    var excludesTypeDeclaration: Bool?
     var issueReporter: String?
     
     func toCommand() throws -> ParsableCommand {
@@ -39,7 +39,7 @@ struct KeyToFormDTO: CommandDTO {
         command.formFilePath = formFilePath
         command.formTypeName = formTypeName
         command.accessLevel = accessLevel
-        command.excludesTypeDeclation = excludesTypeDeclation ?? Default.excludesTypeDeclation
+        command.excludesTypeDeclaration = excludesTypeDeclaration ?? Default.excludesTypeDeclaration
         command.issueReporterType = issueReporterType ?? Default.issueReporterType
         
         return command

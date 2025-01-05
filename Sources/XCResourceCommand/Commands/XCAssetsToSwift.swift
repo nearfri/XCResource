@@ -26,7 +26,7 @@ struct XCAssetsToSwift: ParsableCommand {
     
     enum Default {
         static let assetTypes: [AssetType] = []
-        static let excludesTypeDeclation: Bool = false
+        static let excludesTypeDeclaration: Bool = false
     }
     
     // MARK: - Arguments
@@ -50,8 +50,8 @@ struct XCAssetsToSwift: ParsableCommand {
     @Option(help: ArgumentHelp(valueName: AccessLevel.joinedAllValuesString))
     var accessLevel: AccessLevel?
     
-    @Flag(name: .customLong("exclude-type-declation"))
-    var excludesTypeDeclation: Bool = Default.excludesTypeDeclation
+    @Flag(name: .customLong("exclude-type-declaration"))
+    var excludesTypeDeclaration: Bool = Default.excludesTypeDeclaration
     
     // MARK: - Run
     
@@ -77,7 +77,7 @@ struct XCAssetsToSwift: ParsableCommand {
         
         print(headerComment, terminator: "\n\n", to: &stream)
         
-        if !excludesTypeDeclation {
+        if !excludesTypeDeclaration {
             print(codes.typeDeclaration, terminator: "\n\n", to: &stream)
         }
         

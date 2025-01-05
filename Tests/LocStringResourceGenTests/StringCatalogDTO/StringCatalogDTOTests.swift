@@ -1,8 +1,9 @@
-import XCTest
+import Testing
+import Foundation
 @testable import LocStringResourceGen
 
-final class StringCatalogDTOTests: XCTestCase {
-    func test_decode_stringCatalogDTO() throws {
+@Suite struct StringCatalogDTOTests {
+    @Test func decode_stringCatalogDTO() throws {
         // Given
         let json = """
             {
@@ -50,10 +51,10 @@ final class StringCatalogDTOTests: XCTestCase {
         let dto = try JSONDecoder().decode(StringCatalogDTO.self, from: Data(json.utf8))
         
         // Then
-        XCTAssertEqual(dto, expectedDTO)
+        #expect(dto == expectedDTO)
     }
     
-    func test_decode_stringDTO_substitutions() throws {
+    @Test func decode_stringDTO_substitutions() throws {
         // Given
         let json = """
             {
@@ -112,10 +113,10 @@ final class StringCatalogDTOTests: XCTestCase {
         let dto = try JSONDecoder().decode(StringDTO.self, from: Data(json.utf8))
         
         // Then
-        XCTAssertEqual(dto, expectedDTO)
+        #expect(dto == expectedDTO)
     }
     
-    func test_decode_stringDTO_variations() throws {
+    @Test func decode_stringDTO_variations() throws {
         // Given
         let json = """
             {
@@ -168,6 +169,6 @@ final class StringCatalogDTOTests: XCTestCase {
         let dto = try JSONDecoder().decode(StringDTO.self, from: Data(json.utf8))
         
         // Then
-        XCTAssertEqual(dto, expectedDTO)
+        #expect(dto == expectedDTO)
     }
 }

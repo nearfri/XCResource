@@ -10,7 +10,7 @@ struct XCAssetsToSwiftDTO: CommandDTO {
     var swiftPath: String
     var keyTypeName: String
     var accessLevel: String?
-    var excludesTypeDeclation: Bool?
+    var excludesTypeDeclaration: Bool?
     
     func toCommand() throws -> ParsableCommand {
         typealias Default = XCAssetsToSwift.Default
@@ -40,7 +40,7 @@ struct XCAssetsToSwiftDTO: CommandDTO {
         command.swiftPath = swiftPath
         command.keyTypeName = keyTypeName
         command.accessLevel = accessLevel
-        command.excludesTypeDeclation = excludesTypeDeclation ?? Default.excludesTypeDeclation
+        command.excludesTypeDeclaration = excludesTypeDeclaration ?? Default.excludesTypeDeclaration
         
         return command
     }

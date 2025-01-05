@@ -1,4 +1,5 @@
-import XCTest
+import Testing
+import Foundation
 import TestUtil
 import SampleData
 @testable import XCResourceCommand
@@ -39,8 +40,8 @@ private enum Fixture {
     """
 }
 
-final class XCAssetsToSwiftTests: XCTestCase {
-    func test_runAsRoot() throws {
+@Suite struct XCAssetsToSwiftTests {
+    @Test func runAsRoot() throws {
         // Given
         let fm = FileManager.default
         
@@ -59,13 +60,13 @@ final class XCAssetsToSwiftTests: XCTestCase {
         ])
         
         // Then
-        XCTAssertEqual(
+        expectEqual(
             try String(contentsOf: swiftFileURL, encoding: .utf8),
             try String(contentsOf: SampleData.sourceCodeURL("ColorKey.swift"), encoding: .utf8)
         )
     }
     
-    func test_runAsRoot_publicAccessLevel() throws {
+    @Test func runAsRoot_publicAccessLevel() throws {
         // Given
         let fm = FileManager.default
         
@@ -85,7 +86,6 @@ final class XCAssetsToSwiftTests: XCTestCase {
         ])
         
         // Then
-        XCTAssertEqual(try String(contentsOf: swiftFileURL, encoding: .utf8),
-                       Fixture.publicColorKey)
+        expectEqual(try String(contentsOf: swiftFileURL, encoding: .utf8), Fixture.publicColorKey)
     }
 }

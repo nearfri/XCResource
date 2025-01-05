@@ -60,17 +60,17 @@ struct StringCatalogDTOMapper {
         
         let methodParameters = methodParameters(from: formatInfo.sortedFormatUnits)
         
-        let memberDeclation = if methodParameters.isEmpty {
-            LocalizationItem.MemberDeclation.property(key.toIdentifier())
+        let memberDeclaration = if methodParameters.isEmpty {
+            LocalizationItem.MemberDeclaration.property(key.toIdentifier())
         } else {
-            LocalizationItem.MemberDeclation.method(key.toIdentifier(), methodParameters)
+            LocalizationItem.MemberDeclaration.method(key.toIdentifier(), methodParameters)
         }
         
         return LocalizationItem(
             key: key,
             defaultValue: defaultValue,
             rawDefaultValue: stringUnitDTO.escapedValue,
-            memberDeclation: memberDeclation)
+            memberDeclaration: memberDeclaration)
     }
     
     private func stringUnitDTO(from dto: LocalizationDTO) -> StringUnitDTO? {

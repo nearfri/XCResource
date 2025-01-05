@@ -24,7 +24,7 @@ struct FontsToSwift: ParsableCommand {
         static let generatesLatinKey: Bool = false
         static let stripsCombiningMarksFromKey: Bool = false
         static let preservesRelativePath: Bool = true
-        static let excludesTypeDeclation: Bool = false
+        static let excludesTypeDeclaration: Bool = false
     }
     
     // MARK: - Arguments
@@ -53,8 +53,8 @@ struct FontsToSwift: ParsableCommand {
     @Option(help: ArgumentHelp(valueName: AccessLevel.joinedAllValuesString))
     var accessLevel: AccessLevel?
     
-    @Flag(name: .customLong("exclude-type-declation"))
-    var excludesTypeDeclation: Bool = Default.excludesTypeDeclation
+    @Flag(name: .customLong("exclude-type-declaration"))
+    var excludesTypeDeclaration: Bool = Default.excludesTypeDeclaration
     
     // MARK: - Run
     
@@ -87,7 +87,7 @@ struct FontsToSwift: ParsableCommand {
         
         print("import Foundation", terminator: "\n\n", to: &stream)
         
-        if !excludesTypeDeclation {
+        if !excludesTypeDeclaration {
             print(codes.typeDeclaration, terminator: "\n\n", to: &stream)
         }
         

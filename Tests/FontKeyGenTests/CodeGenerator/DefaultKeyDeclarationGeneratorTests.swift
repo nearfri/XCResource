@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import TestUtil
 @testable import FontKeyGen
 
@@ -26,10 +26,10 @@ private enum Fixture {
     ]
 }
 
-final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
+@Suite struct DefaultKeyDeclarationGeneratorTests {
     private let sut: DefaultKeyDeclarationGenerator = .init()
     
-    func test_generateKeyListDeclaration() throws {
+    @Test func generateKeyListDeclaration() throws {
         // Given
         let fonts: [Font] = Fixture.fonts
         
@@ -47,7 +47,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                 accessLevel: "public"))
         
         // Then
-        XCTAssertEqual(code, """
+        expectEqual(code, """
             public extension FontKey {
                 static let all: [FontKey] = [
                     // Avenir
@@ -61,7 +61,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             """)
     }
     
-    func test_generateKeyListDeclaration_latinKey_false() throws {
+    @Test func generateKeyListDeclaration_latinKey_false() throws {
         // Given
         let fonts: [Font] = Fixture.hangulFonts
         
@@ -79,7 +79,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                 accessLevel: "public"))
         
         // Then
-        XCTAssertEqual(code, """
+        expectEqual(code, """
             public extension FontKey {
                 static let all: [FontKey] = [
                     // 대한
@@ -89,7 +89,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             """)
     }
     
-    func test_generateKeyListDeclaration_latinKey_true() throws {
+    @Test func generateKeyListDeclaration_latinKey_true() throws {
         // Given
         let fonts: [Font] = Fixture.hangulFonts
         
@@ -107,7 +107,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                 accessLevel: "public"))
         
         // Then
-        XCTAssertEqual(code, """
+        expectEqual(code, """
             public extension FontKey {
                 static let all: [FontKey] = [
                     // 대한
@@ -117,7 +117,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             """)
     }
     
-    func test_generateKeyDeclarations_latinKey_false() throws {
+    @Test func generateKeyDeclarations_latinKey_false() throws {
         // Given
         let fonts: [Font] = Fixture.hangulFonts
         
@@ -134,7 +134,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                 accessLevel: "public"))
         
         // Then
-        XCTAssertEqual(code, """
+        expectEqual(code, """
             public extension FontKey {
                 // MARK: 대한
                 
@@ -148,7 +148,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             """)
     }
     
-    func test_generateKeyDeclarations_latinKey_true() throws {
+    @Test func generateKeyDeclarations_latinKey_true() throws {
         // Given
         let fonts: [Font] = Fixture.hangulFonts
         
@@ -165,7 +165,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                 accessLevel: "public"))
         
         // Then
-        XCTAssertEqual(code, """
+        expectEqual(code, """
             public extension FontKey {
                 // MARK: 대한
                 
@@ -179,7 +179,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             """)
     }
     
-    func test_generateKeyDeclarations_preservesRelativePath_true() throws {
+    @Test func generateKeyDeclarations_preservesRelativePath_true() throws {
         // Given
         let fonts: [Font] = Fixture.fonts
         
@@ -196,7 +196,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                 accessLevel: "public"))
         
         // Then
-        XCTAssertEqual(code, """
+        expectEqual(code, """
             public extension FontKey {
                 // MARK: Avenir
                 
@@ -226,7 +226,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             """)
     }
     
-    func test_generateKeyDeclarations_preservesRelativePath_false() throws {
+    @Test func generateKeyDeclarations_preservesRelativePath_false() throws {
         // Given
         let fonts: [Font] = Fixture.fonts
         
@@ -243,7 +243,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                 accessLevel: "public"))
         
         // Then
-        XCTAssertEqual(code, """
+        expectEqual(code, """
             public extension FontKey {
                 // MARK: Avenir
                 
@@ -273,7 +273,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             """)
     }
     
-    func test_generateKeyDeclarations_relativePathPrefix() throws {
+    @Test func generateKeyDeclarations_relativePathPrefix() throws {
         // Given
         let fonts: [Font] = Fixture.fonts
         
@@ -290,7 +290,7 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
                 accessLevel: "public"))
         
         // Then
-        XCTAssertEqual(code, """
+        expectEqual(code, """
             public extension FontKey {
                 // MARK: Avenir
                 

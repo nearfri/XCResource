@@ -1,31 +1,21 @@
-import XCTest
+import Testing
+import Foundation
 @testable import XCResourceUtil
 
-final class TextFileOutputStreamTests: XCTestCase {
-    let fm: FileManager = .default
+@Suite final class TextFileOutputStreamTests {
+    private let fm: FileManager = .default
     
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-        
-        try? fm.removeItem(at: testDirectoryURL)
-        try fm.createDirectory(at: testDirectoryURL, withIntermediateDirectories: true)
+    private let testFileURL: URL
+    
+    init() throws {
+        testFileURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     }
     
-    override func tearDownWithError() throws {
-        try? fm.removeItem(at: testDirectoryURL)
-        
-        try super.tearDownWithError()
+    deinit {
+        try? fm.removeItem(at: testFileURL)
     }
     
-    var testDirectoryURL: URL {
-        return fm.temporaryDirectory.appendingPathComponent("text-stream-test")
-    }
-    
-    var testFileURL: URL {
-        return testDirectoryURL.appendingPathComponent("output.txt")
-    }
-    
-    func test_write() throws {
+    @Test func write() throws {
         // Given
         let text = """
         hello
@@ -47,10 +37,10 @@ final class TextFileOutputStreamTests: XCTestCase {
         
         // Then
         let fileText = try String(contentsOf: testFileURL, encoding: .utf8)
-        XCTAssertEqual(fileText, text)
+        #expect(fileText == text)
     }
     
-    func test_initForWritingTo_overwrite() throws {
+    @Test func initForWritingTo_overwrite() throws {
         // Given
         try """
         hello world
@@ -67,10 +57,10 @@ final class TextFileOutputStreamTests: XCTestCase {
         
         // Then
         let fileText = try String(contentsOf: testFileURL, encoding: .utf8)
-        XCTAssertEqual(fileText, "hi")
+        #expect(fileText == "hi")
     }
     
-    func test_initForWritingTo_append() throws {
+    @Test func initForWritingTo_append() throws {
         // Given
         let text = """
         hello
@@ -87,13 +77,13 @@ final class TextFileOutputStreamTests: XCTestCase {
         
         // Then
         let fileText = try String(contentsOf: testFileURL, encoding: .utf8)
-        XCTAssertEqual(fileText, text + "hi")
+        #expect(fileText == text + "hi")
     }
     
     // 안해도 되는 테스트지만 재미삼아 해본다.
     // print(text, to: &TextFileOutputStream.standardOutput)가 print(text)와 동일한지 테스트하기 위해
     // stdout을 리다이렉트(?)해서 데이터를 캡쳐한다.
-    func test_standardOutput() throws {
+    @Test func standardOutput() throws {
         // Given
         let stdPipe = Pipe()
         let stdWriteHandle = stdPipe.fileHandleForWriting
@@ -102,12 +92,12 @@ final class TextFileOutputStreamTests: XCTestCase {
         let actualStdWriteHandle = actualStdPipe.fileHandleForWriting
         
         // actualStdWHandle을 /dev/stdout로 연결
-        XCTAssertNotEqual(dup2(STDOUT_FILENO, actualStdWriteHandle.fileDescriptor), -1)
+        #expect(dup2(STDOUT_FILENO, actualStdWriteHandle.fileDescriptor) != -1)
         
         fflush(stdout)
         
         // stdout을 stdWHandle로 연결. 이제 stdout에 쓰는건 stdWHandle로 전달된다.
-        XCTAssertNotEqual(dup2(stdWriteHandle.fileDescriptor, STDOUT_FILENO), -1)
+        #expect(dup2(stdWriteHandle.fileDescriptor, STDOUT_FILENO) != -1)
         
         var data = Data()
         stdReadHandle.readabilityHandler = { handle in
@@ -140,7 +130,7 @@ final class TextFileOutputStreamTests: XCTestCase {
         stdReadHandle.readabilityHandler = nil
         
         // Then
-        let dataString = try XCTUnwrap(String(data: data, encoding: .utf8))
-        XCTAssertEqual(dataString, text)
+        let dataString = try #require(String(data: data, encoding: .utf8))
+        #expect(dataString == text)
     }
 }

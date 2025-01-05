@@ -1,9 +1,9 @@
-import XCTest
+import Testing
 import TestUtil
 @testable import LocStringResourceGen
 
-final class SwiftLocalizationSourceCodeRewriterTests: XCTestCase {
-    func test_rewrite_replaceItems() throws {
+@Suite struct SwiftLocalizationSourceCodeRewriterTests {
+    @Test func rewrite_replaceItems() throws {
         // Given
         let originalSourceCode = """
             import Foundation
@@ -32,13 +32,13 @@ final class SwiftLocalizationSourceCodeRewriterTests: XCTestCase {
                   rawDefaultValue: "",
                   table: "TextSystem",
                   bundle: .forClass("ResourceBundleClass.self"), 
-                  memberDeclation: .property("italic")),
+                  memberDeclaration: .property("italic")),
             .init(key: "underline",
                   defaultValue: "Underline",
                   rawDefaultValue: "",
                   table: "TextSystem",
                   bundle: .forClass("ResourceBundleClass.self"),
-                  memberDeclation: .property("underline")),
+                  memberDeclaration: .property("underline")),
         ]
         
         let sut = SwiftLocalizationSourceCodeRewriter()
@@ -49,7 +49,7 @@ final class SwiftLocalizationSourceCodeRewriterTests: XCTestCase {
                                              resourceTypeName: "LocalizedStringResource")
         
         // Then
-        XCTAssertEqual(rewritedSourceCode.description, """
+        #expect(rewritedSourceCode.description == """
             import Foundation
             
             private class ResourceBundleClass {}
@@ -79,7 +79,7 @@ final class SwiftLocalizationSourceCodeRewriterTests: XCTestCase {
             """)
     }
     
-    func test_rewrite_replaceItems_noExtension_insertNew() throws {
+    @Test func rewrite_replaceItems_noExtension_insertNew() throws {
         // Given
         let originalSourceCode = """
             import Foundation
@@ -98,7 +98,7 @@ final class SwiftLocalizationSourceCodeRewriterTests: XCTestCase {
                   rawDefaultValue: "",
                   table: "TextSystem",
                   bundle: .forClass("ResourceBundleClass.self"),
-                  memberDeclation: .property("italic")),
+                  memberDeclaration: .property("italic")),
         ]
         
         let sut = SwiftLocalizationSourceCodeRewriter()
@@ -109,7 +109,7 @@ final class SwiftLocalizationSourceCodeRewriterTests: XCTestCase {
                                              resourceTypeName: "LocalizedStringResource")
         
         // Then
-        XCTAssertEqual(rewritedSourceCode.description, """
+        #expect(rewritedSourceCode.description == """
             import Foundation
             
             private class ResourceBundleClass {}

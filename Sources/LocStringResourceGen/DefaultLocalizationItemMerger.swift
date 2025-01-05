@@ -30,11 +30,11 @@ class DefaultLocalizationItemMerger: LocalizationItemMerger {
             
             if itemInSourceCode.hasCommentCommand(named: commentCommandNames.useRaw) {
                 newItem.defaultValue = newItem.rawDefaultValue
-                newItem.memberDeclation = .property(itemInSourceCode.memberDeclation.id)
+                newItem.memberDeclaration = .property(itemInSourceCode.memberDeclaration.id)
             } else if itemInSourceCode.hasResolvedParameterTypes(compatibleWith: itemInCatalog) {
                 do {
                     try newItem.replaceInterpolations(with: itemInSourceCode)
-                    newItem.memberDeclation = itemInSourceCode.memberDeclation
+                    newItem.memberDeclaration = itemInSourceCode.memberDeclaration
                 } catch {
                     assertionFailure("\(error)")
                 }

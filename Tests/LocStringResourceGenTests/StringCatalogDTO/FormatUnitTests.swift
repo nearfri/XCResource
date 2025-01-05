@@ -1,9 +1,9 @@
-import XCTest
+import Testing
 import Strix
 import StrixParsers
 @testable import LocStringResourceGen
 
-final class FormatUnitTests: XCTestCase {
+@Suite struct FormatUnitTests {
     private let parser = Parser.formatSpecifierContent.map({ specifier in
         switch specifier {
         case .percentSign:
@@ -13,7 +13,7 @@ final class FormatUnitTests: XCTestCase {
         }
     })
     
-    func test_applying() throws {
+    @Test func applying() throws {
         // Given
         let original = FormatUnit(
             placeholder: FormatPlaceholder(
@@ -33,16 +33,16 @@ final class FormatUnitTests: XCTestCase {
         let applied = try original.applying(substitution, using: parser)
         
         // Then
-        XCTAssertEqual(applied.placeholder.index, 2)
-        XCTAssertEqual(applied.placeholder.length, .longLong)
-        XCTAssertEqual(applied.placeholder.conversion, .decimal)
+        #expect(applied.placeholder.index == 2)
+        #expect(applied.placeholder.length == .longLong)
+        #expect(applied.placeholder.conversion == .decimal)
     }
 }
 
-final class FormatUnitsParserTests: XCTestCase {
+@Suite struct FormatUnitsParserTests {
     private let sut: Parser<[FormatUnit]> = Parser.formatUnits
     
-    func test_run_simple() throws {
+    @Test func run_simple() throws {
         // Given
         let format = "%@ ate %lld apples today."
         
@@ -50,7 +50,7 @@ final class FormatUnitsParserTests: XCTestCase {
         let units = try sut.run(format)
         
         // Then
-        XCTAssertEqual(units, [
+        #expect(units == [
             FormatUnit(
                 placeholder: FormatPlaceholder(conversion: .object),
                 range: format.range(of: "%@")!),
@@ -60,7 +60,7 @@ final class FormatUnitsParserTests: XCTestCase {
         ])
     }
     
-    func test_run_substitution() throws {
+    @Test func run_substitution() throws {
         // Given
         let format = "%@ ate %#@appleCount@ today."
         
@@ -68,7 +68,7 @@ final class FormatUnitsParserTests: XCTestCase {
         let units = try sut.run(format)
         
         // Then
-        XCTAssertEqual(units, [
+        #expect(units == [
             FormatUnit(
                 placeholder: FormatPlaceholder(conversion: .object),
                 range: format.range(of: "%@")!),
@@ -81,7 +81,7 @@ final class FormatUnitsParserTests: XCTestCase {
         ])
     }
     
-    func test_run_percentSignWithoutFormat() throws {
+    @Test func run_percentSignWithoutFormat() throws {
         // Given
         let format = "Battery is below 20%. Charge your phone."
         
@@ -89,10 +89,10 @@ final class FormatUnitsParserTests: XCTestCase {
         let units = try sut.run(format)
         
         // Then
-        XCTAssertEqual(units, [])
+        #expect(units == [])
     }
     
-    func test_run_percentSignWithFormat() throws {
+    @Test func run_percentSignWithFormat() throws {
         // Given
         let format = "Battery is below 20%%. Charge %@."
         
@@ -100,7 +100,7 @@ final class FormatUnitsParserTests: XCTestCase {
         let units = try sut.run(format)
         
         // Then
-        XCTAssertEqual(units, [
+        #expect(units == [
             FormatUnit(
                 placeholder: FormatPlaceholder(conversion: .object),
                 range: format.range(of: "%@")!),

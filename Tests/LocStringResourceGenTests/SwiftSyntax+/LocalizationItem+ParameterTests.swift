@@ -1,31 +1,31 @@
-import XCTest
+import Testing
 @testable import LocStringResourceGen
 
-final class LocalizationItem_ParameterTests: XCTestCase {
+@Suite struct LocalizationItem_ParameterTests {
     private typealias Parameter = LocalizationItem.Parameter
     
-    func test_resolvedParameterTypes_property_returnEmpty() throws {
+    @Test func resolvedParameterTypes_property_returnEmpty() throws {
         // Given
         let item = LocalizationItem(
             key: "key",
             defaultValue: "hello",
             rawDefaultValue: "",
-            memberDeclation: .property("key"))
+            memberDeclaration: .property("key"))
         
         // When
         let parameterTypes = item.resolvedParameterTypes
         
         // Then
-        XCTAssertEqual(parameterTypes, [])
+        #expect(parameterTypes == [])
     }
     
-    func test_resolvedParameterTypes() throws {
+    @Test func resolvedParameterTypes() throws {
         // Given
         let item = LocalizationItem(
             key: "key",
             defaultValue: "Name:\\(name)\nAge: \\(age)",
             rawDefaultValue: "",
-            memberDeclation: .method("key", [
+            memberDeclaration: .method("key", [
                 Parameter(firstName: "_", secondName: "name", type: "String"),
                 Parameter(firstName: "age", type: "Int"),
             ]))
@@ -34,16 +34,16 @@ final class LocalizationItem_ParameterTests: XCTestCase {
         let parameterTypes = item.resolvedParameterTypes
         
         // Then
-        XCTAssertEqual(parameterTypes, ["String", "Int"])
+        #expect(parameterTypes == ["String", "Int"])
     }
     
-    func test_resolvedParameterTypes_keepOrderInDefaultValue() throws {
+    @Test func resolvedParameterTypes_keepOrderInDefaultValue() throws {
         // Given
         let item = LocalizationItem(
             key: "key",
             defaultValue: "Name:\\(name)\nAge: \\(age)",
             rawDefaultValue: "",
-            memberDeclation: .method("key", [
+            memberDeclaration: .method("key", [
                 Parameter(firstName: "age", type: "Int"),
                 Parameter(firstName: "_", secondName: "name", type: "String"),
             ]))
@@ -52,16 +52,16 @@ final class LocalizationItem_ParameterTests: XCTestCase {
         let parameterTypes = item.resolvedParameterTypes
         
         // Then
-        XCTAssertEqual(parameterTypes, ["String", "Int"])
+        #expect(parameterTypes == ["String", "Int"])
     }
     
-    func test_resolvedParameterTypes_formatInterpolation() throws {
+    @Test func resolvedParameterTypes_formatInterpolation() throws {
         // Given
         let item = LocalizationItem(
             key: "key",
             defaultValue: "Age: \\(age, format: .number)",
             rawDefaultValue: "",
-            memberDeclation: .method("key", [
+            memberDeclaration: .method("key", [
                 Parameter(firstName: "age", type: "Int"),
             ]))
         
@@ -69,31 +69,31 @@ final class LocalizationItem_ParameterTests: XCTestCase {
         let parameterTypes = item.resolvedParameterTypes
         
         // Then
-        XCTAssertEqual(parameterTypes, ["String"])
+        #expect(parameterTypes == ["String"])
     }
     
-    func test_resolvedParameterTypes_placeholderInterpolation() throws {
+    @Test func resolvedParameterTypes_placeholderInterpolation() throws {
         // Given
         let item = LocalizationItem(
             key: "key",
             defaultValue: "Number: \\(placeholder: .double)",
             rawDefaultValue: "",
-            memberDeclation: .method("key", []))
+            memberDeclaration: .method("key", []))
         
         // When
         let parameterTypes = item.resolvedParameterTypes
         
         // Then
-        XCTAssertEqual(parameterTypes, ["Double"])
+        #expect(parameterTypes == ["Double"])
     }
     
-    func test_replaceInterpolations() throws {
+    @Test func replaceInterpolations() throws {
         // Given
         var item = LocalizationItem(
             key: "key",
             defaultValue: "Hello, \\(param1)!!",
             rawDefaultValue: "Hello, %@",
-            memberDeclation: .method("key", [
+            memberDeclaration: .method("key", [
                 .init(firstName: "_", secondName: "param1", type: "String")
             ]))
         
@@ -101,7 +101,7 @@ final class LocalizationItem_ParameterTests: XCTestCase {
             key: "key",
             defaultValue: "Hi, \\(name).",
             rawDefaultValue: "",
-            memberDeclation: .method("key", [
+            memberDeclaration: .method("key", [
                 .init(firstName: "name", type: "String")
             ]))
         
@@ -109,22 +109,22 @@ final class LocalizationItem_ParameterTests: XCTestCase {
         try item.replaceInterpolations(with: otherItem)
         
         // Then
-        XCTAssertEqual(item, LocalizationItem(
+        #expect(item == LocalizationItem(
             key: "key",
             defaultValue: "Hello, \\(name)!!",
             rawDefaultValue: "Hello, %@",
-            memberDeclation: .method("key", [
+            memberDeclaration: .method("key", [
                 .init(firstName: "_", secondName: "param1", type: "String")
             ])))
     }
     
-    func test_replaceInterpolations_dontMatchInterpolationCount_throwError() throws {
+    @Test func replaceInterpolations_dontMatchInterpolationCount_throwError() throws {
         // Given
         var item = LocalizationItem(
             key: "key",
             defaultValue: "Hello, \\(param1) and \\(param2)!!",
             rawDefaultValue: "Hello, %@ and %@",
-            memberDeclation: .method("key", [
+            memberDeclaration: .method("key", [
                 .init(firstName: "_", secondName: "param1", type: "String"),
                 .init(firstName: "_", secondName: "param2", type: "String"),
             ]))
@@ -133,21 +133,23 @@ final class LocalizationItem_ParameterTests: XCTestCase {
             key: "key",
             defaultValue: "Hi, \\(name).",
             rawDefaultValue: "",
-            memberDeclation: .method("key", [
+            memberDeclaration: .method("key", [
                 .init(firstName: "name", type: "String")
             ]))
         
         // When, Then
-        XCTAssertThrowsError(try item.replaceInterpolations(with: otherItem))
+        #expect(throws: (any Error).self) {
+            try item.replaceInterpolations(with: otherItem)
+        }
     }
     
-    func test_replaceInterpolations_multiline() throws {
+    @Test func replaceInterpolations_multiline() throws {
         // Given
         var item = LocalizationItem(
             key: "key",
             defaultValue: "Hello, \\(param1)!!\nWorld!!",
             rawDefaultValue: "Hello, %@\nWorld!!",
-            memberDeclation: .method("key", [
+            memberDeclaration: .method("key", [
                 .init(firstName: "_", secondName: "param1", type: "String")
             ]))
         
@@ -155,7 +157,7 @@ final class LocalizationItem_ParameterTests: XCTestCase {
             key: "key",
             defaultValue: "Hi, \\(name).",
             rawDefaultValue: "",
-            memberDeclation: .method("key", [
+            memberDeclaration: .method("key", [
                 .init(firstName: "name", type: "String")
             ]))
         
@@ -163,11 +165,11 @@ final class LocalizationItem_ParameterTests: XCTestCase {
         try item.replaceInterpolations(with: otherItem)
         
         // Then
-        XCTAssertEqual(item, LocalizationItem(
+        #expect(item == LocalizationItem(
             key: "key",
             defaultValue: "Hello, \\(name)!!\nWorld!!",
             rawDefaultValue: "Hello, %@\nWorld!!",
-            memberDeclation: .method("key", [
+            memberDeclaration: .method("key", [
                 .init(firstName: "_", secondName: "param1", type: "String")
             ])))
     }

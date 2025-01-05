@@ -1,4 +1,5 @@
-import XCTest
+import Testing
+import Foundation
 import TestUtil
 import SampleData
 @testable import XCResourceCommand
@@ -87,8 +88,8 @@ private enum Fixture {
         """
 }
 
-final class SwiftToStringsdictTests: XCTestCase {
-    func test_runAsRoot() throws {
+@Suite struct SwiftToStringsdictTests {
+    @Test func runAsRoot() throws {
         // Given
         let fm = FileManager.default
         
@@ -119,7 +120,6 @@ final class SwiftToStringsdictTests: XCTestCase {
         ])
         
         // Then
-        XCTAssertEqual(try String(contentsOf: stringsdictURL, encoding: .utf8),
-                       Fixture.newStringsdict)
+        expectEqual(try String(contentsOf: stringsdictURL, encoding: .utf8), Fixture.newStringsdict)
     }
 }

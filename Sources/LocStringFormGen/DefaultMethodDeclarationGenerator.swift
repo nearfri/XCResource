@@ -1,6 +1,6 @@
 import Foundation
 
-class DefaultMethodDeclationGenerator: MethodDeclationGenerator {
+class DefaultMethodDeclarationGenerator: MethodDeclarationGenerator {
     var maxColumns: Int = 100
     
     func generate(formTypeName: String,

@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 @testable import XCResourceUtil
 
 private struct GroceryProduct: Codable {
@@ -16,8 +16,8 @@ private enum Fixture {
     """
 }
 
-final class DefaultStringInterpolationTests: XCTestCase {
-    func test_appendJSON() throws {
+@Suite struct DefaultStringInterpolationTests {
+    @Test func appendJSON() throws {
         // Given
         let product = GroceryProduct(name: "Pear", points: 250, description: nil)
         
@@ -25,6 +25,6 @@ final class DefaultStringInterpolationTests: XCTestCase {
         let json = try "\(json: product)"
         
         // Then
-        XCTAssertEqual(json, Fixture.productJSON)
+        #expect(json == Fixture.productJSON)
     }
 }

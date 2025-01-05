@@ -1,4 +1,5 @@
-import XCTest
+import Testing
+import Foundation
 @testable import AssetKeyGen
 
 private class StubAssetCatalogImporter: AssetCatalogImporter {
@@ -31,38 +32,32 @@ private class StubKeyDeclarationGenerator: KeyDeclarationGenerator {
     }
 }
 
-final class AssetKeyGeneratorTests: XCTestCase {
-    private var keyDeclationGenerator: StubKeyDeclarationGenerator!
-    private var request: AssetKeyGenerator.Request!
-    private var sut: AssetKeyGenerator!
+@Suite struct AssetKeyGeneratorTests {
+    private let keyDeclarationGenerator: StubKeyDeclarationGenerator = .init()
     
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-        
-        keyDeclationGenerator = StubKeyDeclarationGenerator()
-        
-        request = AssetKeyGenerator.Request(
-            assetCatalogURLs: [URL(fileURLWithPath: "a"), URL(fileURLWithPath: "b")],
-            assetTypes: [.imageSet],
-            keyTypeName: "ImageKey",
-            accessLevel: nil)
-        
+    private let request: AssetKeyGenerator.Request = AssetKeyGenerator.Request(
+        assetCatalogURLs: [URL(fileURLWithPath: "a"), URL(fileURLWithPath: "b")],
+        assetTypes: [.imageSet],
+        keyTypeName: "ImageKey",
+        accessLevel: nil)
+    
+    private let sut: AssetKeyGenerator
+    
+    init() {
         sut = AssetKeyGenerator(
             catalogImporter: StubAssetCatalogImporter(),
             typeDeclarationGenerator: StubTypeDeclarationGenerator(),
-            keyDeclarationGenerator: keyDeclationGenerator)
+            keyDeclarationGenerator: keyDeclarationGenerator)
     }
     
-    func test_generate_codes() throws {
+    @Test func generate_codes() throws {
         // When
         let result = try sut.generate(for: request)
         
         // Then
-        XCTAssertEqual(result.typeDeclaration, StubTypeDeclarationGenerator.declarationString)
+        #expect(result.typeDeclaration == StubTypeDeclarationGenerator.declarationString)
         
-        XCTAssertEqual(
-            result.keyDeclarations,
-            """
+        #expect(result.keyDeclarations == """
             \(StubKeyDeclarationGenerator.declarationsString)
             
             \(StubKeyDeclarationGenerator.declarationsString)
@@ -70,12 +65,12 @@ final class AssetKeyGeneratorTests: XCTestCase {
         )
     }
     
-    func test_generate_filterAsset() throws {
+    @Test func generate_filterAsset() throws {
         // When
         _ = try sut.generate(for: request)
-        let allAssets = keyDeclationGenerator.generateParamCatalogs.flatMap({ $0.assets })
+        let allAssets = keyDeclarationGenerator.generateParamCatalogs.flatMap({ $0.assets })
         
         // Then
-        XCTAssert(allAssets.allSatisfy({ $0.type == .imageSet }))
+        #expect(allAssets.allSatisfy({ $0.type == .imageSet }))
     }
 }

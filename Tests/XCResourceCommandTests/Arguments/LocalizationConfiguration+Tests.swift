@@ -1,48 +1,48 @@
-import XCTest
+import Testing
 @testable import XCResourceCommand
 
-final class LocalizationConfigurationTests: XCTestCase {
-    func test_initWithArgument_withVerifyComment() throws {
+@Suite struct LocalizationConfigurationTests {
+    @Test func initWithArgument_withVerifyComment() throws {
         // Given
         let argument = "comment:verify-comments"
         
         // When
-        let config = try XCTUnwrap(KeyToStringsConfiguration(argument: argument))
+        let config = try #require(KeyToStringsConfiguration(argument: argument))
         
         // Then
-        XCTAssertEqual(config.mergeStrategy, .add(.comment))
-        XCTAssertEqual(config.verifiesComments, true)
+        #expect(config.mergeStrategy == .add(.comment))
+        #expect(config.verifiesComments == true)
     }
     
-    func test_initWithArgument_withoutVerifyComment() throws {
+    @Test func initWithArgument_withoutVerifyComment() throws {
         // Given
         let argument = "comment:"
         
         // When
-        let config = try XCTUnwrap(KeyToStringsConfiguration(argument: argument))
+        let config = try #require(KeyToStringsConfiguration(argument: argument))
         
         // Then
-        XCTAssertEqual(config.mergeStrategy, .add(.comment))
-        XCTAssertEqual(config.verifiesComments, false)
+        #expect(config.mergeStrategy == .add(.comment))
+        #expect(config.verifiesComments == false)
     }
     
-    func test_initWithArgument_withoutVerifyCommentSeparator() throws {
+    @Test func initWithArgument_withoutVerifyCommentSeparator() throws {
         // Given
         let argument = "comment"
         
         // When
-        let config = try XCTUnwrap(KeyToStringsConfiguration(argument: argument))
+        let config = try #require(KeyToStringsConfiguration(argument: argument))
         
         // Then
-        XCTAssertEqual(config.mergeStrategy, .add(.comment))
-        XCTAssertEqual(config.verifiesComments, false)
+        #expect(config.mergeStrategy == .add(.comment))
+        #expect(config.verifiesComments == false)
     }
     
-    func test_initWithArgument_withUnknownOption() throws {
+    @Test func initWithArgument_withUnknownOption() throws {
         // Given
         let argument = "comment:unknown-value"
         
         // When, Then
-        XCTAssertNil(KeyToStringsConfiguration(argument: argument))
+        #expect(KeyToStringsConfiguration(argument: argument) == nil)
     }
 }

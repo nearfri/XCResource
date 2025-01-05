@@ -2,7 +2,7 @@ import XCTest
 import TestUtil
 @testable import LocStringFormGen
 
-final class DefaultMethodDeclationGeneratorTests: XCTestCase {
+final class DefaultMethodDeclarationGeneratorTests: XCTestCase {
     private let formTypeName: String = "StringForm"
     private let keyTypeName: String = "StringKey"
     
@@ -19,22 +19,22 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                 .init(externalName: "", localName: "fileCount", type: Int.self),
             ])
         
-        let expectedDeclation = """
+        let expectedDeclaration = """
         /// %ld{fileCount}개의 파일을 로드하였습니다.
         static func fileLoadSuccess(fileCount: Int) -> \(formTypeName) {
             return StringForm(key: StringKey.fileLoadSuccess.rawValue, arguments: [fileCount])
         }
         """
         
-        let sut = DefaultMethodDeclationGenerator()
+        let sut = DefaultMethodDeclarationGenerator()
         
         // When
-        let actualDeclation = sut.generate(formTypeName: formTypeName,
-                                           keyTypeName: keyTypeName,
-                                           item: functionItem)
+        let actualDeclaration = sut.generate(formTypeName: formTypeName,
+                                             keyTypeName: keyTypeName,
+                                             item: functionItem)
         
         // Then
-        XCTAssertEqual(actualDeclation, expectedDeclation)
+        XCTAssertEqual(actualDeclaration, expectedDeclaration)
     }
     
     func test_generate_longMethod() {
@@ -52,7 +52,7 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                 .init(externalName: "", localName: "videoFileSize", type: String.self),
             ])
         
-        let expectedDeclation = """
+        let expectedDeclaration = """
         /// 영상은 최대 %@{videoDuration}, %@{videoFileSize}까지 가능합니다.\\n길이를 수정하세요.
         static func errorPopup_overMaximumSize(
             videoDuration: String,
@@ -64,15 +64,15 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
         }
         """
         
-        let sut = DefaultMethodDeclationGenerator()
+        let sut = DefaultMethodDeclarationGenerator()
         
         // When
-        let actualDeclation = sut.generate(formTypeName: formTypeName,
-                                           keyTypeName: keyTypeName,
-                                           item: functionItem)
+        let actualDeclaration = sut.generate(formTypeName: formTypeName,
+                                             keyTypeName: keyTypeName,
+                                             item: functionItem)
         
         // Then
-        XCTAssertEqual(actualDeclation, expectedDeclation)
+        XCTAssertEqual(actualDeclaration, expectedDeclaration)
     }
     
     func test_generate_namelessParameter() {
@@ -82,31 +82,31 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                 comments: [
                     .documentLine("영상은 최대 %@, %@까지 가능합니다.\\n길이를 수정하세요.")
                 ],
-                name: "errorPopup_overMaximumSize",
-                rawValue: "errorPopup_overMaximumSize"),
+                name: "error_overMaximumSize",
+                rawValue: "error_overMaximumSize"),
             parameters: [
                 .init(externalName: "", localName: "", type: String.self),
                 .init(externalName: "", localName: "", type: String.self),
             ])
         
-        let expectedDeclation = """
+        let expectedDeclaration = """
         /// 영상은 최대 %@, %@까지 가능합니다.\\n길이를 수정하세요.
-        static func errorPopup_overMaximumSize(_ param1: String, _ param2: String) -> \(formTypeName) {
+        static func error_overMaximumSize(_ param1: String, _ param2: String) -> \(formTypeName) {
             return \(formTypeName)(
-                key: StringKey.errorPopup_overMaximumSize.rawValue,
+                key: StringKey.error_overMaximumSize.rawValue,
                 arguments: [param1, param2])
         }
         """
         
-        let sut = DefaultMethodDeclationGenerator()
+        let sut = DefaultMethodDeclarationGenerator()
         
         // When
-        let actualDeclation = sut.generate(formTypeName: formTypeName,
-                                           keyTypeName: keyTypeName,
-                                           item: functionItem)
+        let actualDeclaration = sut.generate(formTypeName: formTypeName,
+                                             keyTypeName: keyTypeName,
+                                             item: functionItem)
         
         // Then
-        XCTAssertEqual(actualDeclation, expectedDeclation)
+        XCTAssertEqual(actualDeclaration, expectedDeclaration)
     }
     
     func test_generate_manyParameters() {
@@ -132,7 +132,7 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                 .init(externalName: "", localName: "", type: Double.self),
             ])
         
-        let expectedDeclation = """
+        let expectedDeclaration = """
         /// %ld %@ %d %f %ld %@ %d %f %ld %@ %d %f
         static func manyMany(
             _ param1: Int,
@@ -157,15 +157,15 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
         }
         """
         
-        let sut = DefaultMethodDeclationGenerator()
+        let sut = DefaultMethodDeclarationGenerator()
         
         // When
-        let actualDeclation = sut.generate(formTypeName: formTypeName,
-                                           keyTypeName: keyTypeName,
-                                           item: functionItem)
+        let actualDeclaration = sut.generate(formTypeName: formTypeName,
+                                             keyTypeName: keyTypeName,
+                                             item: functionItem)
         
         // Then
-        XCTAssertEqual(actualDeclation, expectedDeclation)
+        XCTAssertEqual(actualDeclaration, expectedDeclaration)
     }
     
     func test_generate_documentBlockComment() {
@@ -178,34 +178,34 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                             길이를 수정하세요.
                             """)
                 ],
-                name: "errorPopup_overMaximumSize",
-                rawValue: "errorPopup_overMaximumSize"),
+                name: "error_overMaximumSize",
+                rawValue: "error_overMaximumSize"),
             parameters: [
                 .init(externalName: "", localName: "duration", type: String.self),
                 .init(externalName: "", localName: "fileSize", type: String.self),
             ])
         
-        let expectedDeclation = """
+        let expectedDeclaration = """
         /**
          영상은 최대 %@{duration}, %@{fileSize}까지 가능합니다.
          길이를 수정하세요.
          */
-        static func errorPopup_overMaximumSize(duration: String, fileSize: String) -> \(formTypeName) {
+        static func error_overMaximumSize(duration: String, fileSize: String) -> \(formTypeName) {
             return \(formTypeName)(
-                key: StringKey.errorPopup_overMaximumSize.rawValue,
+                key: StringKey.error_overMaximumSize.rawValue,
                 arguments: [duration, fileSize])
         }
         """
         
-        let sut = DefaultMethodDeclationGenerator()
+        let sut = DefaultMethodDeclarationGenerator()
         
         // When
-        let actualDeclation = sut.generate(formTypeName: formTypeName,
-                                           keyTypeName: keyTypeName,
-                                           item: functionItem)
+        let actualDeclaration = sut.generate(formTypeName: formTypeName,
+                                             keyTypeName: keyTypeName,
+                                             item: functionItem)
         
         // Then
-        XCTAssertEqual(actualDeclation, expectedDeclation)
+        XCTAssertEqual(actualDeclaration, expectedDeclaration)
     }
     
     func test_generate_manyMethods() {
@@ -217,8 +217,8 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                         .documentLine(
                             "영상은 최대 %@{duration}, %@{fileSize}까지 가능합니다.\\n길이를 수정하세요.")
                     ],
-                    name: "errorPopup_overMaximumSize",
-                    rawValue: "errorPopup_overMaximumSize"),
+                    name: "error_overMaximumSize",
+                    rawValue: "error_overMaximumSize"),
                 parameters: [
                     .init(externalName: "", localName: "duration", type: String.self),
                     .init(externalName: "", localName: "fileSize", type: String.self),
@@ -235,14 +235,14 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                 ]),
         ]
         
-        let expectedDeclations = """
+        let expectedDeclarations = """
         // MARK: - \(formTypeName) generated from \(keyTypeName)
         
         extension \(formTypeName) {
             /// 영상은 최대 %@{duration}, %@{fileSize}까지 가능합니다.\\n길이를 수정하세요.
-            static func errorPopup_overMaximumSize(duration: String, fileSize: String) -> \(formTypeName) {
+            static func error_overMaximumSize(duration: String, fileSize: String) -> \(formTypeName) {
                 return \(formTypeName)(
-                    key: StringKey.errorPopup_overMaximumSize.rawValue,
+                    key: StringKey.error_overMaximumSize.rawValue,
                     arguments: [duration, fileSize])
             }
             
@@ -253,16 +253,16 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
         }
         """
         
-        let sut = DefaultMethodDeclationGenerator()
+        let sut = DefaultMethodDeclarationGenerator()
         
         // When
-        let actualDeclations = sut.generate(formTypeName: formTypeName,
-                                            accessLevel: nil,
-                                            keyTypeName: keyTypeName,
-                                            items: functionItems)
+        let actualDeclarations = sut.generate(formTypeName: formTypeName,
+                                              accessLevel: nil,
+                                              keyTypeName: keyTypeName,
+                                              items: functionItems)
         
         // Then
-        XCTAssertEqual(actualDeclations, expectedDeclations)
+        XCTAssertEqual(actualDeclarations, expectedDeclarations)
     }
     
     func test_generate_publicAccessLevel() {
@@ -278,7 +278,7 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
                 .init(externalName: "", localName: "fileCount", type: Int.self),
             ])
         
-        let expectedDeclation = """
+        let expectedDeclaration = """
         // MARK: - \(formTypeName) generated from \(keyTypeName)
         
         public extension \(formTypeName) {
@@ -289,16 +289,16 @@ final class DefaultMethodDeclationGeneratorTests: XCTestCase {
         }
         """
         
-        let sut = DefaultMethodDeclationGenerator()
+        let sut = DefaultMethodDeclarationGenerator()
         
         // When
-        let actualDeclation = sut.generate(formTypeName: formTypeName,
-                                           accessLevel: "public",
-                                           keyTypeName: keyTypeName,
-                                           items: [functionItem])
+        let actualDeclaration = sut.generate(formTypeName: formTypeName,
+                                             accessLevel: "public",
+                                             keyTypeName: keyTypeName,
+                                             items: [functionItem])
         
         // Then
-        XCTAssertEqual(actualDeclation, expectedDeclation)
+        XCTAssertEqual(actualDeclaration, expectedDeclaration)
     }
 }
 

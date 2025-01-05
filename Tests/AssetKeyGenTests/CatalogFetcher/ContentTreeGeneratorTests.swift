@@ -1,9 +1,9 @@
-import XCTest
+import Testing
 import SampleData
 @testable import AssetKeyGen
 
-final class ContentTreeGeneratorTests: XCTestCase {
-    func test_load_root() throws {
+@Suite struct ContentTreeGeneratorTests {
+    @Test func load_root() throws {
         // Given
         let url = SampleData.assetURL()
         
@@ -11,68 +11,68 @@ final class ContentTreeGeneratorTests: XCTestCase {
         let root = try ContentTreeGenerator().load(at: url)
         
         // Then
-        XCTAssert(root.isRoot)
-        XCTAssert(root.hasChildren)
-        XCTAssertEqual(root.element.name, url.lastPathComponent)
-        XCTAssertEqual(root.element.type, .group)
-        XCTAssertEqual(root.element.providesNamespace, false)
+        #expect(root.isRoot)
+        #expect(root.hasChildren)
+        #expect(root.element.name == url.lastPathComponent)
+        #expect(root.element.type == .group)
+        #expect(root.element.providesNamespace == false)
     }
     
-    func test_load_childFolder() throws {
+    @Test func load_childFolder() throws {
         // Given
         let url = SampleData.assetURL()
         
         // When
         let root = try ContentTreeGenerator().load(at: url)
-        let c1 = try XCTUnwrap(root.children.first(where: { $0.element.name == "Places" }))
-        let c2 = try XCTUnwrap(c1.children.first(where: { $0.element.name == "Dot" }))
+        let c1 = try #require(root.children.first(where: { $0.element.name == "Places" }))
+        let c2 = try #require(c1.children.first(where: { $0.element.name == "Dot" }))
         
         // Then
-        XCTAssertFalse(c1.isRoot)
-        XCTAssertFalse(c2.isRoot)
+        #expect(!c1.isRoot)
+        #expect(!c2.isRoot)
         
-        XCTAssert(c1.hasChildren)
-        XCTAssert(c2.hasChildren)
+        #expect(c1.hasChildren)
+        #expect(c2.hasChildren)
         
-        XCTAssertEqual(c1.element.name, "Places")
-        XCTAssertEqual(c2.element.name, "Dot")
+        #expect(c1.element.name == "Places")
+        #expect(c2.element.name == "Dot")
         
-        XCTAssertEqual(c1.element.type, .group)
-        XCTAssertEqual(c2.element.type, .group)
+        #expect(c1.element.type == .group)
+        #expect(c2.element.type == .group)
         
-        XCTAssertEqual(c1.element.providesNamespace, false)
-        XCTAssertEqual(c2.element.providesNamespace, true)
+        #expect(c1.element.providesNamespace == false)
+        #expect(c2.element.providesNamespace == true)
     }
     
-    func test_load_imageSet() throws {
+    @Test func load_imageSet() throws {
         // Given
         let url = SampleData.assetURL()
         
         // When
         let root = try ContentTreeGenerator().load(at: url)
-        let folder = try XCTUnwrap(root.children.first(where: { $0.element.name == "Settings" }))
-        let image = try XCTUnwrap(folder.children.first(where: { $0.element.name == "settings" }))
+        let folder = try #require(root.children.first(where: { $0.element.name == "Settings" }))
+        let image = try #require(folder.children.first(where: { $0.element.name == "settings" }))
         
         // Then
-        XCTAssertFalse(image.hasChildren)
-        XCTAssertEqual(image.element.name, "settings")
-        XCTAssertEqual(image.element.type, .asset(.imageSet))
-        XCTAssertEqual(image.element.providesNamespace, false)
+        #expect(!image.hasChildren)
+        #expect(image.element.name == "settings")
+        #expect(image.element.type == .asset(.imageSet))
+        #expect(image.element.providesNamespace == false)
     }
     
-    func test_load_colorSet() throws {
+    @Test func load_colorSet() throws {
         // Given
         let url = SampleData.assetURL()
         
         // When
         let root = try ContentTreeGenerator().load(at: url)
-        let folder = try XCTUnwrap(root.children.first(where: { $0.element.name == "Color" }))
-        let color = try XCTUnwrap(folder.children.first(where: { $0.element.name == "blush" }))
+        let folder = try #require(root.children.first(where: { $0.element.name == "Color" }))
+        let color = try #require(folder.children.first(where: { $0.element.name == "blush" }))
         
         // Then
-        XCTAssertFalse(color.hasChildren)
-        XCTAssertEqual(color.element.name, "blush")
-        XCTAssertEqual(color.element.type, .asset(.colorSet))
-        XCTAssertEqual(color.element.providesNamespace, false)
+        #expect(!color.hasChildren)
+        #expect(color.element.name == "blush")
+        #expect(color.element.type == .asset(.colorSet))
+        #expect(color.element.providesNamespace == false)
     }
 }

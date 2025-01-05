@@ -13,7 +13,7 @@ struct FilesToSwiftDTO: CommandDTO {
     var relativePathPrefix: String?
     var bundle: String?
     var accessLevel: String?
-    var excludesTypeDeclation: Bool?
+    var excludesTypeDeclaration: Bool?
     
     func toCommand() throws -> ParsableCommand {
         typealias Default = FilesToSwift.Default
@@ -37,7 +37,7 @@ struct FilesToSwiftDTO: CommandDTO {
         command.relativePathPrefix = relativePathPrefix
         command.bundle = bundle ?? Default.bundle
         command.accessLevel = accessLevel
-        command.excludesTypeDeclation = excludesTypeDeclation ?? Default.excludesTypeDeclation
+        command.excludesTypeDeclaration = excludesTypeDeclaration ?? Default.excludesTypeDeclaration
         
         return command
     }

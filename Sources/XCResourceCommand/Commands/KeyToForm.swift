@@ -20,7 +20,7 @@ struct KeyToForm: ParsableCommand {
     // MARK: - Default values
     
     enum Default {
-        static let excludesTypeDeclation: Bool = false
+        static let excludesTypeDeclaration: Bool = false
         static let issueReporterType: IssueReporterType = .none
     }
     
@@ -35,8 +35,8 @@ struct KeyToForm: ParsableCommand {
     @Option(help: ArgumentHelp(valueName: AccessLevel.joinedAllValuesString))
     var accessLevel: AccessLevel?
     
-    @Flag(name: .customLong("exclude-type-declation"))
-    var excludesTypeDeclation: Bool = Default.excludesTypeDeclation
+    @Flag(name: .customLong("exclude-type-declaration"))
+    var excludesTypeDeclaration: Bool = Default.excludesTypeDeclaration
     
     @Option(name: .customLong("issue-reporter"),
             help: ArgumentHelp(valueName: IssueReporterType.joinedAllValuesString))
@@ -70,7 +70,7 @@ struct KeyToForm: ParsableCommand {
         
         print(headerComment, terminator: "\n\n", to: &stream)
         
-        if !excludesTypeDeclation {
+        if !excludesTypeDeclaration {
             print(codes.typeDeclaration, terminator: "\n\n", to: &stream)
         }
         

@@ -1,4 +1,5 @@
-import XCTest
+import Testing
+import Foundation
 @testable import FontKeyGen
 
 private class FakeFontFinder: FontFinder {
@@ -41,8 +42,8 @@ private class FakeFontLoader: FontLoader {
     }
 }
 
-final class DefaultFontImporterTests: XCTestCase {
-    func test_import() throws {
+@Suite struct DefaultFontImporterTests {
+    @Test func importFonts() throws {
         // Given
         let paths: [String] = [
             "Fonts/fontA.ttf",
@@ -58,7 +59,7 @@ final class DefaultFontImporterTests: XCTestCase {
         let fonts = try sut.import(at: resourcesURL)
         
         // Then
-        XCTAssertEqual(fonts, [
+        #expect(fonts == [
             Font(fontName: "fontA", style: "regular", relativePath: "Fonts/fontA.ttf"),
             Font(fontName: "fontB", style: "regular", relativePath: "Fonts/fontB.ttc"),
             Font(fontName: "fontB", style: "bold", relativePath: "Fonts/fontB.ttc"),

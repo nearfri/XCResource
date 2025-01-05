@@ -1,4 +1,5 @@
-import XCTest
+import Testing
+import Foundation
 import TestUtil
 @testable import XCResourceCommand
 
@@ -87,8 +88,8 @@ private enum Fixture {
         """
 }
 
-final class XCStringsToSwiftTests: XCTestCase {
-    func test_runAsRoot() throws {
+@Suite struct XCStringsToSwiftTests {
+    @Test func runAsRoot() throws {
         // Given
         let fm = FileManager.default
         
@@ -112,7 +113,6 @@ final class XCStringsToSwiftTests: XCTestCase {
         ])
         
         // Then
-        XCTAssertEqual(try String(contentsOf: sourceCodeURL, encoding: .utf8),
-                       Fixture.newSourceCode)
+        expectEqual(try String(contentsOf: sourceCodeURL, encoding: .utf8), Fixture.newSourceCode)
     }
 }

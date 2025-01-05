@@ -1,9 +1,9 @@
-import XCTest
+import Testing
 import SampleData
 @testable import FileKeyGen
 
-final class DefaultFileTreeGeneratorTests: XCTestCase {
-    func test_load() throws {
+@Suite struct DefaultFileTreeGeneratorTests {
+    @Test func load() throws {
         // Given
         let sut = DefaultFileTreeGenerator()
         
@@ -12,7 +12,7 @@ final class DefaultFileTreeGeneratorTests: XCTestCase {
         
         // Then
         let urls = fileTree.makePreOrderSequence().map(\.relativePath)
-        XCTAssertEqual(urls, [
+        #expect(urls == [
             "",
             "SFNSDisplay",
             "SFNSDisplay/SFNSDisplay-Bold.otf",

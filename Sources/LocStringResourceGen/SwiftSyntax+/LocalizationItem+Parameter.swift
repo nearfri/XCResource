@@ -5,7 +5,7 @@ import SwiftParser
 
 extension LocalizationItem {
     public var resolvedParameterTypes: [String] {
-        guard case .method(_, let parameters) = memberDeclation else { return [] }
+        guard case .method(_, let parameters) = memberDeclaration else { return [] }
         
         let parametersByAccessName = parameters.reduce(into: [:]) { partialResult, parameter in
             partialResult[parameter.accessName] = parameter
