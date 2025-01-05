@@ -1,6 +1,6 @@
 import Foundation
 
-struct AssetCatalog {
+struct AssetCatalog: Sendable {
     var name: String
     var assets: [Asset]
 }

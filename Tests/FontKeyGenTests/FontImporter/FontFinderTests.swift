@@ -1,9 +1,9 @@
-import XCTest
+import Testing
 import SampleData
 @testable import FontKeyGen
 
-final class FontFinderTests: XCTestCase {
-    func test_find() throws {
+@Suite struct FontFinderTests {
+    @Test func find() throws {
         // Given
         let sut = FontFinder()
         
@@ -11,7 +11,7 @@ final class FontFinderTests: XCTestCase {
         let paths = try sut.find(at: SampleData.fontDirectoryURL())
         
         // Then
-        XCTAssertEqual(paths, [
+        #expect(paths == [
             "Avenir.ttc",
             "SFNSDisplay/SFNSDisplay-Bold.otf",
             "SFNSDisplay/SFNSDisplay-Heavy.otf",

@@ -1,9 +1,9 @@
-import XCTest
+import Testing
 import SampleData
 @testable import FontKeyGen
 
-final class FontLoaderTests: XCTestCase {
-    func test_load_otf() throws {
+@Suite struct FontLoaderTests {
+    @Test func load_otf() throws {
         // Given
         let path = "SFNSDisplay/SFNSDisplay-Regular.otf"
         let baseURL = SampleData.fontDirectoryURL()
@@ -13,7 +13,7 @@ final class FontLoaderTests: XCTestCase {
         let fonts = try sut.load(at: path, relativeTo: baseURL)
         
         // Then
-        XCTAssertEqual(fonts, [
+        #expect(fonts == [
             Font(fontName: ".SFNSDisplay-Regular",
                  familyName: ".SF NS Display",
                  style: "Regular",
@@ -21,7 +21,7 @@ final class FontLoaderTests: XCTestCase {
         ])
     }
     
-    func test_load_ttc() throws {
+    @Test func load_ttc() throws {
         // Given
         let path = "Avenir.ttc"
         let baseURL = SampleData.fontDirectoryURL()
@@ -82,10 +82,10 @@ final class FontLoaderTests: XCTestCase {
         let actualFonts = try sut.load(at: path, relativeTo: baseURL)
         
         // Then
-        XCTAssertEqual(actualFonts.count, expectedFonts.count)
+        #expect(actualFonts.count == expectedFonts.count)
         
         for (actualFont, expectedFont) in zip(actualFonts, expectedFonts) {
-            XCTAssertEqual(actualFont, expectedFont)
+            #expect(actualFont == expectedFont)
         }
     }
 }

@@ -9,7 +9,7 @@ import AppKit.NSFont
 private typealias NativeFont = NSFont
 #endif
 
-public class FontRegistry {
+public final class FontRegistry: Sendable {
     private init() {}
     
     public static let shared: FontRegistry = .init()

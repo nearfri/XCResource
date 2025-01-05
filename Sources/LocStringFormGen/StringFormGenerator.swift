@@ -9,7 +9,7 @@ protocol TypeDeclarationGenerator: AnyObject {
     func generate(formTypeName: String, accessLevel: String?) -> String
 }
 
-protocol MethodDeclationGenerator: AnyObject {
+protocol MethodDeclarationGenerator: AnyObject {
     func generate(formTypeName: String,
                   accessLevel: String?,
                   keyTypeName: String,
@@ -47,7 +47,7 @@ extension StringFormGenerator {
         }
     }
     
-    public enum IssueReporterType: String, CaseIterable {
+    public enum IssueReporterType: String, CaseIterable, Sendable {
         case none
         case xcode
         
@@ -63,8 +63,8 @@ extension StringFormGenerator {
 public class StringFormGenerator {
     private let enumerationImporter: StringEnumerationImporter
     private let placeholderImporter: FormatPlaceholderImporter
-    private let typeDeclationGenerator: TypeDeclarationGenerator
-    private let methodDeclationGenerator: MethodDeclationGenerator
+    private let typeDeclarationGenerator: TypeDeclarationGenerator
+    private let methodDeclarationGenerator: MethodDeclarationGenerator
     private var issueReporter: IssueReporter?
     
     public var issueReporterType: IssueReporterType = .none {
@@ -75,13 +75,13 @@ public class StringFormGenerator {
     
     init(enumerationImporter: StringEnumerationImporter,
          placeholderImporter: FormatPlaceholderImporter,
-         typeDeclationGenerator: TypeDeclarationGenerator,
-         methodDeclationGenerator: MethodDeclationGenerator
+         typeDeclarationGenerator: TypeDeclarationGenerator,
+         methodDeclarationGenerator: MethodDeclarationGenerator
     ) {
         self.enumerationImporter = enumerationImporter
         self.placeholderImporter = placeholderImporter
-        self.typeDeclationGenerator = typeDeclationGenerator
-        self.methodDeclationGenerator = methodDeclationGenerator
+        self.typeDeclarationGenerator = typeDeclarationGenerator
+        self.methodDeclarationGenerator = methodDeclarationGenerator
     }
     
     public convenience init(commandNameSet: CommandNameSet) {
@@ -90,36 +90,36 @@ public class StringFormGenerator {
                 decoratee: SwiftStringEnumerationImporter(),
                 commandNameForExclusion: commandNameSet.exclude),
             placeholderImporter: DefaultFormatPlaceholderImporter(),
-            typeDeclationGenerator: DefaultTypeDeclarationGenerator(),
-            methodDeclationGenerator: DefaultMethodDeclationGenerator())
+            typeDeclarationGenerator: DefaultTypeDeclarationGenerator(),
+            methodDeclarationGenerator: DefaultMethodDeclarationGenerator())
     }
     
     public func generate(for request: Request) throws -> Result {
         do {
-            let typeDeclation = generateTypeDeclation(for: request)
+            let typeDeclaration = generateTypeDeclaration(for: request)
             
-            let methodDeclations = try generateMethodDeclations(for: request)
+            let methodDeclarations = try generateMethodDeclarations(for: request)
             
-            return Result(typeDeclaration: typeDeclation, methodDeclarations: methodDeclations)
+            return Result(typeDeclaration: typeDeclaration, methodDeclarations: methodDeclarations)
         } catch let error as IssueReportError {
             reportIssue(fileURL: request.sourceCodeURL, error: error)
             throw error
         }
     }
     
-    private func generateTypeDeclation(for request: Request) -> String {
-        return typeDeclationGenerator.generate(formTypeName: request.formTypeName,
+    private func generateTypeDeclaration(for request: Request) -> String {
+        return typeDeclarationGenerator.generate(formTypeName: request.formTypeName,
                                                accessLevel: request.accessLevel)
     }
     
-    private func generateMethodDeclations(for request: Request) throws -> String {
+    private func generateMethodDeclarations(for request: Request) throws -> String {
         let enumeration = try enumerationImporter.import(at: request.sourceCodeURL)
         
         let functionItems: [FunctionItem] = try enumeration.cases.compactMap { enumCase in
             return try makeFunctionItem(enumCase: enumCase)
         }
         
-        return methodDeclationGenerator.generate(
+        return methodDeclarationGenerator.generate(
             formTypeName: request.formTypeName,
             accessLevel: request.accessLevel,
             keyTypeName: enumeration.name,

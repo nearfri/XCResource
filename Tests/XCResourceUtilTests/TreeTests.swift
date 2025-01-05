@@ -1,8 +1,8 @@
-import XCTest
+import Testing
 @testable import XCResourceUtil
 
-final class TreeTests: XCTestCase {
-    func test_addChild() throws {
+@Suite struct TreeTests {
+    @Test func addChild() throws {
         // Given
         let parent = Tree(0)
         let child = Tree(1)
@@ -11,11 +11,11 @@ final class TreeTests: XCTestCase {
         parent.addChild(child)
         
         // Then
-        XCTAssertEqual(child.parent, parent)
-        XCTAssertEqual(parent.children.first, child)
+        #expect(child.parent == parent)
+        #expect(parent.children.first == child)
     }
     
-    func test_preOrderSequence() {
+    @Test func preOrderSequence() {
         // Given
         let a = Tree("a")
         
@@ -43,7 +43,7 @@ final class TreeTests: XCTestCase {
         let allTrees: [Tree<String>] = a.makePreOrderSequence().reduce(into: [], { $0.append($1) })
         
         // Then
-        XCTAssertEqual(allTrees, [
+        #expect(allTrees == [
             a, aa, aaa, aab, ab, aba, abaa, ac, aca, acb, acc
         ])
     }

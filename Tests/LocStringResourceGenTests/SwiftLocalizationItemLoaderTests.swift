@@ -1,10 +1,10 @@
-import XCTest
+import Testing
 import SwiftSyntax
 import SwiftParser
 @testable import LocStringResourceGen
 
-final class SwiftLocalizationItemLoaderTests: XCTestCase {
-    func test_load_property() throws {
+@Suite struct SwiftLocalizationItemLoaderTests {
+    @Test func load_property() throws {
         // Given
         let source = """
             import Foundation
@@ -29,7 +29,7 @@ final class SwiftLocalizationItemLoaderTests: XCTestCase {
         let items = try sut.load(source: source, resourceTypeName: "LocalizedStringResource")
         
         // Then
-        XCTAssertEqual(items, [
+        #expect(items == [
             LocalizationItem(
                 key: "style_underline",
                 defaultValue: "Underline",
@@ -37,11 +37,11 @@ final class SwiftLocalizationItemLoaderTests: XCTestCase {
                 table: "TextSystem",
                 bundle: .forClass("FakeClass.self"),
                 developerComments: ["dev comments"],
-                memberDeclation: .property("underline"))
+                memberDeclaration: .property("underline"))
         ])
     }
     
-    func test_load_method() throws {
+    @Test func load_method() throws {
         // Given
         let source = #"""
             import Foundation
@@ -65,20 +65,20 @@ final class SwiftLocalizationItemLoaderTests: XCTestCase {
         let items = try sut.load(source: source, resourceTypeName: "LocalizedStringResource")
         
         // Then
-        XCTAssertEqual(items, [
+        #expect(items == [
             LocalizationItem(
                 key: "dog_eating_apples",
                 defaultValue: #"My dog ate \(appleCount) today!"#,
                 rawDefaultValue: "",
                 table: "TextSystem",
                 bundle: .forClass("FakeClass.self"),
-                memberDeclation: .method("dogEatingApples", [
+                memberDeclaration: .method("dogEatingApples", [
                     .init(firstName: "appleCount", type: "Int")
                 ]))
         ])
     }
     
-    func test_load_manyItems() throws {
+    @Test func load_manyItems() throws {
         // Given
         let source = """
             import Foundation
@@ -110,7 +110,7 @@ final class SwiftLocalizationItemLoaderTests: XCTestCase {
         let items = try sut.load(source: source, resourceTypeName: "LocalizedStringResource")
         
         // Then
-        XCTAssertEqual(items, [
+        #expect(items == [
             LocalizationItem(
                 key: "underline",
                 defaultValue: "Underline",
@@ -118,14 +118,14 @@ final class SwiftLocalizationItemLoaderTests: XCTestCase {
                 table: "TextSystem",
                 bundle: .forClass("FakeClass.self"),
                 developerComments: ["dev comments"],
-                memberDeclation: .property("underline")),
+                memberDeclaration: .property("underline")),
             LocalizationItem(
                 key: "greeting",
                 defaultValue: "Hello",
                 rawDefaultValue: "",
                 table: "TextSystem",
                 bundle: .forClass("FakeClass.self"),
-                memberDeclation: .property("greeting"))
+                memberDeclaration: .property("greeting"))
         ])
     }
 }

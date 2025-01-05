@@ -28,7 +28,7 @@ struct IssueReportError: LocalizedError {
     }
 }
 
-struct Issue {
+struct Issue: Sendable {
     var fileURL: URL
     var lineNumber: Int
     var columnNumber: Int
@@ -53,7 +53,7 @@ extension Issue {
         fileURL: URL,
         error: IssueReportError
     ) -> (lineNumber: Int, columnNumber: Int, isAtEndOfLine: Bool)? {
-        guard let document = try? String(contentsOf: fileURL),
+        guard let document = try? String(contentsOf: fileURL, encoding: .utf8),
               let textRange = document.range(of: error.text)
         else { return nil }
         

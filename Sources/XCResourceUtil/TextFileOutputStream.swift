@@ -1,6 +1,6 @@
 import Foundation
 
-public class TextFileOutputStream {
+public final class TextFileOutputStream: Sendable {
     private let fileHandle: FileHandle
     
     private init(fileHandle: FileHandle) {

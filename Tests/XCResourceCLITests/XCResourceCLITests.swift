@@ -1,8 +1,11 @@
-import XCTest
+import Testing
+import Foundation
 import class Foundation.Bundle
 
-final class XCResourceCLITests: XCTestCase {
-    func test_main() throws {
+private class BundleFinder {}
+
+@Suite struct XCResourceCLITests {
+    @Test func main() throws {
         let executableURL = productsDirectory.appendingPathComponent("xcresource")
         
         let process = Process()
@@ -15,22 +18,17 @@ final class XCResourceCLITests: XCTestCase {
         try process.run()
         process.waitUntilExit() // Bottleneck
         
-        XCTAssertEqual(process.terminationStatus, 0)
+        #expect(process.terminationStatus == 0)
         
         let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(decoding: outputData, as: UTF8.self)
-        XCTAssert(output.hasPrefix("OVERVIEW:"))
+        #expect(output.hasPrefix("OVERVIEW:"))
     }
     
     /// Returns path to the built products directory.
     var productsDirectory: URL {
-        #if os(macOS)
-        for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
-            return bundle.bundleURL.deletingLastPathComponent()
-        }
-        fatalError("couldn't find the products directory")
-        #else
-        return Bundle.main.bundleURL
-        #endif
+        let bundle = Bundle(for: BundleFinder.self)
+        assert(bundle.bundlePath.hasSuffix(".xctest"))
+        return bundle.bundleURL.deletingLastPathComponent()
     }
 }

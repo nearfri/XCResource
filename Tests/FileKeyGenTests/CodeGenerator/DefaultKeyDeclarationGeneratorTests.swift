@@ -1,9 +1,10 @@
-import XCTest
+import Testing
+import Foundation
 import TestUtil
 @testable import FileKeyGen
 
 private enum Fixture {
-    static let fileTree: FileTree = {
+    static func fileTree() -> FileTree {
         let sfnsBold = FileTree(
             FileItem(url: URL(filePath: "/Fonts/SFNSDisplay/SFNSDisplay-Bold.ttf")))
         
@@ -19,23 +20,23 @@ private enum Fixture {
         let fonts = FileTree(FileItem(url: URL(filePath: "/Fonts")), children: [sfns, avenir])
         
         return fonts
-    }()
+    }
 }
 
-final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
+@Suite struct DefaultKeyDeclarationGeneratorTests {
     private let sut: DefaultKeyDeclarationGenerator = .init()
     
-    func test_generateKeyDeclarations_preservesRelativePath_true() throws {
+    @Test func generateKeyDeclarations_preservesRelativePath_true() throws {
         let code = sut.generateKeyDeclarations(
             for: KeyDeclarationRequest(
-                fileTree: Fixture.fileTree,
+                fileTree: Fixture.fileTree(),
                 keyTypeName: "FileResource",
                 preservesRelativePath: true,
                 relativePathPrefix: nil,
                 bundle: "Bundle.main",
                 accessLevel: "public"))
         
-        XCTAssertEqual(code, """
+        expectEqual(code, """
             extension FileResource {
                 public enum SFNSDisplay {
                     public static let sfnsDisplayBold: FileResource = .init(
@@ -54,17 +55,17 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             """)
     }
     
-    func test_generateKeyDeclarations_preservesRelativePath_false() throws {
+    @Test func generateKeyDeclarations_preservesRelativePath_false() throws {
         let code = sut.generateKeyDeclarations(
             for: KeyDeclarationRequest(
-                fileTree: Fixture.fileTree,
+                fileTree: Fixture.fileTree(),
                 keyTypeName: "FileResource",
                 preservesRelativePath: false,
                 relativePathPrefix: nil,
                 bundle: "Bundle.main",
                 accessLevel: "public"))
         
-        XCTAssertEqual(code, """
+        expectEqual(code, """
             extension FileResource {
                 public static let sfnsDisplayBold: FileResource = .init(
                     relativePath: "SFNSDisplay-Bold.ttf",
@@ -81,17 +82,17 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
             """)
     }
     
-    func test_generateKeyDeclarations_relativePathPrefix() throws {
+    @Test func generateKeyDeclarations_relativePathPrefix() throws {
         let code = sut.generateKeyDeclarations(
             for: KeyDeclarationRequest(
-                fileTree: Fixture.fileTree,
+                fileTree: Fixture.fileTree(),
                 keyTypeName: "FileResource",
                 preservesRelativePath: true,
                 relativePathPrefix: "Fonts",
                 bundle: "Bundle.main",
                 accessLevel: "public"))
         
-        XCTAssertEqual(code, """
+        expectEqual(code, """
             extension FileResource {
                 public enum SFNSDisplay {
                     public static let sfnsDisplayBold: FileResource = .init(

@@ -1,7 +1,7 @@
 import Foundation
 import LocStringCore
 
-struct LocalizationTable: Equatable {
+struct LocalizationTable: Equatable, Sendable {
     var header: [String] = []
     var records: [[String]] = []
 }

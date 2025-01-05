@@ -1,20 +1,20 @@
-import XCTest
+import Testing
 import LocStringResourceGen
 @testable import XCResourceCommand
 
-final class BundleDescriptionTests: XCTestCase {
+@Suite struct BundleDescriptionTests {
     private typealias BundleDescription = LocalizationItem.BundleDescription
     
-    func test_initWithArgument_main() throws {
-        XCTAssertEqual(BundleDescription(argument: "main"), .main)
+    @Test func initWithArgument_main() throws {
+        #expect(BundleDescription(argument: "main") == .main)
     }
     
-    func test_initWithArgument_atURL() throws {
-        XCTAssertEqual(BundleDescription(argument: "at-url:.moduleURL"), .atURL(".moduleURL"))
+    @Test func initWithArgument_atURL() throws {
+        #expect(BundleDescription(argument: "at-url:.moduleURL") == .atURL(".moduleURL"))
     }
     
-    func test_initWithArgument_forClass() throws {
-        XCTAssertEqual(BundleDescription(argument: "for-class:ResourceBundleClass.self"),
-                       .forClass("ResourceBundleClass.self"))
+    @Test func initWithArgument_forClass() throws {
+        #expect(BundleDescription(argument: "for-class:ResourceBundleClass.self") ==
+            .forClass("ResourceBundleClass.self"))
     }
 }

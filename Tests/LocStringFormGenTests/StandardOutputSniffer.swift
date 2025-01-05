@@ -1,6 +1,6 @@
 import Foundation
 
-class StandardOutputSniffer {
+final class StandardOutputSniffer: @unchecked Sendable {
     private let originalPipe: Pipe
     private let replacementPipe: Pipe
     private let dataLock: NSLocking

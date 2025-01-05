@@ -1,6 +1,7 @@
-import XCTest
-@testable import XCResourceCommand
+import Testing
+import Foundation
 import SampleData
+@testable import XCResourceCommand
 
 private enum Fixture {
     static let generalManifestFormat = """
@@ -12,14 +13,14 @@ private enum Fixture {
                 "assetTypes": ["imageset"],
                 "swiftPath": "%@",
                 "keyTypeName": "ImageKey",
-                "excludesTypeDeclation": false
+                "excludesTypeDeclaration": false
             },
             {
                 "commandName": "key2form",
                 "keyFilePath": "%@",
                 "formFilePath": "%@",
                 "formTypeName": "StringForm",
-                "excludesTypeDeclation": false,
+                "excludesTypeDeclaration": false,
                 "issueReporter": "none"
             },
             {
@@ -73,8 +74,8 @@ private enum Fixture {
     """
 }
 
-final class RunManifestTests: XCTestCase {
-    func test_runAsRoot_generalManifest() throws {
+@Suite struct RunManifestTests {
+    @Test func runAsRoot_generalManifest() throws {
         // Given
         let fm = FileManager.default
         
@@ -91,7 +92,7 @@ final class RunManifestTests: XCTestCase {
         
         let stringsURL = resourcesURL
             .appendingPathComponent("Localization/ko.lproj/Localizable.strings")
-        let oldStrings = try String(contentsOf: stringsURL)
+        let oldStrings = try String(contentsOf: stringsURL, encoding: .utf8)
         
         let manifest = String(
             format: Fixture.generalManifestFormat,
@@ -118,14 +119,14 @@ final class RunManifestTests: XCTestCase {
         ])
         
         // Then
-        XCTAssert(fm.fileExists(atPath: imageKeyFileURL.path))
-        XCTAssert(fm.fileExists(atPath: stringFormFileURL.path))
+        #expect(fm.fileExists(atPath: imageKeyFileURL.path))
+        #expect(fm.fileExists(atPath: stringFormFileURL.path))
         
-        let newStrings = try String(contentsOf: stringsURL)
-        XCTAssertNotEqual(newStrings, oldStrings)
+        let newStrings = try String(contentsOf: stringsURL, encoding: .utf8)
+        #expect(newStrings != oldStrings)
     }
     
-    func test_runAsRoot_stringsToCSVManifest() throws {
+    @Test func runAsRoot_stringsToCSVManifest() throws {
         // Given
         let fm = FileManager.default
         
@@ -151,10 +152,10 @@ final class RunManifestTests: XCTestCase {
         ])
         
         // Then
-        XCTAssert(fm.fileExists(atPath: csvFileURL.path))
+        #expect(fm.fileExists(atPath: csvFileURL.path))
     }
     
-    func test_runAsRoot_csvToStringsManifest() throws {
+    @Test func runAsRoot_csvToStringsManifest() throws {
         // Given
         let fm = FileManager.default
         
@@ -164,7 +165,7 @@ final class RunManifestTests: XCTestCase {
         
         let csvFileURL = resourcesURL.appendingPathComponent("localizations.csv")
         let stringsURL = resourcesURL.appendingPathComponent("ko.lproj/Translated.strings")
-        XCTAssertFalse(fm.fileExists(atPath: stringsURL.path))
+        #expect(!fm.fileExists(atPath: stringsURL.path))
         
         let manifest = String(
             format: Fixture.csvToStringsManifestFormat,
@@ -185,6 +186,6 @@ final class RunManifestTests: XCTestCase {
         ])
         
         // Then
-        XCTAssert(fm.fileExists(atPath: stringsURL.path))
+        #expect(fm.fileExists(atPath: stringsURL.path))
     }
 }

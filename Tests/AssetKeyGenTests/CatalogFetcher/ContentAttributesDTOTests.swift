@@ -1,8 +1,9 @@
-import XCTest
+import Testing
+import Foundation
 @testable import AssetKeyGen
 
-final class ContentAttributesDTOTests: XCTestCase {
-    func test_initFromDecoder_folder() throws {
+@Suite struct ContentAttributesDTOTests {
+    @Test func initFromDecoder_folder() throws {
         // Given
         let json = """
         {
@@ -17,10 +18,10 @@ final class ContentAttributesDTOTests: XCTestCase {
         let content = try JSONDecoder().decode(ContentAttributesDTO.self, from: json)
         
         // Then
-        XCTAssertNil(content.properties)
+        #expect(content.properties == nil)
     }
     
-    func test_initFromDecoder_namespaceFolder() throws {
+    @Test func initFromDecoder_namespaceFolder() throws {
         // Given
         let json = """
         {
@@ -38,6 +39,6 @@ final class ContentAttributesDTOTests: XCTestCase {
         let content = try JSONDecoder().decode(ContentAttributesDTO.self, from: json)
         
         // Then
-        XCTAssertEqual(content.properties?.providesNamespace, true)
+        #expect(content.properties?.providesNamespace == true)
     }
 }

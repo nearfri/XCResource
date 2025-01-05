@@ -4,7 +4,7 @@ import SwiftSyntaxBuilder
 
 extension DeclSyntax {
     init(_ item: LocalizationItem) {
-        switch item.memberDeclation {
+        switch item.memberDeclaration {
         case .property:
             self = DeclSyntax(VariableDeclSyntax(item))
         case .method:

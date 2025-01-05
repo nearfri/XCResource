@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-protocol CommandDTO: Codable {
+protocol CommandDTO: Codable, Sendable {
     static var commandType: ParsableCommand.Type { get }
     static var commandName: String { get }
     

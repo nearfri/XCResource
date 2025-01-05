@@ -1,8 +1,9 @@
-import XCTest
+import Testing
+import Foundation
 @testable import XCResourceCommand
 
-final class InitManifestTests: XCTestCase {
-    func test_runAsRoot() throws {
+@Suite struct InitManifestTests {
+    @Test func runAsRoot() throws {
         // Given
         let fm = FileManager.default
         
@@ -16,7 +17,7 @@ final class InitManifestTests: XCTestCase {
         try InitManifest.runAsRoot(arguments: [])
         
         // Then
-        XCTAssert(fm.fileExists(atPath: manifestFileURL.path))
+        #expect(fm.fileExists(atPath: manifestFileURL.path))
         print(manifestFileURL.path)
     }
 }

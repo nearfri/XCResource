@@ -1,6 +1,6 @@
 import Foundation
 
-struct FormatPlaceholder: Equatable {
+struct FormatPlaceholder: Equatable, Sendable {
     var index: Index?
     var dynamicWidth: DynamicWidth?
     var dynamicPrecision: DynamicPrecision?
@@ -8,18 +8,18 @@ struct FormatPlaceholder: Equatable {
     var labels: [String] = []
     
     static func == (lhs: FormatPlaceholder, rhs: FormatPlaceholder) -> Bool {
-        return lhs.index == rhs.index
-            && lhs.dynamicWidth == rhs.dynamicWidth
-            && lhs.dynamicPrecision == rhs.dynamicPrecision
-            && lhs.valueType == rhs.valueType
-            && lhs.labels == rhs.labels
+        return lhs.index == rhs.index &&
+        lhs.dynamicWidth == rhs.dynamicWidth &&
+        lhs.dynamicPrecision == rhs.dynamicPrecision &&
+        lhs.valueType == rhs.valueType &&
+        lhs.labels == rhs.labels
     }
 }
 
 extension FormatPlaceholder {
     typealias Index = Int
     
-    struct DynamicWidth: Equatable {
+    struct DynamicWidth: Equatable, Sendable {
         var index: Index?
     }
     
@@ -44,7 +44,7 @@ private struct PlaceholderToParameterConverter {
     }
     
     mutating func convert() throws -> [FunctionParameter] {
-        generateUnsortedParamters()
+        generateUnsortedParameters()
         
         try validateUnsortedParamters()
         
@@ -55,7 +55,7 @@ private struct PlaceholderToParameterConverter {
         return sortedParameters()
     }
     
-    private mutating func generateUnsortedParamters() {
+    private mutating func generateUnsortedParameters() {
         func appendParameter(withIndex index: Int?, label: String, type: Any.Type) {
             unsortedParameters.append((index, makeParameter(label: label, type: type)))
         }

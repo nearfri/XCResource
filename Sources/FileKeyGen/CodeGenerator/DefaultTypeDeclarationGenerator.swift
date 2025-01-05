@@ -5,9 +5,9 @@ class DefaultTypeDeclarationGenerator: TypeDeclarationGenerator {
         let accessLevel = accessLevel.map({ $0 + " " }) ?? ""
         
         return """
-            \(accessLevel)struct \(keyTypeName): Hashable {
-                \(accessLevel)var relativePath: String
-                \(accessLevel)var bundle: Bundle
+            \(accessLevel)struct \(keyTypeName): Hashable, Sendable {
+                \(accessLevel)let relativePath: String
+                \(accessLevel)let bundle: Bundle
                 
                 \(accessLevel)init(relativePath: String, bundle: Bundle) {
                     self.relativePath = relativePath

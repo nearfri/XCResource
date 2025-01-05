@@ -1,21 +1,21 @@
-import XCTest
+import Testing
 import SwiftSyntax
 @testable import LocStringResourceGen
 
-final class FunctionDeclSyntaxTests: XCTestCase {
-    func test_initWithLocalizationItem() throws {
+@Suite struct FunctionDeclSyntaxTests {
+    @Test func initWithLocalizationItem() throws {
         let localizationItem = LocalizationItem(
             key: "some_key",
             defaultValue: "Hello world",
             rawDefaultValue: "",
             table: "LocalizableSystem",
             bundle: .forClass("ResourceBundleClass.self"),
-            memberDeclation: .method("someFunction", [
+            memberDeclaration: .method("someFunction", [
                 .init(firstName: "count1", type: "Int"),
                 .init(firstName: "count2", type: "Int")
             ]))
         
-        XCTAssertEqual(FunctionDeclSyntax(localizationItem).description, """
+        #expect(FunctionDeclSyntax(localizationItem).description == """
             /// Hello world
             static func someFunction(count1: Int, count2: Int) -> Self {
                 .init("some_key",
@@ -26,21 +26,21 @@ final class FunctionDeclSyntaxTests: XCTestCase {
             """)
     }
     
-    func test_initWithLocalizationItem_manyParameters_returnMultilineSignature() throws {
+    @Test func initWithLocalizationItem_manyParameters_returnMultilineSignature() throws {
         let localizationItem = LocalizationItem(
             key: "some_key",
             defaultValue: "Hello world",
             rawDefaultValue: "",
             table: "LocalizableSystem",
             bundle: .forClass("ResourceBundleClass.self"),
-            memberDeclation: .method("someFunction", [
+            memberDeclaration: .method("someFunction", [
                 .init(firstName: "name", type: "String"),
                 .init(firstName: "count1", type: "Int", defaultValue: "1"),
                 .init(firstName: "count2", type: "Int", defaultValue: "2"),
                 .init(firstName: "count3", type: "Int", defaultValue: "3"),
             ]))
         
-        XCTAssertEqual(FunctionDeclSyntax(localizationItem).description, """
+        #expect(FunctionDeclSyntax(localizationItem).description == """
             /// Hello world
             static func someFunction(
                 name: String,

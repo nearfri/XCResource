@@ -1,10 +1,10 @@
-import XCTest
+import Testing
 @testable import LocStringResourceGen
 
-final class StringCatalogDTOMapperTests: XCTestCase {
+@Suite struct StringCatalogDTOMapperTests {
     private let sut: StringCatalogDTOMapper = .init()
     
-    func test_localizationItems_property() throws {
+    @Test func localizationItems_property() throws {
         // Given
         let dto = StringCatalogDTO(
             version: "1.0",
@@ -18,16 +18,16 @@ final class StringCatalogDTOMapperTests: XCTestCase {
         let items = try sut.localizationItems(from: dto)
         
         // Then
-        XCTAssertEqual(items, [
+        #expect(items == [
             LocalizationItem(
                 key: "greeting",
                 defaultValue: "Hello",
                 rawDefaultValue: "Hello",
-                memberDeclation: .property("greeting"))
+                memberDeclaration: .property("greeting"))
         ])
     }
     
-    func test_localizationItems_property_camelCase() throws {
+    @Test func localizationItems_property_camelCase() throws {
         // Given
         let dto = StringCatalogDTO(
             version: "1.0",
@@ -41,16 +41,16 @@ final class StringCatalogDTOMapperTests: XCTestCase {
         let items = try sut.localizationItems(from: dto)
         
         // Then
-        XCTAssertEqual(items, [
+        #expect(items == [
             LocalizationItem(
                 key: "common_greeting",
                 defaultValue: "Hello",
                 rawDefaultValue: "Hello",
-                memberDeclation: .property("commonGreeting"))
+                memberDeclaration: .property("commonGreeting"))
         ])
     }
     
-    func test_localizationItems_property_deviceVariations() throws {
+    @Test func localizationItems_property_deviceVariations() throws {
         // Given
         let dto = StringCatalogDTO(
             version: "1.0",
@@ -69,16 +69,16 @@ final class StringCatalogDTOMapperTests: XCTestCase {
         let items = try sut.localizationItems(from: dto)
         
         // Then
-        XCTAssertEqual(items, [
+        #expect(items == [
             LocalizationItem(
                 key: "tutorial1",
                 defaultValue: "Tap here",
                 rawDefaultValue: "Tap here",
-                memberDeclation: .property("tutorial1"))
+                memberDeclaration: .property("tutorial1"))
         ])
     }
     
-    func test_localizationItems_method() throws {
+    @Test func localizationItems_method() throws {
         // Given
         let dto = StringCatalogDTO(
             version: "1.0",
@@ -92,18 +92,18 @@ final class StringCatalogDTOMapperTests: XCTestCase {
         let items = try sut.localizationItems(from: dto)
         
         // Then
-        XCTAssertEqual(items, [
+        #expect(items == [
             LocalizationItem(
                 key: "greeting",
                 defaultValue: "Hello, \\(param1)",
                 rawDefaultValue: "Hello, %@",
-                memberDeclation: .method("greeting", [
+                memberDeclaration: .method("greeting", [
                     LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "String")
                 ]))
         ])
     }
     
-    func test_localizationItems_method_camelCase() throws {
+    @Test func localizationItems_method_camelCase() throws {
         // Given
         let dto = StringCatalogDTO(
             version: "1.0",
@@ -117,18 +117,18 @@ final class StringCatalogDTOMapperTests: XCTestCase {
         let items = try sut.localizationItems(from: dto)
         
         // Then
-        XCTAssertEqual(items, [
+        #expect(items == [
             LocalizationItem(
                 key: "common_greeting",
                 defaultValue: "Hello, \\(param1)",
                 rawDefaultValue: "Hello, %@",
-                memberDeclation: .method("commonGreeting", [
+                memberDeclaration: .method("commonGreeting", [
                     LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "String")
                 ]))
         ])
     }
     
-    func test_localizationItems_method_sortParameters() throws {
+    @Test func localizationItems_method_sortParameters() throws {
         // Given
         let dto = StringCatalogDTO(
             version: "1.0",
@@ -142,19 +142,19 @@ final class StringCatalogDTOMapperTests: XCTestCase {
         let items = try sut.localizationItems(from: dto)
         
         // Then
-        XCTAssertEqual(items, [
+        #expect(items == [
             LocalizationItem(
                 key: "profile",
                 defaultValue: "\\(param1) \\(param2)\nname: %2$@, age: %1$lld",
                 rawDefaultValue: "name: %2$@, age: %1$lld",
-                memberDeclation: .method("profile", [
+                memberDeclaration: .method("profile", [
                     LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "Int"),
                     LocalizationItem.Parameter(firstName: "_", secondName: "param2", type: "String")
                 ]))
         ])
     }
     
-    func test_localizationItems_method_substitutions() throws {
+    @Test func localizationItems_method_substitutions() throws {
         // Given
         let dto = StringCatalogDTO(
             version: "1.0",
@@ -181,19 +181,19 @@ final class StringCatalogDTOMapperTests: XCTestCase {
         let items = try sut.localizationItems(from: dto)
         
         // Then
-        XCTAssertEqual(items, [
+        #expect(items == [
             LocalizationItem(
                 key: "eating_apples",
                 defaultValue: "\\(param1) ate \\(appleCount).",
                 rawDefaultValue: "%@ ate %#@appleCount@.",
-                memberDeclation: .method("eatingApples", [
+                memberDeclaration: .method("eatingApples", [
                     .init(firstName: "_", secondName: "param1", type: "String"),
                     .init(firstName: "appleCount", type: "Int")
                 ]))
         ])
     }
     
-    func test_localizationItems_escaping() throws {
+    @Test func localizationItems_escaping() throws {
         // Given
         let dto = StringCatalogDTO(
             version: "1.0",
@@ -209,12 +209,12 @@ final class StringCatalogDTOMapperTests: XCTestCase {
         let items = try sut.localizationItems(from: dto)
         
         // Then
-        XCTAssertEqual(items, [
+        #expect(items == [
             LocalizationItem(
                 key: "alert_delete_file",
                 defaultValue: "\\\"\\(param1)\\\" will be deleted.",
                 rawDefaultValue: "\\\"%@\\\" will be deleted.",
-                memberDeclation: .method("alertDeleteFile", [
+                memberDeclaration: .method("alertDeleteFile", [
                     .init(firstName: "_", secondName: "param1", type: "String")
                 ]))
         ])

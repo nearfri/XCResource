@@ -1,5 +1,5 @@
 import Foundation
 
-struct ManifestDTO: Codable {
+struct ManifestDTO: Codable, Sendable {
     var commands: [CommandDTOWrapper]
 }

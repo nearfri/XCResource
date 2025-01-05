@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Comment: Equatable {
+public enum Comment: Equatable, Sendable {
     case line(String) // starting with '//'
     case block(String) // starting with '/*' and ending with '*/'
     case documentLine(String) // starting with '///'

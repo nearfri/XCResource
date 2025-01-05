@@ -1,10 +1,10 @@
-import XCTest
+import Testing
 import SwiftSyntax
 import SwiftParser
 @testable import LocStringResourceGen
 
-final class IndentIncreaserTests: XCTestCase {
-    func test_indent_singleLineString() throws {
+@Suite struct IndentIncreaserTests {
+    @Test func indent_singleLineString() throws {
         // Given
         let source = """
             
@@ -17,13 +17,13 @@ final class IndentIncreaserTests: XCTestCase {
         let indented = IndentIncreaser.indent(syntax, indentation: .spaces(4))
         
         // Then
-        XCTAssertEqual(indented.description, """
+        #expect(indented.description == """
             
                 let str = "hello world"
             """)
     }
     
-    func test_indent_singleLineStringWithNewline() throws {
+    @Test func indent_singleLineStringWithNewline() throws {
         // Given
         let source = """
             
@@ -36,13 +36,13 @@ final class IndentIncreaserTests: XCTestCase {
         let indented = IndentIncreaser.indent(syntax, indentation: .spaces(4))
         
         // Then
-        XCTAssertEqual(indented.description, """
+        #expect(indented.description == """
             
                 let str = "hello\\nworld\\n"
             """)
     }
     
-    func test_indent_multilineString() throws {
+    @Test func indent_multilineString() throws {
         // Given
         let source = #"""
             
@@ -59,7 +59,7 @@ final class IndentIncreaserTests: XCTestCase {
         let indented = IndentIncreaser.indent(syntax, indentation: .spaces(4))
         
         // Then
-        XCTAssertEqual(indented.description, #"""
+        #expect(indented.description == #"""
             
                 let str1 = "hello\\nworld\\n"
                 let str2 = """

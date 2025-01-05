@@ -1,4 +1,5 @@
-import XCTest
+import Testing
+import Foundation
 import TestUtil
 import SampleData
 @testable import XCResourceCommand
@@ -9,8 +10,8 @@ private enum Fixture {
     // Do Not Edit Directly!
 
     public struct StringForm {
-        public var key: String
-        public var arguments: [CVarArg]
+        public let key: String
+        public let arguments: [CVarArg]
         
         public init(key: String, arguments: [CVarArg]) {
             self.key = key
@@ -42,8 +43,8 @@ private enum Fixture {
     """
 }
 
-final class KeyToFormTests: XCTestCase {
-    func test_runAsRoot() throws {
+@Suite struct KeyToFormTests {
+    @Test func runAsRoot() throws {
         // Given
         let fm = FileManager.default
         
@@ -61,13 +62,13 @@ final class KeyToFormTests: XCTestCase {
         ])
         
         // Then
-        XCTAssertEqual(
-            try String(contentsOf: formFileURL),
-            try String(contentsOf: SampleData.sourceCodeURL("StringForm.swift"))
+        expectEqual(
+            try String(contentsOf: formFileURL, encoding: .utf8),
+            try String(contentsOf: SampleData.sourceCodeURL("StringForm.swift"), encoding: .utf8)
         )
     }
     
-    func test_runAsRoot_publicAccessLevel() throws {
+    @Test func runAsRoot_publicAccessLevel() throws {
         // Given
         let fm = FileManager.default
         
@@ -86,6 +87,7 @@ final class KeyToFormTests: XCTestCase {
         ])
         
         // Then
-        XCTAssertEqual(try String(contentsOf: formFileURL), Fixture.publicStringForm)
+        expectEqual(try String(contentsOf: formFileURL, encoding: .utf8),
+                    Fixture.publicStringForm)
     }
 }

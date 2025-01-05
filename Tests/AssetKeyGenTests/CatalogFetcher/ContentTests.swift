@@ -1,9 +1,9 @@
-import XCTest
+import Testing
 import SampleData
 @testable import AssetKeyGen
 
-final class ContentTests: XCTestCase {
-    func test_initWithURL_folder() throws {
+@Suite struct ContentTests {
+    @Test func initWithURL_folder() throws {
         // Given
         let url = SampleData.assetURL("Settings")
         
@@ -11,12 +11,12 @@ final class ContentTests: XCTestCase {
         let content = try Content(url: url)
         
         // Then
-        XCTAssertEqual(content.type, .group)
-        XCTAssertEqual(content.providesNamespace, false)
-        XCTAssertEqual(content.name, "Settings")
+        #expect(content.type == .group)
+        #expect(content.providesNamespace == false)
+        #expect(content.name == "Settings")
     }
     
-    func test_initWithURL_namespaceFolder() throws {
+    @Test func initWithURL_namespaceFolder() throws {
         // Given
         let url = SampleData.assetURL("Places/Dot")
         
@@ -24,12 +24,12 @@ final class ContentTests: XCTestCase {
         let content = try Content(url: url)
         
         // Then
-        XCTAssertEqual(content.type, .group)
-        XCTAssertEqual(content.providesNamespace, true)
-        XCTAssertEqual(content.name, "Dot")
+        #expect(content.type == .group)
+        #expect(content.providesNamespace == true)
+        #expect(content.name == "Dot")
     }
     
-    func test_initWithURL_imageSet() throws {
+    @Test func initWithURL_imageSet() throws {
         // Given
         let url = SampleData.assetURL("Settings/settingsRate.imageset")
         
@@ -37,12 +37,12 @@ final class ContentTests: XCTestCase {
         let content = try Content(url: url)
         
         // Then
-        XCTAssertEqual(content.type, .asset(.imageSet))
-        XCTAssertEqual(content.providesNamespace, false)
-        XCTAssertEqual(content.name, "settingsRate")
+        #expect(content.type == .asset(.imageSet))
+        #expect(content.providesNamespace == false)
+        #expect(content.name == "settingsRate")
     }
     
-    func test_initWithURL_colorSet() throws {
+    @Test func initWithURL_colorSet() throws {
         // Given
         let url = SampleData.assetURL("Color/battleshipGrey8.colorset")
         
@@ -50,8 +50,8 @@ final class ContentTests: XCTestCase {
         let content = try Content(url: url)
         
         // Then
-        XCTAssertEqual(content.type, .asset(.colorSet))
-        XCTAssertEqual(content.providesNamespace, false)
-        XCTAssertEqual(content.name, "battleshipGrey8")
+        #expect(content.type == .asset(.colorSet))
+        #expect(content.providesNamespace == false)
+        #expect(content.name == "battleshipGrey8")
     }
 }

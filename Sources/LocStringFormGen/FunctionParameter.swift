@@ -1,14 +1,14 @@
 import Foundation
 
-struct FunctionParameter: Equatable {
+struct FunctionParameter: Equatable, Sendable {
     var externalName: String
     var localName: String
     var type: Any.Type
     
     static func == (lhs: FunctionParameter, rhs: FunctionParameter) -> Bool {
-        return lhs.externalName == rhs.externalName
-            && lhs.localName == rhs.localName
-            && lhs.type == rhs.type
+        return lhs.externalName == rhs.externalName &&
+        lhs.localName == rhs.localName &&
+        lhs.type == rhs.type
     }
     
     func sourceCodeRepresentation(alternativeName: String) -> String {

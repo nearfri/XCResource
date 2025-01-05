@@ -53,7 +53,7 @@ private class StubTypeDeclarationGenerator: TypeDeclarationGenerator {
     }
 }
 
-private class StubMethodDeclationGenerator: MethodDeclationGenerator {
+private class StubMethodDeclarationGenerator: MethodDeclarationGenerator {
     static let declarationsString = "{ Method Declaration }"
     
     var generateParamItems: [FunctionItem] = []
@@ -70,7 +70,7 @@ private class StubMethodDeclationGenerator: MethodDeclationGenerator {
 
 final class StringFormGeneratorTests: XCTestCase {
     private var placeholderImporter: StubFormatPlaceholderImporter!
-    private var methodDeclationGenerator: StubMethodDeclationGenerator!
+    private var methodDeclarationGenerator: StubMethodDeclarationGenerator!
     private var request: StringFormGenerator.Request!
     private var sut: StringFormGenerator!
     
@@ -78,7 +78,7 @@ final class StringFormGeneratorTests: XCTestCase {
         try super.setUpWithError()
         
         placeholderImporter = StubFormatPlaceholderImporter()
-        methodDeclationGenerator = StubMethodDeclationGenerator()
+        methodDeclarationGenerator = StubMethodDeclarationGenerator()
         
         request = StringFormGenerator.Request(
             sourceCodeURL: URL(fileURLWithPath: "StringKey.swift"),
@@ -88,8 +88,8 @@ final class StringFormGeneratorTests: XCTestCase {
         sut = StringFormGenerator(
             enumerationImporter: StubStringEnumerationImporter(),
             placeholderImporter: placeholderImporter,
-            typeDeclationGenerator: StubTypeDeclarationGenerator(),
-            methodDeclationGenerator: methodDeclationGenerator)
+            typeDeclarationGenerator: StubTypeDeclarationGenerator(),
+            methodDeclarationGenerator: methodDeclarationGenerator)
     }
     
     func test_generate_codes() throws {
@@ -99,7 +99,7 @@ final class StringFormGeneratorTests: XCTestCase {
         // Then
         XCTAssertEqual(result.typeDeclaration, StubTypeDeclarationGenerator.declarationString)
         
-        XCTAssertEqual(result.methodDeclarations, StubMethodDeclationGenerator.declarationsString)
+        XCTAssertEqual(result.methodDeclarations, StubMethodDeclarationGenerator.declarationsString)
     }
     
     func test_generate_filterDocumentComment() throws {
@@ -119,7 +119,7 @@ final class StringFormGeneratorTests: XCTestCase {
         _ = try sut.generate(for: request)
         
         // Then
-        XCTAssertEqual(methodDeclationGenerator.generateParamItems, [
+        XCTAssertEqual(methodDeclarationGenerator.generateParamItems, [
             FunctionItem(
                 enumCase: .init(
                     comments: [.documentLine("영상은 최대 %@{duration}, %@{fileSize}까지만")],

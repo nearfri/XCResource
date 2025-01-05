@@ -1,6 +1,6 @@
 import Foundation
 
-enum ContentType: Hashable {
+enum ContentType: Hashable, Sendable {
     case group
     case asset(AssetType)
     
@@ -22,7 +22,7 @@ enum ContentType: Hashable {
     }
 }
 
-struct Content {
+struct Content: Sendable {
     var url: URL
     var type: ContentType
     var providesNamespace: Bool = false

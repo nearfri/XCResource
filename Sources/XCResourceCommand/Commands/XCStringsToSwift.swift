@@ -41,9 +41,9 @@ struct XCStringsToSwift: ParsableCommand {
         let catalogFileURL = URL(fileURLWithExpandingTildeInPath: catalogPath)
         let swiftFileURL = URL(fileURLWithExpandingTildeInPath: swiftPath)
         
-        let catalogFileContents = try String(contentsOf: catalogFileURL)
+        let catalogFileContents = try String(contentsOf: catalogFileURL, encoding: .utf8)
         let table = catalogFileURL.deletingPathExtension().lastPathComponent
-        let sourceCode = try String(contentsOf: swiftFileURL)
+        let sourceCode = try String(contentsOf: swiftFileURL, encoding: .utf8)
         
         let request = LocalizedStringResourceGenerator.Request(
             catalogFileContents: catalogFileContents,

@@ -2,117 +2,95 @@
 [![Swift](https://github.com/nearfri/XCResource/workflows/Swift/badge.svg)](https://github.com/nearfri/XCResource/actions?query=workflow%3ASwift)
 [![codecov](https://codecov.io/gh/nearfri/XCResource/branch/main/graph/badge.svg?token=DWKDFE0O2A)](https://codecov.io/gh/nearfri/XCResource)
 
-XCResource는 xcassets 리소스 로딩과 다국어 지원을 도와주는 커맨드라인 툴입니다.
+XCResource는 Xcode 프로젝트에서 리소스(문자열, 폰트, 파일 등)를 안전하고 효율적으로 관리할 수 있는 도구입니다.  
+자동 코드 생성을 통해 오타와 런타임 오류를 줄여줍니다.
 
-이를 이용해 이미지, 컬러, 다국어 문자열을 쉽게 생성할 수 있습니다:
-```swift
-let image = UIImage.named(.settings)
-let color = UIColor.named(.coralPink)
-let font = UIFont(.openSans_bold, size: 12)
-let string = String(localized: .done)
-let text = String(localized: .alert_delete_file(named: filename))
-let data = Data(.model)
-```
+## 특징
 
-## 제공기능
-`xcresource`는 다음의 하위 커맨드를 가지고 있습니다:
-- `xcassets2swift`: xcassets을 위한 Swift 코드를 생성합니다.
-- `files2swift`: 파일을 리스팅하는 Swift 코드를 생성합니다.
-- `fonts2swift`: font를 리스팅하는 Swift 코드를 생성합니다.
-- `xcstrings2swift`: xcstrings 파일로 `LocalizedStringResource` 코드를 생성합니다.
-- `strings2swift`: strings 파일로 Swift enum을 생성합니다.
-- `swift2strings`: Swift enum으로 strings 파일을 생성합니다.
-- `key2form`: Swift enum으로 format string 코드를 생성합니다.
-- `strings2csv`: strings 파일로 CSV 파일을 생성합니다.
-- `csv2strings`: CSV 파일로 strings 파일을 생성합니다.
-- `init`: Manifest 파일을 생성합니다. 
-- `run (default)`: Manifest 파일에 나열된 하위 커맨드들을 실행합니다.
+### 1. 리소스 코드 생성
+- **문자열, 폰트, 파일 리소스**에 대해 타입 안전한 Swift 코드를 생성합니다.
 
-## 설치
+### 2. 유연한 설정 및 통합
+- Swift Package Manager 지원으로 의존성 관리가 간편합니다.
+- 설정 파일을 통해 원하는 경로의 리소스만 코드로 생성합니다.
+- Swift Package Plugin을 사용해 간단하게 실행할 수 있습니다.
+
+## 설치 방법
+
 ### Swift Package Manager
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nearfri/XCResource-plugin", from: "0.11.0"),
+    .package(url: "https://github.com/nearfri/XCResource.git", from: "0.11.4"),
+    // 혹은
+    .package(url: "https://github.com/nearfri/XCResource-plugin.git", from: "0.11.4"),
 ],
 ```
 
-## 사용 예제
+`XCResource`는 전체 소스 코드를 포함하기 때문에 플러그인만 포함하는 [`XCResource-plugin`](https://github.com/nearfri/XCResource-plugin.git)을 사용하길 추천합니다. 
 
-### xcassets 이미지 로딩하기
-https://github.com/nearfri/XCResource/assets/323940/1244845a-dea1-403c-ae5e-d2a37d24c14b
+## 빠른 시작
 
-`xcresource.json`에 아래와 같은 커맨드를 추가하고 `RunXCResource` 플러그인을 실행합니다:
+### 1. 다국어 문자열 관리
+https://github.com/nearfri/XCResource/assets/323940/8f7c0a85-f4fb-4c96-b6cb-0ed2d0f72698
+
+#### 설정 파일 작성 (`xcresource.json`)  
 ```json
 {
     "commands": [
         {
-            "commandName": "xcassets2swift",
-            "xcassetsPaths": [
-                "Sources/Resource/Resources/Assets.xcassets"
-            ],
-            "assetTypes": ["imageset"],
-            "swiftPath": "Sources/Resource/Keys/ImageKey.swift",
-            "keyTypeName": "ImageKey",
-            "accessLevel": "public"
+            "commandName": "xcstrings2swift",
+            "catalogPath": "Sources/Resources/Resources/Localizable.xcstrings",
+            "bundle": "at-url:Bundle.module.bundleURL",
+            "swiftPath": "Sources/Resources/Keys/LocalizedStringResource+.swift"
         }
     ]
 }
 ```
 
-아래와 같은 코드가 생성됩니다:
+#### 생성된 코드 예시
 ```swift
-struct ImageKey: ExpressibleByStringLiteral, Hashable {
-    var rawValue: String
-    
-    init(_ rawValue: String) {
-        self.rawValue = rawValue
+public extension LocalizedStringResource {
+    /// \"\\(param1)\" will be deleted.\
+    /// This action cannot be undone.
+    static func alertDeleteFile(_ param1: String) -> Self {
+        .init("alert_delete_file",
+              defaultValue: """
+                \"\(param1)\" will be deleted.
+                This action cannot be undone.
+                """,
+              bundle: .atURL(Bundle.module.bundleURL))
     }
     
-    init(stringLiteral value: String) {
-        self.rawValue = value
-    }
-}
-
-// MARK: - Assets.xcassets
-
-extension ImageKey {
-    // MARK: Places
-    static let places_authArrow: ImageKey = "Places/authArrow"
-    static let places_authClose: ImageKey = "Places/authClose"
-    
-    // MARK: Settings
-    static let settings: ImageKey = "settings"
-    static let settingsAppearance: ImageKey = "settingsAppearance"
-    ...
-```
-
-`UIImage`에 생성자를 추가해줍니다:
-```swift
-extension UIImage {
-    static func named(_ key: ImageKey) -> UIImage {
-        return UIImage(named: key.rawValue, in: .module, compatibleWith: nil)!
+    /// Done
+    static var commonDone: Self {
+        .init("common_done",
+              defaultValue: "Done",
+              bundle: .atURL(Bundle.module.bundleURL))
     }
 }
 ```
+*(다국어 키와 함수 시그니처가 동일하다면 함수명이나 파라미터명은 변경 가능합니다.)*
 
-이제 자동완성과 함께 이미지를 생성할 수 있습니다:
+#### 코드 사용 예시
 ```swift
-imageView.image = .named(.settings)
+let greeting = String(localized: .commonDone)
 ```
 
-### 커스텀 폰트 로딩하기
+### 2. 폰트 코드 생성
 https://github.com/nearfri/XCResource/assets/323940/aada31e4-9b04-4467-b8bb-0f5786171c45
 
-`xcresource.json`에 아래와 같은 커맨드를 추가하고 `RunXCResource` 플러그인을 실행합니다:
+#### 설정 파일 작성 (`xcresource.json`)  
 ```json
 {
     "commands": [
         {
             "commandName": "fonts2swift",
-            "resourcesPath": "Sources/Resource/Resources",
-            "swiftPath": "Sources/Resource/Keys/FontResource.swift",
+            "resourcesPath": "Sources/Resources/Resources",
+            "swiftPath": "Sources/Resources/Keys/FontResource.swift",
             "keyTypeName": "FontResource",
             "keyListName": "all",
+            "generatesLatinKey": true,
+            "stripsCombiningMarksFromKey": true,
             "preservesRelativePath": true,
             "bundle": "Bundle.module",
             "accessLevel": "public"
@@ -121,121 +99,101 @@ https://github.com/nearfri/XCResource/assets/323940/aada31e4-9b04-4467-b8bb-0f57
 }
 ```
 
-아래와 같은 코드가 생성됩니다:
+#### 생성된 코드 예시  
 ```swift
-public struct FontResource: Hashable {
-    public var fontName: String
-    public var familyName: String
-    public var style: String
-    public var relativePath: String
-    public var bundle: Bundle
-    
-    public init(
-        fontName: String,
-        familyName: String,
-        style: String,
-        relativePath: String,
-        bundle: Bundle
-    ) {
-        self.fontName = fontName
-        self.familyName = familyName
-        self.style = style
-        self.relativePath = relativePath
-        self.bundle = bundle
-    }
-    
-    public var url: URL {
-        return URL(filePath: relativePath, relativeTo: bundle.resourceURL).standardizedFileURL
-    }
-    
-    public var path: String {
-        return url.path(percentEncoded: false)
-    }
+public struct FontResource: Hashable, Sendable {
+    public let fontName: String
+    public let familyName: String
+    public let style: String
+    public let relativePath: String
+    public let bundle: Bundle
+    ...
 }
 
 public extension FontResource {
     static let all: [FontResource] = [
+        // Cambria
+        .cambriaRegular,
+        
         // Open Sans
-        .openSans_bold,
-        .openSans_regular,
+        .openSansBold,
     ]
 }
 
 public extension FontResource {
+    // MARK: Cambria
+    
+    static let cambriaRegular: FontResource = .init(
+        fontName: "Cambria",
+        familyName: "Cambria",
+        style: "Regular",
+        relativePath: "Fonts/Cambria.ttc",
+        bundle: Bundle.module)
+    
     // MARK: Open Sans
     
-    static let openSans_bold: FontResource = .init(
+    static let openSansBold: FontResource = .init(
         fontName: "OpenSans-Bold",
         familyName: "Open Sans",
         style: "Bold",
         relativePath: "Fonts/OpenSans/OpenSans-Bold.ttf",
         bundle: Bundle.module)
-    
-    ...
-```
-
-`UIFont`에 생성자를 추가해줍니다:
-```swift
-extension UIFont {
-    convenience init(_ resource: FontResource, size: CGFloat) {
-        self.init(name: resource.fontName, size: size)!
-    }
 }
 ```
 
-이제 자동완성과 함께 폰트를 생성할 수 있습니다:
+#### 코드 사용 예시  
 ```swift
-label.font = UIFont(.openSans_bold, size: 12)
+Font.custom(.openSansBold, size: 16)
 ```
 
-### 다국어 문자열 로딩하기
-https://github.com/nearfri/XCResource/assets/323940/8f7c0a85-f4fb-4c96-b6cb-0ed2d0f72698
+### 3. 파일 코드 생성
 
-`xcresource.json`에 아래와 같은 커맨드를 추가하고 `RunXCResource` 플러그인을 실행합니다:
+#### 설정 파일 작성 (`xcresource.json`)  
 ```json
 {
     "commands": [
         {
-            "commandName": "xcstrings2swift",
-            "catalogPath": "Sources/Resource/Resources/Localizable.xcstrings",
-            "bundle": "at-url:Bundle.module.bundleURL",
-            "swiftPath": "Sources/Resource/Keys/LocalizedStringResource+.swift"
+            "commandName": "files2swift",
+            "resourcesPath": "Sources/Resources/Resources/Lotties",
+            "filePattern": "(?i)\\.json$",
+            "swiftPath": "Sources/Resources/Keys/LottieResource.swift",
+            "keyTypeName": "LottieResource",
+            "preservesRelativePath": true,
+            "relativePathPrefix": "Lotties",
+            "bundle": "Bundle.module",
+            "accessLevel": "public"
         }
     ]
 }
 ```
 
-아래와 같은 코드가 생성됩니다:
+#### 생성된 코드 예시
 ```swift
-public extension LocalizedStringResource {
-    /// \"\\(param1)\" will be deleted.\
-    /// This action cannot be undone.
-    static func alert_delete_file(_ param1: String) -> Self {
-        .init("alert_delete_file",
-              defaultValue: """
-                \"\(param1)\" will be deleted.
-                This action cannot be undone.
-                """,
-              bundle: .atURL(Bundle.module.bundleURL))
-    }
+public struct LottieResource: Hashable, Sendable {
+    public let relativePath: String
+    public let bundle: Bundle
+    ...
+}
 
-    /// Done
-    static var common_done: Self {
-        .init("common_done",
-              defaultValue: "Done",
-              bundle: .atURL(Bundle.module.bundleURL))
-    }
+extension LottieResource {
+    public static let hello: LottieResource = .init(
+        relativePath: "Lotties/hello.json",
+        bundle: Bundle.module)
 }
 ```
 
-**함수 시그니처와 다국어 키가 동일하다면 함수명이나 파라미터명은 변경하더라도 계속 유지됩니다.**
-
-이제 자동완성과 함께 지역화된 문자열을 생성할 수 있습니다:
+#### 코드 사용 예시
 ```swift
-label.text = String(localized: .common_done)
+LottieView(.hello)
 ```
 
-`XCResourceSample.xcworkspace`에서 적용 예제를 볼 수 있습니다.
+## 제공되는 커맨드
+| 명령어 | 설명 |
+|------|-----|
+| `xcstrings2swift` | `.xcstrings` 파일을 분석하여 코드 생성 |
+| `fonts2swift` | 폰트 폴더를 스캔하여 코드 생성 |
+| `files2swift` | 파일 폴더를 스캔하여 코드 생성 |
+| `xcassets2swift` | `.xcassets` 폴더를 스캔하여 코드 생성 |
 
 ## 라이선스
 XCResource는 MIT 라이선스에 따라 배포됩니다. 자세한 내용은 LICENSE를 참조하십시오.

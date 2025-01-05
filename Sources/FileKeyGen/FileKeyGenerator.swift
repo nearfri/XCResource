@@ -22,7 +22,7 @@ protocol KeyDeclarationGenerator: AnyObject {
 }
 
 extension FileKeyGenerator {
-    public struct Request {
+    public struct Request: Sendable {
         public var resourcesURL: URL
         public var filePattern: String
         public var keyTypeName: String
@@ -50,7 +50,7 @@ extension FileKeyGenerator {
         }
     }
     
-    public struct Result {
+    public struct Result: Sendable {
         public var typeDeclaration: String
         public var keyDeclarations: String
         

@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-enum AccessLevel: String, CaseIterable, ExpressibleByArgument {
+enum AccessLevel: String, CaseIterable, ExpressibleByArgument, Sendable {
     case `public`
     case package
     case `internal`

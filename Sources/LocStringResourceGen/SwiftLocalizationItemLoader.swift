@@ -16,7 +16,7 @@ private extension LocalizationItem {
         LocalizationItem(key: "",
                          defaultValue: "",
                          rawDefaultValue: "",
-                         memberDeclation: .property(""))
+                         memberDeclaration: .property(""))
     }
 }
 
@@ -62,7 +62,7 @@ private class SourceFileVisitor: SyntaxVisitor {
         else { return .skipChildren }
         
         currentItem.developerComments = developerComments(in: node.leadingTrivia)
-        currentItem.memberDeclation = .property(idPattern.identifier.text)
+        currentItem.memberDeclaration = .property(idPattern.identifier.text)
         
         isInMemberBlockItem = true
         
@@ -87,7 +87,7 @@ private class SourceFileVisitor: SyntaxVisitor {
         }
         
         currentItem.developerComments = developerComments(in: node.leadingTrivia)
-        currentItem.memberDeclation = .method(name, parameters)
+        currentItem.memberDeclaration = .method(name, parameters)
         
         isInMemberBlockItem = true
         

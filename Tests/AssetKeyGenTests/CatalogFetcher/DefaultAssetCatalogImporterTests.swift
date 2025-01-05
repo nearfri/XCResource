@@ -1,9 +1,9 @@
-import XCTest
+import Testing
 import SampleData
 @testable import AssetKeyGen
 
-final class DefaultAssetCatalogImporterTests: XCTestCase {
-    func test_import() throws {
+@Suite struct DefaultAssetCatalogImporterTests {
+    @Test func importCatalog() throws {
         // Given
         let sut = DefaultAssetCatalogImporter()
         let imagePath = "Settings/settingsRate.imageset"
@@ -12,7 +12,7 @@ final class DefaultAssetCatalogImporterTests: XCTestCase {
         let catalog: AssetCatalog = try sut.import(at: SampleData.assetURL())
         
         // Then
-        XCTAssertEqual(catalog.name, "Media.xcassets")
-        XCTAssert(catalog.assets.contains(where: { $0.path == imagePath }))
+        #expect(catalog.name == "Media.xcassets")
+        #expect(catalog.assets.contains(where: { $0.path == imagePath }))
     }
 }

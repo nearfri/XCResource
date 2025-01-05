@@ -3,7 +3,7 @@ import OrderedCollections
 import Strix
 import StrixParsers
 
-struct PluralLocalizationItem: Equatable {
+struct PluralLocalizationItem: Equatable, Sendable {
     var key: String
     var format: String
     var variables: [String: Variable]
@@ -16,7 +16,7 @@ struct PluralLocalizationItem: Equatable {
 }
 
 extension PluralLocalizationItem {
-    struct Variable: Equatable {
+    struct Variable: Equatable, Sendable {
         var specType: String
         var valueType: String
         var other: String

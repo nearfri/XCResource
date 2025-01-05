@@ -1,21 +1,20 @@
-import XCTest
+import Testing
 import SwiftSyntax
 @testable import LocStringResourceGen
 
-final class ExprTests: XCTestCase {
+@Suite struct ExprTests {
     private typealias BundleDesc = LocalizationItem.BundleDescription
     
-    func test_initWithBundle_main() throws {
-        XCTAssertEqual(ExprSyntax(BundleDesc.main).description, ".main")
+    @Test func initWithBundle_main() throws {
+        #expect(ExprSyntax(BundleDesc.main).description == ".main")
     }
     
-    func test_initWithBundle_atURL() throws {
-        XCTAssertEqual(ExprSyntax(BundleDesc.atURL(".moduleURL")).description,
-                       ".atURL(.moduleURL)")
+    @Test func initWithBundle_atURL() throws {
+        #expect(ExprSyntax(BundleDesc.atURL(".moduleURL")).description == ".atURL(.moduleURL)")
     }
     
-    func test_initWithBundle_forClass() throws {
-        XCTAssertEqual(ExprSyntax(BundleDesc.forClass("ResourceBundleClass.self")).description,
-                       ".forClass(ResourceBundleClass.self)")
+    @Test func initWithBundle_forClass() throws {
+        #expect(ExprSyntax(BundleDesc.forClass("ResourceBundleClass.self")).description ==
+                ".forClass(ResourceBundleClass.self)")
     }
 }

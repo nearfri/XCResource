@@ -2,7 +2,7 @@ import Foundation
 import Strix
 import StrixParsers
 
-struct FormatUnit: Equatable {
+struct FormatUnit: Equatable, Sendable {
     var placeholder: FormatPlaceholder
     var range: Range<String.Index>
     

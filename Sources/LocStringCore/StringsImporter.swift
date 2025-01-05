@@ -5,7 +5,7 @@ public class StringsImporter: LocalizationItemImporter {
     public init() {}
     
     public func `import`(at url: URL) throws -> [LocalizationItem] {
-        let plistString = try String(contentsOf: url)
+        let plistString = try String(contentsOf: url, encoding: .utf8)
         let plist = try ASCIIPlistParser().parse(plistString)
         
         guard case let .dictionary(entries) = plist else {

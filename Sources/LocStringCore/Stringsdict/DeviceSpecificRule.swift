@@ -2,7 +2,7 @@ import Foundation
 import OrderedCollections
 
 // https://developer.apple.com/documentation/xcode/creating-width-and-device-variants-of-strings#Provide-device-specific-string-variants
-struct DeviceSpecificRule: Equatable {
+struct DeviceSpecificRule: Equatable, Sendable {
     var key: String
     var stringsByDevice: OrderedDictionary<String, String>
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-enum StringKey: String, CaseIterable {
+enum StringKey: String, CaseIterable, Sendable {
     // MARK: - Common
     
     /// 취소

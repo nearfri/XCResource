@@ -14,7 +14,7 @@ class DefaultFormatPlaceholderImporter: FormatPlaceholderImporter {
                 guard case let .placeholder(placeholder, labels) = $0 else { return nil }
                 return placeholder.toFormatPlaceholder(withLabels: labels)
             }
-        } catch let error as Strix.RunError {
+        } catch {
             let failureDescription = (error.failureReason ?? error.localizedDescription)
             
             throw IssueReportError(text: string,

@@ -1,4 +1,5 @@
-import XCTest
+import Testing
+import Foundation
 import TestUtil
 import SampleData
 @testable import XCResourceCommand
@@ -10,12 +11,12 @@ private enum Fixture {
     
     import Foundation
     
-    public struct FontKey: Hashable {
-        public var fontName: String
-        public var familyName: String
-        public var style: String
-        public var relativePath: String
-        public var bundle: Bundle
+    public struct FontKey: Hashable, Sendable {
+        public let fontName: String
+        public let familyName: String
+        public let style: String
+        public let relativePath: String
+        public let bundle: Bundle
         
         public init(
             fontName: String,
@@ -85,8 +86,8 @@ private enum Fixture {
     """
 }
 
-final class FontsToSwiftTests: XCTestCase {
-    func test_runAsRoot() throws {
+@Suite struct FontsToSwiftTests {
+    @Test func runAsRoot() throws {
         // Given
         let fm = FileManager.default
         
@@ -108,9 +109,9 @@ final class FontsToSwiftTests: XCTestCase {
         ])
         
         // Then
-        let generatedKey = try String(contentsOf: swiftFileURL)
+        let generatedKey = try String(contentsOf: swiftFileURL, encoding: .utf8)
         
-        XCTAssertEqual(String(generatedKey.prefix(Fixture.generatedFilePrefix.count)),
-                       Fixture.generatedFilePrefix)
+        expectEqual(String(generatedKey.prefix(Fixture.generatedFilePrefix.count)),
+                    Fixture.generatedFilePrefix)
     }
 }

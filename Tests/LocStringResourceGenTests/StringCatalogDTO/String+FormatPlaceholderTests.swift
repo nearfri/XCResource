@@ -1,17 +1,20 @@
-import XCTest
+import Testing
 import StrixParsers
 @testable import LocStringResourceGen
 
-final class String_FormatPlaceholderTests: XCTestCase {
-    func test_initWithFormatPlacehoder() throws {
+@Suite struct String_FormatPlaceholderTests {
+    @Test func initWithFormatPlaceholder() throws {
         func test(
             length: FormatPlaceholder.Length?,
             conversion: FormatPlaceholder.Conversion,
             expected: String,
-            line: UInt = #line
+            sourceLocation: SourceLocation = #_sourceLocation
         ) {
             let placeholder = FormatPlaceholder(length: length, conversion: conversion)
-            XCTAssertEqual(expected, String(formatPlaceholder: placeholder), line: line)
+            #expect(
+                expected == String(formatPlaceholder: placeholder),
+                sourceLocation: sourceLocation
+            )
         }
         
         test(length: .longLong, conversion: .decimal, expected: "Int")

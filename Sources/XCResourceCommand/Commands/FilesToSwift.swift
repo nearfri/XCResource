@@ -21,7 +21,7 @@ struct FilesToSwift: ParsableCommand {
     enum Default {
         static let bundle: String = "Bundle.main"
         static let preservesRelativePath: Bool = true
-        static let excludesTypeDeclation: Bool = false
+        static let excludesTypeDeclaration: Bool = false
     }
     
     // MARK: - Arguments
@@ -44,8 +44,8 @@ struct FilesToSwift: ParsableCommand {
     @Option(help: ArgumentHelp(valueName: AccessLevel.joinedAllValuesString))
     var accessLevel: AccessLevel?
     
-    @Flag(name: .customLong("exclude-type-declation"))
-    var excludesTypeDeclation: Bool = Default.excludesTypeDeclation
+    @Flag(name: .customLong("exclude-type-declaration"))
+    var excludesTypeDeclaration: Bool = Default.excludesTypeDeclaration
     
     // MARK: - Run
     
@@ -76,7 +76,7 @@ struct FilesToSwift: ParsableCommand {
         
         print("import Foundation", terminator: "\n\n", to: &stream)
         
-        if !excludesTypeDeclation {
+        if !excludesTypeDeclaration {
             print(codes.typeDeclaration, terminator: "\n\n", to: &stream)
         }
         

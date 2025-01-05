@@ -1,4 +1,5 @@
-import XCTest
+import Testing
+import Foundation
 import TestUtil
 import SampleData
 @testable import XCResourceCommand
@@ -35,8 +36,8 @@ private enum Fixture {
     """
 }
 
-final class SwiftToStringsTests: XCTestCase {
-    func test_runAsRoot() throws {
+@Suite struct SwiftToStringsTests {
+    @Test func runAsRoot() throws {
         // Given
         let fm = FileManager.default
         
@@ -58,7 +59,7 @@ final class SwiftToStringsTests: XCTestCase {
         let enStringsURL = resourcesURL.appendingPathComponent("en.lproj/Localizable.strings")
         let koStringsURL = resourcesURL.appendingPathComponent("ko.lproj/Localizable.strings")
         
-        XCTAssertEqual(try String(contentsOf: enStringsURL), Fixture.enStrings)
-        XCTAssertEqual(try String(contentsOf: koStringsURL), Fixture.koStrings)
+        expectEqual(try String(contentsOf: enStringsURL, encoding: .utf8), Fixture.enStrings)
+        expectEqual(try String(contentsOf: koStringsURL, encoding: .utf8), Fixture.koStrings)
     }
 }

@@ -1,114 +1,114 @@
-import XCTest
+import Testing
 @testable import XCResourceUtil
 
-final class StringTests: XCTestCase {
-    func test_toIdentifier() throws {
-        XCTAssertEqual("Academy Engraved LET".toIdentifier(), "academyEngravedLET")
-        XCTAssertEqual("Academy engraved LET".toIdentifier(), "academyEngravedLET")
-        XCTAssertEqual("Academy-engraved-LET".toIdentifier(), "academyEngravedLET")
-        XCTAssertEqual("Academy_engraved_LET".toIdentifier(), "academyEngravedLET")
-        XCTAssertEqual("1Academy_engraved_LET2".toIdentifier(), "_1AcademyEngravedLET2")
-        XCTAssertEqual("SF NS Display".toIdentifier(), "sfNSDisplay")
-        XCTAssertEqual(".SF NS Display".toIdentifier(), "sfNSDisplay")
-        XCTAssertEqual("SF_NS_Display".toIdentifier(), "sfNSDisplay")
+@Suite struct StringTests {
+    @Test func toIdentifier() throws {
+        #expect("Academy Engraved LET".toIdentifier() == "academyEngravedLET")
+        #expect("Academy engraved LET".toIdentifier() == "academyEngravedLET")
+        #expect("Academy-engraved-LET".toIdentifier() == "academyEngravedLET")
+        #expect("Academy_engraved_LET".toIdentifier() == "academyEngravedLET")
+        #expect("1Academy_engraved_LET2".toIdentifier() == "_1AcademyEngravedLET2")
+        #expect("SF NS Display".toIdentifier() == "sfNSDisplay")
+        #expect(".SF NS Display".toIdentifier() == "sfNSDisplay")
+        #expect("SF_NS_Display".toIdentifier() == "sfNSDisplay")
     }
     
-    func test_toTypeIdentifier() throws {
-        XCTAssertEqual("Academy Engraved LET".toTypeIdentifier(), "AcademyEngravedLET")
-        XCTAssertEqual("Academy engraved LET".toTypeIdentifier(), "AcademyEngravedLET")
-        XCTAssertEqual("Academy-engraved-LET".toTypeIdentifier(), "AcademyEngravedLET")
-        XCTAssertEqual("Academy_engraved_LET".toTypeIdentifier(), "AcademyEngravedLET")
-        XCTAssertEqual("1Academy_engraved_LET2".toTypeIdentifier(), "_1AcademyEngravedLET2")
-        XCTAssertEqual("SF NS Display".toTypeIdentifier(), "SFNSDisplay")
-        XCTAssertEqual(".SF NS Display".toTypeIdentifier(), "SFNSDisplay")
-        XCTAssertEqual("SF_NS_Display".toTypeIdentifier(), "SFNSDisplay")
+    @Test func toTypeIdentifier() throws {
+        #expect("Academy Engraved LET".toTypeIdentifier() == "AcademyEngravedLET")
+        #expect("Academy engraved LET".toTypeIdentifier() == "AcademyEngravedLET")
+        #expect("Academy-engraved-LET".toTypeIdentifier() == "AcademyEngravedLET")
+        #expect("Academy_engraved_LET".toTypeIdentifier() == "AcademyEngravedLET")
+        #expect("1Academy_engraved_LET2".toTypeIdentifier() == "_1AcademyEngravedLET2")
+        #expect("SF NS Display".toTypeIdentifier() == "SFNSDisplay")
+        #expect(".SF NS Display".toTypeIdentifier() == "SFNSDisplay")
+        #expect("SF_NS_Display".toTypeIdentifier() == "SFNSDisplay")
     }
     
-    func test_camelCased() {
-        XCTAssertEqual("helloWorld".camelCased(), "helloWorld")
-        XCTAssertEqual("HelloWorld".camelCased(), "helloWorld")
-        XCTAssertEqual("URL".camelCased(), "url")
-        XCTAssertEqual("URLs".camelCased(), "urls")
-        XCTAssertEqual("URLString".camelCased(), "urlString")
-        XCTAssertEqual("urlString".camelCased(), "urlString")
-        XCTAssertEqual("downloadURL".camelCased(), "downloadURL")
-        XCTAssertEqual("downloadURLString".camelCased(), "downloadURLString")
+    @Test func camelCased() {
+        #expect("helloWorld".camelCased() == "helloWorld")
+        #expect("HelloWorld".camelCased() == "helloWorld")
+        #expect("URL".camelCased() == "url")
+        #expect("URLs".camelCased() == "urls")
+        #expect("URLString".camelCased() == "urlString")
+        #expect("urlString".camelCased() == "urlString")
+        #expect("downloadURL".camelCased() == "downloadURL")
+        #expect("downloadURLString".camelCased() == "downloadURLString")
     }
     
-    func test_pascalCased() {
-        XCTAssertEqual("helloWorld".pascalCased(), "HelloWorld")
-        XCTAssertEqual("HelloWorld".pascalCased(), "HelloWorld")
-        XCTAssertEqual("URL".pascalCased(), "URL")
-        XCTAssertEqual("URLs".pascalCased(), "URLs")
-        XCTAssertEqual("URLString".pascalCased(), "URLString")
-        XCTAssertEqual("urlString".pascalCased(), "UrlString")
-        XCTAssertEqual("downloadURL".pascalCased(), "DownloadURL")
-        XCTAssertEqual("downloadURLString".pascalCased(), "DownloadURLString")
+    @Test func pascalCased() {
+        #expect("helloWorld".pascalCased() == "HelloWorld")
+        #expect("HelloWorld".pascalCased() == "HelloWorld")
+        #expect("URL".pascalCased() == "URL")
+        #expect("URLs".pascalCased() == "URLs")
+        #expect("URLString".pascalCased() == "URLString")
+        #expect("urlString".pascalCased() == "UrlString")
+        #expect("downloadURL".pascalCased() == "DownloadURL")
+        #expect("downloadURLString".pascalCased() == "DownloadURLString")
     }
     
-    func test_latinCased() {
-        XCTAssertEqual("helloWorld".latinCased(), "helloWorld")
-        XCTAssertEqual("HelloWorld".latinCased(), "HelloWorld")
-        XCTAssertEqual("대한".latinCased(), "daehan")
-        XCTAssertEqual("hello대한".latinCased(), "helloDaehan")
-        XCTAssertEqual("대한hello".latinCased(), "daehanHello")
-        XCTAssertEqual("dh대한san만Regular".latinCased(), "dhDaehanSanManRegular")
-        XCTAssertEqual("DH대한san만Regular".latinCased(), "DHDaehanSanManRegular")
+    @Test func latinCased() {
+        #expect("helloWorld".latinCased() == "helloWorld")
+        #expect("HelloWorld".latinCased() == "HelloWorld")
+        #expect("대한".latinCased() == "daehan")
+        #expect("hello대한".latinCased() == "helloDaehan")
+        #expect("대한hello".latinCased() == "daehanHello")
+        #expect("dh대한san만Regular".latinCased() == "dhDaehanSanManRegular")
+        #expect("DH대한san만Regular".latinCased() == "DHDaehanSanManRegular")
     }
     
-    func test_addingBackslashEncoding() {
-        XCTAssertEqual("ab\"cd".addingBackslashEncoding(), #"ab\"cd"#)
-        XCTAssertEqual("ab\\cd".addingBackslashEncoding(), #"ab\cd"#)
-        XCTAssertEqual("ab\\ncd".addingBackslashEncoding(), #"ab\ncd"#)
-        XCTAssertEqual("ab\ncd".addingBackslashEncoding(), #"ab\ncd"#)
-        XCTAssertEqual("ab\rcd".addingBackslashEncoding(), #"ab\rcd"#)
-        XCTAssertEqual("ab\tcd".addingBackslashEncoding(), #"ab\tcd"#)
-        XCTAssertEqual("ab\u{0008}cd".addingBackslashEncoding(), #"ab\bcd"#)
-        XCTAssertEqual("ab\u{000C}cd".addingBackslashEncoding(), #"ab\fcd"#)
+    @Test func addingBackslashEncoding() {
+        #expect("ab\"cd".addingBackslashEncoding() == #"ab\"cd"#)
+        #expect("ab\\cd".addingBackslashEncoding() == #"ab\cd"#)
+        #expect("ab\\ncd".addingBackslashEncoding() == #"ab\ncd"#)
+        #expect("ab\ncd".addingBackslashEncoding() == #"ab\ncd"#)
+        #expect("ab\rcd".addingBackslashEncoding() == #"ab\rcd"#)
+        #expect("ab\tcd".addingBackslashEncoding() == #"ab\tcd"#)
+        #expect("ab\u{0008}cd".addingBackslashEncoding() == #"ab\bcd"#)
+        #expect("ab\u{000C}cd".addingBackslashEncoding() == #"ab\fcd"#)
     }
     
-    func test_addingCSVEncoding() {
-        XCTAssertEqual("1997".addingCSVEncoding(), "1997")
-        XCTAssertEqual("Ford".addingCSVEncoding(), "Ford")
-        XCTAssertEqual("luxurious truck".addingCSVEncoding(), "luxurious truck")
-        XCTAssertEqual("luxurious,truck".addingCSVEncoding(), "\"luxurious,truck\"")
-        XCTAssertEqual("luxurious\ntruck".addingCSVEncoding(), "\"luxurious\ntruck\"")
-        XCTAssertEqual(#"Venture "Extended Edition"."#.addingCSVEncoding(),
-                       #""Venture ""Extended Edition"".""#)
+    @Test func addingCSVEncoding() {
+        #expect("1997".addingCSVEncoding() == "1997")
+        #expect("Ford".addingCSVEncoding() == "Ford")
+        #expect("luxurious truck".addingCSVEncoding() == "luxurious truck")
+        #expect("luxurious,truck".addingCSVEncoding() == "\"luxurious,truck\"")
+        #expect("luxurious\ntruck".addingCSVEncoding() == "\"luxurious\ntruck\"")
+        #expect(#"Venture "Extended Edition"."#.addingCSVEncoding() ==
+                #""Venture ""Extended Edition"".""#)
     }
     
-    func test_appendingPathComponent() {
-        XCTAssertEqual("/tmp".appendingPathComponent("scratch.tiff"), "/tmp/scratch.tiff")
-        XCTAssertEqual("/tmp/".appendingPathComponent("scratch.tiff"), "/tmp/scratch.tiff")
-        XCTAssertEqual("/".appendingPathComponent("scratch.tiff"), "/scratch.tiff")
-        XCTAssertEqual("".appendingPathComponent("scratch.tiff"), "scratch.tiff")
+    @Test func appendingPathComponent() {
+        #expect("/tmp".appendingPathComponent("scratch.tiff") == "/tmp/scratch.tiff")
+        #expect("/tmp/".appendingPathComponent("scratch.tiff") == "/tmp/scratch.tiff")
+        #expect("/".appendingPathComponent("scratch.tiff") == "/scratch.tiff")
+        #expect("".appendingPathComponent("scratch.tiff") == "scratch.tiff")
         
-        XCTAssertEqual("hello".appendingPathComponent("world"), "hello/world")
+        #expect("hello".appendingPathComponent("world") == "hello/world")
         
-        XCTAssertEqual("hello".appendingPathComponent(""), "hello")
-        XCTAssertEqual("".appendingPathComponent("world"), "world")
+        #expect("hello".appendingPathComponent("") == "hello")
+        #expect("".appendingPathComponent("world") == "world")
         
-        XCTAssertEqual("hello".appendingPathComponent("/world"), "hello/world")
-        XCTAssertEqual("hello/".appendingPathComponent("world"), "hello/world")
-        XCTAssertEqual("hello/".appendingPathComponent("/world"), "hello/world")
+        #expect("hello".appendingPathComponent("/world") == "hello/world")
+        #expect("hello/".appendingPathComponent("world") == "hello/world")
+        #expect("hello/".appendingPathComponent("/world") == "hello/world")
     }
     
-    func test_deletingLastPathComponent() {
-        XCTAssertEqual("/tmp/scratch.tiff".deletingLastPathComponent, "/tmp")
-        XCTAssertEqual("/tmp/lock/".deletingLastPathComponent, "/tmp")
-        XCTAssertEqual("/tmp/".deletingLastPathComponent, "/")
-        XCTAssertEqual("/tmp".deletingLastPathComponent, "/")
-        XCTAssertEqual("/".deletingLastPathComponent, "/")
-        XCTAssertEqual("".deletingLastPathComponent, "")
-        XCTAssertEqual("scratch.tiff".deletingLastPathComponent, "")
+    @Test func deletingLastPathComponent() {
+        #expect("/tmp/scratch.tiff".deletingLastPathComponent == "/tmp")
+        #expect("/tmp/lock/".deletingLastPathComponent == "/tmp")
+        #expect("/tmp/".deletingLastPathComponent == "/")
+        #expect("/tmp".deletingLastPathComponent == "/")
+        #expect("/".deletingLastPathComponent == "/")
+        #expect("".deletingLastPathComponent == "")
+        #expect("scratch.tiff".deletingLastPathComponent == "")
     }
     
-    func test_lastPathComponent() throws {
-        XCTAssertEqual("/tmp/scratch.tiff".lastPathComponent, "scratch.tiff")
-        XCTAssertEqual("/tmp/scratch".lastPathComponent, "scratch")
-        XCTAssertEqual("/tmp/".lastPathComponent, "tmp")
-        XCTAssertEqual("scratch///".lastPathComponent, "scratch")
-        XCTAssertEqual("/".lastPathComponent, "/")
-        XCTAssertEqual("".lastPathComponent, "")
+    @Test func lastPathComponent() throws {
+        #expect("/tmp/scratch.tiff".lastPathComponent == "scratch.tiff")
+        #expect("/tmp/scratch".lastPathComponent == "scratch")
+        #expect("/tmp/".lastPathComponent == "tmp")
+        #expect("scratch///".lastPathComponent == "scratch")
+        #expect("/".lastPathComponent == "/")
+        #expect("".lastPathComponent == "")
     }
 }

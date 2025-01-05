@@ -1,4 +1,5 @@
-import XCTest
+import Testing
+import Foundation
 import TestUtil
 import SampleData
 @testable import XCResourceCommand
@@ -7,7 +8,7 @@ private enum Fixture {
     static let oldSourceCode = """
         import Foundation
         
-        enum StringKey: String, CaseIterable {
+        enum StringKey: String, CaseIterable, Sendable {
             // MARK: - Common
             
             /// Cancel
@@ -50,7 +51,7 @@ private enum Fixture {
     static let newSourceCode = """
         import Foundation
         
-        enum StringKey: String, CaseIterable {
+        enum StringKey: String, CaseIterable, Sendable {
             /// %@ ate %#@appleCount@ today!
             case dog_eating_apples
             
@@ -66,8 +67,8 @@ private enum Fixture {
         """
 }
 
-final class StringsdictToSwiftTests: XCTestCase {
-    func test_runAsRoot() throws {
+@Suite struct StringsdictToSwiftTests {
+    @Test func runAsRoot() throws {
         // Given
         let fm = FileManager.default
         
@@ -98,6 +99,7 @@ final class StringsdictToSwiftTests: XCTestCase {
         ])
         
         // Then
-        XCTAssertEqual(try String(contentsOf: sourceCodeURL), Fixture.newSourceCode)
+        expectEqual(try String(contentsOf: sourceCodeURL, encoding: .utf8),
+                    Fixture.newSourceCode)
     }
 }

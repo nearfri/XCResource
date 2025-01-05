@@ -1,7 +1,7 @@
 import Foundation
 import XCResourceUtil
 
-public struct LocalizationItem: Equatable, Identifiable, SettableByKeyPath {
+public struct LocalizationItem: Equatable, Identifiable, Sendable, SettableByKeyPath {
     public let id: String
     public var key: String
     public var value: String

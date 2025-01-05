@@ -7,7 +7,7 @@ import SwiftParser
 
 private enum Fixture {
     static let sourceCode: String = """
-    enum StringKey: String, CaseIterable {
+    enum StringKey: String, CaseIterable, Sendable {
         // MARK: - Common
         
         /// Cancel
@@ -46,7 +46,7 @@ final class StringEnumerationRewriterTests: XCTestCase {
         
         // Then
         XCTAssertEqual(modifiedNode.description, """
-            enum StringKey: String, CaseIterable {
+            enum StringKey: String, CaseIterable, Sendable {
                 /// Hello
                 case hello = "greeting_hello"
                 
@@ -79,7 +79,7 @@ final class StringEnumerationRewriterTests: XCTestCase {
         
         // Then
         XCTAssertEqual(modifiedNode.description, """
-            enum StringKey: String, CaseIterable {
+            enum StringKey: String, CaseIterable, Sendable {
                 // MARK: - Common
                 
                 /// Cancel
@@ -112,7 +112,7 @@ final class StringEnumerationRewriterTests: XCTestCase {
         
         // Then
         XCTAssertEqual(modifiedNode.description, """
-            enum StringKey: String, CaseIterable {
+            enum StringKey: String, CaseIterable, Sendable {
                 // xcresource:target:stringsdict
                 /// Hello
                 case hello = "greeting_hello"
@@ -142,7 +142,7 @@ final class StringEnumerationRewriterTests: XCTestCase {
         
         // Then
         XCTAssertEqual(modifiedNode.description, """
-            enum StringKey: String, CaseIterable {
+            enum StringKey: String, CaseIterable, Sendable {
                 // MARK: - Common
                 
                 /// Cancel
@@ -163,7 +163,7 @@ final class StringEnumerationRewriterTests: XCTestCase {
         
         // Then
         XCTAssertEqual(modifiedNode.description, """
-            enum StringKey: String, CaseIterable {
+            enum StringKey: String, CaseIterable, Sendable {
                 /// Confirm
                 case confirm = "common_confirm"
             }
@@ -190,7 +190,7 @@ final class StringEnumerationRewriterTests: XCTestCase {
         
         // Then
         XCTAssertEqual(modifiedNode.description, """
-            enum StringKey: String, CaseIterable {
+            enum StringKey: String, CaseIterable, Sendable {
                 // MARK: - Common
                 
                 /// Cancel Text
@@ -220,7 +220,7 @@ final class StringEnumerationRewriterTests: XCTestCase {
         
         // Then
         XCTAssertEqual(modifiedNode.description, """
-            enum StringKey: String, CaseIterable {
+            enum StringKey: String, CaseIterable, Sendable {
                 // MARK: - Common
                 
                 case cancel = "common_cancel"
@@ -249,7 +249,7 @@ final class StringEnumerationRewriterTests: XCTestCase {
         
         // Then
         XCTAssertEqual(modifiedNode.description, """
-            enum StringKey: String, CaseIterable {
+            enum StringKey: String, CaseIterable, Sendable {
                 // MARK: - Common
                 
                 // xcresource:target:stringsdict

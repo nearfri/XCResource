@@ -1,14 +1,14 @@
-import XCTest
+import Testing
 @testable import AssetKeyGen
 
-final class AssetTypeTests: XCTestCase {
-    func test_initWithPathExtension() {
-        XCTAssertNotNil(AssetType(pathExtension: "imageset"))
-        XCTAssertNotNil(AssetType(pathExtension: "colorset"))
-        XCTAssertNotNil(AssetType(pathExtension: "symbolset"))
+@Suite struct AssetTypeTests {
+    @Test func initWithPathExtension() {
+        #expect(AssetType(pathExtension: "imageset") != nil)
+        #expect(AssetType(pathExtension: "colorset") != nil)
+        #expect(AssetType(pathExtension: "symbolset") != nil)
         
-        XCTAssertNil(AssetType(pathExtension: "imageSet"))
-        XCTAssertNil(AssetType(pathExtension: "images"))
-        XCTAssertNil(AssetType(pathExtension: "image"))
+        #expect(AssetType(pathExtension: "imageSet") == nil)
+        #expect(AssetType(pathExtension: "images") == nil)
+        #expect(AssetType(pathExtension: "image") == nil)
     }
 }

@@ -1,12 +1,12 @@
 import Foundation
 
-struct StringCatalogDTO: Codable, Hashable {
+struct StringCatalogDTO: Codable, Hashable, Sendable {
     var version: String
     var sourceLanguage: String
     var strings: [String: StringDTO] // key: localized string key
 }
 
-struct StringDTO: Codable, Hashable {
+struct StringDTO: Codable, Hashable, Sendable {
     var comment: String?
     var extractionState: String? // extracted_with_value, manual, migrated
     var localizations: [String: LocalizationDTO] // key: language
@@ -14,36 +14,36 @@ struct StringDTO: Codable, Hashable {
 
 // required: stringUnit or variations
 // optional: substitutions
-struct LocalizationDTO: Codable, Hashable {
+struct LocalizationDTO: Codable, Hashable, Sendable {
     var stringUnit: StringUnitDTO?
     var variations: DeviceVariationsDTO?
     var substitutions: [String: SubstitutionDTO]? // %#@key@
 }
 
-struct StringUnitDTO: Codable, Hashable {
+struct StringUnitDTO: Codable, Hashable, Sendable {
     var state: String // new, needs_review, translated
     var value: String
 }
 
-struct SubstitutionDTO: Codable, Hashable {
+struct SubstitutionDTO: Codable, Hashable, Sendable {
     var argNum: Int?
     var formatSpecifier: String // lld, lf
     var variations: PluralVariationsDTO
 }
 
-struct DeviceVariationsDTO: Codable, Hashable {
+struct DeviceVariationsDTO: Codable, Hashable, Sendable {
     var device: [String: VariationValueDTO] // key: DeviceDTO
 }
 
-struct PluralVariationsDTO: Codable, Hashable {
+struct PluralVariationsDTO: Codable, Hashable, Sendable {
     var plural: [String: VariationValueDTO] // key: PluralDTO
 }
 
-struct VariationValueDTO: Codable, Hashable {
+struct VariationValueDTO: Codable, Hashable, Sendable {
     var stringUnit: StringUnitDTO
 }
 
-enum DeviceDTO: String {
+enum DeviceDTO: String, Sendable {
     case appleTV = "appletv"
     case appleVision = "applevision"
     case appleWatch = "applewatch"
@@ -54,7 +54,7 @@ enum DeviceDTO: String {
     case other = "other"
 }
 
-enum PluralDTO: String {
+enum PluralDTO: String, Sendable {
     case few
     case many
     case one

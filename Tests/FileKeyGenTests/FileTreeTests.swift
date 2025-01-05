@@ -1,64 +1,65 @@
-import XCTest
+import Testing
+import Foundation
 @testable import FileKeyGen
 
-final class FileTreeTests: XCTestCase {
-    func test_relativePath() throws {
+@Suite struct FileTreeTests {
+    @Test func relativePath() throws {
         let childTree = FileTree(FileItem(url: URL(filePath: "/root/tmp/scratch.tiff")))
         let parentTree = FileTree(FileItem(url: URL(filePath: "/root/tmp")), children: [childTree])
         let rootTree = FileTree(FileItem(url: URL(filePath: "/root")), children: [parentTree])
         
-        XCTAssertEqual(childTree.relativePath, "tmp/scratch.tiff")
+        #expect(childTree.relativePath == "tmp/scratch.tiff")
         
         withExtendedLifetime(rootTree, {})
     }
     
-    func test_filenameToNamespace() throws {
+    @Test func filenameToNamespace() throws {
         let childTree = FileTree(FileItem(url: URL(filePath: "/root/tmp/scratch.tiff")))
         let parentTree = FileTree(FileItem(url: URL(filePath: "/root/tmp")), children: [childTree])
         
-        XCTAssertEqual(parentTree.filenameToNamespace(), "Tmp")
+        #expect(parentTree.filenameToNamespace() == "Tmp")
     }
     
-    func test_filenameToKey() throws {
+    @Test func filenameToKey() throws {
         let childTree = FileTree(FileItem(url: URL(filePath: "/root/tmp/scratch.tiff")))
         
-        XCTAssertEqual(childTree.filenameToKey(), "scratch")
+        #expect(childTree.filenameToKey() == "scratch")
     }
     
-    func test_filter_matchGrandChild_returnClone() throws {
+    @Test func filter_matchGrandChild_returnClone() throws {
         let childTree = FileTree(FileItem(url: URL(filePath: "/root/tmp/scratch.tiff")))
         let parentTree = FileTree(FileItem(url: URL(filePath: "/root/tmp")), children: [childTree])
         let rootTree = FileTree(FileItem(url: URL(filePath: "/root")), children: [parentTree])
         
         let tiff = try Regex("\\.tiff$")
         
-        let filteredTree = try XCTUnwrap(rootTree.filter(tiff))
+        let filteredTree = try #require(rootTree.filter(tiff))
         
-        XCTAssertEqual(filteredTree.url, URL(filePath: "/root"))
+        #expect(filteredTree.url == URL(filePath: "/root"))
         
-        XCTAssertEqual(filteredTree.children.first?.url,  URL(filePath: "/root/tmp"))
+        #expect(filteredTree.children.first?.url == URL(filePath: "/root/tmp"))
         
-        XCTAssertEqual(filteredTree.children.first?.children.first?.url,
-                       URL(filePath: "/root/tmp/scratch.tiff"))
+        #expect(filteredTree.children.first?.children.first?.url ==
+                URL(filePath: "/root/tmp/scratch.tiff"))
     }
     
-    func test_filter_matchChild_grandChildIsNil() throws {
+    @Test func filter_matchChild_grandChildIsNil() throws {
         let childTree = FileTree(FileItem(url: URL(filePath: "/root/tmp/scratch.tiff")))
         let parentTree = FileTree(FileItem(url: URL(filePath: "/root/tmp")), children: [childTree])
         let rootTree = FileTree(FileItem(url: URL(filePath: "/root")), children: [parentTree])
         
         let tmp = try Regex("tmp$")
         
-        let filteredTree = try XCTUnwrap(rootTree.filter(tmp))
+        let filteredTree = try #require(rootTree.filter(tmp))
         
-        XCTAssertEqual(filteredTree.url, URL(filePath: "/root"))
+        #expect(filteredTree.url == URL(filePath: "/root"))
         
-        XCTAssertEqual(filteredTree.children.first?.url,  URL(filePath: "/root/tmp"))
+        #expect(filteredTree.children.first?.url == URL(filePath: "/root/tmp"))
         
-        XCTAssertEqual(filteredTree.children.first?.children.isEmpty, true)
+        #expect(filteredTree.children.first?.children.isEmpty == true)
     }
     
-    func test_filter_noMatch_returnNil() throws {
+    @Test func filter_noMatch_returnNil() throws {
         let childTree = FileTree(FileItem(url: URL(filePath: "/root/tmp/scratch.tiff")))
         let parentTree = FileTree(FileItem(url: URL(filePath: "/root/tmp")), children: [childTree])
         let rootTree = FileTree(FileItem(url: URL(filePath: "/root")), children: [parentTree])
@@ -67,6 +68,6 @@ final class FileTreeTests: XCTestCase {
         
         let filteredTree = rootTree.filter(jpg)
         
-        XCTAssertNil(filteredTree)
+        #expect(filteredTree == nil)
     }
 }

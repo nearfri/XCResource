@@ -1,11 +1,11 @@
-import XCTest
+import Testing
 import SwiftSyntax
 @testable import LocStringResourceGen
 
-final class CommentsExtractorTests: XCTestCase {
+@Suite struct CommentsExtractorTests {
     private let sut: CommentsExtractor = .init()
     
-    func test_extract_line() throws {
+    @Test func extract_line() throws {
         // Given
         let trivia: Trivia = [
             .newlines(1),
@@ -16,10 +16,10 @@ final class CommentsExtractorTests: XCTestCase {
         let comments = sut.comments(from: trivia)
         
         // Then
-        XCTAssertEqual(comments, [.line("line comment")])
+        #expect(comments == [.line("line comment")])
     }
     
-    func test_extract_block() throws {
+    @Test func extract_block() throws {
         // Given
         let trivia: Trivia = [
             .newlines(1),
@@ -30,10 +30,10 @@ final class CommentsExtractorTests: XCTestCase {
         let comments = sut.comments(from: trivia)
         
         // Then
-        XCTAssertEqual(comments, [.block("block comment")])
+        #expect(comments == [.block("block comment")])
     }
     
-    func test_extract_docLine() throws {
+    @Test func extract_docLine() throws {
         // Given
         let trivia: Trivia = [
             .newlines(1),
@@ -44,10 +44,10 @@ final class CommentsExtractorTests: XCTestCase {
         let comments = sut.comments(from: trivia)
         
         // Then
-        XCTAssertEqual(comments, [.documentLine("document line comment")])
+        #expect(comments == [.documentLine("document line comment")])
     }
     
-    func test_extract_docBlock() throws {
+    @Test func extract_docBlock() throws {
         // Given
         let trivia: Trivia = [
             .newlines(1),
@@ -58,6 +58,6 @@ final class CommentsExtractorTests: XCTestCase {
         let comments = sut.comments(from: trivia)
         
         // Then
-        XCTAssertEqual(comments, [.documentBlock("document block comment")])
+        #expect(comments == [.documentBlock("document block comment")])
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-struct KeyToStringsConfigurationDTO: Codable {
+struct KeyToStringsConfigurationDTO: Codable, Sendable {
     var mergeStrategy: String
     var verifiesComments: Bool
     

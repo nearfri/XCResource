@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:XCResourceSample/XCResourceSampleLib">
+   </FileRef>
+   <FileRef
       location = "group:XCResourceSample/XCResourceSample.xcodeproj">
    </FileRef>
 </Workspace>

@@ -3,7 +3,7 @@ import ArgumentParser
 import LocStringsGen
 import LocStringCore
 
-struct LanguageAndStringsConfiguration: ExpressibleByArgument {
+struct LanguageAndStringsConfiguration: ExpressibleByArgument, Sendable {
     var language: String
     var configuration: KeyToStringsConfiguration
     

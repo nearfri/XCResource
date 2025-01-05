@@ -4,7 +4,7 @@ import SwiftSyntaxBuilder
 
 extension VariableDeclSyntax {
     init(_ item: LocalizationItem) {
-        guard case .property(let propertyName) = item.memberDeclation else {
+        guard case .property(let propertyName) = item.memberDeclaration else {
             preconditionFailure()
         }
         

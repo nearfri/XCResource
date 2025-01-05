@@ -4,7 +4,7 @@ import SwiftSyntaxBuilder
 
 extension FunctionDeclSyntax {
     init(_ item: LocalizationItem) {
-        guard case let .method(methodName, parameters) = item.memberDeclation else {
+        guard case let .method(methodName, parameters) = item.memberDeclaration else {
             preconditionFailure()
         }
         

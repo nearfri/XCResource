@@ -3,28 +3,28 @@
         {
             "commandName": "xcassets2swift",
             "xcassetsPaths": [
-                "Sources/Resource/Resources/Assets.xcassets"
+                "Sources/Resources/Resources/Assets.xcassets"
             ],
             "assetTypes": ["imageset"],
-            "swiftPath": "Sources/Resource/Keys/ImageKey.swift",
+            "swiftPath": "Sources/Resources/Keys/ImageKey.swift",
             "keyTypeName": "ImageKey",
             "accessLevel": "public"
         },
         {
             "commandName": "xcassets2swift",
             "xcassetsPaths": [
-                "Sources/Resource/Resources/Assets.xcassets"
+                "Sources/Resources/Resources/Assets.xcassets"
             ],
             "assetTypes": ["colorset"],
-            "swiftPath": "Sources/Resource/Keys/ColorKey.swift",
+            "swiftPath": "Sources/Resources/Keys/ColorKey.swift",
             "keyTypeName": "ColorKey",
             "accessLevel": "public"
         },
         {
             "commandName": "files2swift",
-            "resourcesPath": "Sources/Resource/Resources/Fonts",
+            "resourcesPath": "Sources/Resources/Resources/Fonts",
             "filePattern": "(?i)\\.(otf|ttf|ttc)$",
-            "swiftPath": "Sources/Resource/Keys/FileResource.swift",
+            "swiftPath": "Sources/Resources/Keys/FileResource.swift",
             "keyTypeName": "FileResource",
             "preservesRelativePath": true,
             "relativePathPrefix": "Fonts",
@@ -33,8 +33,8 @@
         },
         {
             "commandName": "fonts2swift",
-            "resourcesPath": "Sources/Resource/Resources",
-            "swiftPath": "Sources/Resource/Keys/FontResource.swift",
+            "resourcesPath": "Sources/Resources/Resources",
+            "swiftPath": "Sources/Resources/Keys/FontResource.swift",
             "keyTypeName": "FontResource",
             "keyListName": "all",
             "generatesLatinKey": true,
@@ -45,9 +45,9 @@
         },
         {
             "commandName": "xcstrings2swift",
-            "catalogPath": "Sources/Resource/Resources/Localizable.xcstrings",
+            "catalogPath": "Sources/Resources/Resources/Localizable.xcstrings",
             "bundle": "at-url:Bundle.module.bundleURL",
-            "swiftPath": "Sources/Resource/Keys/LocalizedStringResource+.swift"
+            "swiftPath": "Sources/Resources/Keys/LocalizedStringResource+.swift"
         }
     ]
 }

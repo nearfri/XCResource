@@ -25,7 +25,7 @@ extension LocalizationImporter {
             case .text(let string):
                 return string
             case .file(let url):
-                return try String(contentsOf: url)
+                return try String(contentsOf: url, encoding: .utf8)
             }
         }
     }

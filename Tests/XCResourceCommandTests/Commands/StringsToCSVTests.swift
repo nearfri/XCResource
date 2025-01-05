@@ -1,10 +1,11 @@
-import XCTest
+import Testing
+import Foundation
 import TestUtil
 import SampleData
 @testable import XCResourceCommand
 
-final class StringsToCSVTests: XCTestCase {
-    func test_runAsRoot() throws {
+@Suite struct StringsToCSVTests {
+    @Test func runAsRoot() throws {
         // Given
         let fm = FileManager.default
         
@@ -25,7 +26,7 @@ final class StringsToCSVTests: XCTestCase {
         ])
         
         // Then
-        XCTAssertEqual(try String(contentsOf: urlOfActualCSVFile),
-                       try String(contentsOf: urlOfExpectedCSVFile))
+        expectEqual(try String(contentsOf: urlOfActualCSVFile, encoding: .utf8),
+                    try String(contentsOf: urlOfExpectedCSVFile, encoding: .utf8))
     }
 }

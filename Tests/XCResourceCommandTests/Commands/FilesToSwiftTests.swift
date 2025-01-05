@@ -1,4 +1,5 @@
-import XCTest
+import Testing
+import Foundation
 import TestUtil
 import SampleData
 @testable import XCResourceCommand
@@ -10,9 +11,9 @@ private enum Fixture {
     
     import Foundation
     
-    public struct FileResource: Hashable {
-        public var relativePath: String
-        public var bundle: Bundle
+    public struct FileResource: Hashable, Sendable {
+        public let relativePath: String
+        public let bundle: Bundle
         
         public init(relativePath: String, bundle: Bundle) {
             self.relativePath = relativePath
@@ -55,8 +56,8 @@ private enum Fixture {
     """
 }
 
-final class FilesToSwiftTests: XCTestCase {
-    func test_runAsRoot() throws {
+@Suite struct FilesToSwiftTests {
+    @Test func runAsRoot() throws {
         // Given
         let fm = FileManager.default
         
@@ -79,8 +80,8 @@ final class FilesToSwiftTests: XCTestCase {
         ])
         
         // Then
-        let generatedKey = try String(contentsOf: swiftFileURL)
+        let generatedKey = try String(contentsOf: swiftFileURL, encoding: .utf8)
         
-        XCTAssertEqual(String(generatedKey), Fixture.generatedFile)
+        expectEqual(String(generatedKey), Fixture.generatedFile)
     }
 }

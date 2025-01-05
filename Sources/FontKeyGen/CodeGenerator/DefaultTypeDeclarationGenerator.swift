@@ -5,12 +5,12 @@ class DefaultTypeDeclarationGenerator: TypeDeclarationGenerator {
         let accessLevel = accessLevel.map({ $0 + " " }) ?? ""
         
         return """
-            \(accessLevel)struct \(keyTypeName): Hashable {
-                \(accessLevel)var fontName: String
-                \(accessLevel)var familyName: String
-                \(accessLevel)var style: String
-                \(accessLevel)var relativePath: String
-                \(accessLevel)var bundle: Bundle
+            \(accessLevel)struct \(keyTypeName): Hashable, Sendable {
+                \(accessLevel)let fontName: String
+                \(accessLevel)let familyName: String
+                \(accessLevel)let style: String
+                \(accessLevel)let relativePath: String
+                \(accessLevel)let bundle: Bundle
                 
                 \(accessLevel)init(
                     fontName: String,

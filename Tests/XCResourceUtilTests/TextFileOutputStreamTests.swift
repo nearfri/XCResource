@@ -1,31 +1,29 @@
-import XCTest
+import Testing
+import Foundation
 @testable import XCResourceUtil
 
-final class TextFileOutputStreamTests: XCTestCase {
-    let fm: FileManager = .default
+private actor DataStorage {
+    private(set) var data = Data()
     
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-        
-        try? fm.removeItem(at: testDirectoryURL)
-        try fm.createDirectory(at: testDirectoryURL, withIntermediateDirectories: true)
+    func append(_ newData: Data) {
+        data.append(newData)
+    }
+}
+
+@Suite final class TextFileOutputStreamTests {
+    private let fm: FileManager = .default
+    
+    private let testFileURL: URL
+    
+    init() throws {
+        testFileURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     }
     
-    override func tearDownWithError() throws {
-        try? fm.removeItem(at: testDirectoryURL)
-        
-        try super.tearDownWithError()
+    deinit {
+        try? fm.removeItem(at: testFileURL)
     }
     
-    var testDirectoryURL: URL {
-        return fm.temporaryDirectory.appendingPathComponent("text-stream-test")
-    }
-    
-    var testFileURL: URL {
-        return testDirectoryURL.appendingPathComponent("output.txt")
-    }
-    
-    func test_write() throws {
+    @Test func write() throws {
         // Given
         let text = """
         hello
@@ -46,11 +44,11 @@ final class TextFileOutputStreamTests: XCTestCase {
         try sut.close()
         
         // Then
-        let fileText = try String(contentsOf: testFileURL)
-        XCTAssertEqual(fileText, text)
+        let fileText = try String(contentsOf: testFileURL, encoding: .utf8)
+        #expect(fileText == text)
     }
     
-    func test_initForWritingTo_overwrite() throws {
+    @Test func initForWritingTo_overwrite() throws {
         // Given
         try """
         hello world
@@ -66,11 +64,11 @@ final class TextFileOutputStreamTests: XCTestCase {
         try sut.close()
         
         // Then
-        let fileText = try String(contentsOf: testFileURL)
-        XCTAssertEqual(fileText, "hi")
+        let fileText = try String(contentsOf: testFileURL, encoding: .utf8)
+        #expect(fileText == "hi")
     }
     
-    func test_initForWritingTo_append() throws {
+    @Test func initForWritingTo_append() throws {
         // Given
         let text = """
         hello
@@ -86,14 +84,14 @@ final class TextFileOutputStreamTests: XCTestCase {
         try sut.close()
         
         // Then
-        let fileText = try String(contentsOf: testFileURL)
-        XCTAssertEqual(fileText, text + "hi")
+        let fileText = try String(contentsOf: testFileURL, encoding: .utf8)
+        #expect(fileText == text + "hi")
     }
     
     // 안해도 되는 테스트지만 재미삼아 해본다.
     // print(text, to: &TextFileOutputStream.standardOutput)가 print(text)와 동일한지 테스트하기 위해
     // stdout을 리다이렉트(?)해서 데이터를 캡쳐한다.
-    func test_standardOutput() throws {
+    @Test func standardOutput() async throws {
         // Given
         let stdPipe = Pipe()
         let stdWriteHandle = stdPipe.fileHandleForWriting
@@ -102,17 +100,20 @@ final class TextFileOutputStreamTests: XCTestCase {
         let actualStdWriteHandle = actualStdPipe.fileHandleForWriting
         
         // actualStdWHandle을 /dev/stdout로 연결
-        XCTAssertNotEqual(dup2(STDOUT_FILENO, actualStdWriteHandle.fileDescriptor), -1)
+        #expect(dup2(STDOUT_FILENO, actualStdWriteHandle.fileDescriptor) != -1)
         
         fflush(stdout)
         
         // stdout을 stdWHandle로 연결. 이제 stdout에 쓰는건 stdWHandle로 전달된다.
-        XCTAssertNotEqual(dup2(stdWriteHandle.fileDescriptor, STDOUT_FILENO), -1)
+        #expect(dup2(stdWriteHandle.fileDescriptor, STDOUT_FILENO) != -1)
         
-        var data = Data()
+        let dataStorage = DataStorage()
+        
         stdReadHandle.readabilityHandler = { handle in
             let newData = handle.availableData
-            data += newData
+            Task {
+                await dataStorage.append(newData)
+            }
             // 콘솔에도 출력하고 싶다면 아래 주석 제거
             // actualStdPipe.fileHandleForWriting.write(newData)
         }
@@ -131,14 +132,16 @@ final class TextFileOutputStreamTests: XCTestCase {
         try? stdWriteHandle.synchronize()
         try? stdReadHandle.synchronize()
         
-        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.001))
+        try await Task.sleep(for: .milliseconds(10))
         
         // stdout을 /dev/stdout으로 되돌린다.
         dup2(actualStdWriteHandle.fileDescriptor, STDOUT_FILENO)
         stdReadHandle.readabilityHandler = nil
         
         // Then
-        let dataString = try XCTUnwrap(String(data: data, encoding: .utf8))
-        XCTAssertEqual(dataString, text)
+        let dataString = try #require(String(data: await dataStorage.data, encoding: .utf8))
+        
+        // 테스트가 병렬도 실행되다 보니 다른 테스트에서 출력한 내용이 섞일 수 있으므로 hasPrefix()로 비교
+        #expect(dataString.hasPrefix(text))
     }
 }

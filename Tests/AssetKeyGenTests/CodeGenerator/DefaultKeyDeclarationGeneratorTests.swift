@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import TestUtil
 @testable import AssetKeyGen
 
@@ -15,10 +15,10 @@ private enum Fixture {
         ])
 }
 
-final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
-    func test_generate() {
+@Suite struct DefaultKeyDeclarationGeneratorTests {
+    @Test func generate() {
         // Given
-        let expectedDeclations = """
+        let expectedDeclarations = """
         // MARK: - Media.xcassets
         
         extension ImageKey {
@@ -33,17 +33,17 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
         let sut = DefaultKeyDeclarationGenerator()
         
         // When
-        let actualDeclations = sut.generate(catalog: Fixture.catalog,
+        let actualDeclarations = sut.generate(catalog: Fixture.catalog,
                                             keyTypeName: "ImageKey",
                                             accessLevel: nil)
         
         // Then
-        XCTAssertEqual(actualDeclations, expectedDeclations)
+        expectEqual(actualDeclarations, expectedDeclarations)
     }
     
-    func test_generate_publicAccessLevel() {
+    @Test func generate_publicAccessLevel() {
         // Given
-        let expectedDeclations = """
+        let expectedDeclarations = """
         // MARK: - Media.xcassets
         
         public extension ImageKey {
@@ -58,11 +58,11 @@ final class DefaultKeyDeclarationGeneratorTests: XCTestCase {
         let sut = DefaultKeyDeclarationGenerator()
         
         // When
-        let actualDeclations = sut.generate(catalog: Fixture.catalog,
+        let actualDeclarations = sut.generate(catalog: Fixture.catalog,
                                             keyTypeName: "ImageKey",
                                             accessLevel: "public")
         
         // Then
-        XCTAssertEqual(actualDeclations, expectedDeclations)
+        expectEqual(actualDeclarations, expectedDeclarations)
     }
 }
