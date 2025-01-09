@@ -20,11 +20,15 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.1.4"),
         .package(url: "https://github.com/apple/swift-collections.git", from: "1.0.3"),
         .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.1"),
+//        .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.4.3"),
         .package(url: "https://github.com/nearfri/Strix.git", from: "2.4.6"),
     ],
     targets: [
-        // MARK: - Plugins
+        // MARK: - Documentation
+        // Empty target that builds the DocC catalog at Documentation/RunXCResourcePlugin.docc
+        .target(name: "Documentation", path: "Documentation"),
         
+        // MARK: - Plugins
         .plugin(
             name: "RunXCResource",
             capability: .command(
