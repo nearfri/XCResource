@@ -11,24 +11,10 @@ let package = Package(
         .library(name: "XCResourceExampleLib", targets: ["View", "Resources"]),
     ],
     dependencies: [
-        // .package(url: /* package url */, from: "1.0.0"),
         .package(path: "../../../"),
+//        .package(url: "https://github.com/nearfri/XCResource-plugin.git", from: "0.11.4"),
     ],
     targets: [
-        // MARK: - Plugins
-        
-        .plugin(
-            name: "RunXCResource-Dev",
-            capability: .command(
-                intent: .custom(
-                    verb: "run-xcresource",
-                    description: "Run XCResource to generate symbols for assets or strings."),
-                permissions: [
-                    .writeToPackageDirectory(
-                        reason: "Write symbol files in the package direcotry")
-                ]),
-            dependencies: [.product(name: "xcresource", package: "XCResource")]),
-        
         // MARK: - Core Modules
         
         .target(

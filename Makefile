@@ -15,7 +15,8 @@ SWIFT_BUILD_FLAGS = -c release
 
 ROOT_CMD_PATH = Sources/XCResourceCommand/Commands/XCResource.swift
 
-MANIFEST_PATH = ./Package.swift
+EXAMPLE_MANIFEST_PATH = ./Examples/XCResourceExample/XCResourceExampleLib/Package.swift
+
 
 # Invoke make with GIT_CHECK=false to override this value.
 GIT_CHECK = true
@@ -97,7 +98,7 @@ build:
 release: release-local-process release-remote-process _finish_release
 
 .PHONY: release-local-process
-release-local-process: _ask-new-version _archive _zip-artifactbundle _update-manifest
+release-local-process: _ask-new-version _archive _zip-artifactbundle _update-example-manifest
 
 .PHONY: print-version
 print-version:
@@ -140,10 +141,9 @@ _zip-artifactbundle:
 	echo "$$ARTIFACTBUNDLE_MANIFEST" > $(ARTIFACTBUNDLE_PATH)/info.json
 	cd $(TEMP_DIR); zip -mr $(ARTIFACTBUNDLE_ZIP) $(ARTIFACTBUNDLE)
 
-.PHONY: _update-manifest
-_update-manifest:
-	@sed -E -i '' "s/(.*url: .*download\/)(.+)(\/xcresource\.artifact.*)/\1$(VERSION)\3/" $(MANIFEST_PATH); \
-	sed -E -i '' "s/(.*checksum: \")([^\"]+)(\".*)/\1$(ARTIFACTBUNDLE_CHECKSUM)\3/" $(MANIFEST_PATH)
+.PHONY: _update-example-manifest
+_update-example-manifest:
+	@sed -E -i '' "s/(.*url: .*XCResource-plugin.git\", from: \")([^\"]+)(\".*)/\1$(VERSION)\3/" $(EXAMPLE_MANIFEST_PATH)
 
 .PHONY: release-remote-process
 release-remote-process: _git-commit _create-release _upload _update-release-notes _open-release-page
