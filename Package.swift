@@ -9,8 +9,7 @@ let package = Package(
     platforms: [.macOS(.v15)],
     products: [
         .plugin(name: "RunXCResource", targets: ["RunXCResource"]),
-        .executable(name: "xcresource-bin", targets: ["xcresource"]),
-        .executable(name: "xcresource", targets: ["XCResourceCLI"]),
+        .executable(name: "xcresource", targets: ["xcresource"]),
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
         .library(name: "FileKeyGen", targets: ["FileKeyGen"]),
@@ -24,14 +23,6 @@ let package = Package(
         .package(url: "https://github.com/nearfri/Strix.git", from: "2.4.6"),
     ],
     targets: [
-        // MARK: - Released Binary
-        
-        .binaryTarget(
-            name: "xcresource",
-            url: "https://github.com/nearfri/XCResource/releases/download/0.11.4/xcresource.artifactbundle.zip",
-            checksum: "1ec36153713b415f2a3053751144982bfc90ca2ce7ddc7c5afcce089d1f20bca"
-        ),
-        
         // MARK: - Plugins
         
         .plugin(
@@ -49,8 +40,9 @@ let package = Package(
         // MARK: - Executables
         
         .executableTarget(
-            name: "XCResourceCLI",
-            dependencies: ["XCResourceCommand"]),
+            name: "xcresource",
+            dependencies: ["XCResourceCommand"],
+            path: "Sources/XCResourceCLI"),
         
         // MARK: - Command Module
         
@@ -144,7 +136,7 @@ let package = Package(
         
         .testTarget(
             name: "XCResourceCLITests",
-            dependencies: ["XCResourceCLI", "SampleData"]),
+            dependencies: ["xcresource", "SampleData"]),
         .testTarget(
             name: "XCResourceCommandTests",
             dependencies: ["XCResourceCommand", "SampleData", "TestUtil"]),

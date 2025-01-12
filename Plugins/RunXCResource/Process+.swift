@@ -1,8 +1,7 @@
 import Foundation
-import PackagePlugin
 
-extension PluginContext.Tool {
-    func execute(arguments: [String]) async throws {
+extension Process {
+    static func run(_ url: URL, arguments: [String]) async throws {
         let process = Process()
         process.executableURL = url
         process.arguments = arguments
@@ -25,10 +24,8 @@ extension PluginContext.Tool {
             process.terminate()
         }
     }
-}
-
-private extension Process {
-    func validateTermination() throws {
+    
+    private func validateTermination() throws {
         guard let toolName = executableURL?.lastPathComponent else { preconditionFailure() }
         
         guard terminationReason == .exit, terminationStatus == 0 else {
