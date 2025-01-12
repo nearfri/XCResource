@@ -1,0 +1,36 @@
+{
+  "configurations" : [
+    {
+      "id" : "87AA8EEA-E45C-4A68-A32B-FFE9A8F0974C",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:XCResourceExample.xcodeproj",
+      "identifier" : "082934F028D2C768007D2577",
+      "name" : "XCResourceExample"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:XCResourceExample.xcodeproj",
+        "identifier" : "086B7C942D2929FF00FEA63D",
+        "name" : "XCResourceExampleUITests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:XCResourceExample.xcodeproj",
+        "identifier" : "0829350128D2C769007D2577",
+        "name" : "XCResourceExampleTests"
+      }
+    }
+  ],
+  "version" : 1
+}

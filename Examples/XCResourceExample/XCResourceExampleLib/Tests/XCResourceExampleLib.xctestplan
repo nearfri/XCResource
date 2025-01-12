@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "6863C637-1120-428E-9B12-C4708FE4A40C",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ResourcesTests",
+        "name" : "ResourcesTests"
+      }
+    }
+  ],
+  "version" : 1
+}
