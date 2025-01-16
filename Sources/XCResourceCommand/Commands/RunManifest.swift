@@ -14,7 +14,7 @@ struct RunManifest: ParsableCommand {
         fileprivate static let hiddenManifestPath: String = ".xcresource.json"
         
         fileprivate static var joinedAllManifestPaths: String {
-            return "\(Default.manifestPath)|\(Default.hiddenManifestPath)"
+            return "[.]\(Default.manifestPath)[5]"
         }
     }
     
@@ -28,7 +28,7 @@ struct RunManifest: ParsableCommand {
     mutating func run() throws {
         let manifestFileURL = determineManifestFileURL()
         let manifestData = try Data(contentsOf: manifestFileURL)
-        let manifestDTO = try JSONDecoder().decode(ManifestDTO.self, from: manifestData)
+        let manifestDTO = try decoder().decode(ManifestDTO.self, from: manifestData)
         
         for commandDTO in manifestDTO.commands.map(\.command) {
             var command = try commandDTO.toCommand()
@@ -43,16 +43,26 @@ struct RunManifest: ParsableCommand {
         
         let fm = FileManager.default
         
-        let defaultManifestURL = URL(fileURLWithExpandingTildeInPath: manifestPath)
-        if fm.fileExists(atPath: defaultManifestURL.path()) {
-            return defaultManifestURL
+        let candidates: [String] = [
+            Default.manifestPath,
+            "\(Default.manifestPath)5",
+            ".\(Default.manifestPath)",
+            ".\(Default.manifestPath)5",
+        ]
+        
+        for candidate in candidates {
+            let candidateURL = URL(fileURLWithExpandingTildeInPath: candidate)
+            if fm.fileExists(atPath: candidateURL.path(percentEncoded: false)) {
+                return candidateURL
+            }
         }
         
-        let hiddenManifestURL = URL(fileURLWithExpandingTildeInPath: Default.hiddenManifestPath)
-        if fm.fileExists(atPath: hiddenManifestURL.path()) {
-            return hiddenManifestURL
-        }
-        
-        return defaultManifestURL
+        return URL(fileURLWithExpandingTildeInPath: Default.manifestPath)
+    }
+    
+    private func decoder() -> JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.allowsJSON5 = true
+        return decoder
     }
 }

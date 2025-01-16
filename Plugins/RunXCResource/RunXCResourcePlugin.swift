@@ -48,8 +48,8 @@ struct RunXCResourcePlugin: CommandPlugin {
         let filename = "xcresource.json"
         
         let candidates: [String] = [
-            "Configs/\(filename)",
-            "Scripts/\(filename)",
+            "Configs/\(filename)", "Configs/\(filename)5",
+            "Scripts/\(filename)", "Scripts/\(filename)5",
         ]
         
         for candidate in candidates {
