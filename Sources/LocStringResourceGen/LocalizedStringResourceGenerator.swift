@@ -17,10 +17,10 @@ protocol LocalizationItemMerger: AnyObject {
 
 extension LocalizedStringResourceGenerator {
     public struct CommentDirectives {
-        public var useRaw: String
+        public var verbatim: String
         
-        public init(useRaw: String) {
-            self.useRaw = useRaw
+        public init(verbatim: String) {
+            self.verbatim = verbatim
         }
     }
     
@@ -69,7 +69,7 @@ public class LocalizedStringResourceGenerator {
             catalogLoader: StringCatalogLoader(),
             sourceCodeLoader: SwiftLocalizationItemLoader(),
             localizationItemMerger: DefaultLocalizationItemMerger(
-                commentDirectives: .init(useRaw: commentDirectives.useRaw)),
+                commentDirectives: .init(verbatim: commentDirectives.verbatim)),
             sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
     }
     

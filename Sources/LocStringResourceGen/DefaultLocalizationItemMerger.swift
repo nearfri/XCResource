@@ -2,7 +2,7 @@ import Foundation
 
 extension DefaultLocalizationItemMerger {
     struct CommentDirectives {
-        var useRaw: String
+        var verbatim: String
     }
 }
 
@@ -28,7 +28,7 @@ class DefaultLocalizationItemMerger: LocalizationItemMerger {
             
             var newItem = itemInCatalog
             
-            if itemInSourceCode.hasCommentDirective(commentDirectives.useRaw) {
+            if itemInSourceCode.hasCommentDirective(commentDirectives.verbatim) {
                 newItem.defaultValue = newItem.rawDefaultValue
                 newItem.memberDeclaration = .property(itemInSourceCode.memberDeclaration.id)
             } else if itemInSourceCode.hasResolvedParameterTypes(compatibleWith: itemInCatalog) {
