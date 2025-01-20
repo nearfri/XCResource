@@ -74,7 +74,7 @@ struct SwiftToStrings: ParsableCommand {
             sortOrder: sortsByKey ? .key : .occurrence)
         
         let generator = StringKeyToStringsGenerator(
-            commandNameSet: .init(exclude: CommentCommandName.targetStringsdict))
+            commentDirectives: .init(exclude: CommentDirective.targetStringsdict))
         
         return try generator.generate(for: request)
     }

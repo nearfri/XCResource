@@ -45,7 +45,7 @@ struct StringsToSwift: ParsableCommand {
             sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftPath))
         
         let generator = StringsToStringKeyGenerator(
-            commandNameSet: .init(exclude: CommentCommandName.targetStringsdict))
+            commentDirectives: .init(exclude: CommentDirective.targetStringsdict))
         
         return try generator.generate(for: request)
     }

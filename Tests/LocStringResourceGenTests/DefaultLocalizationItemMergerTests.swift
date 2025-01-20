@@ -3,7 +3,7 @@ import Testing
 
 @Suite struct DefaultLocalizationItemMergerTests {
     private let sut: DefaultLocalizationItemMerger = .init(
-        commentCommandNames: .init(useRaw: "xcresource:use-raw"))
+        commentDirectives: .init(useRaw: "xcresource:use-raw"))
     
     @Test func itemsByMerging_matchParameterTypes_useParametersInSourceCode() throws {
         // Given

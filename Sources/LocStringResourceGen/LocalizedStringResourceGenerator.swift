@@ -16,7 +16,7 @@ protocol LocalizationItemMerger: AnyObject {
 }
 
 extension LocalizedStringResourceGenerator {
-    public struct CommentCommandNames {
+    public struct CommentDirectives {
         public var useRaw: String
         
         public init(useRaw: String) {
@@ -64,12 +64,12 @@ public class LocalizedStringResourceGenerator {
         self.sourceCodeRewriter = sourceCodeRewriter
     }
     
-    public convenience init(commentCommandNames: CommentCommandNames) {
+    public convenience init(commentDirectives: CommentDirectives) {
         self.init(
             catalogLoader: StringCatalogLoader(),
             sourceCodeLoader: SwiftLocalizationItemLoader(),
             localizationItemMerger: DefaultLocalizationItemMerger(
-                commentCommandNames: .init(useRaw: commentCommandNames.useRaw)),
+                commentDirectives: .init(useRaw: commentDirectives.useRaw)),
             sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
     }
     

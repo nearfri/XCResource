@@ -53,7 +53,7 @@ struct XCStringsToSwift: ParsableCommand {
             resourceTypeName: resourceTypeName)
         
         let generator = LocalizedStringResourceGenerator(
-            commentCommandNames: .init(useRaw: CommentCommandName.useRaw))
+            commentDirectives: .init(useRaw: CommentDirective.useRaw))
         
         return try generator.generate(for: request)
     }

@@ -67,7 +67,7 @@ final class LocalizationItemTests: XCTestCase {
             developerComments: ["xcresource:target:stringsdict"])
         
         // When
-        let hasCommandName = sut.hasCommandName("xcresource:target:stringsdict")
+        let hasCommandName = sut.hasCommentDirective("xcresource:target:stringsdict")
         
         // Then
         XCTAssertTrue(hasCommandName)
@@ -81,7 +81,7 @@ final class LocalizationItemTests: XCTestCase {
             developerComments: ["xcresource:other:command"])
         
         // When
-        let hasCommandName = sut.hasCommandName("xcresource:target:stringsdict")
+        let hasCommandName = sut.hasCommentDirective("xcresource:target:stringsdict")
         
         // Then
         XCTAssertFalse(hasCommandName)

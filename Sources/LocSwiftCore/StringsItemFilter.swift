@@ -2,15 +2,15 @@ import Foundation
 import LocStringCore
 
 public class StringsItemFilter: LocalizationItemFilter, LocalizationCommentProvider {
-    private let commandNameForExclusion: String
+    private let directiveForExclusion: String
     
-    public init(commandNameForExclusion: String) {
-        self.commandNameForExclusion = commandNameForExclusion
+    public init(directiveForExclusion: String) {
+        self.directiveForExclusion = directiveForExclusion
     }
     
     public func isIncluded(_ item: LocalizationItem) -> Bool {
         let isPlural = item.commentContainsPluralVariables
-        let isExcluded = item.hasCommandName(commandNameForExclusion)
+        let isExcluded = item.hasCommentDirective(directiveForExclusion)
         return !isPlural && !isExcluded
     }
     

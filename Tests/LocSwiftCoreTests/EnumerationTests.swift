@@ -10,7 +10,7 @@ final class EnumerationCaseTests: XCTestCase {
             rawValue: "greeting")
         
         // When
-        let hasCommand = sut.hasCommandName("xcresource:customcommand")
+        let hasCommand = sut.hasCommentDirective("xcresource:customcommand")
         
         // Then
         XCTAssert(hasCommand)
@@ -24,7 +24,7 @@ final class EnumerationCaseTests: XCTestCase {
             rawValue: "greeting")
         
         // When
-        let hasCommand = sut.hasCommandName("xcresource:mycommand")
+        let hasCommand = sut.hasCommentDirective("xcresource:mycommand")
         
         // Then
         XCTAssertFalse(hasCommand)

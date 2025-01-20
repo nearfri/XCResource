@@ -13,7 +13,7 @@ protocol StringsLocalizationItemMerger: AnyObject {
 }
 
 extension StringKeyToStringsGenerator {
-    public struct CommandNameSet: Sendable {
+    public struct CommentDirectives: Sendable {
         public var exclude: String
         
         public init(exclude: String) {
@@ -79,14 +79,14 @@ public class StringKeyToStringsGenerator {
         self.stringsGenerator = stringsGenerator
     }
     
-    public convenience init(commandNameSet: CommandNameSet) {
+    public convenience init(commentDirectives: CommentDirectives) {
         self.init(
             languageDetector: DefaultLanguageDetector(
                 detector: LocStringCore.DefaultLanguageDetector()),
             sourceCodeImporter: LocalizationItemImporterFilterDecorator(
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter()),
-                filter: StringsItemFilter(commandNameForExclusion: commandNameSet.exclude)),
+                filter: StringsItemFilter(directiveForExclusion: commentDirectives.exclude)),
             stringsImporter: LocalizationItemImporterIDDecorator(
                 decoratee: StringsImporter()),
             localizationItemMerger: DefaultStringsLocalizationItemMerger(),

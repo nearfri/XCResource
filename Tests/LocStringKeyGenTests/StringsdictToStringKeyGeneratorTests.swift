@@ -99,7 +99,7 @@ final class StringsdictToStringKeyGeneratorTests: XCTestCase {
         }
         
         let sut = StringsdictToStringKeyGenerator(
-            commandNameSet: .init(include: "xcresource:target:stringsdict"))
+            commentDirectives: .init(include: "xcresource:target:stringsdict"))
         
         let request = StringsdictToStringKeyGenerator.Request(
             stringsdictFileURL: stringsdictURL,
