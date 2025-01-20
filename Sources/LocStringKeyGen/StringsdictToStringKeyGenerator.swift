@@ -3,7 +3,7 @@ import LocStringCore
 import LocSwiftCore
 
 extension StringsdictToStringKeyGenerator {
-    public struct CommandNameSet {
+    public struct CommentDirectives {
         public var include: String
         
         public init(include: String) {
@@ -45,9 +45,9 @@ public class StringsdictToStringKeyGenerator {
         self.sourceCodeRewriter = sourceCodeRewriter
     }
     
-    public convenience init(commandNameSet: CommandNameSet) {
+    public convenience init(commentDirectives: CommentDirectives) {
         let sourceCodeItemFilter = StringsdictItemFilter(
-            commandNameForInclusion: commandNameSet.include)
+            directiveForInclusion: commentDirectives.include)
         
         self.init(
             stringsdictImporter: LocalizationItemImporterCommentWithValueDecorator(

@@ -2,13 +2,13 @@ import Foundation
 import PackagePlugin
 
 private enum OptionName {
-    static let manifestPath: String = "manifest-path"
+    static let configurationPath: String = "configuration-path"
     static let version: String = "version"
     static let help: String = "help"
 }
 
 @main
-struct RunXCResourcePlugin: CommandPlugin {
+struct GenerateResourceCode: CommandPlugin {
     func performCommand(context: PluginContext, arguments: [String]) async throws {
         let toolURL = try context.tool(named: "xcresource").url
         
@@ -25,14 +25,14 @@ struct RunXCResourcePlugin: CommandPlugin {
         
         var argExtractor = ArgumentExtractor(pluginArguments)
         
-        func appendManifestPath(_ manifestPath: String) {
-            result.append(contentsOf: ["--\(OptionName.manifestPath)", manifestPath])
+        func appendConfigPath(_ configPath: String) {
+            result.append(contentsOf: ["--\(OptionName.configurationPath)", configPath])
         }
         
-        if let manifestPath = argExtractor.extractOption(named: OptionName.manifestPath).first {
-            appendManifestPath(manifestPath)
-        } else if let manifestPath = manifestPath(inDirectory: context.currentDirectoryURL) {
-            appendManifestPath(manifestPath)
+        if let configPath = argExtractor.extractOption(named: OptionName.configurationPath).first {
+            appendConfigPath(configPath)
+        } else if let configPath = configurationPath(inDirectory: context.currentDirectoryURL) {
+            appendConfigPath(configPath)
         }
         
         for flag in [OptionName.version, OptionName.help] {
@@ -44,7 +44,7 @@ struct RunXCResourcePlugin: CommandPlugin {
         return result
     }
     
-    private func manifestPath(inDirectory directory: URL) -> String? {
+    private func configurationPath(inDirectory directory: URL) -> String? {
         let filename = "xcresource.json"
         
         let candidates: [String] = [
@@ -68,7 +68,7 @@ struct RunXCResourcePlugin: CommandPlugin {
 
 import XcodeProjectPlugin
 
-extension RunXCResourcePlugin: XcodeCommandPlugin {
+extension GenerateResourceCode: XcodeCommandPlugin {
     // Entry point for command plugins applied to Xcode projects.
     func performCommand(context: XcodePluginContext, arguments: [String]) throws {
         let toolURL = try context.tool(named: "xcresource").url

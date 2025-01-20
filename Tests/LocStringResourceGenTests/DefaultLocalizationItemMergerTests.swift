@@ -3,7 +3,7 @@ import Testing
 
 @Suite struct DefaultLocalizationItemMergerTests {
     private let sut: DefaultLocalizationItemMerger = .init(
-        commentCommandNames: .init(useRaw: "xcresource:use-raw"))
+        commentDirectives: .init(verbatim: "xcresource:verbatim"))
     
     @Test func itemsByMerging_matchParameterTypes_useParametersInSourceCode() throws {
         // Given
@@ -122,7 +122,7 @@ import Testing
         ])
     }
     
-    @Test func itemsByMerging_hasUseRawComment_useRawDefaultValue() throws {
+    @Test func itemsByMerging_hasVerbatimComment_useRawDefaultValue() throws {
         // Given
         let itemsInCatalog: [LocalizationItem] = [
             .init(key: "success100",
@@ -137,7 +137,7 @@ import Testing
             .init(key: "success100",
                   defaultValue: "100\\(param1)uccess",
                   rawDefaultValue: "",
-                  developerComments: ["xcresource:use-raw"],
+                  developerComments: ["xcresource:verbatim"],
                   memberDeclaration: .method("success100", [
                     .init(firstName: "_", secondName: "param1", type: "UnsafePointer<UInt8>"),
                   ])),
@@ -152,7 +152,7 @@ import Testing
             .init(key: "success100",
                   defaultValue: "100% success",
                   rawDefaultValue: "100% success",
-                  developerComments: ["xcresource:use-raw"],
+                  developerComments: ["xcresource:verbatim"],
                   memberDeclaration: .property("success100")),
         ])
     }

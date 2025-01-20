@@ -25,7 +25,7 @@ extension LocalizationSourceCodeRewriter {
 }
 
 extension StringsToStringKeyGenerator {
-    public struct CommandNameSet {
+    public struct CommentDirectives {
         public var exclude: String
         
         public init(exclude: String) {
@@ -67,9 +67,9 @@ public class StringsToStringKeyGenerator {
         self.sourceCodeRewriter = sourceCodeRewriter
     }
     
-    public convenience init(commandNameSet: CommandNameSet) {
+    public convenience init(commentDirectives: CommentDirectives) {
         let sourceCodeItemFilter = StringsItemFilter(
-            commandNameForExclusion: commandNameSet.exclude)
+            directiveForExclusion: commentDirectives.exclude)
         
         self.init(
             stringsImporter: LocalizationItemImporterCommentWithValueDecorator(
