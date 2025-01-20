@@ -8,7 +8,7 @@ private enum OptionName {
 }
 
 @main
-struct RunXCResourcePlugin: CommandPlugin {
+struct GenerateResourceCode: CommandPlugin {
     func performCommand(context: PluginContext, arguments: [String]) async throws {
         let toolURL = try context.tool(named: "xcresource").url
         
@@ -68,7 +68,7 @@ struct RunXCResourcePlugin: CommandPlugin {
 
 import XcodeProjectPlugin
 
-extension RunXCResourcePlugin: XcodeCommandPlugin {
+extension GenerateResourceCode: XcodeCommandPlugin {
     // Entry point for command plugins applied to Xcode projects.
     func performCommand(context: XcodePluginContext, arguments: [String]) throws {
         let toolURL = try context.tool(named: "xcresource").url

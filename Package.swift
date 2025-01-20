@@ -8,7 +8,7 @@ let package = Package(
     name: "XCResource",
     platforms: [.macOS(.v15)],
     products: [
-        .plugin(name: "RunXCResource", targets: ["RunXCResource"]),
+        .plugin(name: "Generate Resource Code", targets: ["Generate Resource Code"]),
         .executable(name: "xcresource", targets: ["xcresource"]),
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
         .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
@@ -26,16 +26,17 @@ let package = Package(
         // MARK: - Plugins
         
         .plugin(
-            name: "RunXCResource",
+            name: "Generate Resource Code",
             capability: .command(
                 intent: .custom(
-                    verb: "run-xcresource",
-                    description: "Run XCResource to generate symbols for assets or strings."),
+                    verb: "generate-resource-code",
+                    description: "Generate source code for resources."),
                 permissions: [
                     .writeToPackageDirectory(
-                        reason: "Write symbol files in the package direcotry")
+                        reason: "Generate and write source code into the package direcotry")
                 ]),
-            dependencies: ["xcresource"]),
+            dependencies: ["xcresource"],
+            path: "Plugins/GenerateResourceCode"),
         
         // MARK: - Executables
         
