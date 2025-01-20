@@ -17,7 +17,7 @@ protocol MethodDeclarationGenerator: AnyObject {
 }
 
 extension StringFormGenerator {
-    public struct CommandNameSet {
+    public struct CommentDirectives {
         public var exclude: String
         
         public init(exclude: String) {
@@ -84,11 +84,11 @@ public class StringFormGenerator {
         self.methodDeclarationGenerator = methodDeclarationGenerator
     }
     
-    public convenience init(commandNameSet: CommandNameSet) {
+    public convenience init(commentDirectives: CommentDirectives) {
         self.init(
             enumerationImporter: StringEnumerationImporterFilterDecorator(
                 decoratee: SwiftStringEnumerationImporter(),
-                commandNameForExclusion: commandNameSet.exclude),
+                directiveForExclusion: commentDirectives.exclude),
             placeholderImporter: DefaultFormatPlaceholderImporter(),
             typeDeclarationGenerator: DefaultTypeDeclarationGenerator(),
             methodDeclarationGenerator: DefaultMethodDeclarationGenerator())

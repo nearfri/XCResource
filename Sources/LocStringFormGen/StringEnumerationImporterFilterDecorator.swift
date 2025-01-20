@@ -3,20 +3,20 @@ import LocSwiftCore
 
 class StringEnumerationImporterFilterDecorator: StringEnumerationImporter {
     private let decoratee: StringEnumerationImporter
-    private let commandNameForExclusion: String
+    private let directiveForExclusion: String
     
     init(decoratee: StringEnumerationImporter = SwiftStringEnumerationImporter(),
-         commandNameForExclusion: String
+         directiveForExclusion: String
     ) {
         self.decoratee = decoratee
-        self.commandNameForExclusion = commandNameForExclusion
+        self.directiveForExclusion = directiveForExclusion
     }
     
     func `import`(at url: URL) throws -> Enumeration<String> {
         var enumeration = try decoratee.import(at: url)
         
         enumeration.cases.removeAll { enumCase in
-            enumCase.hasCommandName(commandNameForExclusion)
+            enumCase.hasCommentDirective(directiveForExclusion)
         }
         
         return enumeration

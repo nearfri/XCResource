@@ -89,7 +89,7 @@ public extension LocalizedStringResource {
               bundle: .atURL(Bundle.module.bundleURL))
     }
     
-    // xcresource:use-raw
+    // xcresource:verbatim
     /// 100% success
     static var success100: Self {
         .init("success100",

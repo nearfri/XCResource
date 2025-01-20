@@ -16,11 +16,11 @@ protocol LocalizationItemMerger: AnyObject {
 }
 
 extension LocalizedStringResourceGenerator {
-    public struct CommentCommandNames {
-        public var useRaw: String
+    public struct CommentDirectives {
+        public var verbatim: String
         
-        public init(useRaw: String) {
-            self.useRaw = useRaw
+        public init(verbatim: String) {
+            self.verbatim = verbatim
         }
     }
     
@@ -64,12 +64,12 @@ public class LocalizedStringResourceGenerator {
         self.sourceCodeRewriter = sourceCodeRewriter
     }
     
-    public convenience init(commentCommandNames: CommentCommandNames) {
+    public convenience init(commentDirectives: CommentDirectives) {
         self.init(
             catalogLoader: StringCatalogLoader(),
             sourceCodeLoader: SwiftLocalizationItemLoader(),
             localizationItemMerger: DefaultLocalizationItemMerger(
-                commentCommandNames: .init(useRaw: commentCommandNames.useRaw)),
+                commentDirectives: .init(verbatim: commentDirectives.verbatim)),
             sourceCodeRewriter: SwiftLocalizationSourceCodeRewriter())
     }
     

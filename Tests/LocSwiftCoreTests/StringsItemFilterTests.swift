@@ -6,7 +6,7 @@ final class StringsItemFilterTests: XCTestCase {
     private var sut: StringsItemFilter!
     
     override func setUp() {
-        sut = StringsItemFilter(commandNameForExclusion: "xcresource:target:stringsdict")
+        sut = StringsItemFilter(directiveForExclusion: "xcresource:target:stringsdict")
     }
     
     func test_isIncluded_pluralComment_returnsFalse() throws {

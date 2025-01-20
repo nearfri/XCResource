@@ -1,16 +1,16 @@
 import Foundation
 
 extension DefaultLocalizationItemMerger {
-    struct CommentCommandNames {
-        var useRaw: String
+    struct CommentDirectives {
+        var verbatim: String
     }
 }
 
 class DefaultLocalizationItemMerger: LocalizationItemMerger {
-    private let commentCommandNames: CommentCommandNames
+    private let commentDirectives: CommentDirectives
     
-    init(commentCommandNames: CommentCommandNames) {
-        self.commentCommandNames = commentCommandNames
+    init(commentDirectives: CommentDirectives) {
+        self.commentDirectives = commentDirectives
     }
     
     func itemsByMerging(
@@ -28,7 +28,7 @@ class DefaultLocalizationItemMerger: LocalizationItemMerger {
             
             var newItem = itemInCatalog
             
-            if itemInSourceCode.hasCommentCommand(named: commentCommandNames.useRaw) {
+            if itemInSourceCode.hasCommentDirective(commentDirectives.verbatim) {
                 newItem.defaultValue = newItem.rawDefaultValue
                 newItem.memberDeclaration = .property(itemInSourceCode.memberDeclaration.id)
             } else if itemInSourceCode.hasResolvedParameterTypes(compatibleWith: itemInCatalog) {
@@ -48,8 +48,8 @@ class DefaultLocalizationItemMerger: LocalizationItemMerger {
 }
 
 private extension LocalizationItem {
-    func hasCommentCommand(named name: String) -> Bool {
-        return developerComments.contains(name)
+    func hasCommentDirective(_ commentDirective: String) -> Bool {
+        return developerComments.contains(commentDirective)
     }
     
     func hasResolvedParameterTypes(compatibleWith other: LocalizationItem) -> Bool {

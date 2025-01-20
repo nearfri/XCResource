@@ -2,40 +2,42 @@ import Foundation
 import ArgumentParser
 import LocStringsGen
 
-struct InitManifest: ParsableCommand {
-    static let configuration: CommandConfiguration = .init(
-        commandName: "init",
-        abstract: "Create an initial manifest file")
-    
-    // MARK: - Run
-    
-    mutating func run() throws {
-        let fileURL = URL(fileURLWithPath: RunManifest.Default.manifestPath)
+extension Config {
+    struct Init: ParsableCommand {
+        static let configuration: CommandConfiguration = .init(
+            commandName: "init",
+            abstract: "Create an initial configuration file")
         
-        print("Creating manifest file: \(fileURL.lastPathComponent)")
+        // MARK: - Run
         
-        if FileManager.default.fileExists(atPath: fileURL.path) {
-            throw Error.manifestAlreadyExists
+        mutating func run() throws {
+            let fileURL = URL(fileURLWithPath: Run.Default.configurationPath)
+            
+            print("Creating configuration file: \(fileURL.lastPathComponent)")
+            
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                throw Error.configurationAlreadyExists
+            }
+            
+            try configurationTemplate.write(to: fileURL, atomically: true, encoding: .utf8)
         }
-        
-        try manifestTemplate.write(to: fileURL, atomically: true, encoding: .utf8)
     }
 }
 
-extension InitManifest {
+extension Config.Init {
     private enum Error: LocalizedError {
-        case manifestAlreadyExists
+        case configurationAlreadyExists
         
         var errorDescription: String? {
             switch self {
-            case .manifestAlreadyExists:
-                return "A manifest file already exists in this directory"
+            case .configurationAlreadyExists:
+                return "The configuration file already exists in this directory"
             }
         }
     }
 }
 
-private let manifestTemplate = """
+private let configurationTemplate = """
 {
     "commands": [
         {

@@ -31,7 +31,7 @@ final class StringEnumerationImporterFilterDecoratorTests: XCTestCase {
         
         let sut = StringEnumerationImporterFilterDecorator(
             decoratee: StubStringEnumerationImporter(),
-            commandNameForExclusion: "xcresource:key2form:exclude")
+            directiveForExclusion: "xcresource:key2form:exclude")
         
         let expectedEnum = Enumeration<String>(
             name: "StringKey",

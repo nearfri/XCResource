@@ -80,7 +80,7 @@ final class StringsToStringKeyGeneratorTests: XCTestCase {
         }
         
         let sut = StringsToStringKeyGenerator(
-            commandNameSet: .init(exclude: "xcresource:target:stringsdict"))
+            commentDirectives: .init(exclude: "xcresource:target:stringsdict"))
         
         let request = StringsToStringKeyGenerator.Request(
             stringsFileURL: stringsURL,

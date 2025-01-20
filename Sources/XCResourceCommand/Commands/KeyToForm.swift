@@ -57,7 +57,7 @@ struct KeyToForm: ParsableCommand {
             accessLevel: accessLevel?.rawValue)
         
         let generator = StringFormGenerator(
-            commandNameSet: .init(exclude: CommentCommandName.key2formExclude))
+            commentDirectives: .init(exclude: CommentDirective.key2formExclude))
         
         generator.issueReporterType = issueReporterType
         

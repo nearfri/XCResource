@@ -16,7 +16,7 @@ protocol StringsdictMerger: AnyObject {
 }
 
 extension StringKeyToStringsdictGenerator {
-    public struct CommandNameSet: Sendable {
+    public struct CommentDirectives: Sendable {
         public var include: String
         
         public init(include: String) {
@@ -77,14 +77,14 @@ public class StringKeyToStringsdictGenerator {
         self.stringsdictMerger = stringsdictMerger
     }
     
-    public convenience init(commandNameSet: CommandNameSet) {
+    public convenience init(commentDirectives: CommentDirectives) {
         self.init(
             languageDetector: DefaultLanguageDetector(
                 detector: LocStringCore.DefaultLanguageDetector()),
             sourceCodeImporter: LocalizationItemImporterFilterDecorator(
                 decoratee: SwiftLocalizationItemImporter(
                     enumerationImporter: SwiftStringEnumerationImporter()),
-                filter: StringsdictItemFilter(commandNameForInclusion: commandNameSet.include)),
+                filter: StringsdictItemFilter(directiveForInclusion: commentDirectives.include)),
             stringsdictImporter: StringsdictImporterIDDecorator(
                 decoratee: DefaultStringsdictImporter()),
             localizationItemMerger: DefaultStringsdictLocalizationItemMerger(),
