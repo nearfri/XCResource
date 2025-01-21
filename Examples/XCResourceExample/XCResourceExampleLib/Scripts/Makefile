@@ -3,7 +3,7 @@ XCRESOURCE = xcrun --sdk macosx swift run --package-path ../../../../ xcresource
 PROJECT_NAME = XCResourceExample
 PROJECT_DIR = ../Sources/Resources
 RESOURCES_DIR = $(PROJECT_DIR)/Resources
-RESOURCEKEYS_DIR = $(PROJECT_DIR)/Keys
+RESOURCEKEYS_DIR = $(PROJECT_DIR)/ResourceAccess
 
 IMAGEKEY_FILE = $(RESOURCEKEYS_DIR)/$(IMAGEKEY_NAME).swift
 COLORKEY_FILE = $(RESOURCEKEYS_DIR)/$(COLORKEY_NAME).swift

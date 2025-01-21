@@ -6,7 +6,7 @@
                 "Sources/Resources/Resources/Assets.xcassets"
             ],
             "assetTypes": ["imageset"],
-            "swiftPath": "Sources/Resources/Keys/ImageKey.swift",
+            "swiftPath": "Sources/Resources/ResourceAccess/ImageKey.swift",
             "keyTypeName": "ImageKey",
             "accessLevel": "public"
         },
@@ -16,7 +16,7 @@
                 "Sources/Resources/Resources/Assets.xcassets"
             ],
             "assetTypes": ["colorset"],
-            "swiftPath": "Sources/Resources/Keys/ColorKey.swift",
+            "swiftPath": "Sources/Resources/ResourceAccess/ColorKey.swift",
             "keyTypeName": "ColorKey",
             "accessLevel": "public"
         },
@@ -24,7 +24,7 @@
             "commandName": "files2swift",
             "resourcesPath": "Sources/Resources/Resources/Fonts",
             "filePattern": "(?i)\\.(otf|ttf|ttc)$",
-            "swiftPath": "Sources/Resources/Keys/FileResource.swift",
+            "swiftPath": "Sources/Resources/ResourceAccess/FileResource.swift",
             "keyTypeName": "FileResource",
             "preservesRelativePath": true,
             "relativePathPrefix": "Fonts",
@@ -34,7 +34,7 @@
         {
             "commandName": "fonts2swift",
             "resourcesPath": "Sources/Resources/Resources",
-            "swiftPath": "Sources/Resources/Keys/FontResource.swift",
+            "swiftPath": "Sources/Resources/ResourceAccess/FontResource.swift",
             "keyTypeName": "FontResource",
             "keyListName": "all",
             "generatesLatinKey": true,
@@ -47,7 +47,7 @@
             "commandName": "xcstrings2swift",
             "catalogPath": "Sources/Resources/Resources/Localizable.xcstrings",
             "bundle": "at-url:Bundle.module.bundleURL",
-            "swiftPath": "Sources/Resources/Keys/LocalizedStringResource+.swift"
+            "swiftPath": "Sources/Resources/ResourceAccess/LocalizedStringResource+.swift"
         }
     ]
 }
