@@ -1,8 +1,9 @@
-import XCTest
+import Testing
+import Foundation
 @testable import Resources
 
-final class FileResourceTests: XCTestCase {
-    func test_filesExist() throws {
+struct FileResourceTests {
+    @Test func filesExist() throws {
         let fileResources: [FileResource] = [
             .cambria,
             .OpenSans.openSansBold,
@@ -12,8 +13,8 @@ final class FileResourceTests: XCTestCase {
         let fm = FileManager.default
         
         for fileResource in fileResources {
-            XCTAssert(fm.fileExists(atPath: fileResource.path),
-                      "File not found: \(fileResource.path)")
+            #expect(fm.fileExists(atPath: fileResource.path),
+                    "File not found: \(fileResource.path)")
         }
     }
 }

@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 @testable import Resources
 
 #if os(iOS) || os(tvOS) || os(watchOS)
@@ -9,15 +9,15 @@ import AppKit.NSFont
 typealias NativeFont = NSFont
 #endif
 
-final class FontResourceTests: XCTestCase {
-    func test_fontsExist() throws {
+struct FontResourceTests {
+    @Test func fontsExist() throws {
         let registry = FontRegistry.shared
         
         registry.registerAllFonts()
         
         for resource in FontResource.all {
-            XCTAssertNotNil(NativeFont(name: resource.fontName, size: 10),
-                            "\(resource.fontName) loading failed")
+            #expect(NativeFont(name: resource.fontName, size: 10) != nil,
+                    "\(resource.fontName) loading failed")
         }
     }
 }
