@@ -30,7 +30,7 @@ struct FilesToSwift: ParsableCommand {
     
     @Option var filePattern: String
     
-    @Option var swiftPath: String
+    @Option var swiftFilePath: String
     
     @Option var resourceTypeName: String
     
@@ -83,6 +83,6 @@ struct FilesToSwift: ParsableCommand {
         print(codes.keyDeclarations, to: &stream)
         
         try stream.close()
-        try FileManager.default.compareAndReplaceItem(at: swiftPath, withItemAt: tempFileURL)
+        try FileManager.default.compareAndReplaceItem(at: swiftFilePath, withItemAt: tempFileURL)
     }
 }

@@ -7,7 +7,7 @@ struct StringsdictToSwiftDTO: CommandDTO {
     var resourcesPath: String
     var tableName: String?
     var language: String?
-    var swiftPath: String
+    var swiftFilePath: String
     
     func toCommand() throws -> ParsableCommand {
         typealias Default = StringsdictToSwift.Default
@@ -16,7 +16,7 @@ struct StringsdictToSwiftDTO: CommandDTO {
         command.resourcesPath = resourcesPath
         command.tableName = tableName ?? Default.tableName
         command.language = language ?? Default.language
-        command.swiftPath = swiftPath
+        command.swiftFilePath = swiftFilePath
         
         return command
     }

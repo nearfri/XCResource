@@ -51,7 +51,7 @@ https://github.com/user-attachments/assets/ce0122be-e0c5-42b6-abf6-4d1d8e0dcf4d
             "commandName": "xcstrings2swift",
             "catalogPath": "Sources/Resources/Resources/Localizable.xcstrings",
             "bundle": "at-url:Bundle.module.bundleURL",
-            "swiftPath": "Sources/Resources/Keys/LocalizedStringResource+.swift"
+            "swiftFilePath": "Sources/Resources/Keys/LocalizedStringResource+.swift"
         }
     ]
 }
@@ -96,7 +96,7 @@ https://github.com/user-attachments/assets/83990542-0d9a-4c12-8f3f-74c47b8fe381
         {
             "commandName": "fonts2swift",
             "resourcesPath": "Sources/Resources/Resources",
-            "swiftPath": "Sources/Resources/Keys/FontResource.swift",
+            "swiftFilePath": "Sources/Resources/Keys/FontResource.swift",
             "resourceTypeName": "FontResource",
             "resourceListName": "all",
             "transformsToLatin": true,
@@ -166,7 +166,7 @@ Font.custom(.openSansBold, size: 16)
             "commandName": "files2swift",
             "resourcesPath": "Sources/Resources/Resources/Lotties",
             "filePattern": "(?i)\\.json$",
-            "swiftPath": "Sources/Resources/Keys/LottieResource.swift",
+            "swiftFilePath": "Sources/Resources/Keys/LottieResource.swift",
             "resourceTypeName": "LottieResource",
             "preservesRelativePath": true,
             "relativePathPrefix": "Lotties",

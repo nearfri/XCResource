@@ -114,7 +114,7 @@ private enum Fixture {
         
         // When
         try SwiftToStringsdict.runAsRoot(arguments: [
-            "--swift-path", sourceCodeURL.path,
+            "--swift-file-path", sourceCodeURL.path,
             "--resources-path", resourcesURL.path,
             "--language-config", "en:comment",
         ])

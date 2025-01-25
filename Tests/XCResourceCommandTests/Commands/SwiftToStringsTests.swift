@@ -50,7 +50,7 @@ private enum Fixture {
         
         // When
         try SwiftToStrings.runAsRoot(arguments: [
-            "--swift-path", SampleData.sourceCodeURL("StringKey.swift").path,
+            "--swift-file-path", SampleData.sourceCodeURL("StringKey.swift").path,
             "--resources-path", resourcesURL.path,
             "--language-config", "ko:comment", "jp:UNLOCALIZED-TEXT", "all:dont-add",
         ])

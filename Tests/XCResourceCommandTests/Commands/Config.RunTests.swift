@@ -11,7 +11,7 @@ private enum Fixture {
                 "commandName": "xcassets2swift",
                 "xcassetsPaths": ["%@"],
                 "assetTypes": ["imageset"], // comment
-                "swiftPath": "%@",
+                "swiftFilePath": "%@",
                 "resourceTypeName": "ImageKey",
                 "excludesTypeDeclaration": false
             },
@@ -25,7 +25,7 @@ private enum Fixture {
             },
             {
                 "commandName": "swift2strings",
-                "swiftPath": "%@",
+                "swiftFilePath": "%@",
                 "resourcesPath": "%@",
                 "tableName": "Localizable",
                 "languages": ["ko"],

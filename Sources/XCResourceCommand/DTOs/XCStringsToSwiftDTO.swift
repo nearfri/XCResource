@@ -7,7 +7,7 @@ struct XCStringsToSwiftDTO: CommandDTO {
     
     var catalogPath: String
     var bundle: String?
-    var swiftPath: String
+    var swiftFilePath: String
     var resourceTypeName: String?
     
     func toCommand() throws -> ParsableCommand {
@@ -26,7 +26,7 @@ struct XCStringsToSwiftDTO: CommandDTO {
         var command = XCStringsToSwift()
         command.catalogPath = catalogPath
         command.bundle = bundle ?? Default.bundle
-        command.swiftPath = swiftPath
+        command.swiftFilePath = swiftFilePath
         command.resourceTypeName = resourceTypeName ?? Default.resourceTypeName
         
         return command

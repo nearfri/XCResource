@@ -6,7 +6,7 @@ struct FontsToSwiftDTO: CommandDTO {
     static let commandType: ParsableCommand.Type = FontsToSwift.self
     
     var resourcesPath: String
-    var swiftPath: String
+    var swiftFilePath: String
     var resourceTypeName: String
     var resourceListName: String?
     var transformsToLatin: Bool?
@@ -32,7 +32,7 @@ struct FontsToSwiftDTO: CommandDTO {
         
         var command = FontsToSwift()
         command.resourcesPath = resourcesPath
-        command.swiftPath = swiftPath
+        command.swiftFilePath = swiftFilePath
         command.resourceTypeName = resourceTypeName
         command.resourceListName = resourceListName
         command.transformsToLatin = transformsToLatin ?? Default.transformsToLatin

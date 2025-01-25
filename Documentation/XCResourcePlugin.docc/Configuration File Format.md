@@ -19,12 +19,12 @@ Below is an example configuration:
             "commandName": "xcstrings2swift",
             "catalogPath": "Sources/ExampleLib/Resources/Localizable.xcstrings",
             "bundle": "atURL:Bundle.module.bundleURL",
-            "swiftCodePath": "Sources/ExampleLib/ResourceAccess/LocalizedStringResource+.swift"
+            "swiftFilePath": "Sources/ExampleLib/ResourceAccess/LocalizedStringResource+.swift"
         },
         {
             "commandName": "fonts2swift",
             "resourcesPath": "Sources/ExampleLib/Resources/Fonts",
-            "swiftCodePath": "Sources/ExampleLib/ResourceAccess/FontResource.swift",
+            "swiftFilePath": "Sources/ExampleLib/ResourceAccess/FontResource.swift",
             "resourceTypeName": "FontResource",
             "resourceListName": "all",
             "transformsToLatin": true,
@@ -36,7 +36,7 @@ Below is an example configuration:
             "commandName": "files2swift",
             "resourcesPath": "Sources/ExampleLib/Resources/Lotties",
             "filePattern": "(?i)\\.json$",
-            "swiftCodePath": "Sources/ExampleLib/ResourceAccess/LottieResource.swift",
+            "swiftFilePath": "Sources/ExampleLib/ResourceAccess/LottieResource.swift",
             "resourceTypeName": "LottieResource",
             "bundle": "Bundle.module",
             "accessLevel": "public"
@@ -47,7 +47,7 @@ Below is an example configuration:
                 "Sources/ExampleLib/Resources/Assets.xcassets"
             ],
             "assetTypes": ["colorset"],
-            "swiftCodePath": "Sources/ExampleLib/ResourceAccess/ColorKey.swift",
+            "swiftFilePath": "Sources/ExampleLib/ResourceAccess/ColorKey.swift",
             "resourceTypeName": "ColorKey",
             "accessLevel": "public"
         }
@@ -65,7 +65,7 @@ Option | Description
 -------|------------
 `catalogPath` | The path to the `.xcstrings` file.
 `bundle` | Specifies the bundle containing the strings file. Possible values: `main`, `atURL:<url-getter>` or `forClass:<class-type>`. Default: `main`.
-`swiftCodePath` | The path where the generated Swift file will be saved.
+`swiftFilePath` | The path where the generated Swift file will be saved.
 `resourceTypeName` | The name of the generated resource type. Default: `LocalizedStringResource`.
 
 ---
@@ -74,7 +74,7 @@ Option | Description
 Option | Description
 -------|------------
 `resourcesPath` | The path to the folder containing font resources.
-`swiftCodePath` | The path where the generated Swift file will be saved.
+`swiftFilePath` | The path where the generated Swift file will be saved.
 `resourceTypeName` | The name of the generated font resource type.
 `resourceListName` | The name of the list containing all font resources.
 `transformsToLatin` | Whether to transform font identifiers to Latin characters. Default: `false`.
@@ -92,7 +92,7 @@ Option | Description
 -------|------------
 `resourcesPath` | The path to the folder containing resource files.
 `filePattern` | A regex pattern to match files.
-`swiftCodePath` | The path where the generated Swift file will be saved.
+`swiftFilePath` | The path where the generated Swift file will be saved.
 `resourceTypeName` | The name of the generated resource type.
 `preservesRelativePath` | Whether to preserve relative paths. Set to `false` if using the [*process rule*](https://developer.apple.com/documentation/xcode/bundling-resources-with-a-swift-package#Explicitly-declare-or-exclude-resources). Default: `true`.
 `relativePathPrefix` | A prefix to prepend to relative paths. Default: `null`.
@@ -107,7 +107,7 @@ Option | Description
 -------|------------
 `xcassetsPaths` | An array of paths to `.xcassets` directories.
 `assetTypes` | An array of asset types to include, e.g., `imageset`, `colorset`, `symbolset`, `dataset`. If empty, all types are included by default.
-`swiftCodePath` | The path where the generated Swift file will be saved.
+`swiftFilePath` | The path where the generated Swift file will be saved.
 `resourceTypeName` | The name of the generated resource type.
 `accessLevel` | The access level for the generated code. Default: `null`.
 `excludesTypeDeclaration` | Whether to exclude the type declaration in the generated code. Default: `false`.

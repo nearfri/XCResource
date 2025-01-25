@@ -43,7 +43,7 @@ struct XCAssetsToSwift: ParsableCommand {
                 valueName: AssetType.joinedAllValuesString))
     var assetTypes: [AssetType] = Default.assetTypes
     
-    @Option var swiftPath: String
+    @Option var swiftFilePath: String
     
     @Option var resourceTypeName: String
     
@@ -84,6 +84,6 @@ struct XCAssetsToSwift: ParsableCommand {
         print(codes.keyDeclarations, to: &stream)
         
         try stream.close()
-        try FileManager.default.compareAndReplaceItem(at: swiftPath, withItemAt: tempFileURL)
+        try FileManager.default.compareAndReplaceItem(at: swiftFilePath, withItemAt: tempFileURL)
     }
 }

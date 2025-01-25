@@ -49,7 +49,7 @@ private let configurationTemplate = """
                 "<#imageset|colorset|symbolset|dataset|...#>",
                 "<#If not specified, all asset types are exported.#>"
             ],
-            "swiftPath": "<#swift file path#>",
+            "swiftFilePath": "<#swift file path#>",
             "resourceTypeName": "<#resource type name#>",
             "accessLevel": null,
             "excludesTypeDeclaration": false
@@ -58,7 +58,7 @@ private let configurationTemplate = """
             "commandName": "files2swift",
             "resourcesPath": "<#resourcesPath#>",
             "filePattern": "<#(?i)\\.(jpeg|jpg)$#>",
-            "swiftPath": "<#swift file path#>",
+            "swiftFilePath": "<#swift file path#>",
             "resourceTypeName": "<#resource type name#>",
             "bundle": "<#Bundle.main#>",
             "accessLevel": null,
@@ -67,7 +67,7 @@ private let configurationTemplate = """
         {
             "commandName": "fonts2swift",
             "resourcesPath": "<#resourcesPath#>",
-            "swiftPath": "<#swift file path#>",
+            "swiftFilePath": "<#swift file path#>",
             "resourceTypeName": "<#resource type name#>",
             "resourceListName": null,
             "transformsToLatin": false,
@@ -82,7 +82,7 @@ private let configurationTemplate = """
             "commandName": "xcstrings2swift",
             "catalogPath": "<#xcstrings file path#>",
             "bundle": "<#main|at-url<url-getter>|for-class<class-type>#>",
-            "swiftPath": "<#swift file path#>",
+            "swiftFilePath": "<#swift file path#>",
             "resourceTypeName": "LocalizedStringResource"
         },
         {
@@ -96,7 +96,7 @@ private let configurationTemplate = """
         },
         {
             "commandName": "swift2strings",
-            "swiftPath": "<#swift file path#>",
+            "swiftFilePath": "<#swift file path#>",
             "resourcesPath": "<#resources path#>",
             "tableName": "Localizable",
             "configurationsByLanguage": {
@@ -110,7 +110,7 @@ private let configurationTemplate = """
         },
         {
             "commandName": "swift2stringsdict",
-            "swiftPath": "<#swift file path#>",
+            "swiftFilePath": "<#swift file path#>",
             "resourcesPath": "<#resources path#>",
             "tableName": "Localizable",
             "configurationsByLanguage": {
@@ -125,14 +125,14 @@ private let configurationTemplate = """
             "resourcesPath": "<#resources path#>",
             "tableName": "Localizable",
             "language": "en",
-            "swiftPath": "<#swift file path#>"
+            "swiftFilePath": "<#swift file path#>"
         },
         {
             "commandName": "stringsdict2swift",
             "resourcesPath": "<#resources path#>",
             "tableName": "Localizable",
             "language": "en",
-            "swiftPath": "<#swift file path#>"
+            "swiftFilePath": "<#swift file path#>"
         },
         {
             "commandName": "strings2csv",

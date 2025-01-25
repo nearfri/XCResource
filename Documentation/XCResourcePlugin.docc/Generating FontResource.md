@@ -33,7 +33,7 @@ Update the `xcresource.json` file to include the `xcfonts2swift` command for gen
         {
             "commandName": "fonts2swift",
             "resourcesPath": "Sources/ExampleLib/Resources",
-            "swiftCodePath": "Sources/ExampleLib/ResourceAccess/FontResource.swift",
+            "swiftFilePath": "Sources/ExampleLib/ResourceAccess/FontResource.swift",
             "resourceTypeName": "FontResource",
             "resourceListName": "all",
             "transformsToLatin": true,

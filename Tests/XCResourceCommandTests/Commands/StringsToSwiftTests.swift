@@ -78,7 +78,7 @@ private enum Fixture {
         try StringsToSwift.runAsRoot(arguments: [
             "--resources-path", resourcesURL.path,
             "--language", "en",
-            "--swift-path", sourceCodeURL.path,
+            "--swift-file-path", sourceCodeURL.path,
         ])
         
         // Then

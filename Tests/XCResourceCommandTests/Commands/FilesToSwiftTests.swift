@@ -71,7 +71,7 @@ private enum Fixture {
         try FilesToSwift.runAsRoot(arguments: [
             "--resources-path", SampleData.resourcesURL().path + "/Fonts",
             "--file-pattern", "(?i)\\.(otf|ttf|ttc)$",
-            "--swift-path", swiftFileURL.path,
+            "--swift-file-path", swiftFileURL.path,
             "--resource-type-name", "FileResource",
             "--preserve-relative-path",
             "--relative-path-prefix", "Fonts",

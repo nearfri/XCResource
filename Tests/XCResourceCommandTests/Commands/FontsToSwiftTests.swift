@@ -100,7 +100,7 @@ private enum Fixture {
         // When
         try FontsToSwift.runAsRoot(arguments: [
             "--resources-path", SampleData.resourcesURL().path,
-            "--swift-path", swiftFileURL.path,
+            "--swift-file-path", swiftFileURL.path,
             "--resource-type-name", "FontResource",
             "--resource-list-name", "all",
             "--preserve-relative-path",
