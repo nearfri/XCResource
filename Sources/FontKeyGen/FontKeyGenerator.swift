@@ -13,7 +13,7 @@ struct KeyDeclarationRequest: Sendable {
     var resourceTypeName: String
     var resourceListName: String?
     var transformsToLatin: Bool
-    var stripsCombiningMarksFromKey: Bool
+    var stripsCombiningMarks: Bool
     var preservesRelativePath: Bool
     var relativePathPrefix: String?
     var bundle: String
@@ -31,7 +31,7 @@ extension FontKeyGenerator {
         public var resourceTypeName: String
         public var resourceListName: String?
         public var transformsToLatin: Bool
-        public var stripsCombiningMarksFromKey: Bool
+        public var stripsCombiningMarks: Bool
         public var preservesRelativePath: Bool
         public var relativePathPrefix: String?
         public var bundle: String
@@ -42,7 +42,7 @@ extension FontKeyGenerator {
             resourceTypeName: String,
             resourceListName: String?,
             transformsToLatin: Bool,
-            stripsCombiningMarksFromKey: Bool,
+            stripsCombiningMarks: Bool,
             preservesRelativePath: Bool,
             relativePathPrefix: String?,
             bundle: String,
@@ -52,7 +52,7 @@ extension FontKeyGenerator {
             self.resourceTypeName = resourceTypeName
             self.resourceListName = resourceListName
             self.transformsToLatin = transformsToLatin
-            self.stripsCombiningMarksFromKey = stripsCombiningMarksFromKey
+            self.stripsCombiningMarks = stripsCombiningMarks
             self.preservesRelativePath = preservesRelativePath
             self.relativePathPrefix = relativePathPrefix
             self.bundle = bundle
@@ -105,7 +105,7 @@ public class FontKeyGenerator {
             resourceTypeName: request.resourceTypeName,
             resourceListName: request.resourceListName,
             transformsToLatin: request.transformsToLatin,
-            stripsCombiningMarksFromKey: request.stripsCombiningMarksFromKey,
+            stripsCombiningMarks: request.stripsCombiningMarks,
             preservesRelativePath: request.preservesRelativePath,
             relativePathPrefix: request.relativePathPrefix,
             bundle: request.bundle,

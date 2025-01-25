@@ -71,7 +71,7 @@ private let configurationTemplate = """
             "resourceTypeName": "<#resource type name#>",
             "resourceListName": null,
             "transformsToLatin": false,
-            "stripsCombiningMarksFromKey": false,
+            "stripsCombiningMarks": false,
             "preservesRelativePath": true,
             "relativePathPrefix": null,
             "bundle": "<#Bundle.main#>",

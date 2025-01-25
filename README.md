@@ -100,7 +100,7 @@ https://github.com/user-attachments/assets/83990542-0d9a-4c12-8f3f-74c47b8fe381
             "resourceTypeName": "FontResource",
             "resourceListName": "all",
             "transformsToLatin": true,
-            "stripsCombiningMarksFromKey": true,
+            "stripsCombiningMarks": true,
             "preservesRelativePath": true,
             "bundle": "Bundle.module",
             "accessLevel": "public"

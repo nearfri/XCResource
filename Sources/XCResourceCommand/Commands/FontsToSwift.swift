@@ -22,7 +22,7 @@ struct FontsToSwift: ParsableCommand {
     enum Default {
         static let bundle: String = "Bundle.main"
         static let transformsToLatin: Bool = false
-        static let stripsCombiningMarksFromKey: Bool = false
+        static let stripsCombiningMarks: Bool = false
         static let preservesRelativePath: Bool = true
         static let excludesTypeDeclaration: Bool = false
     }
@@ -40,8 +40,8 @@ struct FontsToSwift: ParsableCommand {
     @Flag(name: .customLong("transform-to-latin"))
     var transformsToLatin: Bool = Default.transformsToLatin
     
-    @Flag(name: .customLong("strip-combining-marks-from-key"))
-    var stripsCombiningMarksFromKey: Bool = Default.stripsCombiningMarksFromKey
+    @Flag(name: .customLong("strip-combining-marks"))
+    var stripsCombiningMarks: Bool = Default.stripsCombiningMarks
     
     @Flag(name: .customLong("preserve-relative-path"), inversion: .prefixedNo)
     var preservesRelativePath: Bool = Default.preservesRelativePath
@@ -70,7 +70,7 @@ struct FontsToSwift: ParsableCommand {
             resourceTypeName: resourceTypeName,
             resourceListName: resourceListName,
             transformsToLatin: transformsToLatin,
-            stripsCombiningMarksFromKey: stripsCombiningMarksFromKey,
+            stripsCombiningMarks: stripsCombiningMarks,
             preservesRelativePath: preservesRelativePath,
             relativePathPrefix: relativePathPrefix,
             bundle: bundle,

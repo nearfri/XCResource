@@ -27,7 +27,7 @@ class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
             
             let fontID = font.identifier(
                 transformingToLatin: request.transformsToLatin,
-                strippingCombiningMarks: request.stripsCombiningMarksFromKey)
+                strippingCombiningMarks: request.stripsCombiningMarks)
             
             result += """
                         .\(fontID),
@@ -63,7 +63,7 @@ class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
             
             let fontID = font.identifier(
                 transformingToLatin: request.transformsToLatin,
-                strippingCombiningMarks: request.stripsCombiningMarksFromKey)
+                strippingCombiningMarks: request.stripsCombiningMarks)
             
             result += """
                     

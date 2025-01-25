@@ -10,7 +10,7 @@ struct FontsToSwiftDTO: CommandDTO {
     var resourceTypeName: String
     var resourceListName: String?
     var transformsToLatin: Bool?
-    var stripsCombiningMarksFromKey: Bool?
+    var stripsCombiningMarks: Bool?
     var preservesRelativePath: Bool?
     var relativePathPrefix: String?
     var bundle: String?
@@ -36,8 +36,8 @@ struct FontsToSwiftDTO: CommandDTO {
         command.resourceTypeName = resourceTypeName
         command.resourceListName = resourceListName
         command.transformsToLatin = transformsToLatin ?? Default.transformsToLatin
-        command.stripsCombiningMarksFromKey = {
-            stripsCombiningMarksFromKey ?? Default.stripsCombiningMarksFromKey
+        command.stripsCombiningMarks = {
+            stripsCombiningMarks ?? Default.stripsCombiningMarks
         }()
         command.preservesRelativePath = preservesRelativePath ?? Default.preservesRelativePath
         command.relativePathPrefix = relativePathPrefix
