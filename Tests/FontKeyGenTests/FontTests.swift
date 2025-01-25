@@ -7,7 +7,7 @@ import Testing
         let font = Font(fontName: "", familyName: "Arial", style: "", relativePath: "")
         
         // When
-        let key = font.key(asLatin: false, strippingCombiningMarks: false)
+        let key = font.identifier(transformingToLatin: false, strippingCombiningMarks: false)
         
         // Then
         #expect(key == "arial")
@@ -18,7 +18,7 @@ import Testing
         let font = Font(fontName: "", familyName: "Arial", style: "Regular", relativePath: "")
         
         // When
-        let key = font.key(asLatin: false, strippingCombiningMarks: false)
+        let key = font.identifier(transformingToLatin: false, strippingCombiningMarks: false)
         
         // Then
         #expect(key == "arialRegular")
@@ -30,7 +30,7 @@ import Testing
         let font = Font(fontName: "", familyName: "Arial산토끼", style: "", relativePath: "")
         
         // When
-        let key = font.key(asLatin: true, strippingCombiningMarks: false)
+        let key = font.identifier(transformingToLatin: true, strippingCombiningMarks: false)
         
         // Then
         #expect(key == "arialSantokki")
@@ -41,7 +41,7 @@ import Testing
         let font = Font(fontName: "", familyName: "Arial小野兔", style: "", relativePath: "")
         
         // When
-        let key = font.key(asLatin: true, strippingCombiningMarks: false)
+        let key = font.identifier(transformingToLatin: true, strippingCombiningMarks: false)
         
         // Then
         #expect(key == "arialXiǎoYěTù")
@@ -52,7 +52,7 @@ import Testing
         let font = Font(fontName: "", familyName: "café façade", style: "", relativePath: "")
         
         // When
-        let key = font.key(asLatin: false, strippingCombiningMarks: true)
+        let key = font.identifier(transformingToLatin: false, strippingCombiningMarks: true)
         
         // Then
         #expect(key == "cafeFacade")
@@ -63,7 +63,7 @@ import Testing
         let font = Font(fontName: "", familyName: "Arial小野兔", style: "", relativePath: "")
         
         // When
-        let key = font.key(asLatin: true, strippingCombiningMarks: true)
+        let key = font.identifier(transformingToLatin: true, strippingCombiningMarks: true)
         
         // Then
         #expect(key == "arialXiaoYeTu")

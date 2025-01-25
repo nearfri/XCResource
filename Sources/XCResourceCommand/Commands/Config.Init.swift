@@ -70,7 +70,7 @@ private let configurationTemplate = """
             "swiftPath": "<#swift file path#>",
             "resourceTypeName": "<#resource type name#>",
             "resourceListName": null,
-            "generatesLatinKey": false,
+            "transformsToLatin": false,
             "stripsCombiningMarksFromKey": false,
             "preservesRelativePath": true,
             "relativePathPrefix": null,

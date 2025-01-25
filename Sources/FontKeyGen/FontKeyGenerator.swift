@@ -12,7 +12,7 @@ struct KeyDeclarationRequest: Sendable {
     var fonts: [Font]
     var resourceTypeName: String
     var resourceListName: String?
-    var generatesLatinKey: Bool
+    var transformsToLatin: Bool
     var stripsCombiningMarksFromKey: Bool
     var preservesRelativePath: Bool
     var relativePathPrefix: String?
@@ -30,7 +30,7 @@ extension FontKeyGenerator {
         public var resourcesURL: URL
         public var resourceTypeName: String
         public var resourceListName: String?
-        public var generatesLatinKey: Bool
+        public var transformsToLatin: Bool
         public var stripsCombiningMarksFromKey: Bool
         public var preservesRelativePath: Bool
         public var relativePathPrefix: String?
@@ -41,7 +41,7 @@ extension FontKeyGenerator {
             resourcesURL: URL,
             resourceTypeName: String,
             resourceListName: String?,
-            generatesLatinKey: Bool,
+            transformsToLatin: Bool,
             stripsCombiningMarksFromKey: Bool,
             preservesRelativePath: Bool,
             relativePathPrefix: String?,
@@ -51,7 +51,7 @@ extension FontKeyGenerator {
             self.resourcesURL = resourcesURL
             self.resourceTypeName = resourceTypeName
             self.resourceListName = resourceListName
-            self.generatesLatinKey = generatesLatinKey
+            self.transformsToLatin = transformsToLatin
             self.stripsCombiningMarksFromKey = stripsCombiningMarksFromKey
             self.preservesRelativePath = preservesRelativePath
             self.relativePathPrefix = relativePathPrefix
@@ -104,7 +104,7 @@ public class FontKeyGenerator {
             fonts: fonts,
             resourceTypeName: request.resourceTypeName,
             resourceListName: request.resourceListName,
-            generatesLatinKey: request.generatesLatinKey,
+            transformsToLatin: request.transformsToLatin,
             stripsCombiningMarksFromKey: request.stripsCombiningMarksFromKey,
             preservesRelativePath: request.preservesRelativePath,
             relativePathPrefix: request.relativePathPrefix,

@@ -99,7 +99,7 @@ https://github.com/user-attachments/assets/83990542-0d9a-4c12-8f3f-74c47b8fe381
             "swiftPath": "Sources/Resources/Keys/FontResource.swift",
             "resourceTypeName": "FontResource",
             "resourceListName": "all",
-            "generatesLatinKey": true,
+            "transformsToLatin": true,
             "stripsCombiningMarksFromKey": true,
             "preservesRelativePath": true,
             "bundle": "Bundle.module",
