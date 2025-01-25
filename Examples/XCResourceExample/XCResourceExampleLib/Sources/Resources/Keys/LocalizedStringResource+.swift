@@ -1,12 +1,12 @@
 import Foundation
 
 public extension LocalizedStringResource {
-    /// \"\\(fileName)\" will be deleted.\
+    /// \"\\(filename)\" will be deleted.\
     /// This action cannot be undone.
-    static func alertDeleteFile(named fileName: String) -> Self {
+    static func alertDeleteFile(named filename: String) -> Self {
         .init("alert_delete_file",
               defaultValue: """
-                \"\(fileName)\" will be deleted.
+                \"\(filename)\" will be deleted.
                 This action cannot be undone.
                 """,
               bundle: .atURL(Bundle.module.bundleURL))
@@ -37,6 +37,14 @@ public extension LocalizedStringResource {
     static func dogEatingApples(dogName: AttributedString, appleCount: Int) -> Self {
         .init("dog_eating_apples",
               defaultValue: "\(dogName) ate \(appleCount) today!",
+              bundle: .atURL(Bundle.module.bundleURL))
+    }
+    
+    // xcresource:verbatim
+    /// %lf works for doubles when formatting.
+    static var doubleFormat: Self {
+        .init("double_format",
+              defaultValue: "%lf works for doubles when formatting.",
               bundle: .atURL(Bundle.module.bundleURL))
     }
     
@@ -86,14 +94,6 @@ public extension LocalizedStringResource {
     static func fileListFileCount(_ fileCount: Int) -> Self {
         .init("fileList_fileCount",
               defaultValue: "\(fileCount) files",
-              bundle: .atURL(Bundle.module.bundleURL))
-    }
-    
-    // xcresource:verbatim
-    /// 100% success
-    static var success100: Self {
-        .init("success100",
-              defaultValue: "100% success",
               bundle: .atURL(Bundle.module.bundleURL))
     }
     

@@ -25,7 +25,7 @@ let package = Package(
     ],
     targets: [
         // MARK: - Documentation
-        // Empty target that builds the DocC catalog at Documentation/RunXCResourcePlugin.docc
+        // Empty target that builds the DocC catalog at Documentation/XCResourcePlugin.docc
         .target(name: "Documentation", path: "Documentation"),
         
         // MARK: - Plugins

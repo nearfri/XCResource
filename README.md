@@ -24,15 +24,16 @@ By automating code generation, it reduces typos and runtime errors.
 ### Add to `Package.swift`
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nearfri/XCResource.git", from: "0.11.4"),
+    .package(url: "https://github.com/nearfri/XCResource.git", from: "<version>"),
     // OR
-    .package(url: "https://github.com/nearfri/XCResource-plugin.git", from: "0.11.4"),
+    .package(url: "https://github.com/nearfri/XCResource-plugin.git", from: "<version>"),
 ],
 ```
-**Recommendation**: Use the [XCResource-plugin](https://github.com/nearfri/XCResource-plugin.git) to take advantage of the precompiled binary executable.
+**Recommendation**: Use [XCResource-plugin](https://github.com/nearfri/XCResource-plugin.git) to take advantage of the precompiled binary executable.
 
 ### Create a Configuration File (`xcresource.json`)
 Add an `xcresource.json` file to your project. The plugin reads this file and generates Swift code every time it runs.
+
 Supported paths for the configuration file:
 - `${PROJECT_DIR}/xcresource.json`
 - `${PROJECT_DIR}/.xcresource.json`

@@ -23,8 +23,8 @@ public struct ContentView: View {
             
             Text(.dogEatingApples(dogName: dogName, appleCount: 1))
                 .font(.custom(.openSansRegular, size: 16))
-                .ifTrue(isBold, then: { $0.bold() })
-                .ifTrue(isItalic, then: { $0.italic() })
+                .bold(isBold)
+                .italic(isItalic)
                 .underline(isUnderline)
                 .strikethrough(isStrikethrough)
             
