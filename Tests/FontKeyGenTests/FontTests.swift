@@ -2,70 +2,70 @@ import Testing
 @testable import FontKeyGen
 
 @Suite struct FontTests {
-    @Test func key_camelCased() throws {
+    @Test func id_camelCased() throws {
         // Given
         let font = Font(fontName: "", familyName: "Arial", style: "", relativePath: "")
         
         // When
-        let key = font.identifier(transformingToLatin: false, strippingCombiningMarks: false)
+        let id = font.id(transformingToLatin: false, strippingCombiningMarks: false)
         
         // Then
-        #expect(key == "arial")
+        #expect(id == "arial")
     }
     
-    @Test func key_appendStyle() throws {
+    @Test func id_appendStyle() throws {
         // Given
         let font = Font(fontName: "", familyName: "Arial", style: "Regular", relativePath: "")
         
         // When
-        let key = font.identifier(transformingToLatin: false, strippingCombiningMarks: false)
+        let id = font.id(transformingToLatin: false, strippingCombiningMarks: false)
         
         // Then
-        #expect(key == "arialRegular")
+        #expect(id == "arialRegular")
     }
     
     
-    @Test func key_hangulToLatin() throws {
+    @Test func id_hangulToLatin() throws {
         // Given
         let font = Font(fontName: "", familyName: "Arial산토끼", style: "", relativePath: "")
         
         // When
-        let key = font.identifier(transformingToLatin: true, strippingCombiningMarks: false)
+        let id = font.id(transformingToLatin: true, strippingCombiningMarks: false)
         
         // Then
-        #expect(key == "arialSantokki")
+        #expect(id == "arialSantokki")
     }
     
-    @Test func key_chineseToLatin() throws {
+    @Test func id_chineseToLatin() throws {
         // Given
         let font = Font(fontName: "", familyName: "Arial小野兔", style: "", relativePath: "")
         
         // When
-        let key = font.identifier(transformingToLatin: true, strippingCombiningMarks: false)
+        let id = font.id(transformingToLatin: true, strippingCombiningMarks: false)
         
         // Then
-        #expect(key == "arialXiǎoYěTù")
+        #expect(id == "arialXiǎoYěTù")
     }
     
-    @Test func key_strippingCombiningMarks() throws {
+    @Test func id_strippingCombiningMarks() throws {
         // Given
         let font = Font(fontName: "", familyName: "café façade", style: "", relativePath: "")
         
         // When
-        let key = font.identifier(transformingToLatin: false, strippingCombiningMarks: true)
+        let id = font.id(transformingToLatin: false, strippingCombiningMarks: true)
         
         // Then
-        #expect(key == "cafeFacade")
+        #expect(id == "cafeFacade")
     }
     
-    @Test func key_chineseToLatinAndStrippingCombiningMarks() throws {
+    @Test func id_chineseToLatinAndStrippingCombiningMarks() throws {
         // Given
         let font = Font(fontName: "", familyName: "Arial小野兔", style: "", relativePath: "")
         
         // When
-        let key = font.identifier(transformingToLatin: true, strippingCombiningMarks: true)
+        let id = font.id(transformingToLatin: true, strippingCombiningMarks: true)
         
         // Then
-        #expect(key == "arialXiaoYeTu")
+        #expect(id == "arialXiaoYeTu")
     }
 }

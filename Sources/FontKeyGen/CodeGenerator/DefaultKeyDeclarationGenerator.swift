@@ -25,7 +25,7 @@ class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
                 currentFamilyName = font.familyName
             }
             
-            let fontID = font.identifier(
+            let fontID = font.id(
                 transformingToLatin: request.transformsToLatin,
                 strippingCombiningMarks: request.stripsCombiningMarks)
             
@@ -61,7 +61,7 @@ class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
                 currentFamilyName = font.familyName
             }
             
-            let fontID = font.identifier(
+            let fontID = font.id(
                 transformingToLatin: request.transformsToLatin,
                 strippingCombiningMarks: request.stripsCombiningMarks)
             

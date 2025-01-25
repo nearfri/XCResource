@@ -2,44 +2,44 @@ import Testing
 @testable import AssetKeyGen
 
 @Suite struct AssetTests {
-    @Test func key_word() {
-        checkComputedKey(name: "hello", key: "hello")
+    @Test func id_word() {
+        checkComputedID(name: "hello", id: "hello")
     }
     
-    @Test func key_twoWords() {
-        checkComputedKey(name: "helloWorld", key: "helloWorld")
-        checkComputedKey(name: "URLString", key: "urlString")
-        checkComputedKey(name: "downloadURL", key: "downloadURL")
+    @Test func id_twoWords() {
+        checkComputedID(name: "helloWorld", id: "helloWorld")
+        checkComputedID(name: "URLString", id: "urlString")
+        checkComputedID(name: "downloadURL", id: "downloadURL")
     }
     
-    @Test func key_number() {
-        checkComputedKey(name: "hello2", key: "hello2")
+    @Test func id_number() {
+        checkComputedID(name: "hello2", id: "hello2")
     }
     
-    @Test func key_hangul() {
-        checkComputedKey(name: "hello월드", key: "hello월드")
+    @Test func id_hangul() {
+        checkComputedID(name: "hello월드", id: "hello월드")
     }
     
-    @Test func key_punctuation() {
-        checkComputedKey(name: "hello world", key: "hello_world")
-        checkComputedKey(name: "hello/world", key: "hello_world")
-        checkComputedKey(name: "hello.world", key: "hello_world")
-        checkComputedKey(name: "hello_world", key: "hello_world")
+    @Test func id_punctuation() {
+        checkComputedID(name: "hello world", id: "hello_world")
+        checkComputedID(name: "hello/world", id: "hello_world")
+        checkComputedID(name: "hello.world", id: "hello_world")
+        checkComputedID(name: "hello_world", id: "hello_world")
     }
     
-    @Test func key_path() {
-        checkComputedKey(name: "HelloWorld", key: "helloWorld")
-        checkComputedKey(name: "Hello/Swift/world", key: "hello_swift_world")
-        checkComputedKey(name: "Hello/SwiftWorld", key: "hello_swiftWorld")
-        checkComputedKey(name: "Hello/URLString", key: "hello_urlString")
+    @Test func id_path() {
+        checkComputedID(name: "HelloWorld", id: "helloWorld")
+        checkComputedID(name: "Hello/Swift/world", id: "hello_swift_world")
+        checkComputedID(name: "Hello/SwiftWorld", id: "hello_swiftWorld")
+        checkComputedID(name: "Hello/URLString", id: "hello_urlString")
     }
     
-    private func checkComputedKey(
+    private func checkComputedID(
         name: String,
-        key: String,
+        id: String,
         sourceLocation: SourceLocation = #_sourceLocation
     ) {
         let asset = Asset(name: name, path: "", type: .imageSet)
-        #expect(asset.key == key, sourceLocation: sourceLocation)
+        #expect(asset.id == id, sourceLocation: sourceLocation)
     }
 }

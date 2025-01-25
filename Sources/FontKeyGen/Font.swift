@@ -8,7 +8,7 @@ struct Font: Equatable, Sendable, SettableByKeyPath {
     var style: String
     var relativePath: String
     
-    func identifier(transformingToLatin: Bool, strippingCombiningMarks: Bool) -> String {
+    func id(transformingToLatin: Bool, strippingCombiningMarks: Bool) -> String {
         func refine(_ string: String) -> String {
             var result = string
             if transformingToLatin {

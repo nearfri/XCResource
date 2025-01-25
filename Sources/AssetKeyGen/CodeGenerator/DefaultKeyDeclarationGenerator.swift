@@ -21,7 +21,7 @@ class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
                 currentDirectoryPath = assetDirectoryPath
             }
             
-            result += "    static let \(asset.key): \(resourceTypeName) = \"\(asset.name)\"\n"
+            result += "    static let \(asset.id): \(resourceTypeName) = \"\(asset.name)\"\n"
         }
         
         result += "}"
