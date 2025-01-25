@@ -4,37 +4,46 @@
 [![Platform Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnearfri%2FXCResource%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/nearfri/XCResource)
 [![codecov](https://codecov.io/gh/nearfri/XCResource/branch/main/graph/badge.svg?token=DWKDFE0O2A)](https://codecov.io/gh/nearfri/XCResource)
 
-**XCResource** is a tool that allows you to efficiently and safely manage resources (strings, fonts, files, etc.) in Xcode projects.
-It reduces typos and runtime errors through automatic code generation.
+**XCResource** is a tool that allows you to efficiently and safely manage resources (localized strings, fonts, files, etc.) in Xcode projects.
+By automating code generation, it reduces typos and runtime errors.
 
 ## Features
 
-### 1. Resource Code Generation
-- Generates type-safe Swift code for **strings, fonts, and file resources**.
+### 1. Type-Safe Resource Code Generation
+- Generates type-safe Swift code for **localized strings, fonts, and file resources**.
 
 ### 2. Flexible Configuration and Integration
 - Supports Swift Package Manager for easy dependency management.
-- Allows generating code for specific resource paths using configuration files.
+- Enables customized code generation using configuration files.
 - Easily executable via Swift Package Plugin.
 
-## Installation
+## Getting Started
 
-### Swift Package Manager
+### 1. Adding `XCResource` to Your Project
+
+### Add to `Package.swift`
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nearfri/XCResource.git", from: "0.11.4"),
+    .package(url: "https://github.com/nearfri/XCResource.git", from: "<version>"),
     // OR
-    .package(url: "https://github.com/nearfri/XCResource-plugin.git", from: "0.11.4"),
+    .package(url: "https://github.com/nearfri/XCResource-plugin.git", from: "<version>"),
 ],
 ```
-Since `XCResource` includes the full source code, It is recommended to use the [`XCResource-plugin`](https://github.com/nearfri/XCResource-plugin.git) that only includes the plugin.
+**Recommendation**: Use [XCResource-plugin](https://github.com/nearfri/XCResource-plugin.git) to take advantage of the precompiled binary executable.
 
-## Quick Start
+### Create a Configuration File (`xcresource.json`)
+Add an `xcresource.json` file to your project. The plugin reads this file and generates Swift code every time it runs.
 
-### 1. Managing Localized Strings
+Supported paths for the configuration file:
+- `${PROJECT_DIR}/xcresource.json`
+- `${PROJECT_DIR}/.xcresource.json`
+- `${PROJECT_DIR}/Configs/xcresource.json`
+- `${PROJECT_DIR}/Scripts/xcresource.json`
+
+### 2. Managing Localized Strings
 https://github.com/user-attachments/assets/ce0122be-e0c5-42b6-abf6-4d1d8e0dcf4d
 
-#### Configuration File (`xcresource.json`)  
+#### Example Configuration (`xcresource.json`)  
 ```json
 {
     "commands": [
@@ -72,15 +81,15 @@ public extension LocalizedStringResource {
 ```
 *(Function names and parameter names can be customized if they match the localization key and function signature.)*
 
-#### Example Usage
+#### Usage Example
 ```swift
 let string = String(localized: .commonDone)
 ```
 
-### 2. Font Code Generation
+### 3. Font Code Generation
 https://github.com/user-attachments/assets/83990542-0d9a-4c12-8f3f-74c47b8fe381
 
-#### Configuration File (`xcresource.json`)  
+#### Example Configuration (`xcresource.json`)  
 ```json
 {
     "commands": [
@@ -142,14 +151,14 @@ public extension FontResource {
 }
 ```
 
-#### Example Usage
+#### Usage Example
 ```swift
 Font.custom(.openSansBold, size: 16)
 ```
 
-### 3. File Code Generation
+### 4. File Code Generation
 
-#### Configuration File (`xcresource.json`)  
+#### Example Configuration (`xcresource.json`)  
 ```json
 {
     "commands": [
@@ -183,7 +192,7 @@ extension LottieResource {
 }
 ```
 
-#### Example Usage
+#### Usage Example
 ```swift
 LottieView(.hello)
 ```

@@ -130,6 +130,23 @@
         }
       }
     },
+    "double_format" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%lf works for doubles when formatting."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lf는 더블 타입을 포매팅할 때 사용됩니다."
+          }
+        }
+      }
+    },
     "editMenu_copy" : {
       "localizations" : {
         "en" : {
@@ -238,22 +255,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%ld개의 파일"
-          }
-        }
-      }
-    },
-    "success100" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "100% success"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "100% 성공"
           }
         }
       }
