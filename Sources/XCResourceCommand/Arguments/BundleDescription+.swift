@@ -15,9 +15,9 @@ extension LocalizationItem.BundleDescription: ExpressibleByArgument {
         switch type {
         case "main":
             self = .main
-        case "at-url":
+        case "atURL":
             self = .atURL(associatedValue)
-        case "for-class":
+        case "forClass":
             self = .forClass(associatedValue)
         default:
             return nil
@@ -29,14 +29,14 @@ extension LocalizationItem.BundleDescription: ExpressibleByArgument {
         case .main:
             return "main"
         case .atURL(let urlGetter):
-            return "at-url:\(urlGetter)"
+            return "atURL:\(urlGetter)"
         case .forClass(let classType):
-            return "for-class:\(classType)"
+            return "forClass:\(classType)"
         }
     }
     
     public static var allValueStrings: [String] {
-        return ["main", "at-url:<url-getter>", "for-class:<class-type>"]
+        return ["main", "atURL:<url-getter>", "forClass:<class-type>"]
     }
     
     static var joinedAllValuesString: String {

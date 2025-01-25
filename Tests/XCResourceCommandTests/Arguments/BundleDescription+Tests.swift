@@ -10,11 +10,11 @@ import LocStringResourceGen
     }
     
     @Test func initWithArgument_atURL() throws {
-        #expect(BundleDescription(argument: "at-url:.moduleURL") == .atURL(".moduleURL"))
+        #expect(BundleDescription(argument: "atURL:.moduleURL") == .atURL(".moduleURL"))
     }
     
     @Test func initWithArgument_forClass() throws {
-        #expect(BundleDescription(argument: "for-class:ResourceBundleClass.self") ==
+        #expect(BundleDescription(argument: "forClass:ResourceBundleClass.self") ==
             .forClass("ResourceBundleClass.self"))
     }
 }
