@@ -8,7 +8,7 @@ struct FontsToSwiftDTO: CommandDTO {
     var resourcesPath: String
     var swiftPath: String
     var resourceTypeName: String
-    var keyListName: String?
+    var resourceListName: String?
     var generatesLatinKey: Bool?
     var stripsCombiningMarksFromKey: Bool?
     var preservesRelativePath: Bool?
@@ -34,7 +34,7 @@ struct FontsToSwiftDTO: CommandDTO {
         command.resourcesPath = resourcesPath
         command.swiftPath = swiftPath
         command.resourceTypeName = resourceTypeName
-        command.keyListName = keyListName
+        command.resourceListName = resourceListName
         command.generatesLatinKey = generatesLatinKey ?? Default.generatesLatinKey
         command.stripsCombiningMarksFromKey = {
             stripsCombiningMarksFromKey ?? Default.stripsCombiningMarksFromKey

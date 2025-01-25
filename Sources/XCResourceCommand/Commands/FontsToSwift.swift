@@ -35,7 +35,7 @@ struct FontsToSwift: ParsableCommand {
     
     @Option var resourceTypeName: String
     
-    @Option var keyListName: String?
+    @Option var resourceListName: String?
     
     @Flag(name: .customLong("generate-latin-key"))
     var generatesLatinKey: Bool = Default.generatesLatinKey
@@ -68,7 +68,7 @@ struct FontsToSwift: ParsableCommand {
         let request = FontKeyGenerator.Request(
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             resourceTypeName: resourceTypeName,
-            keyListName: keyListName,
+            resourceListName: resourceListName,
             generatesLatinKey: generatesLatinKey,
             stripsCombiningMarksFromKey: stripsCombiningMarksFromKey,
             preservesRelativePath: preservesRelativePath,

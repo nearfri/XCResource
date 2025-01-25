@@ -40,7 +40,7 @@ extension FontKeyGenerator {
         public init(
             resourcesURL: URL,
             resourceTypeName: String,
-            keyListName: String?,
+            resourceListName: String?,
             generatesLatinKey: Bool,
             stripsCombiningMarksFromKey: Bool,
             preservesRelativePath: Bool,
@@ -50,7 +50,7 @@ extension FontKeyGenerator {
         ) {
             self.resourcesURL = resourcesURL
             self.resourceTypeName = resourceTypeName
-            self.resourceListName = keyListName
+            self.resourceListName = resourceListName
             self.generatesLatinKey = generatesLatinKey
             self.stripsCombiningMarksFromKey = stripsCombiningMarksFromKey
             self.preservesRelativePath = preservesRelativePath

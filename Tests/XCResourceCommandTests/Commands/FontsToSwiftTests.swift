@@ -102,7 +102,7 @@ private enum Fixture {
             "--resources-path", SampleData.resourcesURL().path,
             "--swift-path", swiftFileURL.path,
             "--resource-type-name", "FontResource",
-            "--key-list-name", "all",
+            "--resource-list-name", "all",
             "--preserve-relative-path",
             "--bundle", "Bundle.main",
             "--access-level", "public",
