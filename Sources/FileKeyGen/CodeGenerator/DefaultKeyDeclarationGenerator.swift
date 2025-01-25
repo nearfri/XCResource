@@ -21,7 +21,7 @@ private class KeyDeclarationGeneratorCore {
     }
     
     func generate() -> String {
-        result += "extension \(request.keyTypeName) {\n"
+        result += "extension \(request.resourceTypeName) {\n"
         
         indentLevel += 1
         
@@ -73,7 +73,7 @@ private class KeyDeclarationGeneratorCore {
     private func writeLeaf(_ leaf: FileTree) {
         let key = leaf.filenameToKey()
         
-        result += "\(indent)\(accessLevel)static let \(key): \(request.keyTypeName) = .init(\n"
+        result += "\(indent)\(accessLevel)static let \(key): \(request.resourceTypeName) = .init(\n"
         
         indentLevel += 1
         

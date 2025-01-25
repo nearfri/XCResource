@@ -32,7 +32,7 @@ struct FilesToSwift: ParsableCommand {
     
     @Option var swiftPath: String
     
-    @Option var keyTypeName: String
+    @Option var resourceTypeName: String
     
     @Flag(name: .customLong("preserve-relative-path"), inversion: .prefixedNo)
     var preservesRelativePath: Bool = Default.preservesRelativePath
@@ -59,7 +59,7 @@ struct FilesToSwift: ParsableCommand {
         let request = FileKeyGenerator.Request(
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             filePattern: filePattern,
-            keyTypeName: keyTypeName,
+            resourceTypeName: resourceTypeName,
             preservesRelativePath: preservesRelativePath,
             relativePathPrefix: relativePathPrefix,
             bundle: bundle,

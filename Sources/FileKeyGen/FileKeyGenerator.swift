@@ -5,12 +5,12 @@ protocol FileTreeGenerator: AnyObject {
 }
 
 protocol TypeDeclarationGenerator: AnyObject {
-    func generate(keyTypeName: String, accessLevel: String?) -> String
+    func generate(resourceTypeName: String, accessLevel: String?) -> String
 }
 
 struct KeyDeclarationRequest {
     var fileTree: FileTree
-    var keyTypeName: String
+    var resourceTypeName: String
     var preservesRelativePath: Bool
     var relativePathPrefix: String?
     var bundle: String
@@ -25,7 +25,7 @@ extension FileKeyGenerator {
     public struct Request: Sendable {
         public var resourcesURL: URL
         public var filePattern: String
-        public var keyTypeName: String
+        public var resourceTypeName: String
         public var preservesRelativePath: Bool
         public var relativePathPrefix: String?
         public var bundle: String
@@ -34,7 +34,7 @@ extension FileKeyGenerator {
         public init(
             resourcesURL: URL,
             filePattern: String,
-            keyTypeName: String,
+            resourceTypeName: String,
             preservesRelativePath: Bool,
             relativePathPrefix: String?,
             bundle: String,
@@ -42,7 +42,7 @@ extension FileKeyGenerator {
         ) {
             self.resourcesURL = resourcesURL
             self.filePattern = filePattern
-            self.keyTypeName = keyTypeName
+            self.resourceTypeName = resourceTypeName
             self.preservesRelativePath = preservesRelativePath
             self.relativePathPrefix = relativePathPrefix
             self.bundle = bundle
@@ -86,12 +86,12 @@ public class FileKeyGenerator {
         let filteredFileTree = fileTree.filter(try Regex(request.filePattern))
         
         let typeDeclaration = typeDeclarationGenerator.generate(
-            keyTypeName: request.keyTypeName,
+            resourceTypeName: request.resourceTypeName,
             accessLevel: request.accessLevel)
         
         let keyRequest = KeyDeclarationRequest(
             fileTree: filteredFileTree ?? FileTree(FileItem(url: request.resourcesURL)),
-            keyTypeName: request.keyTypeName,
+            resourceTypeName: request.resourceTypeName,
             preservesRelativePath: request.preservesRelativePath,
             relativePathPrefix: request.relativePathPrefix,
             bundle: request.bundle,

@@ -72,7 +72,7 @@ private enum Fixture {
             "--resources-path", SampleData.resourcesURL().path + "/Fonts",
             "--file-pattern", "(?i)\\.(otf|ttf|ttc)$",
             "--swift-path", swiftFileURL.path,
-            "--key-type-name", "FileResource",
+            "--resource-type-name", "FileResource",
             "--preserve-relative-path",
             "--relative-path-prefix", "Fonts",
             "--bundle", "Bundle.module",

@@ -1,14 +1,14 @@
 import Foundation
 
 class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
-    func generate(catalog: AssetCatalog, keyTypeName: String, accessLevel: String?) -> String {
+    func generate(catalog: AssetCatalog, resourceTypeName: String, accessLevel: String?) -> String {
         let accessLevel = accessLevel.map({ $0 + " " }) ?? ""
         
         var result = ""
         
-        print("// MARK: - \(catalog.name)", to: &result)
-        print("", to: &result)
-        print("\(accessLevel)extension \(keyTypeName) {", to: &result)
+        result += "// MARK: - \(catalog.name)\n"
+        result += "\n"
+        result += "\(accessLevel)extension \(resourceTypeName) {\n"
         
         var currentDirectoryPath = ""
         var commentPrefix = ""
@@ -16,15 +16,15 @@ class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
             defer { commentPrefix = "    \n" }
             let assetDirectoryPath = asset.path.deletingLastPathComponent
             if assetDirectoryPath != currentDirectoryPath {
-                print(commentPrefix, terminator: "", to: &result)
-                print("    // MARK: \(assetDirectoryPath)", to: &result)
+                result += commentPrefix
+                result += "    // MARK: \(assetDirectoryPath)\n"
                 currentDirectoryPath = assetDirectoryPath
             }
             
-            print("    static let \(asset.key): \(keyTypeName) = \"\(asset.name)\"", to: &result)
+            result += "    static let \(asset.key): \(resourceTypeName) = \"\(asset.name)\"\n"
         }
         
-        print("}", terminator: "", to: &result)
+        result += "}"
         
         return result
     }

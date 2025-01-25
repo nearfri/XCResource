@@ -7,7 +7,7 @@ struct FontsToSwiftDTO: CommandDTO {
     
     var resourcesPath: String
     var swiftPath: String
-    var keyTypeName: String
+    var resourceTypeName: String
     var keyListName: String?
     var generatesLatinKey: Bool?
     var stripsCombiningMarksFromKey: Bool?
@@ -33,7 +33,7 @@ struct FontsToSwiftDTO: CommandDTO {
         var command = FontsToSwift()
         command.resourcesPath = resourcesPath
         command.swiftPath = swiftPath
-        command.keyTypeName = keyTypeName
+        command.resourceTypeName = resourceTypeName
         command.keyListName = keyListName
         command.generatesLatinKey = generatesLatinKey ?? Default.generatesLatinKey
         command.stripsCombiningMarksFromKey = {

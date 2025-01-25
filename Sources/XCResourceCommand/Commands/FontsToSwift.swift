@@ -33,7 +33,7 @@ struct FontsToSwift: ParsableCommand {
     
     @Option var swiftPath: String
     
-    @Option var keyTypeName: String
+    @Option var resourceTypeName: String
     
     @Option var keyListName: String?
     
@@ -67,7 +67,7 @@ struct FontsToSwift: ParsableCommand {
     private func generateCodes() throws -> FontKeyGenerator.Result {
         let request = FontKeyGenerator.Request(
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
-            keyTypeName: keyTypeName,
+            resourceTypeName: resourceTypeName,
             keyListName: keyListName,
             generatesLatinKey: generatesLatinKey,
             stripsCombiningMarksFromKey: stripsCombiningMarksFromKey,

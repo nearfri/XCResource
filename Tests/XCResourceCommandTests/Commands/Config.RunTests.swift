@@ -12,7 +12,7 @@ private enum Fixture {
                 "xcassetsPaths": ["%@"],
                 "assetTypes": ["imageset"], // comment
                 "swiftPath": "%@",
-                "keyTypeName": "ImageKey",
+                "resourceTypeName": "ImageKey",
                 "excludesTypeDeclaration": false
             },
             {

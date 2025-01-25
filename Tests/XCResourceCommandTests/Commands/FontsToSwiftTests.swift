@@ -11,7 +11,7 @@ private enum Fixture {
     
     import Foundation
     
-    public struct FontKey: Hashable, Sendable {
+    public struct FontResource: Hashable, Sendable {
         public let fontName: String
         public let familyName: String
         public let style: String
@@ -41,8 +41,8 @@ private enum Fixture {
         }
     }
     
-    public extension FontKey {
-        static let all: [FontKey] = [
+    public extension FontResource {
+        static let all: [FontResource] = [
             // Avenir
             .avenirBook,
             .avenirBookOblique,
@@ -67,17 +67,17 @@ private enum Fixture {
         ]
     }
     
-    public extension FontKey {
+    public extension FontResource {
         // MARK: Avenir
         
-        static let avenirBook: FontKey = .init(
+        static let avenirBook: FontResource = .init(
             fontName: "Avenir-Book",
             familyName: "Avenir",
             style: "Book",
             relativePath: "Fonts/Avenir.ttc",
             bundle: Bundle.main)
         
-        static let avenirBookOblique: FontKey = .init(
+        static let avenirBookOblique: FontResource = .init(
             fontName: "Avenir-BookOblique",
             familyName: "Avenir",
             style: "Book Oblique",
@@ -101,7 +101,7 @@ private enum Fixture {
         try FontsToSwift.runAsRoot(arguments: [
             "--resources-path", SampleData.resourcesURL().path,
             "--swift-path", swiftFileURL.path,
-            "--key-type-name", "FontKey",
+            "--resource-type-name", "FontResource",
             "--key-list-name", "all",
             "--preserve-relative-path",
             "--bundle", "Bundle.main",

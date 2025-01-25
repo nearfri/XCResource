@@ -45,7 +45,7 @@ struct XCAssetsToSwift: ParsableCommand {
     
     @Option var swiftPath: String
     
-    @Option var keyTypeName: String
+    @Option var resourceTypeName: String
     
     @Option(help: ArgumentHelp(valueName: AccessLevel.joinedAllValuesString))
     var accessLevel: AccessLevel?
@@ -65,7 +65,7 @@ struct XCAssetsToSwift: ParsableCommand {
         let request = AssetKeyGenerator.Request(
             assetCatalogURLs: assetCatalogPaths.map({ URL(fileURLWithExpandingTildeInPath: $0) }),
             assetTypes: Set(assetTypes.isEmpty ? AssetType.allCases : assetTypes),
-            keyTypeName: keyTypeName,
+            resourceTypeName: resourceTypeName,
             accessLevel: accessLevel?.rawValue)
         
         return try AssetKeyGenerator().generate(for: request)

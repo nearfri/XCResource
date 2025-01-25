@@ -37,8 +37,8 @@ private enum Fixture {
         let code = sut.generateKeyListDeclaration(
             for: KeyDeclarationRequest(
                 fonts: fonts,
-                keyTypeName: "FontKey",
-                keyListName: "all",
+                resourceTypeName: "FontResource",
+                resourceListName: "all",
                 generatesLatinKey: false,
                 stripsCombiningMarksFromKey: false,
                 preservesRelativePath: true,
@@ -48,8 +48,8 @@ private enum Fixture {
         
         // Then
         expectEqual(code, """
-            public extension FontKey {
-                static let all: [FontKey] = [
+            public extension FontResource {
+                static let all: [FontResource] = [
                     // Avenir
                     .avenirHeavy,
                     .avenirLight,
@@ -69,8 +69,8 @@ private enum Fixture {
         let code = sut.generateKeyListDeclaration(
             for: KeyDeclarationRequest(
                 fonts: fonts,
-                keyTypeName: "FontKey",
-                keyListName: "all",
+                resourceTypeName: "FontResource",
+                resourceListName: "all",
                 generatesLatinKey: false,
                 stripsCombiningMarksFromKey: false,
                 preservesRelativePath: true,
@@ -80,8 +80,8 @@ private enum Fixture {
         
         // Then
         expectEqual(code, """
-            public extension FontKey {
-                static let all: [FontKey] = [
+            public extension FontResource {
+                static let all: [FontResource] = [
                     // 대한
                     .대한Light,
                 ]
@@ -97,8 +97,8 @@ private enum Fixture {
         let code = sut.generateKeyListDeclaration(
             for: KeyDeclarationRequest(
                 fonts: fonts,
-                keyTypeName: "FontKey",
-                keyListName: "all",
+                resourceTypeName: "FontResource",
+                resourceListName: "all",
                 generatesLatinKey: true,
                 stripsCombiningMarksFromKey: false,
                 preservesRelativePath: true,
@@ -108,8 +108,8 @@ private enum Fixture {
         
         // Then
         expectEqual(code, """
-            public extension FontKey {
-                static let all: [FontKey] = [
+            public extension FontResource {
+                static let all: [FontResource] = [
                     // 대한
                     .daehanLight,
                 ]
@@ -125,7 +125,7 @@ private enum Fixture {
         let code = sut.generateKeyDeclarations(
             for: KeyDeclarationRequest(
                 fonts: fonts,
-                keyTypeName: "FontKey",
+                resourceTypeName: "FontResource",
                 generatesLatinKey: false,
                 stripsCombiningMarksFromKey: false,
                 preservesRelativePath: false,
@@ -135,10 +135,10 @@ private enum Fixture {
         
         // Then
         expectEqual(code, """
-            public extension FontKey {
+            public extension FontResource {
                 // MARK: 대한
                 
-                static let 대한Light: FontKey = .init(
+                static let 대한Light: FontResource = .init(
                     fontName: "대한-Light",
                     familyName: "대한",
                     style: "light",
@@ -156,7 +156,7 @@ private enum Fixture {
         let code = sut.generateKeyDeclarations(
             for: KeyDeclarationRequest(
                 fonts: fonts,
-                keyTypeName: "FontKey",
+                resourceTypeName: "FontResource",
                 generatesLatinKey: true,
                 stripsCombiningMarksFromKey: false,
                 preservesRelativePath: false,
@@ -166,10 +166,10 @@ private enum Fixture {
         
         // Then
         expectEqual(code, """
-            public extension FontKey {
+            public extension FontResource {
                 // MARK: 대한
                 
-                static let daehanLight: FontKey = .init(
+                static let daehanLight: FontResource = .init(
                     fontName: "대한-Light",
                     familyName: "대한",
                     style: "light",
@@ -187,7 +187,7 @@ private enum Fixture {
         let code = sut.generateKeyDeclarations(
             for: KeyDeclarationRequest(
                 fonts: fonts,
-                keyTypeName: "FontKey",
+                resourceTypeName: "FontResource",
                 generatesLatinKey: false,
                 stripsCombiningMarksFromKey: false,
                 preservesRelativePath: true,
@@ -197,17 +197,17 @@ private enum Fixture {
         
         // Then
         expectEqual(code, """
-            public extension FontKey {
+            public extension FontResource {
                 // MARK: Avenir
                 
-                static let avenirHeavy: FontKey = .init(
+                static let avenirHeavy: FontResource = .init(
                     fontName: "Avenir-Heavy",
                     familyName: "Avenir",
                     style: "heavy",
                     relativePath: "Fonts/Avenir.ttc",
                     bundle: Bundle.main)
                 
-                static let avenirLight: FontKey = .init(
+                static let avenirLight: FontResource = .init(
                     fontName: "Avenir-Light",
                     familyName: "Avenir",
                     style: "light",
@@ -216,7 +216,7 @@ private enum Fixture {
                 
                 // MARK: Zapf Dingbats
                 
-                static let zapfDingbatsRegular: FontKey = .init(
+                static let zapfDingbatsRegular: FontResource = .init(
                     fontName: "ZapfDingbatsITC",
                     familyName: "Zapf Dingbats",
                     style: "regular",
@@ -234,7 +234,7 @@ private enum Fixture {
         let code = sut.generateKeyDeclarations(
             for: KeyDeclarationRequest(
                 fonts: fonts,
-                keyTypeName: "FontKey",
+                resourceTypeName: "FontResource",
                 generatesLatinKey: false,
                 stripsCombiningMarksFromKey: false,
                 preservesRelativePath: false,
@@ -244,17 +244,17 @@ private enum Fixture {
         
         // Then
         expectEqual(code, """
-            public extension FontKey {
+            public extension FontResource {
                 // MARK: Avenir
                 
-                static let avenirHeavy: FontKey = .init(
+                static let avenirHeavy: FontResource = .init(
                     fontName: "Avenir-Heavy",
                     familyName: "Avenir",
                     style: "heavy",
                     relativePath: "Avenir.ttc",
                     bundle: Bundle.main)
                 
-                static let avenirLight: FontKey = .init(
+                static let avenirLight: FontResource = .init(
                     fontName: "Avenir-Light",
                     familyName: "Avenir",
                     style: "light",
@@ -263,7 +263,7 @@ private enum Fixture {
                 
                 // MARK: Zapf Dingbats
                 
-                static let zapfDingbatsRegular: FontKey = .init(
+                static let zapfDingbatsRegular: FontResource = .init(
                     fontName: "ZapfDingbatsITC",
                     familyName: "Zapf Dingbats",
                     style: "regular",
@@ -281,7 +281,7 @@ private enum Fixture {
         let code = sut.generateKeyDeclarations(
             for: KeyDeclarationRequest(
                 fonts: fonts,
-                keyTypeName: "FontKey",
+                resourceTypeName: "FontResource",
                 generatesLatinKey: false,
                 stripsCombiningMarksFromKey: false,
                 preservesRelativePath: true,
@@ -291,17 +291,17 @@ private enum Fixture {
         
         // Then
         expectEqual(code, """
-            public extension FontKey {
+            public extension FontResource {
                 // MARK: Avenir
                 
-                static let avenirHeavy: FontKey = .init(
+                static let avenirHeavy: FontResource = .init(
                     fontName: "Avenir-Heavy",
                     familyName: "Avenir",
                     style: "heavy",
                     relativePath: "Resources/Fonts/Avenir.ttc",
                     bundle: Bundle.main)
                 
-                static let avenirLight: FontKey = .init(
+                static let avenirLight: FontResource = .init(
                     fontName: "Avenir-Light",
                     familyName: "Avenir",
                     style: "light",
@@ -310,7 +310,7 @@ private enum Fixture {
                 
                 // MARK: Zapf Dingbats
                 
-                static let zapfDingbatsRegular: FontKey = .init(
+                static let zapfDingbatsRegular: FontResource = .init(
                     fontName: "ZapfDingbatsITC",
                     familyName: "Zapf Dingbats",
                     style: "regular",

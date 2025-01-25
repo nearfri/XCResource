@@ -34,8 +34,8 @@ private enum Fixture {
         
         // When
         let actualDeclarations = sut.generate(catalog: Fixture.catalog,
-                                            keyTypeName: "ImageKey",
-                                            accessLevel: nil)
+                                              resourceTypeName: "ImageKey",
+                                              accessLevel: nil)
         
         // Then
         expectEqual(actualDeclarations, expectedDeclarations)
@@ -59,8 +59,8 @@ private enum Fixture {
         
         // When
         let actualDeclarations = sut.generate(catalog: Fixture.catalog,
-                                            keyTypeName: "ImageKey",
-                                            accessLevel: "public")
+                                              resourceTypeName: "ImageKey",
+                                              accessLevel: "public")
         
         // Then
         expectEqual(actualDeclarations, expectedDeclarations)

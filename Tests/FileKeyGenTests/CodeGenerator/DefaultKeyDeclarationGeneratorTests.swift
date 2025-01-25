@@ -30,7 +30,7 @@ private enum Fixture {
         let code = sut.generateKeyDeclarations(
             for: KeyDeclarationRequest(
                 fileTree: Fixture.fileTree(),
-                keyTypeName: "FileResource",
+                resourceTypeName: "FileResource",
                 preservesRelativePath: true,
                 relativePathPrefix: nil,
                 bundle: "Bundle.main",
@@ -59,7 +59,7 @@ private enum Fixture {
         let code = sut.generateKeyDeclarations(
             for: KeyDeclarationRequest(
                 fileTree: Fixture.fileTree(),
-                keyTypeName: "FileResource",
+                resourceTypeName: "FileResource",
                 preservesRelativePath: false,
                 relativePathPrefix: nil,
                 bundle: "Bundle.main",
@@ -86,7 +86,7 @@ private enum Fixture {
         let code = sut.generateKeyDeclarations(
             for: KeyDeclarationRequest(
                 fileTree: Fixture.fileTree(),
-                keyTypeName: "FileResource",
+                resourceTypeName: "FileResource",
                 preservesRelativePath: true,
                 relativePathPrefix: "Fonts",
                 bundle: "Bundle.main",

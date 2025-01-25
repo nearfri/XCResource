@@ -5,13 +5,13 @@ protocol FontImporter: AnyObject {
 }
 
 protocol TypeDeclarationGenerator: AnyObject {
-    func generate(keyTypeName: String, accessLevel: String?) -> String
+    func generate(resourceTypeName: String, accessLevel: String?) -> String
 }
 
 struct KeyDeclarationRequest: Sendable {
     var fonts: [Font]
-    var keyTypeName: String
-    var keyListName: String?
+    var resourceTypeName: String
+    var resourceListName: String?
     var generatesLatinKey: Bool
     var stripsCombiningMarksFromKey: Bool
     var preservesRelativePath: Bool
@@ -28,8 +28,8 @@ protocol KeyDeclarationGenerator: AnyObject {
 extension FontKeyGenerator {
     public struct Request: Sendable {
         public var resourcesURL: URL
-        public var keyTypeName: String
-        public var keyListName: String?
+        public var resourceTypeName: String
+        public var resourceListName: String?
         public var generatesLatinKey: Bool
         public var stripsCombiningMarksFromKey: Bool
         public var preservesRelativePath: Bool
@@ -39,7 +39,7 @@ extension FontKeyGenerator {
         
         public init(
             resourcesURL: URL,
-            keyTypeName: String,
+            resourceTypeName: String,
             keyListName: String?,
             generatesLatinKey: Bool,
             stripsCombiningMarksFromKey: Bool,
@@ -49,8 +49,8 @@ extension FontKeyGenerator {
             accessLevel: String? = nil
         ) {
             self.resourcesURL = resourcesURL
-            self.keyTypeName = keyTypeName
-            self.keyListName = keyListName
+            self.resourceTypeName = resourceTypeName
+            self.resourceListName = keyListName
             self.generatesLatinKey = generatesLatinKey
             self.stripsCombiningMarksFromKey = stripsCombiningMarksFromKey
             self.preservesRelativePath = preservesRelativePath
@@ -97,13 +97,13 @@ public class FontKeyGenerator {
         let fonts = try fontImporter.import(at: request.resourcesURL)
         
         let typeDeclaration = typeDeclarationGenerator.generate(
-            keyTypeName: request.keyTypeName,
+            resourceTypeName: request.resourceTypeName,
             accessLevel: request.accessLevel)
         
         let keyRequest = KeyDeclarationRequest(
             fonts: fonts,
-            keyTypeName: request.keyTypeName,
-            keyListName: request.keyListName,
+            resourceTypeName: request.resourceTypeName,
+            resourceListName: request.resourceListName,
             generatesLatinKey: request.generatesLatinKey,
             stripsCombiningMarksFromKey: request.stripsCombiningMarksFromKey,
             preservesRelativePath: request.preservesRelativePath,

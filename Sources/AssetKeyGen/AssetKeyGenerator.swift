@@ -5,28 +5,28 @@ protocol AssetCatalogImporter: AnyObject {
 }
 
 protocol TypeDeclarationGenerator: AnyObject {
-    func generate(keyTypeName: String, accessLevel: String?) -> String
+    func generate(resourceTypeName: String, accessLevel: String?) -> String
 }
 
 protocol KeyDeclarationGenerator: AnyObject {
-    func generate(catalog: AssetCatalog, keyTypeName: String, accessLevel: String?) -> String
+    func generate(catalog: AssetCatalog, resourceTypeName: String, accessLevel: String?) -> String
 }
 
 extension AssetKeyGenerator {
     public struct Request: Sendable {
         public var assetCatalogURLs: [URL]
         public var assetTypes: Set<AssetType>
-        public var keyTypeName: String
+        public var resourceTypeName: String
         public var accessLevel: String?
         
         public init(assetCatalogURLs: [URL],
                     assetTypes: Set<AssetType>,
-                    keyTypeName: String,
+                    resourceTypeName: String,
                     accessLevel: String? = nil
         ) {
             self.assetCatalogURLs = assetCatalogURLs
             self.assetTypes = assetTypes
-            self.keyTypeName = keyTypeName
+            self.resourceTypeName = resourceTypeName
             self.accessLevel = accessLevel
         }
     }
@@ -71,7 +71,7 @@ public class AssetKeyGenerator {
     }
     
     private func generateTypeDeclaration(for request: Request) -> String {
-        return typeDeclarationGenerator.generate(keyTypeName: request.keyTypeName,
+        return typeDeclarationGenerator.generate(resourceTypeName: request.resourceTypeName,
                                                  accessLevel: request.accessLevel)
     }
     
@@ -84,7 +84,7 @@ public class AssetKeyGenerator {
         
         return catalogs.map {
             return keyDeclarationGenerator.generate(catalog: $0,
-                                                    keyTypeName: request.keyTypeName,
+                                                    resourceTypeName: request.resourceTypeName,
                                                     accessLevel: request.accessLevel)
         }
     }

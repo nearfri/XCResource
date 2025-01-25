@@ -15,7 +15,7 @@ private class StubAssetCatalogImporter: AssetCatalogImporter {
 private class StubTypeDeclarationGenerator: TypeDeclarationGenerator {
     static let declarationString = "{ Type Declaration }"
     
-    func generate(keyTypeName: String, accessLevel: String?) -> String {
+    func generate(resourceTypeName: String, accessLevel: String?) -> String {
         return Self.declarationString
     }
 }
@@ -25,7 +25,7 @@ private class StubKeyDeclarationGenerator: KeyDeclarationGenerator {
     
     var generateParamCatalogs: [AssetCatalog] = []
     
-    func generate(catalog: AssetCatalog, keyTypeName: String, accessLevel: String?) -> String {
+    func generate(catalog: AssetCatalog, resourceTypeName: String, accessLevel: String?) -> String {
         generateParamCatalogs.append(catalog)
         
         return Self.declarationsString
@@ -38,7 +38,7 @@ private class StubKeyDeclarationGenerator: KeyDeclarationGenerator {
     private let request: AssetKeyGenerator.Request = AssetKeyGenerator.Request(
         assetCatalogURLs: [URL(fileURLWithPath: "a"), URL(fileURLWithPath: "b")],
         assetTypes: [.imageSet],
-        keyTypeName: "ImageKey",
+        resourceTypeName: "ImageKey",
         accessLevel: nil)
     
     private let sut: AssetKeyGenerator

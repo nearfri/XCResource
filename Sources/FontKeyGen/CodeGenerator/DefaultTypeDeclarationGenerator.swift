@@ -1,11 +1,11 @@
 import Foundation
 
 class DefaultTypeDeclarationGenerator: TypeDeclarationGenerator {
-    func generate(keyTypeName: String, accessLevel: String?) -> String {
+    func generate(resourceTypeName: String, accessLevel: String?) -> String {
         let accessLevel = accessLevel.map({ $0 + " " }) ?? ""
         
         return """
-            \(accessLevel)struct \(keyTypeName): Hashable, Sendable {
+            \(accessLevel)struct \(resourceTypeName): Hashable, Sendable {
                 \(accessLevel)let fontName: String
                 \(accessLevel)let familyName: String
                 \(accessLevel)let style: String
