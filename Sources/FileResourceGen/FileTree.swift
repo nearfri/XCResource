@@ -19,7 +19,7 @@ extension FileTree {
         return url.lastPathComponent.toTypeIdentifier()
     }
     
-    func filenameToKey() -> String {
+    func filenameToIdentifier() -> String {
         return url.deletingPathExtension().lastPathComponent.toIdentifier()
     }
     

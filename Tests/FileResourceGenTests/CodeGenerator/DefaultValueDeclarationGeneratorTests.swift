@@ -1,7 +1,7 @@
 import Testing
 import Foundation
 import TestUtil
-@testable import FileKeyGen
+@testable import FileResourceGen
 
 private enum Fixture {
     static func fileTree() -> FileTree {
@@ -23,12 +23,12 @@ private enum Fixture {
     }
 }
 
-@Suite struct DefaultKeyDeclarationGeneratorTests {
-    private let sut: DefaultKeyDeclarationGenerator = .init()
+@Suite struct DefaultValueDeclarationGeneratorTests {
+    private let sut: DefaultValueDeclarationGenerator = .init()
     
-    @Test func generateKeyDeclarations_preservesRelativePath_true() throws {
-        let code = sut.generateKeyDeclarations(
-            for: KeyDeclarationRequest(
+    @Test func generateValueDeclarations_preservesRelativePath_true() throws {
+        let code = sut.generateValueDeclarations(
+            for: ValueDeclarationRequest(
                 fileTree: Fixture.fileTree(),
                 resourceTypeName: "FileResource",
                 preservesRelativePath: true,
@@ -55,9 +55,9 @@ private enum Fixture {
             """)
     }
     
-    @Test func generateKeyDeclarations_preservesRelativePath_false() throws {
-        let code = sut.generateKeyDeclarations(
-            for: KeyDeclarationRequest(
+    @Test func generateValueDeclarations_preservesRelativePath_false() throws {
+        let code = sut.generateValueDeclarations(
+            for: ValueDeclarationRequest(
                 fileTree: Fixture.fileTree(),
                 resourceTypeName: "FileResource",
                 preservesRelativePath: false,
@@ -82,9 +82,9 @@ private enum Fixture {
             """)
     }
     
-    @Test func generateKeyDeclarations_relativePathPrefix() throws {
-        let code = sut.generateKeyDeclarations(
-            for: KeyDeclarationRequest(
+    @Test func generateValueDeclarations_relativePathPrefix() throws {
+        let code = sut.generateValueDeclarations(
+            for: ValueDeclarationRequest(
                 fileTree: Fixture.fileTree(),
                 resourceTypeName: "FileResource",
                 preservesRelativePath: true,

@@ -1,13 +1,13 @@
 import Foundation
 
-class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
-    func generateKeyDeclarations(for request: KeyDeclarationRequest) -> String {
-        return KeyDeclarationGeneratorCore(request: request).generate()
+class DefaultValueDeclarationGenerator: ValueDeclarationGenerator {
+    func generateValueDeclarations(for request: ValueDeclarationRequest) -> String {
+        return ValueDeclarationGeneratorCore(request: request).generate()
     }
 }
 
-private class KeyDeclarationGeneratorCore {
-    private let request: KeyDeclarationRequest
+private class ValueDeclarationGeneratorCore {
+    private let request: ValueDeclarationRequest
     
     private let accessLevel: String
     
@@ -15,7 +15,7 @@ private class KeyDeclarationGeneratorCore {
     
     private var indentLevel: Int = 0
     
-    init(request: KeyDeclarationRequest) {
+    init(request: ValueDeclarationRequest) {
         self.request = request
         self.accessLevel = request.accessLevel.map({ $0 + " " }) ?? ""
     }
@@ -71,9 +71,9 @@ private class KeyDeclarationGeneratorCore {
     }
     
     private func writeLeaf(_ leaf: FileTree) {
-        let key = leaf.filenameToKey()
+        let id = leaf.filenameToIdentifier()
         
-        result += "\(indent)\(accessLevel)static let \(key): \(request.resourceTypeName) = .init(\n"
+        result += "\(indent)\(accessLevel)static let \(id): \(request.resourceTypeName) = .init(\n"
         
         indentLevel += 1
         

@@ -12,7 +12,7 @@ let package = Package(
         .executable(name: "xcresource", targets: ["xcresource"]),
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
         .library(name: "AssetResourceGen", targets: ["AssetResourceGen"]),
-        .library(name: "FileKeyGen", targets: ["FileKeyGen"]),
+        .library(name: "FileResourceGen", targets: ["FileResourceGen"]),
         .library(name: "FontResourceGen", targets: ["FontResourceGen"]),
         .library(name: "LocStringResourceGen", targets: ["LocStringResourceGen"]),
     ],
@@ -56,7 +56,7 @@ let package = Package(
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 "AssetResourceGen",
-                "FileKeyGen",
+                "FileResourceGen",
                 "FontResourceGen",
                 "LocStringResourceGen",
                 "LocStringKeyGen",
@@ -72,7 +72,7 @@ let package = Package(
             name: "AssetResourceGen",
             dependencies: ["XCResourceUtil"]),
         .target(
-            name: "FileKeyGen",
+            name: "FileResourceGen",
             dependencies: ["XCResourceUtil"]),
         .target(
             name: "FontResourceGen",
@@ -149,8 +149,8 @@ let package = Package(
             name: "AssetResourceGenTests",
             dependencies: ["AssetResourceGen", "SampleData", "TestUtil"]),
         .testTarget(
-            name: "FileKeyGenTests",
-            dependencies: ["FileKeyGen", "SampleData", "TestUtil"]),
+            name: "FileResourceGenTests",
+            dependencies: ["FileResourceGen", "SampleData", "TestUtil"]),
         .testTarget(
             name: "FontResourceGenTests",
             dependencies: ["FontResourceGen", "SampleData", "TestUtil"]),

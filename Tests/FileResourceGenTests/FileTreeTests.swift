@@ -1,6 +1,6 @@
 import Testing
 import Foundation
-@testable import FileKeyGen
+@testable import FileResourceGen
 
 @Suite struct FileTreeTests {
     @Test func relativePath() throws {
@@ -20,10 +20,10 @@ import Foundation
         #expect(parentTree.filenameToNamespace() == "Tmp")
     }
     
-    @Test func filenameToKey() throws {
+    @Test func filenameToIdentifier() throws {
         let childTree = FileTree(FileItem(url: URL(filePath: "/root/tmp/scratch.tiff")))
         
-        #expect(childTree.filenameToKey() == "scratch")
+        #expect(childTree.filenameToIdentifier() == "scratch")
     }
     
     @Test func filter_matchGrandChild_returnClone() throws {

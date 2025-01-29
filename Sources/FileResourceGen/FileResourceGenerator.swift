@@ -8,7 +8,7 @@ protocol TypeDeclarationGenerator: AnyObject {
     func generate(resourceTypeName: String, accessLevel: String?) -> String
 }
 
-struct KeyDeclarationRequest {
+struct ValueDeclarationRequest {
     var fileTree: FileTree
     var resourceTypeName: String
     var preservesRelativePath: Bool
@@ -17,11 +17,11 @@ struct KeyDeclarationRequest {
     var accessLevel: String?
 }
 
-protocol KeyDeclarationGenerator: AnyObject {
-    func generateKeyDeclarations(for request: KeyDeclarationRequest) -> String
+protocol ValueDeclarationGenerator: AnyObject {
+    func generateValueDeclarations(for request: ValueDeclarationRequest) -> String
 }
 
-extension FileKeyGenerator {
+extension FileResourceGenerator {
     public struct Request: Sendable {
         public var resourcesURL: URL
         public var filePattern: String
@@ -52,33 +52,33 @@ extension FileKeyGenerator {
     
     public struct Result: Sendable {
         public var typeDeclaration: String
-        public var keyDeclarations: String
+        public var valueDeclarations: String
         
-        public init(typeDeclaration: String, keyDeclarations: String) {
+        public init(typeDeclaration: String, valueDeclarations: String) {
             self.typeDeclaration = typeDeclaration
-            self.keyDeclarations = keyDeclarations
+            self.valueDeclarations = valueDeclarations
         }
     }
 }
 
-public class FileKeyGenerator {
+public class FileResourceGenerator {
     private let fileTreeGenerator: FileTreeGenerator
     private let typeDeclarationGenerator: TypeDeclarationGenerator
-    private let keyDeclarationGenerator: KeyDeclarationGenerator
+    private let valueDeclarationGenerator: ValueDeclarationGenerator
     
     init(fileTreeGenerator: FileTreeGenerator, 
          typeDeclarationGenerator: TypeDeclarationGenerator,
-         keyDeclarationGenerator: KeyDeclarationGenerator
+         valueDeclarationGenerator: ValueDeclarationGenerator
     ) {
         self.fileTreeGenerator = fileTreeGenerator
         self.typeDeclarationGenerator = typeDeclarationGenerator
-        self.keyDeclarationGenerator = keyDeclarationGenerator
+        self.valueDeclarationGenerator = valueDeclarationGenerator
     }
     
     public convenience init() {
         self.init(fileTreeGenerator: DefaultFileTreeGenerator(),
                   typeDeclarationGenerator: DefaultTypeDeclarationGenerator(),
-                  keyDeclarationGenerator: DefaultKeyDeclarationGenerator())
+                  valueDeclarationGenerator: DefaultValueDeclarationGenerator())
     }
     
     public func generate(for request: Request) throws -> Result {
@@ -89,7 +89,7 @@ public class FileKeyGenerator {
             resourceTypeName: request.resourceTypeName,
             accessLevel: request.accessLevel)
         
-        let keyRequest = KeyDeclarationRequest(
+        let valueRequest = ValueDeclarationRequest(
             fileTree: filteredFileTree ?? FileTree(FileItem(url: request.resourcesURL)),
             resourceTypeName: request.resourceTypeName,
             preservesRelativePath: request.preservesRelativePath,
@@ -97,9 +97,10 @@ public class FileKeyGenerator {
             bundle: request.bundle,
             accessLevel: request.accessLevel)
         
-        let keyDeclarations = keyDeclarationGenerator.generateKeyDeclarations(for: keyRequest)
+        let valueDeclarations = valueDeclarationGenerator
+            .generateValueDeclarations(for: valueRequest)
         
         return Result(typeDeclaration: typeDeclaration,
-                      keyDeclarations: keyDeclarations)
+                      valueDeclarations: valueDeclarations)
     }
 }

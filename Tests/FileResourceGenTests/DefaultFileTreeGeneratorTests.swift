@@ -1,6 +1,6 @@
 import Testing
 import SampleData
-@testable import FileKeyGen
+@testable import FileResourceGen
 
 @Suite struct DefaultFileTreeGeneratorTests {
     @Test func load() throws {
