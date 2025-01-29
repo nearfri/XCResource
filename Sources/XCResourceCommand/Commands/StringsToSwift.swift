@@ -26,7 +26,7 @@ struct StringsToSwift: ParsableCommand {
     
     @Option var language: String = Default.language
     
-    @Option var swiftPath: String
+    @Option var swiftFilePath: String
     
     // MARK: - Run
     
@@ -42,7 +42,7 @@ struct StringsToSwift: ParsableCommand {
         
         let request = StringsToStringKeyGenerator.Request(
             stringsFileURL: stringsFileURL,
-            sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftPath))
+            sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftFilePath))
         
         let generator = StringsToStringKeyGenerator(
             commentDirectives: .init(exclude: CommentDirective.targetStringsdict))
@@ -55,6 +55,6 @@ struct StringsToSwift: ParsableCommand {
         
         try code.write(to: tempFileURL, atomically: false, encoding: .utf8)
         
-        try FileManager.default.compareAndReplaceItem(at: swiftPath, withItemAt: tempFileURL)
+        try FileManager.default.compareAndReplaceItem(at: swiftFilePath, withItemAt: tempFileURL)
     }
 }

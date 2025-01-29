@@ -1,14 +1,14 @@
 import Foundation
 import ArgumentParser
-import AssetKeyGen
+import AssetResourceGen
 
 struct XCAssetsToSwiftDTO: CommandDTO {
     static let commandType: ParsableCommand.Type = XCAssetsToSwift.self
     
     var xcassetsPaths: [String]
     var assetTypes: [String]?
-    var swiftPath: String
-    var keyTypeName: String
+    var swiftFilePath: String
+    var resourceTypeName: String
     var accessLevel: String?
     var excludesTypeDeclaration: Bool?
     
@@ -37,8 +37,8 @@ struct XCAssetsToSwiftDTO: CommandDTO {
         var command = XCAssetsToSwift()
         command.assetCatalogPaths = xcassetsPaths
         command.assetTypes = assetTypes ?? Default.assetTypes
-        command.swiftPath = swiftPath
-        command.keyTypeName = keyTypeName
+        command.swiftFilePath = swiftFilePath
+        command.resourceTypeName = resourceTypeName
         command.accessLevel = accessLevel
         command.excludesTypeDeclaration = excludesTypeDeclaration ?? Default.excludesTypeDeclaration
         

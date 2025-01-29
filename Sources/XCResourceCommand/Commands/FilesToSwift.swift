@@ -1,6 +1,6 @@
 import Foundation
 import ArgumentParser
-import FileKeyGen
+import FileResourceGen
 import XCResourceUtil
 
 private let headerComment = """
@@ -30,9 +30,9 @@ struct FilesToSwift: ParsableCommand {
     
     @Option var filePattern: String
     
-    @Option var swiftPath: String
+    @Option var swiftFilePath: String
     
-    @Option var keyTypeName: String
+    @Option var resourceTypeName: String
     
     @Flag(name: .customLong("preserve-relative-path"), inversion: .prefixedNo)
     var preservesRelativePath: Bool = Default.preservesRelativePath
@@ -55,20 +55,20 @@ struct FilesToSwift: ParsableCommand {
         try writeCodes(codes)
     }
     
-    private func generateCodes() throws -> FileKeyGenerator.Result {
-        let request = FileKeyGenerator.Request(
+    private func generateCodes() throws -> FileResourceGenerator.Result {
+        let request = FileResourceGenerator.Request(
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             filePattern: filePattern,
-            keyTypeName: keyTypeName,
+            resourceTypeName: resourceTypeName,
             preservesRelativePath: preservesRelativePath,
             relativePathPrefix: relativePathPrefix,
             bundle: bundle,
             accessLevel: accessLevel?.rawValue)
         
-        return try FileKeyGenerator().generate(for: request)
+        return try FileResourceGenerator().generate(for: request)
     }
     
-    private func writeCodes(_ codes: FileKeyGenerator.Result) throws {
+    private func writeCodes(_ codes: FileResourceGenerator.Result) throws {
         let tempFileURL = FileManager.default.makeTemporaryItemURL()
         var stream = try TextFileOutputStream(forWritingTo: tempFileURL)
         
@@ -80,9 +80,9 @@ struct FilesToSwift: ParsableCommand {
             print(codes.typeDeclaration, terminator: "\n\n", to: &stream)
         }
         
-        print(codes.keyDeclarations, to: &stream)
+        print(codes.valueDeclarations, to: &stream)
         
         try stream.close()
-        try FileManager.default.compareAndReplaceItem(at: swiftPath, withItemAt: tempFileURL)
+        try FileManager.default.compareAndReplaceItem(at: swiftFilePath, withItemAt: tempFileURL)
     }
 }

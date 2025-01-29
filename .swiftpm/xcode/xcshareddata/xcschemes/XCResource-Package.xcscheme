@@ -286,6 +286,34 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FontResourceGen"
+               BuildableName = "FontResourceGen"
+               BlueprintName = "FontResourceGen"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FileResourceGen"
+               BuildableName = "FileResourceGen"
+               BlueprintName = "FileResourceGen"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -421,6 +449,36 @@
                BlueprintIdentifier = "FileKeyGenTests"
                BuildableName = "FileKeyGenTests"
                BlueprintName = "FileKeyGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AssetResourceGenTests"
+               BuildableName = "AssetResourceGenTests"
+               BlueprintName = "AssetResourceGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FontResourceGenTests"
+               BuildableName = "FontResourceGenTests"
+               BlueprintName = "FontResourceGenTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FileResourceGenTests"
+               BuildableName = "FileResourceGenTests"
+               BlueprintName = "FileResourceGenTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

@@ -29,7 +29,7 @@ struct SwiftToStrings: ParsableCommand {
     
     // MARK: - Arguments
     
-    @Option var swiftPath: String
+    @Option var swiftFilePath: String
     
     @Option var resourcesPath: String
     
@@ -66,7 +66,7 @@ struct SwiftToStrings: ParsableCommand {
     
     private func generateStrings() throws -> [LanguageID: String] {
         let request = StringKeyToStringsGenerator.Request(
-            sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftPath),
+            sourceCodeURL: URL(fileURLWithExpandingTildeInPath: swiftFilePath),
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             tableName: tableName,
             configurationsByLanguage: configurations.configurationsByLanguage,

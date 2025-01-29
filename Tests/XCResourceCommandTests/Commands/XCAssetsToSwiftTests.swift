@@ -55,8 +55,8 @@ private enum Fixture {
         try XCAssetsToSwift.runAsRoot(arguments: [
             "--xcassets-path", SampleData.assetURL().path,
             "--asset-type", "colorset",
-            "--swift-path", swiftFileURL.path,
-            "--key-type-name", "ColorKey",
+            "--swift-file-path", swiftFileURL.path,
+            "--resource-type-name", "ColorKey",
         ])
         
         // Then
@@ -80,8 +80,8 @@ private enum Fixture {
         try XCAssetsToSwift.runAsRoot(arguments: [
             "--xcassets-path", SampleData.assetURL().path,
             "--asset-type", "colorset",
-            "--swift-path", swiftFileURL.path,
-            "--key-type-name", "ColorKey",
+            "--swift-file-path", swiftFileURL.path,
+            "--resource-type-name", "ColorKey",
             "--access-level", "public",
         ])
         

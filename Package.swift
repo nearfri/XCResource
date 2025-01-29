@@ -11,9 +11,9 @@ let package = Package(
         .plugin(name: "Generate Resource Code", targets: ["Generate Resource Code"]),
         .executable(name: "xcresource", targets: ["xcresource"]),
         .library(name: "XCResourceCommand", targets: ["XCResourceCommand"]),
-        .library(name: "AssetKeyGen", targets: ["AssetKeyGen"]),
-        .library(name: "FileKeyGen", targets: ["FileKeyGen"]),
-        .library(name: "FontKeyGen", targets: ["FontKeyGen"]),
+        .library(name: "AssetResourceGen", targets: ["AssetResourceGen"]),
+        .library(name: "FileResourceGen", targets: ["FileResourceGen"]),
+        .library(name: "FontResourceGen", targets: ["FontResourceGen"]),
         .library(name: "LocStringResourceGen", targets: ["LocStringResourceGen"]),
     ],
     dependencies: [
@@ -55,9 +55,9 @@ let package = Package(
             name: "XCResourceCommand",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                "AssetKeyGen",
-                "FileKeyGen",
-                "FontKeyGen",
+                "AssetResourceGen",
+                "FileResourceGen",
+                "FontResourceGen",
                 "LocStringResourceGen",
                 "LocStringKeyGen",
                 "LocStringsGen",
@@ -69,13 +69,13 @@ let package = Package(
         // MARK: - Core Modules
         
         .target(
-            name: "AssetKeyGen",
+            name: "AssetResourceGen",
             dependencies: ["XCResourceUtil"]),
         .target(
-            name: "FileKeyGen",
+            name: "FileResourceGen",
             dependencies: ["XCResourceUtil"]),
         .target(
-            name: "FontKeyGen",
+            name: "FontResourceGen",
             dependencies: ["XCResourceUtil"]),
         .target(
             name: "LocStringResourceGen",
@@ -146,14 +146,14 @@ let package = Package(
             name: "XCResourceCommandTests",
             dependencies: ["XCResourceCommand", "SampleData", "TestUtil"]),
         .testTarget(
-            name: "AssetKeyGenTests",
-            dependencies: ["AssetKeyGen", "SampleData", "TestUtil"]),
+            name: "AssetResourceGenTests",
+            dependencies: ["AssetResourceGen", "SampleData", "TestUtil"]),
         .testTarget(
-            name: "FileKeyGenTests",
-            dependencies: ["FileKeyGen", "SampleData", "TestUtil"]),
+            name: "FileResourceGenTests",
+            dependencies: ["FileResourceGen", "SampleData", "TestUtil"]),
         .testTarget(
-            name: "FontKeyGenTests",
-            dependencies: ["FontKeyGen", "SampleData", "TestUtil"]),
+            name: "FontResourceGenTests",
+            dependencies: ["FontResourceGen", "SampleData", "TestUtil"]),
         .testTarget(
             name: "LocStringResourceGenTests",
             dependencies: ["LocStringResourceGen", "TestUtil"]),

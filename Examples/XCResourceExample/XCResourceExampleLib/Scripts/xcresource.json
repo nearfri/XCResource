@@ -6,8 +6,8 @@
                 "Sources/Resources/Resources/Assets.xcassets"
             ],
             "assetTypes": ["imageset"],
-            "swiftPath": "Sources/Resources/ResourceAccess/ImageKey.swift",
-            "keyTypeName": "ImageKey",
+            "swiftFilePath": "Sources/Resources/ResourceAccess/ImageKey.swift",
+            "resourceTypeName": "ImageKey",
             "accessLevel": "public"
         },
         {
@@ -16,16 +16,16 @@
                 "Sources/Resources/Resources/Assets.xcassets"
             ],
             "assetTypes": ["colorset"],
-            "swiftPath": "Sources/Resources/ResourceAccess/ColorKey.swift",
-            "keyTypeName": "ColorKey",
+            "swiftFilePath": "Sources/Resources/ResourceAccess/ColorKey.swift",
+            "resourceTypeName": "ColorKey",
             "accessLevel": "public"
         },
         {
             "commandName": "files2swift",
             "resourcesPath": "Sources/Resources/Resources/Fonts",
             "filePattern": "(?i)\\.(otf|ttf|ttc)$",
-            "swiftPath": "Sources/Resources/ResourceAccess/FileResource.swift",
-            "keyTypeName": "FileResource",
+            "swiftFilePath": "Sources/Resources/ResourceAccess/FileResource.swift",
+            "resourceTypeName": "FileResource",
             "preservesRelativePath": true,
             "relativePathPrefix": "Fonts",
             "bundle": "Bundle.module",
@@ -34,11 +34,11 @@
         {
             "commandName": "fonts2swift",
             "resourcesPath": "Sources/Resources/Resources",
-            "swiftPath": "Sources/Resources/ResourceAccess/FontResource.swift",
-            "keyTypeName": "FontResource",
-            "keyListName": "all",
-            "generatesLatinKey": true,
-            "stripsCombiningMarksFromKey": true,
+            "swiftFilePath": "Sources/Resources/ResourceAccess/FontResource.swift",
+            "resourceTypeName": "FontResource",
+            "resourceListName": "all",
+            "transformsToLatin": true,
+            "stripsCombiningMarks": true,
             "preservesRelativePath": true,
             "bundle": "Bundle.module",
             "accessLevel": "public"
@@ -46,8 +46,8 @@
         {
             "commandName": "xcstrings2swift",
             "catalogPath": "Sources/Resources/Resources/Localizable.xcstrings",
-            "bundle": "at-url:Bundle.module.bundleURL",
-            "swiftPath": "Sources/Resources/ResourceAccess/LocalizedStringResource+.swift"
+            "bundle": "atURL:Bundle.module.bundleURL",
+            "swiftFilePath": "Sources/Resources/ResourceAccess/LocalizedStringResource+.swift"
         }
     ]
 }

@@ -1,16 +1,16 @@
 import Foundation
 import ArgumentParser
-import AssetKeyGen
+import AssetResourceGen
 
 struct FontsToSwiftDTO: CommandDTO {
     static let commandType: ParsableCommand.Type = FontsToSwift.self
     
     var resourcesPath: String
-    var swiftPath: String
-    var keyTypeName: String
-    var keyListName: String?
-    var generatesLatinKey: Bool?
-    var stripsCombiningMarksFromKey: Bool?
+    var swiftFilePath: String
+    var resourceTypeName: String
+    var resourceListName: String?
+    var transformsToLatin: Bool?
+    var stripsCombiningMarks: Bool?
     var preservesRelativePath: Bool?
     var relativePathPrefix: String?
     var bundle: String?
@@ -32,12 +32,12 @@ struct FontsToSwiftDTO: CommandDTO {
         
         var command = FontsToSwift()
         command.resourcesPath = resourcesPath
-        command.swiftPath = swiftPath
-        command.keyTypeName = keyTypeName
-        command.keyListName = keyListName
-        command.generatesLatinKey = generatesLatinKey ?? Default.generatesLatinKey
-        command.stripsCombiningMarksFromKey = {
-            stripsCombiningMarksFromKey ?? Default.stripsCombiningMarksFromKey
+        command.swiftFilePath = swiftFilePath
+        command.resourceTypeName = resourceTypeName
+        command.resourceListName = resourceListName
+        command.transformsToLatin = transformsToLatin ?? Default.transformsToLatin
+        command.stripsCombiningMarks = {
+            stripsCombiningMarks ?? Default.stripsCombiningMarks
         }()
         command.preservesRelativePath = preservesRelativePath ?? Default.preservesRelativePath
         command.relativePathPrefix = relativePathPrefix

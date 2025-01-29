@@ -13,7 +13,7 @@ struct KeyToStringsdictConfigurationDTO: Codable, Sendable {
 struct SwiftToStringsdictDTO: CommandDTO {
     static let commandType: ParsableCommand.Type = SwiftToStringsdict.self
     
-    var swiftPath: String
+    var swiftFilePath: String
     var resourcesPath: String
     var tableName: String?
     var configurationsByLanguage: [String: KeyToStringsdictConfigurationDTO]?
@@ -28,7 +28,7 @@ struct SwiftToStringsdictDTO: CommandDTO {
         })
         
         var command = SwiftToStringsdict()
-        command.swiftPath = swiftPath
+        command.swiftFilePath = swiftFilePath
         command.resourcesPath = resourcesPath
         command.tableName = tableName ?? Default.tableName
         command.configurations = langAndConfigs ?? Default.configurations

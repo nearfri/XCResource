@@ -42,8 +42,8 @@ $(IMAGEKEY_FILE): $(ASSET_CONTENTS_FILES)
 	$(XCRESOURCE) xcassets2swift \
 	--xcassets-path $(ASSETS_DIR) \
 	--asset-type imageset \
-	--swift-path $@ \
-	--key-type-name $(IMAGEKEY_NAME) \
+	--swift-file-path $@ \
+	--resource-type-name $(IMAGEKEY_NAME) \
 	--access-level public
 	
 	@touch $@
@@ -55,8 +55,8 @@ $(COLORKEY_FILE): $(ASSET_CONTENTS_FILES)
 	$(XCRESOURCE) xcassets2swift \
 	--xcassets-path $(ASSETS_DIR) \
 	--asset-type colorset \
-	--swift-path $@ \
-	--key-type-name $(COLORKEY_NAME) \
+	--swift-file-path $@ \
+	--resource-type-name $(COLORKEY_NAME) \
 	--access-level public
 	
 	@touch $@
@@ -66,8 +66,8 @@ files2swift:
 	$(XCRESOURCE) files2swift \
 	--resources-path $(RESOURCES_DIR)/Fonts \
 	--file-pattern "(?i)\\.(otf|ttf|ttc)$$" \
-	--swift-path $(FILEKEY_FILE) \
-	--key-type-name $(FILEKEY_NAME) \
+	--swift-file-path $(FILEKEY_FILE) \
+	--resource-type-name $(FILEKEY_NAME) \
 	--preserve-relative-path \
 	--relative-path-prefix Fonts \
 	--bundle Bundle.module \
@@ -77,11 +77,11 @@ files2swift:
 fonts2swift:
 	$(XCRESOURCE) fonts2swift \
 	--resources-path $(RESOURCES_DIR) \
-	--swift-path $(FONTKEY_FILE) \
-	--key-type-name $(FONTKEY_NAME) \
-	--key-list-name all \
-	--generate-latin-key \
-	--strip-combining-marks-from-key \
+	--swift-file-path $(FONTKEY_FILE) \
+	--resource-type-name $(FONTKEY_NAME) \
+	--resource-list-name all \
+	--transform-to-latin \
+	--strip-combining-marks \
 	--preserve-relative-path \
 	--bundle Bundle.module \
 	--access-level public
@@ -90,5 +90,5 @@ fonts2swift:
 xcstrings2swift:
 	$(XCRESOURCE) xcstrings2swift \
 	--catalog-path $(RESOURCES_DIR)/Localizable.xcstrings \
-	--bundle at-url:Bundle.module.bundleURL \
-	--swift-path $(STRINGKEY_FILE)
+	--bundle atURL:Bundle.module.bundleURL \
+	--swift-file-path $(STRINGKEY_FILE)

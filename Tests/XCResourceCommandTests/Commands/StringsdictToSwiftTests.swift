@@ -95,7 +95,7 @@ private enum Fixture {
         try StringsdictToSwift.runAsRoot(arguments: [
             "--resources-path", resourcesURL.path,
             "--language", "en",
-            "--swift-path", sourceCodeURL.path,
+            "--swift-file-path", sourceCodeURL.path,
         ])
         
         // Then

@@ -25,7 +25,7 @@ struct XCStringsToSwift: ParsableCommand {
     
     @Option var bundle: LocalizationItem.BundleDescription = Default.bundle
     
-    @Option var swiftPath: String
+    @Option var swiftFilePath: String
     
     @Option var resourceTypeName: String = Default.resourceTypeName
     
@@ -39,7 +39,7 @@ struct XCStringsToSwift: ParsableCommand {
     
     private func generateCode() throws -> String {
         let catalogFileURL = URL(fileURLWithExpandingTildeInPath: catalogPath)
-        let swiftFileURL = URL(fileURLWithExpandingTildeInPath: swiftPath)
+        let swiftFileURL = URL(fileURLWithExpandingTildeInPath: swiftFilePath)
         
         let catalogFileContents = try String(contentsOf: catalogFileURL, encoding: .utf8)
         let table = catalogFileURL.deletingPathExtension().lastPathComponent
@@ -63,6 +63,6 @@ struct XCStringsToSwift: ParsableCommand {
         
         try code.write(to: tempFileURL, atomically: false, encoding: .utf8)
         
-        try FileManager.default.compareAndReplaceItem(at: swiftPath, withItemAt: tempFileURL)
+        try FileManager.default.compareAndReplaceItem(at: swiftFilePath, withItemAt: tempFileURL)
     }
 }
