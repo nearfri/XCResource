@@ -1,6 +1,5 @@
 import Foundation
 import ArgumentParser
-import LocStringsGen
 
 extension Config {
     struct Init: ParsableCommand {
@@ -84,73 +83,6 @@ private let configurationTemplate = """
             "bundle": "<#main|atURL:<url-getter>|forClass:<class-type>#>",
             "swiftFilePath": "<#swift file path#>",
             "resourceTypeName": "LocalizedStringResource"
-        },
-        {
-            "commandName": "key2form",
-            "keyFilePath": "<#key file path#>",
-            "formFilePath": "<#form file path#>",
-            "formTypeName": "<#form type name#>",
-            "accessLevel": null,
-            "excludesTypeDeclaration": false,
-            "issueReporter": "<#none|xcode#>"
-        },
-        {
-            "commandName": "swift2strings",
-            "swiftFilePath": "<#swift file path#>",
-            "resourcesPath": "<#resources path#>",
-            "tableName": "Localizable",
-            "configurationsByLanguage": {
-                "<#language#>": {
-                    "mergeStrategy": "<#comment|key|custom-string|dont-add#>",
-                    "verifiesComments": false
-                }
-            },
-            "omitsComments": false,
-            "sortsByKey": false
-        },
-        {
-            "commandName": "swift2stringsdict",
-            "swiftFilePath": "<#swift file path#>",
-            "resourcesPath": "<#resources path#>",
-            "tableName": "Localizable",
-            "configurationsByLanguage": {
-                "<#language#>": {
-                    "mergeStrategy": "<#comment|key|custom-string|dont-add#>"
-                }
-            },
-            "sortsByKey": false
-        },
-        {
-            "commandName": "strings2swift",
-            "resourcesPath": "<#resources path#>",
-            "tableName": "Localizable",
-            "language": "en",
-            "swiftFilePath": "<#swift file path#>"
-        },
-        {
-            "commandName": "stringsdict2swift",
-            "resourcesPath": "<#resources path#>",
-            "tableName": "Localizable",
-            "language": "en",
-            "swiftFilePath": "<#swift file path#>"
-        },
-        {
-            "commandName": "strings2csv",
-            "resourcesPath": "<#resources path#>",
-            "tableName": "Localizable",
-            "developmentLanguage": "en",
-            "csvPath": "<#CSV file path#>",
-            "headerStyle": "<#short|long|long-<language>#>",
-            "emptyEncoding": "<#string used to represent empty value#>",
-            "writesBOM": false
-        },
-        {
-            "commandName": "csv2strings",
-            "csvPath": "<#CSV file path#>",
-            "headerStyle": "<#short|long|long-<language>#>",
-            "resourcesPath": "<#resources path#>",
-            "tableName": "Localizable",
-            "emptyEncoding": "<#string used to represent empty value#>"
         }
     ]
 }

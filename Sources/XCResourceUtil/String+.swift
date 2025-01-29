@@ -94,27 +94,6 @@ extension String {
         }
     }
     
-    public func addingBackslashEncoding() -> String {
-        let backslashMap: [Character: String] = [
-            "\"": #"\""#, "\n": #"\n"#, "\r": #"\r"#, "\t": #"\t"#,
-            "\u{0008}": #"\b"#, "\u{000C}": #"\f"#
-        ]
-        
-        return reduce(into: "") { result, char in
-            if let mapped = backslashMap[char] {
-                result += mapped
-            } else {
-                result.append(char)
-            }
-        }
-    }
-    
-    public func addingCSVEncoding() -> String {
-        let needsEncoding = contains(where: { $0 == "\"" || $0 == "," || $0.isNewline })
-        guard needsEncoding else { return self }
-        return "\"" + replacingOccurrences(of: "\"", with: "\"\"") + "\""
-    }
-    
     public func appendingPathComponent(_ str: some StringProtocol) -> String {
         if isEmpty { return String(str) }
         if str.isEmpty { return self }
