@@ -43,7 +43,12 @@ struct XCStringsToSwift: ParsableCommand {
         
         let catalogFileContents = try String(contentsOf: catalogFileURL, encoding: .utf8)
         let table = catalogFileURL.deletingPathExtension().lastPathComponent
-        let sourceCode = try String(contentsOf: swiftFileURL, encoding: .utf8)
+        
+        let sourceCode = if FileManager.default.fileExists(at: swiftFileURL) {
+            try String(contentsOf: swiftFileURL, encoding: .utf8)
+        } else {
+            "\n"
+        }
         
         let request = LocalizedStringResourceGenerator.Request(
             catalogFileContents: catalogFileContents,
