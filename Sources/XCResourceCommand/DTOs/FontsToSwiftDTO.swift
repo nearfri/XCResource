@@ -1,6 +1,6 @@
 import Foundation
 import ArgumentParser
-import AssetKeyGen
+import AssetResourceGen
 
 struct FontsToSwiftDTO: CommandDTO {
     static let commandType: ParsableCommand.Type = FontsToSwift.self

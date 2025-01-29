@@ -1,5 +1,5 @@
 import Testing
-@testable import AssetKeyGen
+@testable import AssetResourceGen
 
 @Suite struct AssetTypeTests {
     @Test func initWithPathExtension() {

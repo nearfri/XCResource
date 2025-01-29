@@ -1,6 +1,6 @@
 import Testing
 import SampleData
-@testable import AssetKeyGen
+@testable import AssetResourceGen
 
 @Suite struct ContentTests {
     @Test func initWithURL_folder() throws {

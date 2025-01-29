@@ -8,11 +8,11 @@ protocol TypeDeclarationGenerator: AnyObject {
     func generate(resourceTypeName: String, accessLevel: String?) -> String
 }
 
-protocol KeyDeclarationGenerator: AnyObject {
+protocol ValueDeclarationGenerator: AnyObject {
     func generate(catalog: AssetCatalog, resourceTypeName: String, accessLevel: String?) -> String
 }
 
-extension AssetKeyGenerator {
+extension AssetResourceGenerator {
     public struct Request: Sendable {
         public var assetCatalogURLs: [URL]
         public var assetTypes: Set<AssetType>
@@ -33,41 +33,42 @@ extension AssetKeyGenerator {
     
     public struct Result: Sendable {
         public var typeDeclaration: String
-        public var keyDeclarations: String
+        public var valueDeclarations: String
         
-        public init(typeDeclaration: String, keyDeclarations: String) {
+        public init(typeDeclaration: String, valueDeclarations: String) {
             self.typeDeclaration = typeDeclaration
-            self.keyDeclarations = keyDeclarations
+            self.valueDeclarations = valueDeclarations
         }
     }
 }
 
-public class AssetKeyGenerator {
+public class AssetResourceGenerator {
     private let catalogImporter: AssetCatalogImporter
     private let typeDeclarationGenerator: TypeDeclarationGenerator
-    private let keyDeclarationGenerator: KeyDeclarationGenerator
+    private let valueDeclarationGenerator: ValueDeclarationGenerator
     
     init(catalogImporter: AssetCatalogImporter,
          typeDeclarationGenerator: TypeDeclarationGenerator,
-         keyDeclarationGenerator: KeyDeclarationGenerator
+         valueDeclarationGenerator: ValueDeclarationGenerator
     ) {
         self.catalogImporter = catalogImporter
         self.typeDeclarationGenerator = typeDeclarationGenerator
-        self.keyDeclarationGenerator = keyDeclarationGenerator
+        self.valueDeclarationGenerator = valueDeclarationGenerator
     }
     
     public convenience init() {
         self.init(catalogImporter: DefaultAssetCatalogImporter(),
                   typeDeclarationGenerator: DefaultTypeDeclarationGenerator(),
-                  keyDeclarationGenerator: DefaultKeyDeclarationGenerator())
+                  valueDeclarationGenerator: DefaultValueDeclarationGenerator())
     }
     
     public func generate(for request: Request) throws -> Result {
         let typeDeclaration = generateTypeDeclaration(for: request)
         
-        let keyDeclarations = try generateKeyDeclarations(for: request).joined(separator: "\n\n")
+        let valueDeclarations = try generateValueDeclarations(for: request)
+            .joined(separator: "\n\n")
         
-        return Result(typeDeclaration: typeDeclaration, keyDeclarations: keyDeclarations)
+        return Result(typeDeclaration: typeDeclaration, valueDeclarations: valueDeclarations)
     }
     
     private func generateTypeDeclaration(for request: Request) -> String {
@@ -75,7 +76,7 @@ public class AssetKeyGenerator {
                                                  accessLevel: request.accessLevel)
     }
     
-    private func generateKeyDeclarations(for request: Request) throws -> [String] {
+    private func generateValueDeclarations(for request: Request) throws -> [String] {
         let catalogs: [AssetCatalog] = try request.assetCatalogURLs.map { url in
             var catalog = try catalogImporter.import(at: url)
             catalog.assets.removeAll(where: { !request.assetTypes.contains($0.type) })
@@ -83,9 +84,10 @@ public class AssetKeyGenerator {
         }
         
         return catalogs.map {
-            return keyDeclarationGenerator.generate(catalog: $0,
-                                                    resourceTypeName: request.resourceTypeName,
-                                                    accessLevel: request.accessLevel)
+            return valueDeclarationGenerator.generate(
+                catalog: $0,
+                resourceTypeName: request.resourceTypeName,
+                accessLevel: request.accessLevel)
         }
     }
 }

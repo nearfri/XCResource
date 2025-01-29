@@ -1,6 +1,6 @@
 import Testing
 import Foundation
-@testable import AssetKeyGen
+@testable import AssetResourceGen
 
 private class StubAssetCatalogImporter: AssetCatalogImporter {
     func `import`(at url: URL) throws -> AssetCatalog {
@@ -20,7 +20,7 @@ private class StubTypeDeclarationGenerator: TypeDeclarationGenerator {
     }
 }
 
-private class StubKeyDeclarationGenerator: KeyDeclarationGenerator {
+private class StubValueDeclarationGenerator: ValueDeclarationGenerator {
     static let declarationsString = "{ Key Declaration }"
     
     var generateParamCatalogs: [AssetCatalog] = []
@@ -32,22 +32,22 @@ private class StubKeyDeclarationGenerator: KeyDeclarationGenerator {
     }
 }
 
-@Suite struct AssetKeyGeneratorTests {
-    private let keyDeclarationGenerator: StubKeyDeclarationGenerator = .init()
+@Suite struct AssetResourceGeneratorTests {
+    private let valueDeclarationGenerator: StubValueDeclarationGenerator = .init()
     
-    private let request: AssetKeyGenerator.Request = AssetKeyGenerator.Request(
+    private let request: AssetResourceGenerator.Request = AssetResourceGenerator.Request(
         assetCatalogURLs: [URL(fileURLWithPath: "a"), URL(fileURLWithPath: "b")],
         assetTypes: [.imageSet],
         resourceTypeName: "ImageKey",
         accessLevel: nil)
     
-    private let sut: AssetKeyGenerator
+    private let sut: AssetResourceGenerator
     
     init() {
-        sut = AssetKeyGenerator(
+        sut = AssetResourceGenerator(
             catalogImporter: StubAssetCatalogImporter(),
             typeDeclarationGenerator: StubTypeDeclarationGenerator(),
-            keyDeclarationGenerator: keyDeclarationGenerator)
+            valueDeclarationGenerator: valueDeclarationGenerator)
     }
     
     @Test func generate_codes() throws {
@@ -57,10 +57,10 @@ private class StubKeyDeclarationGenerator: KeyDeclarationGenerator {
         // Then
         #expect(result.typeDeclaration == StubTypeDeclarationGenerator.declarationString)
         
-        #expect(result.keyDeclarations == """
-            \(StubKeyDeclarationGenerator.declarationsString)
+        #expect(result.valueDeclarations == """
+            \(StubValueDeclarationGenerator.declarationsString)
             
-            \(StubKeyDeclarationGenerator.declarationsString)
+            \(StubValueDeclarationGenerator.declarationsString)
             """
         )
     }
@@ -68,7 +68,7 @@ private class StubKeyDeclarationGenerator: KeyDeclarationGenerator {
     @Test func generate_filterAsset() throws {
         // When
         _ = try sut.generate(for: request)
-        let allAssets = keyDeclarationGenerator.generateParamCatalogs.flatMap({ $0.assets })
+        let allAssets = valueDeclarationGenerator.generateParamCatalogs.flatMap({ $0.assets })
         
         // Then
         #expect(allAssets.allSatisfy({ $0.type == .imageSet }))

@@ -1,6 +1,6 @@
 import Testing
 import Foundation
-@testable import AssetKeyGen
+@testable import AssetResourceGen
 
 @Suite struct ContentTreeTests {
     @Test func fullName_noNamespace() {

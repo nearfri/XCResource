@@ -1,6 +1,6 @@
 import Testing
 import TestUtil
-@testable import AssetKeyGen
+@testable import AssetResourceGen
 
 private enum Fixture {
     static let catalog = AssetCatalog(
@@ -15,7 +15,7 @@ private enum Fixture {
         ])
 }
 
-@Suite struct DefaultKeyDeclarationGeneratorTests {
+@Suite struct DefaultValueDeclarationGeneratorTests {
     @Test func generate() {
         // Given
         let expectedDeclarations = """
@@ -30,7 +30,7 @@ private enum Fixture {
         }
         """
         
-        let sut = DefaultKeyDeclarationGenerator()
+        let sut = DefaultValueDeclarationGenerator()
         
         // When
         let actualDeclarations = sut.generate(catalog: Fixture.catalog,
@@ -55,7 +55,7 @@ private enum Fixture {
         }
         """
         
-        let sut = DefaultKeyDeclarationGenerator()
+        let sut = DefaultValueDeclarationGenerator()
         
         // When
         let actualDeclarations = sut.generate(catalog: Fixture.catalog,

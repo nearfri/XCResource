@@ -1,5 +1,5 @@
 import Testing
-@testable import AssetKeyGen
+@testable import AssetResourceGen
 
 @Suite struct AssetTests {
     @Test func id_word() {

@@ -1,6 +1,6 @@
 import Foundation
 import ArgumentParser
-import AssetKeyGen
+import AssetResourceGen
 
 extension AssetType: ExpressibleByArgument {
     public init?(argument: String) {

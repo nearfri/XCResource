@@ -1,6 +1,6 @@
 import Testing
 import Foundation
-@testable import AssetKeyGen
+@testable import AssetResourceGen
 
 @Suite struct ContentAttributesDTOTests {
     @Test func initFromDecoder_folder() throws {

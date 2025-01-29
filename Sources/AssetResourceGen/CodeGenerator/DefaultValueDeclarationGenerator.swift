@@ -1,6 +1,6 @@
 import Foundation
 
-class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
+class DefaultValueDeclarationGenerator: ValueDeclarationGenerator {
     func generate(catalog: AssetCatalog, resourceTypeName: String, accessLevel: String?) -> String {
         let accessLevel = accessLevel.map({ $0 + " " }) ?? ""
         
