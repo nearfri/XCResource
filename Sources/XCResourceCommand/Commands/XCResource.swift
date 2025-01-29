@@ -9,10 +9,7 @@ public struct XCResource: ParsableCommand {
         subcommands: [
             Config.self,
             XCAssetsToSwift.self, FilesToSwift.self, FontsToSwift.self,
-            XCStringsToSwift.self, KeyToForm.self,
-            SwiftToStrings.self, SwiftToStringsdict.self,
-            StringsToSwift.self, StringsdictToSwift.self,
-            StringsToCSV.self, CSVToStrings.self,
+            XCStringsToSwift.self,
         ],
         defaultSubcommand: Config.self)
     

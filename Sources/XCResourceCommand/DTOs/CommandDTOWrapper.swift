@@ -2,10 +2,7 @@ import Foundation
 
 private let allCommandDTOTypes: [CommandDTO.Type] = [
     XCAssetsToSwiftDTO.self, FilesToSwiftDTO.self, FontsToSwiftDTO.self,
-    XCStringsToSwiftDTO.self, KeyToFormDTO.self,
-    SwiftToStringsDTO.self, SwiftToStringsdictDTO.self,
-    StringsToSwiftDTO.self, StringsdictToSwiftDTO.self,
-    StringsToCSVDTO.self, CSVToStringsDTO.self,
+    XCStringsToSwiftDTO.self,
 ]
 
 struct CommandDTOWrapper: Codable, Sendable {

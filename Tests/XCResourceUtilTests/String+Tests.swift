@@ -56,27 +56,6 @@ import Testing
         #expect("DH대한san만Regular".latinCased() == "DHDaehanSanManRegular")
     }
     
-    @Test func addingBackslashEncoding() {
-        #expect("ab\"cd".addingBackslashEncoding() == #"ab\"cd"#)
-        #expect("ab\\cd".addingBackslashEncoding() == #"ab\cd"#)
-        #expect("ab\\ncd".addingBackslashEncoding() == #"ab\ncd"#)
-        #expect("ab\ncd".addingBackslashEncoding() == #"ab\ncd"#)
-        #expect("ab\rcd".addingBackslashEncoding() == #"ab\rcd"#)
-        #expect("ab\tcd".addingBackslashEncoding() == #"ab\tcd"#)
-        #expect("ab\u{0008}cd".addingBackslashEncoding() == #"ab\bcd"#)
-        #expect("ab\u{000C}cd".addingBackslashEncoding() == #"ab\fcd"#)
-    }
-    
-    @Test func addingCSVEncoding() {
-        #expect("1997".addingCSVEncoding() == "1997")
-        #expect("Ford".addingCSVEncoding() == "Ford")
-        #expect("luxurious truck".addingCSVEncoding() == "luxurious truck")
-        #expect("luxurious,truck".addingCSVEncoding() == "\"luxurious,truck\"")
-        #expect("luxurious\ntruck".addingCSVEncoding() == "\"luxurious\ntruck\"")
-        #expect(#"Venture "Extended Edition"."#.addingCSVEncoding() ==
-                #""Venture ""Extended Edition"".""#)
-    }
-    
     @Test func appendingPathComponent() {
         #expect("/tmp".appendingPathComponent("scratch.tiff") == "/tmp/scratch.tiff")
         #expect("/tmp/".appendingPathComponent("scratch.tiff") == "/tmp/scratch.tiff")
