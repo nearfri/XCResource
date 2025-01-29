@@ -8,7 +8,7 @@ protocol TypeDeclarationGenerator: AnyObject {
     func generate(resourceTypeName: String, accessLevel: String?) -> String
 }
 
-struct KeyDeclarationRequest: Sendable {
+struct ValueDeclarationRequest: Sendable {
     var fonts: [Font]
     var resourceTypeName: String
     var resourceListName: String?
@@ -20,12 +20,12 @@ struct KeyDeclarationRequest: Sendable {
     var accessLevel: String?
 }
 
-protocol KeyDeclarationGenerator: AnyObject {
-    func generateKeyListDeclaration(for request: KeyDeclarationRequest) -> String?
-    func generateKeyDeclarations(for request: KeyDeclarationRequest) -> String
+protocol ValueDeclarationGenerator: AnyObject {
+    func generateValueListDeclaration(for request: ValueDeclarationRequest) -> String?
+    func generateValueDeclarations(for request: ValueDeclarationRequest) -> String
 }
 
-extension FontKeyGenerator {
+extension FontResourceGenerator {
     public struct Request: Sendable {
         public var resourcesURL: URL
         public var resourceTypeName: String
@@ -62,35 +62,39 @@ extension FontKeyGenerator {
     
     public struct Result: Sendable {
         public var typeDeclaration: String
-        public var keyListDeclaration: String?
-        public var keyDeclarations: String
+        public var valueListDeclaration: String?
+        public var valueDeclarations: String
         
-        public init(typeDeclaration: String, keyListDeclaration: String?, keyDeclarations: String) {
+        public init(
+            typeDeclaration: String,
+            valueListDeclaration: String?,
+            valueDeclarations: String
+        ) {
             self.typeDeclaration = typeDeclaration
-            self.keyListDeclaration = keyListDeclaration
-            self.keyDeclarations = keyDeclarations
+            self.valueListDeclaration = valueListDeclaration
+            self.valueDeclarations = valueDeclarations
         }
     }
 }
 
-public class FontKeyGenerator {
+public class FontResourceGenerator {
     private let fontImporter: FontImporter
     private let typeDeclarationGenerator: TypeDeclarationGenerator
-    private let keyDeclarationGenerator: KeyDeclarationGenerator
+    private let valueDeclarationGenerator: ValueDeclarationGenerator
     
     init(fontImporter: FontImporter,
          typeDeclarationGenerator: TypeDeclarationGenerator,
-         keyDeclarationGenerator: KeyDeclarationGenerator
+         valueDeclarationGenerator: ValueDeclarationGenerator
     ) {
         self.fontImporter = fontImporter
         self.typeDeclarationGenerator = typeDeclarationGenerator
-        self.keyDeclarationGenerator = keyDeclarationGenerator
+        self.valueDeclarationGenerator = valueDeclarationGenerator
     }
     
     public convenience init() {
         self.init(fontImporter: DefaultFontImporter(),
                   typeDeclarationGenerator: DefaultTypeDeclarationGenerator(),
-                  keyDeclarationGenerator: DefaultKeyDeclarationGenerator())
+                  valueDeclarationGenerator: DefaultValueDeclarationGenerator())
     }
     
     public func generate(for request: Request) throws -> Result {
@@ -100,7 +104,7 @@ public class FontKeyGenerator {
             resourceTypeName: request.resourceTypeName,
             accessLevel: request.accessLevel)
         
-        let keyRequest = KeyDeclarationRequest(
+        let valueRequest = ValueDeclarationRequest(
             fonts: fonts,
             resourceTypeName: request.resourceTypeName,
             resourceListName: request.resourceListName,
@@ -111,12 +115,14 @@ public class FontKeyGenerator {
             bundle: request.bundle,
             accessLevel: request.accessLevel)
         
-        let keyListDeclaration = keyDeclarationGenerator.generateKeyListDeclaration(for: keyRequest)
+        let listDeclaration = valueDeclarationGenerator
+            .generateValueListDeclaration(for: valueRequest)
         
-        let keyDeclarations = keyDeclarationGenerator.generateKeyDeclarations(for: keyRequest)
+        let valueDeclarations = valueDeclarationGenerator
+            .generateValueDeclarations(for: valueRequest)
         
         return Result(typeDeclaration: typeDeclaration,
-                      keyListDeclaration: keyListDeclaration,
-                      keyDeclarations: keyDeclarations)
+                      valueListDeclaration: listDeclaration,
+                      valueDeclarations: valueDeclarations)
     }
 }

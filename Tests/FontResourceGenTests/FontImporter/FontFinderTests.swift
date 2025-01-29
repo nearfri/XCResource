@@ -1,6 +1,6 @@
 import Testing
 import SampleData
-@testable import FontKeyGen
+@testable import FontResourceGen
 
 @Suite struct FontFinderTests {
     @Test func find() throws {

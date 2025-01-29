@@ -1,6 +1,6 @@
 import Testing
 import Foundation
-@testable import FontKeyGen
+@testable import FontResourceGen
 
 private class FakeFontFinder: FontFinder {
     let paths: [String]

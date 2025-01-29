@@ -1,5 +1,5 @@
 import Testing
-@testable import FontKeyGen
+@testable import FontResourceGen
 
 @Suite struct FontTests {
     @Test func id_camelCased() throws {

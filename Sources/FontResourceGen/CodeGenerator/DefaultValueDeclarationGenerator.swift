@@ -1,7 +1,7 @@
 import Foundation
 
-class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
-    func generateKeyListDeclaration(for request: KeyDeclarationRequest) -> String? {
+class DefaultValueDeclarationGenerator: ValueDeclarationGenerator {
+    func generateValueListDeclaration(for request: ValueDeclarationRequest) -> String? {
         guard let resourceListName = request.resourceListName else { return nil }
         
         let accessLevel = request.accessLevel.map({ $0 + " " }) ?? ""
@@ -43,7 +43,7 @@ class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
         return result
     }
     
-    func generateKeyDeclarations(for request: KeyDeclarationRequest) -> String {
+    func generateValueDeclarations(for request: ValueDeclarationRequest) -> String {
         let accessLevel = request.accessLevel.map({ $0 + " " }) ?? ""
         
         var result = ""
@@ -82,7 +82,7 @@ class DefaultKeyDeclarationGenerator: KeyDeclarationGenerator {
         return result
     }
     
-    private func relativePath(of font: Font, for request: KeyDeclarationRequest) -> String {
+    private func relativePath(of font: Font, for request: ValueDeclarationRequest) -> String {
         var result = font.relativePath
         
         if !request.preservesRelativePath {

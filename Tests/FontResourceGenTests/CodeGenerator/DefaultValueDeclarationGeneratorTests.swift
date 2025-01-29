@@ -1,6 +1,6 @@
 import Testing
 import TestUtil
-@testable import FontKeyGen
+@testable import FontResourceGen
 
 private enum Fixture {
     static let fonts: [Font] = [
@@ -26,16 +26,16 @@ private enum Fixture {
     ]
 }
 
-@Suite struct DefaultKeyDeclarationGeneratorTests {
-    private let sut: DefaultKeyDeclarationGenerator = .init()
+@Suite struct DefaultValueDeclarationGeneratorTests {
+    private let sut: DefaultValueDeclarationGenerator = .init()
     
-    @Test func generateKeyListDeclaration() throws {
+    @Test func generateValueListDeclaration() throws {
         // Given
         let fonts: [Font] = Fixture.fonts
         
         // When
-        let code = sut.generateKeyListDeclaration(
-            for: KeyDeclarationRequest(
+        let code = sut.generateValueListDeclaration(
+            for: ValueDeclarationRequest(
                 fonts: fonts,
                 resourceTypeName: "FontResource",
                 resourceListName: "all",
@@ -61,13 +61,13 @@ private enum Fixture {
             """)
     }
     
-    @Test func generateKeyListDeclaration_latinKey_false() throws {
+    @Test func generateValueListDeclaration_latin_false() throws {
         // Given
         let fonts: [Font] = Fixture.hangulFonts
         
         // When
-        let code = sut.generateKeyListDeclaration(
-            for: KeyDeclarationRequest(
+        let code = sut.generateValueListDeclaration(
+            for: ValueDeclarationRequest(
                 fonts: fonts,
                 resourceTypeName: "FontResource",
                 resourceListName: "all",
@@ -89,13 +89,13 @@ private enum Fixture {
             """)
     }
     
-    @Test func generateKeyListDeclaration_latinKey_true() throws {
+    @Test func generateValueListDeclaration_latin_true() throws {
         // Given
         let fonts: [Font] = Fixture.hangulFonts
         
         // When
-        let code = sut.generateKeyListDeclaration(
-            for: KeyDeclarationRequest(
+        let code = sut.generateValueListDeclaration(
+            for: ValueDeclarationRequest(
                 fonts: fonts,
                 resourceTypeName: "FontResource",
                 resourceListName: "all",
@@ -117,13 +117,13 @@ private enum Fixture {
             """)
     }
     
-    @Test func generateKeyDeclarations_latinKey_false() throws {
+    @Test func generateValueDeclarations_latin_false() throws {
         // Given
         let fonts: [Font] = Fixture.hangulFonts
         
         // When
-        let code = sut.generateKeyDeclarations(
-            for: KeyDeclarationRequest(
+        let code = sut.generateValueDeclarations(
+            for: ValueDeclarationRequest(
                 fonts: fonts,
                 resourceTypeName: "FontResource",
                 transformsToLatin: false,
@@ -148,13 +148,13 @@ private enum Fixture {
             """)
     }
     
-    @Test func generateKeyDeclarations_latinKey_true() throws {
+    @Test func generateValueDeclarations_latin_true() throws {
         // Given
         let fonts: [Font] = Fixture.hangulFonts
         
         // When
-        let code = sut.generateKeyDeclarations(
-            for: KeyDeclarationRequest(
+        let code = sut.generateValueDeclarations(
+            for: ValueDeclarationRequest(
                 fonts: fonts,
                 resourceTypeName: "FontResource",
                 transformsToLatin: true,
@@ -179,13 +179,13 @@ private enum Fixture {
             """)
     }
     
-    @Test func generateKeyDeclarations_preservesRelativePath_true() throws {
+    @Test func generateValueDeclarations_preservesRelativePath_true() throws {
         // Given
         let fonts: [Font] = Fixture.fonts
         
         // When
-        let code = sut.generateKeyDeclarations(
-            for: KeyDeclarationRequest(
+        let code = sut.generateValueDeclarations(
+            for: ValueDeclarationRequest(
                 fonts: fonts,
                 resourceTypeName: "FontResource",
                 transformsToLatin: false,
@@ -226,13 +226,13 @@ private enum Fixture {
             """)
     }
     
-    @Test func generateKeyDeclarations_preservesRelativePath_false() throws {
+    @Test func generateValueDeclarations_preservesRelativePath_false() throws {
         // Given
         let fonts: [Font] = Fixture.fonts
         
         // When
-        let code = sut.generateKeyDeclarations(
-            for: KeyDeclarationRequest(
+        let code = sut.generateValueDeclarations(
+            for: ValueDeclarationRequest(
                 fonts: fonts,
                 resourceTypeName: "FontResource",
                 transformsToLatin: false,
@@ -273,13 +273,13 @@ private enum Fixture {
             """)
     }
     
-    @Test func generateKeyDeclarations_relativePathPrefix() throws {
+    @Test func generateValueDeclarations_relativePathPrefix() throws {
         // Given
         let fonts: [Font] = Fixture.fonts
         
         // When
-        let code = sut.generateKeyDeclarations(
-            for: KeyDeclarationRequest(
+        let code = sut.generateValueDeclarations(
+            for: ValueDeclarationRequest(
                 fonts: fonts,
                 resourceTypeName: "FontResource",
                 transformsToLatin: false,

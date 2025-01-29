@@ -1,6 +1,6 @@
 import Testing
 import SampleData
-@testable import FontKeyGen
+@testable import FontResourceGen
 
 @Suite struct FontLoaderTests {
     @Test func load_otf() throws {

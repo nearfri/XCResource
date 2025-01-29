@@ -1,6 +1,6 @@
 import Foundation
 import ArgumentParser
-import FontKeyGen
+import FontResourceGen
 import XCResourceUtil
 
 private let headerComment = """
@@ -64,8 +64,8 @@ struct FontsToSwift: ParsableCommand {
         try writeCodes(codes)
     }
     
-    private func generateCodes() throws -> FontKeyGenerator.Result {
-        let request = FontKeyGenerator.Request(
+    private func generateCodes() throws -> FontResourceGenerator.Result {
+        let request = FontResourceGenerator.Request(
             resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
             resourceTypeName: resourceTypeName,
             resourceListName: resourceListName,
@@ -76,10 +76,10 @@ struct FontsToSwift: ParsableCommand {
             bundle: bundle,
             accessLevel: accessLevel?.rawValue)
         
-        return try FontKeyGenerator().generate(for: request)
+        return try FontResourceGenerator().generate(for: request)
     }
     
-    private func writeCodes(_ codes: FontKeyGenerator.Result) throws {
+    private func writeCodes(_ codes: FontResourceGenerator.Result) throws {
         let tempFileURL = FileManager.default.makeTemporaryItemURL()
         var stream = try TextFileOutputStream(forWritingTo: tempFileURL)
         
@@ -91,11 +91,11 @@ struct FontsToSwift: ParsableCommand {
             print(codes.typeDeclaration, terminator: "\n\n", to: &stream)
         }
         
-        if let keyListDeclaration = codes.keyListDeclaration {
-            print(keyListDeclaration, terminator: "\n\n", to: &stream)
+        if let valueListDeclaration = codes.valueListDeclaration {
+            print(valueListDeclaration, terminator: "\n\n", to: &stream)
         }
         
-        print(codes.keyDeclarations, to: &stream)
+        print(codes.valueDeclarations, to: &stream)
         
         try stream.close()
         try FileManager.default.compareAndReplaceItem(at: swiftFilePath, withItemAt: tempFileURL)
