@@ -11,8 +11,15 @@ class SwiftLocalizationSourceCodeRewriter: LocalizationSourceCodeRewriter {
     ) -> String {
         var sourceFile = Parser.parse(source: sourceCode)
         
+        if !sourceFile.statements.containsImportDecl(name: "Foundation") {
+            let trailingTrivia = sourceFile.statements.isEmpty ? "" : "\n"
+            sourceFile.statements.insert(
+                .importDeclBlockItem(name: "Foundation", trailingTrivia: trailingTrivia),
+                at: sourceFile.statements.startIndex)
+        }
+        
         if !sourceFile.statements.containsExtensionDecl(name: resourceTypeName) {
-            sourceFile.statements.append(.emptyExtensionDeclBlockItem(typeName: resourceTypeName))
+            sourceFile.statements.append(.emptyExtensionDeclBlockItem(name: resourceTypeName))
         }
         
         let rewriter = SourceCodeRewriter(resourceTypeName: resourceTypeName, items: items)
@@ -22,6 +29,16 @@ class SwiftLocalizationSourceCodeRewriter: LocalizationSourceCodeRewriter {
 }
 
 private extension CodeBlockItemListSyntax {
+    func containsImportDecl(name: String) -> Bool {
+        return contains { codeBlockItem in
+            guard case let .decl(decl) = codeBlockItem.item,
+                  let importDecl = ImportDeclSyntax(decl)
+            else { return false }
+            
+            return importDecl.path.first?.name.text == name
+        }
+    }
+    
     func containsExtensionDecl(name: String) -> Bool {
         return contains { codeBlockItem in
             guard case let .decl(decl) = codeBlockItem.item,
@@ -35,11 +52,15 @@ private extension CodeBlockItemListSyntax {
 }
 
 private extension CodeBlockItemSyntax {
-    static func emptyExtensionDeclBlockItem(typeName: String) -> CodeBlockItemSyntax {
+    static func importDeclBlockItem(name: String, trailingTrivia: String) -> CodeBlockItemSyntax {
+        return "import \(raw: name)\(raw: trailingTrivia)"
+    }
+    
+    static func emptyExtensionDeclBlockItem(name: String) -> CodeBlockItemSyntax {
         return """
             
             
-            extension \(raw: typeName) {
+            extension \(raw: name) {
             }
             """
     }

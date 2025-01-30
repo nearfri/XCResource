@@ -79,7 +79,70 @@ import TestUtil
             """)
     }
     
-    @Test func rewrite_replaceItems_noExtension_insertNew() throws {
+    @Test func rewrite_replaceItems_noImportFoundation_insert() throws {
+        // Given
+        let originalSourceCode = """
+            import SwiftUI
+            
+            private class ResourceBundleClass {}
+            
+            extension CustomClass {
+                // custom code
+            }
+            
+            extension LocalizedStringResource {
+                /// Bold
+                static var bold: Self {
+                    .init("bold",
+                          defaultValue: "Bold",
+                          table: "TextSystem",
+                          bundle: .forClass(ResourceBundleClass.self))
+                }
+            }
+            
+            """
+        
+        let items: [LocalizationItem] = [
+            .init(key: "italic",
+                  defaultValue: "Italic",
+                  rawDefaultValue: "",
+                  table: "TextSystem",
+                  bundle: .forClass("ResourceBundleClass.self"),
+                  memberDeclaration: .property("italic")),
+        ]
+        
+        let sut = SwiftLocalizationSourceCodeRewriter()
+        
+        // When
+        let rewritedSourceCode = sut.rewrite(sourceCode: originalSourceCode,
+                                             with: items,
+                                             resourceTypeName: "LocalizedStringResource")
+        
+        // Then
+        #expect(rewritedSourceCode.description == """
+            import Foundation
+            import SwiftUI
+            
+            private class ResourceBundleClass {}
+            
+            extension CustomClass {
+                // custom code
+            }
+            
+            extension LocalizedStringResource {
+                /// Italic
+                static var italic: Self {
+                    .init("italic",
+                          defaultValue: "Italic",
+                          table: "TextSystem",
+                          bundle: .forClass(ResourceBundleClass.self))
+                }
+            }
+            
+            """)
+    }
+    
+    @Test func rewrite_replaceItems_noExtension_insert() throws {
         // Given
         let originalSourceCode = """
             import Foundation

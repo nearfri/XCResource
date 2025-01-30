@@ -39,10 +39,7 @@ private enum Fixture {
         
         let stringCatalogFileURL = resourcesURL.appendingPathComponent("Localizable.xcstrings")
         
-        let stringResourceFileURL = resourcesURL
-            .appendingPathComponent("SourceCode/LocalizedStringResource+.swift")
-        
-        let oldStringResources = try String(contentsOf: stringResourceFileURL, encoding: .utf8)
+        let stringResourceFileURL = makeUniqueURL()
         
         let fontResourceFileURL = makeUniqueURL()
         
@@ -58,6 +55,7 @@ private enum Fixture {
         
         defer {
             try? fm.removeItem(at: resourcesURL)
+            try? fm.removeItem(at: stringResourceFileURL)
             try? fm.removeItem(at: fontResourceFileURL)
             try? fm.removeItem(at: configurationFileURL)
         }
@@ -68,9 +66,7 @@ private enum Fixture {
         ])
         
         // Then
+        #expect(fm.fileExists(atPath: stringResourceFileURL.path))
         #expect(fm.fileExists(atPath: fontResourceFileURL.path))
-        
-        let newStringResources = try String(contentsOf: stringResourceFileURL, encoding: .utf8)
-        #expect(newStringResources != oldStringResources)
     }
 }

@@ -41,6 +41,33 @@ private enum Fixture {
         }
         """
     
+    static let initialNewSourceCode = """
+        import Foundation
+        
+        extension LocalizedStringResource {
+            /// \\"\\\\(param1)\\" will be deleted.\\
+            /// This action cannot be undone.
+            static func alertDeleteFile(_ param1: String) -> Self {
+                .init("alert_delete_file",
+                      defaultValue: \"\"\"
+                        \\"\\(param1)\\" will be deleted.
+                        This action cannot be undone.
+                        \"\"\",
+                      table: "CustomLocalizable",
+                      bundle: .forClass(BundleFinder.self))
+            }
+            
+            /// Cancel
+            static var cancel: Self {
+                .init("cancel",
+                      defaultValue: "Cancel",
+                      table: "CustomLocalizable",
+                      bundle: .forClass(BundleFinder.self))
+            }
+        }
+        
+        """
+    
     static let oldSourceCode = """
         import Foundation
         
@@ -89,7 +116,34 @@ private enum Fixture {
 }
 
 @Suite struct XCStringsToSwiftTests {
-    @Test func runAsRoot() throws {
+    @Test func runAsRoot_initial() throws {
+        // Given
+        let fm = FileManager.default
+        
+        let catalogURL = fm.temporaryDirectory.appendingPathComponent("CustomLocalizable.xcstrings")
+        
+        let sourceCodeURL = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        
+        try Fixture.catalog.write(to: catalogURL, atomically: false, encoding: .utf8)
+        
+        defer {
+            try? fm.removeItem(at: catalogURL)
+            try? fm.removeItem(at: sourceCodeURL)
+        }
+        
+        // When
+        try XCStringsToSwift.runAsRoot(arguments: [
+            "--catalog-path", catalogURL.path,
+            "--swift-file-path", sourceCodeURL.path,
+            "--bundle", "forClass:BundleFinder.self",
+        ])
+        
+        // Then
+        expectEqual(try String(contentsOf: sourceCodeURL, encoding: .utf8),
+                    Fixture.initialNewSourceCode)
+    }
+    
+    @Test func runAsRoot_update() throws {
         // Given
         let fm = FileManager.default
         
