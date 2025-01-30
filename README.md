@@ -4,7 +4,7 @@
 [![Platform Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnearfri%2FXCResource%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/nearfri/XCResource)
 [![codecov](https://codecov.io/gh/nearfri/XCResource/branch/main/graph/badge.svg?token=DWKDFE0O2A)](https://codecov.io/gh/nearfri/XCResource)
 
-**XCResource** is a tool that allows you to efficiently and safely manage resources (localized strings, fonts, files, etc.) in Xcode projects.
+**XCResource** is a tool that allows you to efficiently and safely manage resources (localized strings, fonts, files.) in Xcode projects.
 By automating code generation, it reduces typos and runtime errors.
 
 ## Features
