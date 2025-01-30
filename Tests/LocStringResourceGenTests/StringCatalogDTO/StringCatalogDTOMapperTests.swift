@@ -193,7 +193,32 @@ import Testing
         ])
     }
     
-    @Test func localizationItems_escaping() throws {
+    @Test func localizationItems_property_escaping() throws {
+        // Given
+        let dto = StringCatalogDTO(
+            version: "1.0",
+            sourceLanguage: "en",
+            strings: ["sample": StringDTO(localizations: [
+                "en": LocalizationDTO(
+                    stringUnit: StringUnitDTO(
+                        state: "translated",
+                        value: "double quotes: \"; backslash: \\"))
+            ])])
+        
+        // When
+        let items = try sut.localizationItems(from: dto)
+        
+        // Then
+        #expect(items == [
+            LocalizationItem(
+                key: "sample",
+                defaultValue: "double quotes: \\\"; backslash: \\\\",
+                rawDefaultValue: "double quotes: \\\"; backslash: \\\\",
+                memberDeclaration: .property("sample"))
+        ])
+    }
+    
+    @Test func localizationItems_method_escaping() throws {
         // Given
         let dto = StringCatalogDTO(
             version: "1.0",
@@ -202,7 +227,7 @@ import Testing
                 "en": LocalizationDTO(
                     stringUnit: StringUnitDTO(
                         state: "translated",
-                        value: "\"%@\" will be deleted."))
+                        value: "\"%@\" will be deleted. '\\' is called a backslash."))
             ])])
         
         // When
@@ -212,10 +237,88 @@ import Testing
         #expect(items == [
             LocalizationItem(
                 key: "alert_delete_file",
-                defaultValue: "\\\"\\(param1)\\\" will be deleted.",
-                rawDefaultValue: "\\\"%@\\\" will be deleted.",
+                defaultValue: "\\\"\\(param1)\\\" will be deleted. '\\\\' is called a backslash.",
+                rawDefaultValue: "\\\"%@\\\" will be deleted. '\\\\' is called a backslash.",
                 memberDeclaration: .method("alertDeleteFile", [
                     .init(firstName: "_", secondName: "param1", type: "String")
+                ]))
+        ])
+    }
+    
+    @Test func localizationItems_property_percentSign() throws {
+        // Given
+        let dto = StringCatalogDTO(
+            version: "1.0",
+            sourceLanguage: "en",
+            strings: ["orange_juice": StringDTO(localizations: [
+                "en": LocalizationDTO(
+                    stringUnit: StringUnitDTO(
+                        state: "translated",
+                        value: "100% orange juice"))
+            ])])
+        
+        // When
+        let items = try sut.localizationItems(from: dto)
+        
+        // Then
+        let item = try #require(items.first)
+        #expect(item.key == "orange_juice")
+        #expect(item.rawDefaultValue == "100% orange juice")
+        #expect(item.memberDeclaration.id == "orangeJuice")
+    }
+    
+    @Test func localizationItems_method_percentSign() throws {
+        // Given
+        let dto = StringCatalogDTO(
+            version: "1.0",
+            sourceLanguage: "en",
+            strings: ["juice": StringDTO(localizations: [
+                "en": LocalizationDTO(
+                    stringUnit: StringUnitDTO(
+                        state: "translated",
+                        value: "Hello, %@. This is 100%% %@ juice."))
+            ])])
+        
+        // When
+        let items = try sut.localizationItems(from: dto)
+        
+        // Then
+        #expect(items == [
+            LocalizationItem(
+                key: "juice",
+                defaultValue: "Hello, \\(param1). This is 100% \\(param2) juice.",
+                rawDefaultValue: "Hello, %@. This is 100%% %@ juice.",
+                memberDeclaration: .method("juice", [
+                    .init(firstName: "_", secondName: "param1", type: "String"),
+                    .init(firstName: "_", secondName: "param2", type: "String"),
+                ]))
+        ])
+    }
+    
+    @Test func localizationItems_method_percentSign_indexedParameters() throws {
+        // Given
+        let dto = StringCatalogDTO(
+            version: "1.0",
+            sourceLanguage: "en",
+            strings: ["sample": StringDTO(localizations: [
+                "en": LocalizationDTO(
+                    stringUnit: StringUnitDTO(
+                        state: "new",
+                        value: "percent: %%, str: %2$@, int: %1$lld"))
+            ])])
+        
+        // When
+        let items = try sut.localizationItems(from: dto)
+        
+        // Then
+        #expect(items == [
+            LocalizationItem(
+                key: "sample",
+                defaultValue: "\\(param1) \\(param2)\npercent: %%, str: %2$@, int: %1$lld",
+                rawDefaultValue: "percent: %%, str: %2$@, int: %1$lld",
+                memberDeclaration: .method("sample", [
+                    LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "Int"),
+                    LocalizationItem.Parameter(firstName: "_", secondName: "param2", type: "String")
                 ]))
         ])
     }

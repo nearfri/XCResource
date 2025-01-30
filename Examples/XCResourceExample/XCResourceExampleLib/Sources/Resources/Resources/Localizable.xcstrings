@@ -259,6 +259,23 @@
         }
       }
     },
+    "task_progress" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "The task is %.2lf%% complete."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "작업이 %.2lf%% 완료되었습니다."
+          }
+        }
+      }
+    },
     "text_bold" : {
       "localizations" : {
         "en" : {

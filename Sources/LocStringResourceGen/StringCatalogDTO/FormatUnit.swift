@@ -3,21 +3,23 @@ import Strix
 import StrixParsers
 
 struct FormatUnit: Equatable, Sendable {
-    var placeholder: FormatPlaceholder
+    var specifier: FormatSpecifier
     var range: Range<String.Index>
     
-    func applying(
-        _ substitution: SubstitutionDTO,
-        using parser: Parser<FormatPlaceholder>
-    ) throws -> FormatUnit {
-        let substitutionPlaceholder = try parser.run(substitution.formatSpecifier)
-        
-        var result = self
-        result.placeholder.index = substitution.argNum ?? placeholder.index
-        result.placeholder.length = substitutionPlaceholder.length
-        result.placeholder.conversion = substitutionPlaceholder.conversion
-        
-        return result
+    var placeholder: FormatPlaceholder? {
+        switch specifier {
+        case .percentSign:
+            return nil
+        case .placeholder(let placeholder):
+            return placeholder
+        }
+    }
+}
+
+extension FormatUnit {
+    init(placeholder: FormatPlaceholder, range: Range<String.Index>) {
+        self.specifier = .placeholder(placeholder)
+        self.range = range
     }
 }
 
@@ -37,9 +39,9 @@ private struct ParserGenerator {
         
         return Parser.many(.attempt(formatSpecifier) <|> anyCharacter).map { specInfos in
             return specInfos.compactMap { specInfo in
-                if case let .placeholder(placeholder) = specInfo.specifier {
+                if let specifier = specInfo.specifier {
                     let range = specInfo.substring.startIndex..<specInfo.substring.endIndex
-                    return FormatUnit(placeholder: placeholder, range: range)
+                    return FormatUnit(specifier: specifier, range: range)
                 }
                 return nil
             }
