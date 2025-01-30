@@ -41,9 +41,9 @@ Supported paths for the configuration file:
 - `${PROJECT_DIR}/Scripts/xcresource.json`
 
 ### 2. Managing Localized Strings
-https://github.com/user-attachments/assets/ce0122be-e0c5-42b6-abf6-4d1d8e0dcf4d
+https://github.com/user-attachments/assets/16073e8f-9ad9-4e9c-b945-d542efd656f7
 
-#### Example Configuration (`xcresource.json`)  
+#### Configuration (`xcresource.json`)  
 ```json
 {
     "commands": [
@@ -57,7 +57,7 @@ https://github.com/user-attachments/assets/ce0122be-e0c5-42b6-abf6-4d1d8e0dcf4d
 }
 ```
 
-#### Example of Generated Code
+#### Generated Code
 ```swift
 public extension LocalizedStringResource {
     /// \"\\(param1)\" will be deleted.\
@@ -81,15 +81,15 @@ public extension LocalizedStringResource {
 ```
 *(Function names and parameter names can be customized if they match the localization key and function signature.)*
 
-#### Usage Example
+#### Usage
 ```swift
 let string = String(localized: .commonDone)
 ```
 
 ### 3. Font Code Generation
-https://github.com/user-attachments/assets/83990542-0d9a-4c12-8f3f-74c47b8fe381
+https://github.com/user-attachments/assets/ae09a571-3ee8-450e-84c2-39341fe203d2
 
-#### Example Configuration (`xcresource.json`)  
+#### Configuration (`xcresource.json`)  
 ```json
 {
     "commands": [
@@ -109,7 +109,7 @@ https://github.com/user-attachments/assets/83990542-0d9a-4c12-8f3f-74c47b8fe381
 }
 ```
 
-#### Example of Generated Code
+#### Generated Code
 ```swift
 public struct FontResource: Hashable, Sendable {
     public let fontName: String
@@ -151,14 +151,14 @@ public extension FontResource {
 }
 ```
 
-#### Usage Example
+#### Usage
 ```swift
 Font.custom(.openSansBold, size: 16)
 ```
 
 ### 4. File Code Generation
 
-#### Example Configuration (`xcresource.json`)  
+#### Configuration (`xcresource.json`)  
 ```json
 {
     "commands": [
@@ -177,7 +177,7 @@ Font.custom(.openSansBold, size: 16)
 }
 ```
 
-#### Example of Generated Code
+#### Generated Code
 ```swift
 public struct LottieResource: Hashable, Sendable {
     public let relativePath: String
@@ -192,7 +192,7 @@ extension LottieResource {
 }
 ```
 
-#### Usage Example
+#### Usage
 ```swift
 LottieView(.hello)
 ```
