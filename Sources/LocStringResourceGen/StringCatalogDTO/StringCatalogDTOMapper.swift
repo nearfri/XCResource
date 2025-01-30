@@ -107,18 +107,22 @@ struct StringCatalogDTOMapper {
         let formatUnits = try formatUnitsParser.run(dto.escapedValue)
         
         let substitutedFormatUnits = try formatUnits.map { formatUnit in
-            guard let variableName = formatUnit.placeholder.variableName,
+            guard let placeholder = formatUnit.placeholder,
+                  let variableName = placeholder.variableName,
                   let substitution = substitutions[variableName]
             else { return formatUnit }
             
-            return try formatUnit.applying(substitution, using: formatPlaceholderParser)
+            let substitutedPlaceholder = try placeholder.applying(substitution,
+                                                                  using: formatPlaceholderParser)
+            
+            return FormatUnit(placeholder: substitutedPlaceholder, range: formatUnit.range)
         }
         
-        let formatUnitComparator = KeyPathComparator(\FormatUnit.placeholder.index)
+        let formatUnitComparator = KeyPathComparator(\FormatUnit.placeholder?.index)
         let sortedFormatUnits = substitutedFormatUnits.sorted(using: formatUnitComparator)
         
         return FormatInfo(substitutedFormatUnits: substitutedFormatUnits,
-                              sortedFormatUnits: sortedFormatUnits)
+                          sortedFormatUnits: sortedFormatUnits)
     }
     
     private func defaultValue(from dto: StringUnitDTO, formatInfo: FormatInfo) -> String {
@@ -127,24 +131,36 @@ struct StringCatalogDTOMapper {
         
         if sortedFormatUnits == substitutedFormatUnits {
             var result = dto.escapedValue
-            for index in substitutedFormatUnits.indices.reversed() {
-                let formatUnit = substitutedFormatUnits[index]
-                let variableName = formatUnit.placeholder.variableName ?? "param\(index + 1)"
-                result.replaceSubrange(formatUnit.range, with: "\\(\(variableName))")
+            var paramIndex = substitutedFormatUnits.count(where: { $0.placeholder != nil })
+            
+            for formatUnit in substitutedFormatUnits.reversed() {
+                switch formatUnit.specifier {
+                case .percentSign:
+                    result.replaceSubrange(formatUnit.range, with: "%")
+                case .placeholder(let placeholder):
+                    let variableName = placeholder.variableName ?? "param\(paramIndex)"
+                    result.replaceSubrange(formatUnit.range, with: "\\(\(variableName))")
+                    paramIndex -= 1
+                }
             }
+            
             return result.replacing(.newlineSequence, with: "\n")
         } else {
-            let interpolations = sortedFormatUnits.enumerated().map { index, formatUnit in
-                let variableName = formatUnit.placeholder.variableName ?? "param\(index + 1)"
-                return "\\(\(variableName))"
-            }
+            let interpolations = sortedFormatUnits
+                .compactMap(\.placeholder)
+                .enumerated()
+                .map { index, placeholder in
+                    let variableName = placeholder.variableName ?? "param\(index + 1)"
+                    return "\\(\(variableName))"
+                }
+            
             return "\(interpolations.joined(separator: " "))\n\(dto.escapedValue)"
                 .replacing(.newlineSequence, with: "\n")
         }
     }
     
     private func methodParameters(from formatUnits: [FormatUnit]) -> [LocalizationItem.Parameter] {
-        return formatUnits.map(\.placeholder).enumerated().map { index, placeholder in
+        return formatUnits.compactMap(\.placeholder).enumerated().map { index, placeholder in
             let firstName = placeholder.variableName ?? "_"
             let secondName = placeholder.variableName == nil ? "param\(index + 1)" : nil
             let type = String(formatPlaceholder: placeholder)

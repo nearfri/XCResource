@@ -97,6 +97,13 @@ public extension LocalizedStringResource {
               bundle: .atURL(Bundle.module.bundleURL))
     }
     
+    /// The task is \\(fractionCompleted, specifier: "%.2lf")% complete.
+    static func taskProgress(fractionCompleted: Double) -> Self {
+        .init("task_progress",
+              defaultValue: "The task is \(fractionCompleted, specifier: "%.2lf")% complete.",
+              bundle: .atURL(Bundle.module.bundleURL))
+    }
+    
     /// Bold
     static var textBold: Self {
         .init("text_bold",
