@@ -3,6 +3,6 @@ import SwiftUI
 
 public extension Color {
     init(key: ColorKey) {
-        self.init(key.rawValue, bundle: .module)
+        self.init(key.name, bundle: key.bundle)
     }
 }

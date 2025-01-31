@@ -67,19 +67,19 @@ public struct ContentView: View {
             TextStyleData(
                 isOn: $isBold,
                 title: .textBold,
-                imageKey: .textFormattingBold),
+                imageKey: .Style.textFormattingBold),
             TextStyleData(
                 isOn: $isItalic,
                 title: .textItalic,
-                imageKey: .textFormattingItalic),
+                imageKey: .Style.textFormattingItalic),
             TextStyleData(
                 isOn: $isUnderline,
                 title: .textUnderline,
-                imageKey: .textFormattingUnderline),
+                imageKey: .Style.textFormattingUnderline),
             TextStyleData(
                 isOn: $isStrikethrough,
                 title: .textStrikethrough,
-                imageKey: .textFormattingStrikethrough),
+                imageKey: .Style.textFormattingStrikethrough),
         ]
     }
 }

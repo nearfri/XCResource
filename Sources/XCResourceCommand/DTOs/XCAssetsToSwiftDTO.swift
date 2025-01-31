@@ -9,6 +9,7 @@ struct XCAssetsToSwiftDTO: CommandDTO {
     var assetTypes: [String]?
     var swiftFilePath: String
     var resourceTypeName: String
+    var bundle: String?
     var accessLevel: String?
     var excludesTypeDeclaration: Bool?
     
@@ -39,6 +40,7 @@ struct XCAssetsToSwiftDTO: CommandDTO {
         command.assetTypes = assetTypes ?? Default.assetTypes
         command.swiftFilePath = swiftFilePath
         command.resourceTypeName = resourceTypeName
+        command.bundle = bundle ?? Default.bundle
         command.accessLevel = accessLevel
         command.excludesTypeDeclaration = excludesTypeDeclaration ?? Default.excludesTypeDeclaration
         

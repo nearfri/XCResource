@@ -44,6 +44,7 @@ $(IMAGEKEY_FILE): $(ASSET_CONTENTS_FILES)
 	--asset-type imageset \
 	--swift-file-path $@ \
 	--resource-type-name $(IMAGEKEY_NAME) \
+	--bundle Bundle.module \
 	--access-level public
 	
 	@touch $@
@@ -57,6 +58,7 @@ $(COLORKEY_FILE): $(ASSET_CONTENTS_FILES)
 	--asset-type colorset \
 	--swift-file-path $@ \
 	--resource-type-name $(COLORKEY_NAME) \
+	--bundle Bundle.module \
 	--access-level public
 	
 	@touch $@

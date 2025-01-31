@@ -10,7 +10,7 @@ extension Config {
         // MARK: - Run
         
         mutating func run() throws {
-            let fileURL = URL(fileURLWithPath: Run.Default.configurationPath)
+            let fileURL = URL(filePath: Run.Default.configurationPath)
             
             print("Creating configuration file: \(fileURL.lastPathComponent)")
             

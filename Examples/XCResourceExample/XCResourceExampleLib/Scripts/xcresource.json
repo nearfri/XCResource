@@ -8,6 +8,7 @@
             "assetTypes": ["imageset"],
             "swiftFilePath": "Sources/Resources/ResourceAccess/ImageKey.swift",
             "resourceTypeName": "ImageKey",
+            "bundle": "Bundle.module",
             "accessLevel": "public"
         },
         {
@@ -18,6 +19,7 @@
             "assetTypes": ["colorset"],
             "swiftFilePath": "Sources/Resources/ResourceAccess/ColorKey.swift",
             "resourceTypeName": "ColorKey",
+            "bundle": "Bundle.module",
             "accessLevel": "public"
         },
         {

@@ -8,7 +8,7 @@ import SampleData
         let url = SampleData.assetURL()
         
         // When
-        let root = try ContentTreeGenerator().load(at: url)
+        let root = try DefaultContentTreeGenerator().load(at: url)
         
         // Then
         #expect(root.isRoot)
@@ -23,7 +23,7 @@ import SampleData
         let url = SampleData.assetURL()
         
         // When
-        let root = try ContentTreeGenerator().load(at: url)
+        let root = try DefaultContentTreeGenerator().load(at: url)
         let c1 = try #require(root.children.first(where: { $0.element.name == "Places" }))
         let c2 = try #require(c1.children.first(where: { $0.element.name == "Dot" }))
         
@@ -49,7 +49,7 @@ import SampleData
         let url = SampleData.assetURL()
         
         // When
-        let root = try ContentTreeGenerator().load(at: url)
+        let root = try DefaultContentTreeGenerator().load(at: url)
         let folder = try #require(root.children.first(where: { $0.element.name == "Settings" }))
         let image = try #require(folder.children.first(where: { $0.element.name == "settings" }))
         
@@ -65,7 +65,7 @@ import SampleData
         let url = SampleData.assetURL()
         
         // When
-        let root = try ContentTreeGenerator().load(at: url)
+        let root = try DefaultContentTreeGenerator().load(at: url)
         let folder = try #require(root.children.first(where: { $0.element.name == "Color" }))
         let color = try #require(folder.children.first(where: { $0.element.name == "blush" }))
         

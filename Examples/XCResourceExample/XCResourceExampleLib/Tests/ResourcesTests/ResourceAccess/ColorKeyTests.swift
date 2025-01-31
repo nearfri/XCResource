@@ -8,8 +8,8 @@ struct ColorKeyTests {
         ]
         
         for key in keys {
-            #expect(NativeColor(named: key.rawValue, in: .module) != nil,
-                    "\(key.rawValue) color not found")
+            #expect(NativeColor(named: key.name, in: key.bundle) != nil,
+                    "\(key.name) color not found")
         }
     }
 }

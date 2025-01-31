@@ -18,7 +18,7 @@ struct ValueDeclarationRequest {
 }
 
 protocol ValueDeclarationGenerator: AnyObject {
-    func generateValueDeclarations(for request: ValueDeclarationRequest) -> String
+    func generate(for request: ValueDeclarationRequest) -> String
 }
 
 extension FileResourceGenerator {
@@ -97,8 +97,7 @@ public class FileResourceGenerator {
             bundle: request.bundle,
             accessLevel: request.accessLevel)
         
-        let valueDeclarations = valueDeclarationGenerator
-            .generateValueDeclarations(for: valueRequest)
+        let valueDeclarations = valueDeclarationGenerator.generate(for: valueRequest)
         
         return Result(typeDeclaration: typeDeclaration,
                       valueDeclarations: valueDeclarations)

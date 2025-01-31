@@ -1,5 +1,4 @@
 import Foundation
-import System
 import XCResourceUtil
 
 struct Font: Equatable, Sendable, SettableByKeyPath {
