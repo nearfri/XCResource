@@ -1,6 +1,6 @@
 import Foundation
 
-class ContentTreeGenerator {
+class DefaultContentTreeGenerator: ContentTreeGenerator {
     func load(at url: URL) throws -> ContentTree {
         return try ContentTreeGeneratorCore(url: url).load()
     }

@@ -27,7 +27,7 @@ private enum Fixture {
     private let sut: DefaultValueDeclarationGenerator = .init()
     
     @Test func generateValueDeclarations_preservesRelativePath_true() throws {
-        let code = sut.generateValueDeclarations(
+        let code = sut.generate(
             for: ValueDeclarationRequest(
                 fileTree: Fixture.fileTree(),
                 resourceTypeName: "FileResource",
@@ -56,7 +56,7 @@ private enum Fixture {
     }
     
     @Test func generateValueDeclarations_preservesRelativePath_false() throws {
-        let code = sut.generateValueDeclarations(
+        let code = sut.generate(
             for: ValueDeclarationRequest(
                 fileTree: Fixture.fileTree(),
                 resourceTypeName: "FileResource",
@@ -83,7 +83,7 @@ private enum Fixture {
     }
     
     @Test func generateValueDeclarations_relativePathPrefix() throws {
-        let code = sut.generateValueDeclarations(
+        let code = sut.generate(
             for: ValueDeclarationRequest(
                 fileTree: Fixture.fileTree(),
                 resourceTypeName: "FileResource",

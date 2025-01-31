@@ -1,18 +1,31 @@
 import Testing
+import Foundation
 import TestUtil
 @testable import AssetResourceGen
 
 private enum Fixture {
-    static let catalog = AssetCatalog(
-        name: "Media.xcassets",
-        assets: [
-            Asset(name: "buttonSelect",
-                  path: "Common/Buttons/buttonSelect.imageset",
-                  type: .imageSet),
-            Asset(name: "checkIcon",
-                  path: "Common/Icons/checkIcon.imageset",
-                  type: .imageSet)
+    static var contentTree: ContentTree {
+        ContentTree(Content(url: URL(filePath: "Media.xcassets"), type: .group), children: [
+            ContentTree(
+                Content(
+                    url: URL(filePath: "Media.xcassets/Buttons"),
+                    type: .group,
+                    providesNamespace: true),
+                children: [
+                    ContentTree(Content(url: URL(filePath: "Media.xcassets/Buttons/done.imageset"),
+                                        type: .asset(.imageSet)))
+                ]),
+            ContentTree(
+                Content(
+                    url: URL(filePath: "Media.xcassets/Icons"),
+                    type: .group,
+                    providesNamespace: false),
+                children: [
+                    ContentTree(Content(url: URL(filePath: "Media.xcassets/Icons/check.imageset"),
+                                        type: .asset(.imageSet)))
+                ]),
         ])
+    }
 }
 
 @Suite struct DefaultValueDeclarationGeneratorTests {
@@ -22,20 +35,25 @@ private enum Fixture {
         // MARK: - Media.xcassets
         
         extension ImageKey {
-            // MARK: Common/Buttons
-            static let buttonSelect: ImageKey = "buttonSelect"
+            enum Buttons {
+                static let done: ImageKey = .init(
+                    name: "Buttons/done",
+                    bundle: Bundle.main)
+            }
             
-            // MARK: Common/Icons
-            static let checkIcon: ImageKey = "checkIcon"
+            static let check: ImageKey = .init(
+                name: "check",
+                bundle: Bundle.main)
         }
         """
         
         let sut = DefaultValueDeclarationGenerator()
         
         // When
-        let actualDeclarations = sut.generate(catalog: Fixture.catalog,
-                                              resourceTypeName: "ImageKey",
-                                              accessLevel: nil)
+        let actualDeclarations = sut.generate(for: ValueDeclarationRequest(
+            contentTree: Fixture.contentTree,
+            resourceTypeName: "ImageKey",
+            bundle: "Bundle.main"))
         
         // Then
         expectEqual(actualDeclarations, expectedDeclarations)
@@ -46,21 +64,27 @@ private enum Fixture {
         let expectedDeclarations = """
         // MARK: - Media.xcassets
         
-        public extension ImageKey {
-            // MARK: Common/Buttons
-            static let buttonSelect: ImageKey = "buttonSelect"
+        extension ImageKey {
+            public enum Buttons {
+                public static let done: ImageKey = .init(
+                    name: "Buttons/done",
+                    bundle: Bundle.main)
+            }
             
-            // MARK: Common/Icons
-            static let checkIcon: ImageKey = "checkIcon"
+            public static let check: ImageKey = .init(
+                name: "check",
+                bundle: Bundle.main)
         }
         """
         
         let sut = DefaultValueDeclarationGenerator()
         
         // When
-        let actualDeclarations = sut.generate(catalog: Fixture.catalog,
-                                              resourceTypeName: "ImageKey",
-                                              accessLevel: "public")
+        let actualDeclarations = sut.generate(for: ValueDeclarationRequest(
+            contentTree: Fixture.contentTree,
+            resourceTypeName: "ImageKey",
+            bundle: "Bundle.main",
+            accessLevel: "public"))
         
         // Then
         expectEqual(actualDeclarations, expectedDeclarations)

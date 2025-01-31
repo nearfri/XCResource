@@ -2,12 +2,15 @@ import Testing
 import Foundation
 @testable import AssetResourceGen
 
-private class StubAssetCatalogImporter: AssetCatalogImporter {
-    func `import`(at url: URL) throws -> AssetCatalog {
-        return AssetCatalog(name: "", assets: [
-            Asset(name: "image", path: "Images", type: .imageSet),
-            Asset(name: "color", path: "Colors", type: .colorSet),
-            Asset(name: "symbol", path: "Symbols", type: .symbolSet),
+private class StubContentTreeGenerator: ContentTreeGenerator {
+    var loadCalledCount = 0
+    
+    func load(at url: URL) throws -> ContentTree {
+        loadCalledCount += 1
+        
+        return ContentTree(try Content(url: url), children: [
+            ContentTree(try Content(url: URL(filePath: "image\(loadCalledCount).imageset"))),
+            ContentTree(try Content(url: URL(filePath: "color\(loadCalledCount).colorset"))),
         ])
     }
 }
@@ -21,13 +24,12 @@ private class StubTypeDeclarationGenerator: TypeDeclarationGenerator {
 }
 
 private class StubValueDeclarationGenerator: ValueDeclarationGenerator {
-    static let declarationsString = "{ Key Declaration }"
+    static let declarationsString = "{ Value Declarations }"
     
-    var generateParamCatalogs: [AssetCatalog] = []
+    var generateParamContentTree: ContentTree?
     
-    func generate(catalog: AssetCatalog, resourceTypeName: String, accessLevel: String?) -> String {
-        generateParamCatalogs.append(catalog)
-        
+    func generate(for request: ValueDeclarationRequest) -> String {
+        generateParamContentTree = request.contentTree
         return Self.declarationsString
     }
 }
@@ -39,13 +41,14 @@ private class StubValueDeclarationGenerator: ValueDeclarationGenerator {
         assetCatalogURLs: [URL(filePath: "a"), URL(filePath: "b")],
         assetTypes: [.imageSet],
         resourceTypeName: "ImageKey",
+        bundle: "Bundle.main",
         accessLevel: nil)
     
     private let sut: AssetResourceGenerator
     
     init() {
         sut = AssetResourceGenerator(
-            catalogImporter: StubAssetCatalogImporter(),
+            contentTreeGenerator: StubContentTreeGenerator(),
             typeDeclarationGenerator: StubTypeDeclarationGenerator(),
             valueDeclarationGenerator: valueDeclarationGenerator)
     }
@@ -68,9 +71,15 @@ private class StubValueDeclarationGenerator: ValueDeclarationGenerator {
     @Test func generate_filterAsset() throws {
         // When
         _ = try sut.generate(for: request)
-        let allAssets = valueDeclarationGenerator.generateParamCatalogs.flatMap({ $0.assets })
+        
+        let contentTree = try #require(valueDeclarationGenerator.generateParamContentTree)
         
         // Then
-        #expect(allAssets.allSatisfy({ $0.type == .imageSet }))
+        #expect(contentTree.makePreOrderSequence().allSatisfy({
+            switch $0.element.type {
+            case .group: return true
+            case .asset(let assetType): return assetType == .imageSet
+            }
+        }))
     }
 }

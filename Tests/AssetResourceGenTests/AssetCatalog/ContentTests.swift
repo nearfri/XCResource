@@ -1,4 +1,5 @@
 import Testing
+import Foundation
 import SampleData
 @testable import AssetResourceGen
 
@@ -53,5 +54,27 @@ import SampleData
         #expect(content.type == .asset(.colorSet))
         #expect(content.providesNamespace == false)
         #expect(content.name == "battleshipGrey8")
+    }
+    
+    @Test func namespace() throws {
+        // Given
+        let url = URL(filePath: "/root/tmp")
+        
+        // When
+        let sut = try Content(url: url)
+        
+        // Then
+        #expect(sut.namespace == "Tmp")
+    }
+    
+    @Test func identifier() throws {
+        // Given
+        let url = SampleData.assetURL("Color/battleshipGrey8.colorset")
+        
+        // When
+        let sut = try Content(url: url)
+        
+        // Then
+        #expect(sut.identifier == "battleshipGrey8")
     }
 }

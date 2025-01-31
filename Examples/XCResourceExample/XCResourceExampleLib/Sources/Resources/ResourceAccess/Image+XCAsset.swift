@@ -3,10 +3,10 @@ import SwiftUI
 
 public extension Image {
     init(key: ImageKey) {
-        self.init(key.rawValue, bundle: .module)
+        self.init(key.name, bundle: key.bundle)
     }
     
     init(key: ImageKey, label: Text) {
-        self.init(key.rawValue, bundle: .module, label: label)
+        self.init(key.name, bundle: key.bundle, label: label)
     }
 }

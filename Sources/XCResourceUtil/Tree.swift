@@ -20,6 +20,20 @@ public class Tree<Element> {
         children.append(child)
         child.parent = self
     }
+    
+    public func filter(_ isIncluded: (Element) throws -> Bool) rethrows -> Tree<Element>? {
+        if try isIncluded(element) {
+            return self
+        }
+        
+        let newChildren: [Tree<Element>] = try children.reduce(into: []) { partialResult, child in
+            if let filteredChild = try child.filter(isIncluded) {
+                partialResult.append(filteredChild)
+            }
+        }
+        
+        return newChildren.isEmpty ? nil : Tree(element, children: newChildren)
+    }
 }
 
 extension Tree: Hashable {

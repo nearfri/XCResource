@@ -1,7 +1,7 @@
 import Foundation
 
 class DefaultValueDeclarationGenerator: ValueDeclarationGenerator {
-    func generateValueDeclarations(for request: ValueDeclarationRequest) -> String {
+    func generate(for request: ValueDeclarationRequest) -> String {
         return ValueDeclarationGeneratorCore(request: request).generate()
     }
 }
@@ -57,9 +57,7 @@ private class ValueDeclarationGeneratorCore {
     }
     
     private func writeSubtree(_ subtree: FileTree) {
-        let namespace = subtree.filenameToNamespace()
-        
-        result += "\(indent)\(accessLevel)enum \(namespace) {\n"
+        result += "\(indent)\(accessLevel)enum \(subtree.namespace) {\n"
         indentLevel += 1
         
         for (index, child) in subtree.children.enumerated() {
@@ -71,7 +69,7 @@ private class ValueDeclarationGeneratorCore {
     }
     
     private func writeLeaf(_ leaf: FileTree) {
-        let id = leaf.filenameToIdentifier()
+        let id = leaf.identifier
         
         result += "\(indent)\(accessLevel)static let \(id): \(request.resourceTypeName) = .init(\n"
         

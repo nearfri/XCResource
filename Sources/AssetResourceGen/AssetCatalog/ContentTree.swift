@@ -4,29 +4,40 @@ import XCResourceUtil
 typealias ContentTree = Tree<Content>
 
 extension ContentTree {
-    var fullName: String {
-        return namespace.appendingPathComponent(element.name)
+    var type: ContentType {
+        return element.type
+    }
+    
+    var providesNamespace: Bool {
+        return element.providesNamespace
     }
     
     var namespace: String {
-        guard let parent else { return "" }
-        
-        guard parent.element.providesNamespace else {
-            return parent.namespace
-        }
-        return parent.namespace.appendingPathComponent(parent.element.name)
+        return element.namespace
     }
     
-    var relativePath: String {
-        guard let parent else { return "" }
-        
-        return parent.relativePath.appendingPathComponent(element.url.lastPathComponent)
+    var identifier: String {
+        return element.identifier
     }
-}
-
-extension ContentTree {
-    func toAsset() -> Asset? {
-        guard case .asset(let assetType) = element.type else { return nil }
-        return Asset(name: fullName, path: relativePath, type: assetType)
+    
+    var name: String {
+        return (ancestorNamespaces + [element.name]).joined(separator: "/")
+    }
+    
+    private var ancestorNamespaces: [String] {
+        guard let parent else { return [] }
+        
+        return parent.ancestorNamespaces + (parent.providesNamespace ? [parent.element.name] : [])
+    }
+    
+    func filter(matching assetTypes: Set<AssetType>) -> ContentTree? {
+        return filter { element in
+            switch element.type {
+            case .group:
+                return false
+            case .asset(let assetType):
+                return assetTypes.contains(assetType)
+            }
+        }
     }
 }

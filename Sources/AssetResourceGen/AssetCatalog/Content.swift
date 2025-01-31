@@ -1,4 +1,5 @@
 import Foundation
+import XCResourceUtil
 
 enum ContentType: Hashable, Sendable {
     case group
@@ -33,6 +34,14 @@ struct Content: Sendable {
         } else {
             return url.deletingPathExtension().lastPathComponent
         }
+    }
+    
+    var namespace: String {
+        return url.lastPathComponent.toTypeIdentifier()
+    }
+    
+    var identifier: String {
+        return url.deletingPathExtension().lastPathComponent.toIdentifier()
     }
 }
 
