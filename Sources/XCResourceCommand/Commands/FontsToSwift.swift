@@ -66,7 +66,7 @@ struct FontsToSwift: ParsableCommand {
     
     private func generateCodes() throws -> FontResourceGenerator.Result {
         let request = FontResourceGenerator.Request(
-            resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
+            resourcesURL: URL(filePath: resourcesPath, expandingTilde: true),
             resourceTypeName: resourceTypeName,
             resourceListName: resourceListName,
             transformsToLatin: transformsToLatin,

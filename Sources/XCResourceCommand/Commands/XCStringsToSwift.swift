@@ -38,8 +38,8 @@ struct XCStringsToSwift: ParsableCommand {
     }
     
     private func generateCode() throws -> String {
-        let catalogFileURL = URL(fileURLWithExpandingTildeInPath: catalogPath)
-        let swiftFileURL = URL(fileURLWithExpandingTildeInPath: swiftFilePath)
+        let catalogFileURL = URL(filePath: catalogPath, expandingTilde: true)
+        let swiftFileURL = URL(filePath: swiftFilePath, expandingTilde: true)
         
         let catalogFileContents = try String(contentsOf: catalogFileURL, encoding: .utf8)
         let table = catalogFileURL.deletingPathExtension().lastPathComponent

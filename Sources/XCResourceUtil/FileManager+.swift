@@ -11,7 +11,7 @@ extension FileManager {
     
     public func compareAndReplaceItem(at originalItemPath: String,
                                       withItemAt newItemURL: URL) throws {
-        let originalItemURL = URL(fileURLWithExpandingTildeInPath: originalItemPath)
+        let originalItemURL = URL(filePath: originalItemPath, expandingTilde: true)
         try compareAndReplaceItem(at: originalItemURL, withItemAt: newItemURL)
     }
     

@@ -39,7 +39,7 @@ extension Config {
         
         private func determineConfigurationFileURL() -> URL {
             if configurationPath != Default.configurationPath {
-                return URL(fileURLWithExpandingTildeInPath: configurationPath)
+                return URL(filePath: configurationPath, expandingTilde: true)
             }
             
             let fm = FileManager.default
@@ -52,13 +52,13 @@ extension Config {
             ]
             
             for candidate in candidates {
-                let candidateURL = URL(fileURLWithExpandingTildeInPath: candidate)
+                let candidateURL = URL(filePath: candidate, expandingTilde: true)
                 if fm.fileExists(atPath: candidateURL.path(percentEncoded: false)) {
                     return candidateURL
                 }
             }
             
-            return URL(fileURLWithExpandingTildeInPath: Default.configurationPath)
+            return URL(filePath: Default.configurationPath, expandingTilde: true)
         }
         
         private func decoder() -> JSONDecoder {

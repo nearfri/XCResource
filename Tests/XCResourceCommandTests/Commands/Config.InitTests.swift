@@ -7,7 +7,7 @@ import Foundation
         // Given
         let fm = FileManager.default
         
-        let configurationFileURL = URL(fileURLWithPath: "./xcresource.json")
+        let configurationFileURL = URL(filePath: "./xcresource.json")
         
         defer {
             try? fm.removeItem(at: configurationFileURL)

@@ -7,17 +7,17 @@ import Foundation
         // Given
         let root = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "root"),
+                url: URL(filePath: "root"),
                 type: .group,
                 providesNamespace: false))
         let child = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "child"),
+                url: URL(filePath: "child"),
                 type: .group,
                 providesNamespace: false))
         let grandchild = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "grandchild.imageset"),
+                url: URL(filePath: "grandchild.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
         
@@ -34,17 +34,17 @@ import Foundation
         // Given
         let root = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "root"),
+                url: URL(filePath: "root"),
                 type: .group,
                 providesNamespace: true))
         let child = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "child"),
+                url: URL(filePath: "child"),
                 type: .group,
                 providesNamespace: false))
         let grandchild = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "grandchild.imageset"),
+                url: URL(filePath: "grandchild.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
         
@@ -61,17 +61,17 @@ import Foundation
         // Given
         let root = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "root"),
+                url: URL(filePath: "root"),
                 type: .group,
                 providesNamespace: false))
         let child = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "child"),
+                url: URL(filePath: "child"),
                 type: .group,
                 providesNamespace: true))
         let grandchild = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "grandchild.imageset"),
+                url: URL(filePath: "grandchild.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
         
@@ -88,17 +88,17 @@ import Foundation
         // Given
         let root = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "root"),
+                url: URL(filePath: "root"),
                 type: .group,
                 providesNamespace: true))
         let child = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "child"),
+                url: URL(filePath: "child"),
                 type: .group,
                 providesNamespace: true))
         let grandchild = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "grandchild.imageset"),
+                url: URL(filePath: "grandchild.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
         
@@ -115,17 +115,17 @@ import Foundation
         // Given
         let root = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "root"),
+                url: URL(filePath: "root"),
                 type: .group,
                 providesNamespace: false))
         let child = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "child"),
+                url: URL(filePath: "child"),
                 type: .group,
                 providesNamespace: false))
         let grandchild = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "grandchild.imageset"),
+                url: URL(filePath: "grandchild.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
         
@@ -138,11 +138,39 @@ import Foundation
         #expect(grandchild.relativePath == "child/grandchild.imageset")
     }
     
+//    @Test func filter() async throws {
+//        // Given
+//        let root = ContentTree(
+//            Content(
+//                url: URL(filePath: "root"),
+//                type: .group,
+//                providesNamespace: false))
+//        let child = ContentTree(
+//            Content(
+//                url: URL(filePath: "child"),
+//                type: .group,
+//                providesNamespace: false))
+//        let grandchild = ContentTree(
+//            Content(
+//                url: URL(filePath: "grandchild.imageset"),
+//                type: .asset(.imageSet),
+//                providesNamespace: false))
+//        
+//        root.addChild(child)
+//        child.addChild(grandchild)
+//        
+//        let tree = ContentTree(
+//            Content(url: URL(filePath: "root"),
+//                    type: .group,
+//                    providesNamespace: false),
+//            children: <#T##[Tree<Content>]#>)
+//    }
+    
     @Test func toAsset_whenGroup_returnNil() {
         // Given
         let contentTree = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "root"),
+                url: URL(filePath: "root"),
                 type: .group,
                 providesNamespace: false))
         
@@ -157,12 +185,12 @@ import Foundation
         // Given
         let root = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "root"),
+                url: URL(filePath: "root"),
                 type: .group,
                 providesNamespace: false))
         let child = ContentTree(
             Content(
-                url: URL(fileURLWithPath: "child.imageset"),
+                url: URL(filePath: "child.imageset"),
                 type: .asset(.imageSet),
                 providesNamespace: false))
         

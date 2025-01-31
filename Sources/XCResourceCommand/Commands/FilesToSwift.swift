@@ -57,7 +57,7 @@ struct FilesToSwift: ParsableCommand {
     
     private func generateCodes() throws -> FileResourceGenerator.Result {
         let request = FileResourceGenerator.Request(
-            resourcesURL: URL(fileURLWithExpandingTildeInPath: resourcesPath),
+            resourcesURL: URL(filePath: resourcesPath, expandingTilde: true),
             filePattern: filePattern,
             resourceTypeName: resourceTypeName,
             preservesRelativePath: preservesRelativePath,

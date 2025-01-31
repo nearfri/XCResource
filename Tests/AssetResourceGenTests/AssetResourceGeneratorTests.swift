@@ -36,7 +36,7 @@ private class StubValueDeclarationGenerator: ValueDeclarationGenerator {
     private let valueDeclarationGenerator: StubValueDeclarationGenerator = .init()
     
     private let request: AssetResourceGenerator.Request = AssetResourceGenerator.Request(
-        assetCatalogURLs: [URL(fileURLWithPath: "a"), URL(fileURLWithPath: "b")],
+        assetCatalogURLs: [URL(filePath: "a"), URL(filePath: "b")],
         assetTypes: [.imageSet],
         resourceTypeName: "ImageKey",
         accessLevel: nil)

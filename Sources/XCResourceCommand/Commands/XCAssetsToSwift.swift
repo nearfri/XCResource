@@ -63,7 +63,7 @@ struct XCAssetsToSwift: ParsableCommand {
     
     private func generateCodes() throws -> AssetResourceGenerator.Result {
         let request = AssetResourceGenerator.Request(
-            assetCatalogURLs: assetCatalogPaths.map({ URL(fileURLWithExpandingTildeInPath: $0) }),
+            assetCatalogURLs: assetCatalogPaths.map({ URL(filePath: $0, expandingTilde: true) }),
             assetTypes: Set(assetTypes.isEmpty ? AssetType.allCases : assetTypes),
             resourceTypeName: resourceTypeName,
             accessLevel: accessLevel?.rawValue)
