@@ -4,12 +4,15 @@ import ArgumentParser
 public struct XCResource: ParsableCommand {
     public static let configuration: CommandConfiguration = .init(
         commandName: "xcresource",
-        abstract: "리소스 코드 생성 유틸리티",
+        abstract: "A command-line tool for generating type-safe Swift code for resources.",
+        discussion: """
+            xcresource is a command line tool for generating Swift code from various resources \
+            such as localized strings, fonts, and xcassets.
+            """,
         version: "0.12.0",
         subcommands: [
             Config.self,
-            XCAssetsToSwift.self, FilesToSwift.self, FontsToSwift.self,
-            XCStringsToSwift.self,
+            XCStringsToSwift.self, FontsToSwift.self, FilesToSwift.self, XCAssetsToSwift.self,
         ],
         defaultSubcommand: Config.self)
     

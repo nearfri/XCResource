@@ -11,9 +11,11 @@ private let headerComment = """
 struct FilesToSwift: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
         commandName: "files2swift",
-        abstract: "파일 로딩용 키 파일 생성",
+        abstract: "Generate Swift code for accessing files.",
         discussion: """
-            디렉토리에서 패턴에 매칭되는 파일의 이름으로 키 파일을 생성한다.
+            This command generates Swift code to access files in a type-safe manner. \
+            It scans the specified directory for files matching the given pattern \
+            and generates code to access these files.
             """)
     
     // MARK: - Default values

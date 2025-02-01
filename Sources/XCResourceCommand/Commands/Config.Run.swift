@@ -6,7 +6,7 @@ extension Config {
     struct Run: ParsableCommand {
         static let configuration: CommandConfiguration = .init(
             commandName: "run",
-            abstract: "Run commands listed in the configuration file")
+            abstract: "Run commands listed in the configuration file.")
         
         // MARK: - Default values
         

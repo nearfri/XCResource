@@ -1,5 +1,5 @@
 {
-  "originHash" : "c26c3bfe63149cf68766c4d0802f3b5cde3ca5e7d4603a3c2ca945c3ef838f06",
+  "originHash" : "f05b719d92bb68fe85ac7fb60c943dbd8e065beac3c3bd0deaaf2351a4931f5b",
   "pins" : [
     {
       "identity" : "strix",
@@ -17,15 +17,6 @@
       "state" : {
         "revision" : "46989693916f56d1186bd59ac15124caef896560",
         "version" : "1.3.1"
-      }
-    },
-    {
-      "identity" : "swift-collections",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-collections",
-      "state" : {
-        "revision" : "94cf62b3ba8d4bed62680a282d4c25f9c63c2efb",
-        "version" : "1.1.0"
       }
     },
     {

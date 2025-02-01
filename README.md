@@ -4,16 +4,16 @@
 [![Platform Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnearfri%2FXCResource%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/nearfri/XCResource)
 [![codecov](https://codecov.io/gh/nearfri/XCResource/branch/main/graph/badge.svg?token=DWKDFE0O2A)](https://codecov.io/gh/nearfri/XCResource)
 
-**XCResource** is a tool that allows you to efficiently and safely manage resources (localized strings, fonts, files.) in Xcode projects.
+**XCResource** is a tool that allows you to efficiently and safely manage resources (localized strings, fonts, and other files) in Xcode projects.
 By automating code generation, it reduces typos and runtime errors.
 
 ## Features
 
 ### 1. Type-Safe Resource Code Generation
-- Generates type-safe Swift code for **localized strings, fonts, and file resources**.
+- Generates type-safe Swift code for **localized strings, fonts, and other files**.
 
 ### 2. Flexible Configuration and Integration
-- Supports Swift Package Manager for easy dependency management.
+- Supports Swift Package Manager for easy integration.
 - Enables customized code generation using configuration files.
 - Easily executable via Swift Package Plugin.
 
@@ -197,13 +197,13 @@ extension LottieResource {
 LottieView(.hello)
 ```
 
-## Available Commands
+## Commands
 | Command              | Description                                                  |
 |----------------------|--------------------------------------------------------------|
-| `xcstrings2swift`    | Parses `.xcstrings` file and generates code.                 |
-| `fonts2swift`        | Scans font folder and generates code.                        |
-| `files2swift`        | Scans file folder and generates code.                        |
-| `xcassets2swift`     | Scans `.xcassets` folder and generates code.                 |
+| `xcstrings2swift`    | Scans `.xcstrings` file and generates code.                  |
+| `fonts2swift`        | Scans font directory and generates code.                     |
+| `files2swift`        | Scans directory for matching files and generates code.       |
+| `xcassets2swift`     | Scans `.xcassets` directory and generates code.              |
 
 ## License
 XCResource is distributed under the MIT license. For more details, see the LICENSE file.

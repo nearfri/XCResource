@@ -11,10 +11,11 @@ private let headerComment = """
 struct FontsToSwift: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
         commandName: "fonts2swift",
-        abstract: "Font 키 파일 생성",
+        abstract: "Generate Swift code for accessing fonts.",
         discussion: """
-            디렉토리의 폰트 파일을 추출해 키 파일을 생성한다.
-            추출한 키 파일은 앱에서 폰트 로딩 시 사용할 수 있다.
+            This command generates Swift code to access fonts in a type-safe manner. \
+            It scans the specified directory for font files and \
+            generates code to access these fonts.
             """)
     
     // MARK: - Default values

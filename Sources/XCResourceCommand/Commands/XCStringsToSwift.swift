@@ -6,9 +6,11 @@ import LocStringResourceGen
 struct XCStringsToSwift: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
         commandName: "xcstrings2swift",
-        abstract: "xcstrings를 Swift 소스 코드로 변환",
+        abstract: "Generate Swift code for accessing localized strings.",
         discussion: """
-            Localizable.xcstrings 파일로 LocalizedStringResource 값을 생성한다.
+            This command generates Swift code to access localized strings in a type-safe manner. \
+            It scans the specified .xcstrings file and \
+            generates code to access these localized strings.
             """)
     
     // MARK: - Default Values

@@ -16,10 +16,11 @@ xcode_ref-Asset_Catalog_Format/AssetTypes.html
 struct XCAssetsToSwift: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
         commandName: "xcassets2swift",
-        abstract: "Asset Catalog로부터 키 파일 생성",
+        abstract: "Generate Swift code for accessing assets.",
         discussion: """
-            Xcode Asset Catalog(.xcassets)에서 리소스 이름을 추출해서 키 파일을 생성한다.
-            추출한 키 파일은 앱에서 리소스 로딩에 사용할 수 있다.
+            This command generates Swift code to access assets in a type-safe manner. \
+            It scans the specified asset catalog for assets and \
+            generates code to access these assets.
             """)
     
     // MARK: - Default values
@@ -38,8 +39,8 @@ struct XCAssetsToSwift: ParsableCommand {
     @Option(name: .customLong("asset-type"),
             parsing: .upToNextOption,
             help: ArgumentHelp(
-                "Asset type to export.",
-                discussion: "If not specified, all asset types are exported. For more "
+                "Specify the asset types to generate.",
+                discussion: "If not specified, all asset types will be generated. For more "
                     + "information about possible types, see \(catalogDocumentURLString)",
                 valueName: AssetType.joinedAllValuesString))
     var assetTypes: [AssetType] = Default.assetTypes
