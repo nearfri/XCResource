@@ -25,8 +25,6 @@ let package = Package(
             name: "Resources",
             dependencies: [],
             resources: [
-                .process("Resources/Assets.xcassets"),
-                .process("Resources/Localizable.xcstrings"),
                 .copy("Resources/Fonts"),
             ],
             plugins: []),

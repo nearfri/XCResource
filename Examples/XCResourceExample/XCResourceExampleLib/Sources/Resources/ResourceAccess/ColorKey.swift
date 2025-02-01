@@ -41,12 +41,12 @@ extension ColorKey {
         bundle: Bundle.module)
     
     public enum Warm {
-        public static let warmBlue: ColorKey = .init(
-            name: "Warm/warmBlue",
+        public static let blue: ColorKey = .init(
+            name: "Warm/blue",
             bundle: Bundle.module)
         
-        public static let warmGray: ColorKey = .init(
-            name: "Warm/warmGray",
+        public static let gray: ColorKey = .init(
+            name: "Warm/gray",
             bundle: Bundle.module)
     }
     
