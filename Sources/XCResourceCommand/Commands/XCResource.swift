@@ -9,7 +9,7 @@ public struct XCResource: ParsableCommand {
             xcresource is a command line tool for generating Swift code from various resources \
             such as localized strings, fonts, and xcassets.
             """,
-        version: "0.12.0",
+        version: "1.0.0",
         subcommands: [
             Config.self,
             XCStringsToSwift.self, FontsToSwift.self, FilesToSwift.self, XCAssetsToSwift.self,
