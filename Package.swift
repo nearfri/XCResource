@@ -33,10 +33,10 @@ let package = Package(
             capability: .command(
                 intent: .custom(
                     verb: "generate-resource-code",
-                    description: "Generate source code for resources."),
+                    description: "Generate source code for resources"),
                 permissions: [
                     .writeToPackageDirectory(
-                        reason: "Generate and write source code into the package direcotry")
+                        reason: "Generate Swift source files for accessing resources")
                 ]),
             dependencies: ["xcresource"],
             path: "Plugins/GenerateResourceCode"),
