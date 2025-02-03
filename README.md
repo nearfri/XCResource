@@ -41,6 +41,8 @@ Supported paths for the configuration file:
 - `${PROJECT_DIR}/Scripts/xcresource.json`
 
 ### 2. Managing Localized Strings
+`xcresource` provides multiple subcommands. Among them, `xcstrings2swift` parses a String Catalog (.xcstrings) and generates Swift code.
+
 https://github.com/user-attachments/assets/16073e8f-9ad9-4e9c-b945-d542efd656f7
 
 #### Configuration (`xcresource.json`)  
@@ -87,6 +89,8 @@ let string = String(localized: .commonDone)
 ```
 
 ### 3. Font Code Generation
+`fonts2swift` generates Swift code for fonts.
+
 https://github.com/user-attachments/assets/ae09a571-3ee8-450e-84c2-39341fe203d2
 
 #### Configuration (`xcresource.json`)  
