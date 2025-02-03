@@ -53,14 +53,14 @@ private extension LocalizationItem {
     }
     
     func hasResolvedParameterTypes(compatibleWith other: LocalizationItem) -> Bool {
-        let lhs = resolvedParameterTypes
-        let rhs = other.resolvedParameterTypes
+        let typesInSourceCode = resolvedParameterTypes
+        let typesInCatalog = other.resolvedParameterTypes
         
-        guard lhs.count == rhs.count else { return false }
+        guard typesInSourceCode.count == typesInCatalog.count else { return false }
         
-        return zip(lhs, rhs).allSatisfy {
+        return zip(typesInSourceCode, typesInCatalog).allSatisfy {
             switch ($0, $1) {
-            case ("AttributedString", "String"):
+            case ("AttributedString", "String"), ("Double", "Float"):
                 return true
             default:
                 return $0 == $1

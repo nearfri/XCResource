@@ -91,19 +91,21 @@ import Testing
         // Given
         let itemsInCatalog: [LocalizationItem] = [
             .init(key: "hello",
-                  defaultValue: "Hello \\(param1)!!",
-                  rawDefaultValue: "Hello %@!!",
+                  defaultValue: "Hello \\(param1)!! \\(param2) percent.",
+                  rawDefaultValue: "Hello %@!! %f percent.",
                   memberDeclaration: .method("hello", [
                     .init(firstName: "_", secondName: "param1", type: "String"),
+                    .init(firstName: "_", secondName: "param2", type: "Float"),
                   ])),
         ]
         
         let itemsInSourceCode: [LocalizationItem] = [
             .init(key: "hello",
-                  defaultValue: "Hello \\(name)!!",
+                  defaultValue: "Hello \\(name)!! \\(progress) percent.",
                   rawDefaultValue: "",
                   memberDeclaration: .method("hello", [
                     .init(firstName: "name", type: "AttributedString"),
+                    .init(firstName: "progress", type: "Double"),
                   ])),
         ]
         
@@ -114,10 +116,11 @@ import Testing
         // Then
         #expect(newItems == [
             .init(key: "hello",
-                  defaultValue: "Hello \\(name)!!",
-                  rawDefaultValue: "Hello %@!!",
+                  defaultValue: "Hello \\(name)!! \\(progress) percent.",
+                  rawDefaultValue: "Hello %@!! %f percent.",
                   memberDeclaration: .method("hello", [
                     .init(firstName: "name", type: "AttributedString"),
+                    .init(firstName: "progress", type: "Double"),
                   ])),
         ])
     }
