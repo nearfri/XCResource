@@ -161,6 +161,7 @@ Font.custom(.openSansBold, size: 16)
 ```
 
 ### 4. File Code Generation
+`files2swift` generates Swift code for files such as JSON.
 
 #### Configuration (`xcresource.json`)  
 ```json
