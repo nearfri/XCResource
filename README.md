@@ -41,7 +41,7 @@ Supported paths for the configuration file:
 - `${PROJECT_DIR}/Scripts/xcresource.json`
 
 ### 2. Managing Localized Strings
-`xcresource` provides multiple subcommands. Among them, `xcstrings2swift` parses a String Catalog (.xcstrings) and generates Swift code.
+`xcresource` provides multiple subcommands. Among them, `xcstrings2swift` parses a String Catalog (.xcstrings) and generates [LocalizedStringResource](https://developer.apple.com/documentation/foundation/localizedstringresource) constants.
 
 https://github.com/user-attachments/assets/16073e8f-9ad9-4e9c-b945-d542efd656f7
 
@@ -85,7 +85,7 @@ public extension LocalizedStringResource {
 
 #### Usage
 ```swift
-let string = String(localized: .commonDone)
+Text(.commonDone)
 ```
 
 ### 3. Font Code Generation
@@ -209,6 +209,19 @@ LottieView(.hello)
 | `fonts2swift`        | Scans font directory and generates code.                     |
 | `files2swift`        | Scans directory for matching files and generates code.       |
 | `xcassets2swift`     | Scans `.xcassets` directory and generates code.              |
+
+## Documentation
+For more information about the plugin, check the documentation on Swift Package Index.
+  - [XCResource Documentation](https://swiftpackageindex.com/nearfri/xcresource/documentation/documentation)
+  - Getting Started
+    - [Integrating XCResource into a Swift Package](https://swiftpackageindex.com/nearfri/xcresource/documentation/documentation/integrating-xcresource-into-a-swift-package)
+    - [Generating LocalizedStringResource](https://swiftpackageindex.com/nearfri/xcresource/documentation/documentation/generating-localizedstringresource)
+    - [Generating FontResource](https://swiftpackageindex.com/nearfri/xcresource/documentation/documentation/generating-fontresource)
+  - Advanced
+    - [Configuration File Format](https://swiftpackageindex.com/nearfri/xcresource/documentation/documentation/configuration-file-format)
+
+### Example
+This repository includes an [example](https://github.com/nearfri/XCResource/tree/main/Examples) of using the plugin.
 
 ## License
 XCResource is distributed under the MIT license. For more details, see the LICENSE file.
