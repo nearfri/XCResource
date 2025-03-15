@@ -2,6 +2,23 @@ import Testing
 @testable import LocStringResourceGen
 
 @Suite struct CommentsFormatterTests {
+    @Test func commentsFromContent_simpleLine() throws {
+        // Given
+        let string = """
+            File will be deleted. This action cannot be undone.
+            """
+        
+        // When
+        let comments = CommentsFormatter.comments(
+            from: string,
+            context: CommentsFormatter.Context(maxSingleLineColumns: 80, maxMultilineColumns: 80))
+        
+        // Then
+        #expect(comments == [
+            "File will be deleted. This action cannot be undone.",
+        ])
+    }
+    
     @Test func commentsFromContent_atNewline_insertBackslash() throws {
         // Given
         let string = """

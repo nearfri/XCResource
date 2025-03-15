@@ -97,6 +97,13 @@ public extension LocalizedStringResource {
               bundle: .atURL(Bundle.module.bundleURL))
     }
     
+    /// ^[\\(count) person]\(inflect: true)
+    static func people(count: Int) -> Self {
+        .init("people",
+              defaultValue: "^[\(count) person](inflect: true)",
+              bundle: .atURL(Bundle.module.bundleURL))
+    }
+    
     /// The task is \\(fractionCompleted, specifier: "%.2lf")% complete.
     static func taskProgress(fractionCompleted: Double) -> Self {
         .init("task_progress",

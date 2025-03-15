@@ -10,13 +10,15 @@ struct StringLiteralFormatter {
     
     static func refactor(
         syntax: StringLiteralExprSyntax,
-        in context: Context
+        in context: Context,
+        escapingMarkdown: Bool = false
     ) -> StringLiteralExprSyntax {
         var result = syntax
         
         var segmentListFormatter = StringLiteralSegmentListFormatter(
             syntax: result.segments,
-            maxColumns: context.maxMultilineColumns)
+            maxColumns: context.maxMultilineColumns,
+            escapingMarkdown: escapingMarkdown)
         
         result.segments = segmentListFormatter.refactor()
         
@@ -35,13 +37,16 @@ private struct StringLiteralSegmentListFormatter {
     
     let maxColumns: Int
     
+    let escapingMarkdown: Bool
+    
     private var segments: [StringLiteralSegmentListSyntax.Element] = []
     
     private var currentColumns: Int = 0
     
-    init(syntax: StringLiteralSegmentListSyntax, maxColumns: Int) {
+    init(syntax: StringLiteralSegmentListSyntax, maxColumns: Int, escapingMarkdown: Bool) {
         self.syntax = syntax
         self.maxColumns = maxColumns
+        self.escapingMarkdown = escapingMarkdown
     }
     
     mutating func refactor() -> StringLiteralSegmentListSyntax {
@@ -59,7 +64,12 @@ private struct StringLiteralSegmentListFormatter {
     
     private mutating func append(_ stringSegment: StringSegmentSyntax, isLastSegment: Bool) {
         let text = stringSegment.content.text
-        let words = text.words
+        
+        let words = if escapingMarkdown {
+            text.addingMarkdownEscapes().words
+        } else {
+            text.words
+        }
         
         for (index, word) in words.enumerated() {
             let endsWithNewline = word.last?.isNewline ?? false
@@ -98,5 +108,33 @@ private struct StringLiteralSegmentListFormatter {
 private extension String {
     var words: [String] {
         return matches(of: /\S*\s*/).map({ String($0.output) })
+    }
+    
+    func addingMarkdownEscapes() -> String {
+        return replacing(/([*<_~])(\1*)/) { match in
+            let prev = match.output.0.base[..<match.range.lowerBound].last ?? " "
+            let next = match.output.0.base[match.range.upperBound...].first ?? " "
+            if prev.isWhitespace && next.isWhitespace {
+                return match.output.0
+            }
+            return "\\\(match.output.1)\(match.output.2.addingBackslashes())"
+        }
+        .replacing(/^( *)((#+ )|(>+)|([\-+*|] ))/) { match in
+            "\(match.output.1)\\\(match.output.2)"
+        }
+        .replacing(/^( *)([1-9]+)(\. )/) { match in
+            "\(match.output.1)\(match.output.2)\\\(match.output.3)"
+        }
+        .replacing(/[(`]/) { match in
+            "\\\(match.output)"
+        }
+    }
+}
+
+private extension Substring {
+    func addingBackslashes() -> String {
+        return reduce(into: "") { partialResult, character in
+            partialResult += "\\\(character)"
+        }
     }
 }

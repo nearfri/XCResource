@@ -259,6 +259,17 @@
         }
       }
     },
+    "people" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "^[%lld person](inflect: true)"
+          }
+        }
+      }
+    },
     "task_progress" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {

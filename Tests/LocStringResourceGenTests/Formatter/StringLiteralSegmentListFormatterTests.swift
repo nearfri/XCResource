@@ -134,4 +134,45 @@ import SwiftSyntax
             """
             """#)
     }
+    
+    @Test func refactor_escapingMarkdown() throws {
+        // Given
+        let string = #"""
+            1234567 \(number, format: .number) 8912345
+            ## H2
+            **bold** _italic_ ~~strikethrough~~ `code`
+            hello * world
+            > blockquote
+            1. ordered list
+            - unordered list
+            + unordered list
+            [link](https://www.example.com)
+            | table |
+            <html>
+            """#
+        let syntax = StringLiteralExprSyntax(contentLiteral: string)
+        
+        // When
+        let formattedSyntax = StringLiteralFormatter.refactor(
+            syntax: syntax,
+            in: .init(maxSingleLineColumns: 100, maxMultilineColumns: 100),
+            escapingMarkdown: true)
+        
+        // Then
+        #expect(formattedSyntax.description == ###"""
+            """
+            1234567 \(number, format: .number) 8912345
+            \## H2
+            \*\*bold\*\* \_italic\_ \~\~strikethrough\~\~ \`code\`
+            hello * world
+            \> blockquote
+            1\. ordered list
+            \- unordered list
+            \+ unordered list
+            [link]\(https://www.example.com)
+            \| table |
+            \<html>
+            """
+            """###)
+    }
 }
