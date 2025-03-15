@@ -36,6 +36,9 @@
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		086B7C692D2925FC00FEA63D /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				XCResourceExample.xctestplan,
+			);
 			platformFiltersByRelativePath = {
 				iOS/XCResourceExampleApp.swift = (
 					ios,
