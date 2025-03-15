@@ -17,7 +17,8 @@ struct CommentsFormatter {
             syntax: StringLiteralExprSyntax(contentLiteral: string),
             in: StringLiteralFormatter.Context(
                 maxSingleLineColumns: context.maxSingleLineColumns,
-                maxMultilineColumns: context.maxMultilineColumns))
+                maxMultilineColumns: context.maxMultilineColumns),
+            escapingMarkdown: true)
         
         var formatter = CommentsFormatter(syntax: formattedSyntax.segments)
         
