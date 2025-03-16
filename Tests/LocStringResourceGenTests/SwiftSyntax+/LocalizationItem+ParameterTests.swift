@@ -92,7 +92,7 @@ import Testing
         var item = LocalizationItem(
             key: "key",
             defaultValue: "Hello, \\(param1)!!",
-            rawDefaultValue: "Hello, %@",
+            rawDefaultValue: "Hello, %@!!",
             memberDeclaration: .method("key", [
                 .init(firstName: "_", secondName: "param1", type: "String")
             ]))
@@ -112,7 +112,7 @@ import Testing
         #expect(item == LocalizationItem(
             key: "key",
             defaultValue: "Hello, \\(name)!!",
-            rawDefaultValue: "Hello, %@",
+            rawDefaultValue: "Hello, %@!!",
             memberDeclaration: .method("key", [
                 .init(firstName: "_", secondName: "param1", type: "String")
             ])))
@@ -123,7 +123,7 @@ import Testing
         var item = LocalizationItem(
             key: "key",
             defaultValue: "Hello, \\(param1) and \\(param2)!!",
-            rawDefaultValue: "Hello, %@ and %@",
+            rawDefaultValue: "Hello, %@ and %@!!",
             memberDeclaration: .method("key", [
                 .init(firstName: "_", secondName: "param1", type: "String"),
                 .init(firstName: "_", secondName: "param2", type: "String"),
@@ -171,6 +171,64 @@ import Testing
             rawDefaultValue: "Hello, %@\nWorld!!",
             memberDeclaration: .method("key", [
                 .init(firstName: "_", secondName: "param1", type: "String")
+            ])))
+    }
+    
+    @Test(arguments: [
+        (
+            "Number \\(param1)!!", "Number %lf!!",
+            "Number \\(number, specifier: \"%.6lf\")!!",
+            "Number \\(number)!!"
+        ),
+        (
+            "Number \\(param1, specifier: \"%.3lf\")!!", "Number %.3lf!!",
+            "Number \\(number)!!",
+            "Number \\(number, specifier: \"%.3lf\")!!"
+        ),
+        (
+            "Number \\(param1, specifier: \"%.3lf\")!!", "Number %.3lf!!",
+            "Number \\(number, specifier: \"%.6lf\")!!",
+            "Number \\(number, specifier: \"%.3lf\")!!"
+        ),
+        (
+            "Number \\(param1, specifier: \"%.3lf\")!!", "Number %.3lf!!",
+            "Number \\(placeholder: .double, specifier: \"%.6lf\")!!",
+            "Number \\(placeholder: .double, specifier: \"%.3lf\")!!"
+        ),
+    ])
+    func replaceInterpolations_specifier(
+        value: String,
+        rawValue: String,
+        otherValue: String,
+        resultValue: String
+    ) throws {
+        // Given
+        var item = LocalizationItem(
+            key: "key",
+            defaultValue: value,
+            rawDefaultValue: rawValue,
+            memberDeclaration: .method("key", [
+                .init(firstName: "_", secondName: "param1", type: "Double")
+            ]))
+        
+        let otherItem = LocalizationItem(
+            key: "key",
+            defaultValue: otherValue,
+            rawDefaultValue: "",
+            memberDeclaration: .method("key", [
+                .init(firstName: "number", type: "Double")
+            ]))
+        
+        // When
+        try item.replaceInterpolations(with: otherItem)
+        
+        // Then
+        #expect(item == LocalizationItem(
+            key: "key",
+            defaultValue: resultValue,
+            rawDefaultValue: rawValue,
+            memberDeclaration: .method("key", [
+                .init(firstName: "_", secondName: "param1", type: "Double")
             ])))
     }
 }

@@ -47,11 +47,13 @@ extension LocalizationItem {
             switch segment {
             case .stringSegment(let stringSegmentSyntax):
                 return .stringSegment(stringSegmentSyntax)
-            case .expressionSegment(_):
+            case .expressionSegment(let exprSegment):
                 if otherExpressionSegments.isEmpty {
                     throw SyntaxError.incompatibleInterpolationCount
                 }
-                return .expressionSegment(otherExpressionSegments.removeFirst())
+                var otherExprSegment = otherExpressionSegments.removeFirst()
+                otherExprSegment.replaceSpecifier(with: exprSegment)
+                return .expressionSegment(otherExprSegment)
             }
         }
         
@@ -124,6 +126,36 @@ private extension String {
             self = "NSObject"
         @unknown default:
             self = "Never"
+        }
+    }
+}
+
+private extension ExpressionSegmentSyntax {
+    mutating func replaceSpecifier(with other: ExpressionSegmentSyntax) {
+        let specifierKey = "specifier"
+        
+        let specifierIndex = expressions.firstIndex(where: {
+            $0.label?.text == specifierKey
+        })
+        let otherSpecifierIndex = other.expressions.firstIndex(where: {
+            $0.label?.text == specifierKey
+        })
+        
+        switch (specifierIndex, otherSpecifierIndex) {
+        case (nil, nil):
+            break
+        case let (nil, otherSpecifierIndex?):
+            if let lastIndex = expressions.indices.last {
+                expressions[lastIndex].trailingComma = .commaToken(trailingTrivia: .space)
+            }
+            expressions.append(other.expressions[otherSpecifierIndex])
+        case let (specifierIndex?, nil):
+            if specifierIndex == expressions.indices.last {
+                expressions[expressions.index(before: specifierIndex)].trailingComma = nil
+            }
+            expressions.remove(at: specifierIndex)
+        case let (specifierIndex?, otherSpecifierIndex?):
+            expressions[specifierIndex] = other.expressions[otherSpecifierIndex]
         }
     }
 }
