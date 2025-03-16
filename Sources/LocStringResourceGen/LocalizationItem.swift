@@ -48,6 +48,7 @@ public struct LocalizationItem: Hashable, Sendable, SettableByKeyPath {
     public var table: String?
     public var bundle: BundleDescription
     
+    public var translationComment: String?
     public var developerComments: [String]
     public var memberDeclaration: MemberDeclaration
     
@@ -57,6 +58,7 @@ public struct LocalizationItem: Hashable, Sendable, SettableByKeyPath {
         rawDefaultValue: String,
         table: String? = nil,
         bundle: BundleDescription = .main,
+        translationComment: String? = nil,
         developerComments: [String] = [],
         memberDeclaration: MemberDeclaration
     ) {
@@ -65,17 +67,27 @@ public struct LocalizationItem: Hashable, Sendable, SettableByKeyPath {
         self.rawDefaultValue = rawDefaultValue
         self.table = table
         self.bundle = bundle
+        self.translationComment = translationComment
         self.developerComments = developerComments
         self.memberDeclaration = memberDeclaration
     }
     
     public var documentComments: [String] {
-        return CommentsFormatter.comments(from: defaultValue)
+        let formatter = CommentsFormatter.self
+        
+        var result = formatter.comments(from: defaultValue, type: .localizationValue)
+        
+        if let translationComment {
+            result += [""]
+            result += formatter.comments(from: translationComment, type: .translationComment)
+        }
+        
+        return result
     }
     
     public var commentsSourceCode: String {
         let devComments = developerComments.map({ "// \($0)" })
-        let docComments = documentComments.map({ "/// \($0)" })
+        let docComments = documentComments.map({ $0.isEmpty ? "///" : "/// \($0)" })
         
         return (devComments + docComments).joined(separator: "\n") + "\n"
     }

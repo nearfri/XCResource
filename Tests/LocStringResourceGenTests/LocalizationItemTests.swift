@@ -31,11 +31,26 @@ import Testing
              "Backslash must be escaped")
     }
     
+    @Test func documentComments_withTranslationComment() throws {
+        let sut = LocalizationItem(key: "",
+                                   defaultValue: "hello",
+                                   rawDefaultValue: "",
+                                   translationComment: "comment",
+                                   memberDeclaration: .property(""))
+        
+        #expect(sut.documentComments == [
+            "hello",
+            "",
+            "comment",
+        ])
+    }
+    
     @Test func commentsSourceCode() throws {
         let sut = LocalizationItem(
             key: "",
             defaultValue: "localized string1.\nlocalized string2.",
             rawDefaultValue: "",
+            translationComment: "hello\n\nworld",
             developerComments: ["cmt1", "cmt2"],
             memberDeclaration: .property(""))
         
@@ -44,6 +59,10 @@ import Testing
             // cmt2
             /// localized string1.\\
             /// localized string2.
+            ///
+            /// hello
+            ///
+            /// world
             
             """)
     }

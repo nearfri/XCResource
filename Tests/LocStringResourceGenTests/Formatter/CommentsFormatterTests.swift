@@ -11,6 +11,7 @@ import Testing
         // When
         let comments = CommentsFormatter.comments(
             from: string,
+            type: .localizationValue,
             context: CommentsFormatter.Context(maxSingleLineColumns: 80, maxMultilineColumns: 80))
         
         // Then
@@ -29,6 +30,7 @@ import Testing
         // When
         let comments = CommentsFormatter.comments(
             from: string,
+            type: .localizationValue,
             context: CommentsFormatter.Context(maxSingleLineColumns: 50, maxMultilineColumns: 50))
         
         // Then
@@ -45,6 +47,7 @@ import Testing
         // When
         let comments = CommentsFormatter.comments(
             from: string,
+            type: .localizationValue,
             context: CommentsFormatter.Context(maxSingleLineColumns: 25, maxMultilineColumns: 25))
         
         // Then
@@ -64,12 +67,36 @@ import Testing
         // When
         let comments = CommentsFormatter.comments(
             from: string,
+            type: .localizationValue,
             context: CommentsFormatter.Context(maxSingleLineColumns: 50, maxMultilineColumns: 50))
         
         // Then
         #expect(comments == [
             "\\\\(filename) will be deleted.\\",
             "This action cannot be undone.",
+        ])
+    }
+    
+    @Test func commentsFromContent_translationComment_justSplitLines() throws {
+        // Given
+        let string = #"""
+            Line breaks are entered with "Option + Return".
+            
+            - First item
+            - Second item
+            """#
+        
+        // When
+        let comments = CommentsFormatter.comments(
+            from: string,
+            type: .translationComment)
+        
+        // Then
+        #expect(comments == [
+            "Line breaks are entered with \"Option + Return\".",
+            "",
+            "- First item",
+            "- Second item",
         ])
     }
 }

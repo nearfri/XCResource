@@ -40,6 +40,8 @@ struct StringCatalogDTOMapper {
             }()
             
             let localizationItem = try localizationItem(from: localizationDTO, key: key)
+                .with(\.translationComment, stringDTO.comment)
+            
             partialResult.append(localizationItem)
         }
         .sorted(by: { $0.key < $1.key })
