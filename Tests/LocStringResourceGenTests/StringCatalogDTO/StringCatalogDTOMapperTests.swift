@@ -10,7 +10,7 @@ import Testing
             version: "1.0",
             sourceLanguage: "en",
             strings: ["greeting": StringDTO(
-                comment: "Hello or Hi",
+                comment: "\"Hello\" or \"Hi\"",
                 localizations: [
                     "en": LocalizationDTO(
                         stringUnit: StringUnitDTO(state: "translated", value: "Hello"))
@@ -25,7 +25,7 @@ import Testing
                 key: "greeting",
                 defaultValue: "Hello",
                 rawDefaultValue: "Hello",
-                translationComment: "Hello or Hi",
+                translationComment: "\"Hello\" or \"Hi\"",
                 memberDeclaration: .property("greeting"))
         ])
     }
