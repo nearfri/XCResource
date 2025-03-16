@@ -42,6 +42,8 @@ public extension LocalizedStringResource {
     
     // xcresource:verbatim
     /// %lf works for doubles when formatting.
+    ///
+    /// This is not a string format. It is plain text.
     static var doubleFormat: Self {
         .init("double_format",
               defaultValue: "%lf works for doubles when formatting.",

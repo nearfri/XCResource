@@ -33,11 +33,11 @@ struct StringLiteralFormatter {
 }
 
 private struct StringLiteralSegmentListFormatter {
-    let syntax: StringLiteralSegmentListSyntax
+    private let syntax: StringLiteralSegmentListSyntax
     
-    let maxColumns: Int
+    private let maxColumns: Int
     
-    let escapingMarkdown: Bool
+    private let escapingMarkdown: Bool
     
     private var segments: [StringLiteralSegmentListSyntax.Element] = []
     

@@ -3,33 +3,57 @@ import RegexBuilder
 import SwiftSyntax
 
 struct CommentsFormatter {
+    enum CommentType {
+        case localizationValue
+        case translationComment
+    }
+    
     struct Context {
         var maxSingleLineColumns: Int = 100 - 31
         var maxMultilineColumns: Int = 100 - 16
     }
     
+    static func comments(
+        from string: String,
+        type: CommentType,
+        context: Context = .init()
+    ) -> [String] {
+        func lines(from str: String) -> [String] {
+            return str
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .split(separator: "\n", omittingEmptySubsequences: false)
+                .map({ String($0).trimmingCharacters(in: .whitespaces) })
+        }
+        
+        switch type {
+        case .localizationValue:
+            let formattedSyntax = StringLiteralFormatter.refactor(
+                syntax: StringLiteralExprSyntax(contentLiteral: string),
+                in: StringLiteralFormatter.Context(
+                    maxSingleLineColumns: context.maxSingleLineColumns,
+                    maxMultilineColumns: context.maxMultilineColumns),
+                escapingMarkdown: type == .localizationValue)
+            
+            var formatter = LocalizationValueFormatter(syntax: formattedSyntax.segments)
+            
+            return lines(from: formatter.refactor().description)
+            
+        case .translationComment:
+            return lines(from: string)
+        }
+    }
+}
+
+private struct LocalizationValueFormatter {
     private let syntax: StringLiteralSegmentListSyntax
     
     private var segments: [StringLiteralSegmentListSyntax.Element] = []
     
-    static func comments(from string: String, context: Context = .init()) -> [String] {
-        let formattedSyntax = StringLiteralFormatter.refactor(
-            syntax: StringLiteralExprSyntax(contentLiteral: string),
-            in: StringLiteralFormatter.Context(
-                maxSingleLineColumns: context.maxSingleLineColumns,
-                maxMultilineColumns: context.maxMultilineColumns),
-            escapingMarkdown: true)
-        
-        var formatter = CommentsFormatter(syntax: formattedSyntax.segments)
-        
-        return formatter.refactor()
-            .description
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .split(separator: "\n", omittingEmptySubsequences: false)
-            .map({ String($0).trimmingCharacters(in: .whitespaces) })
+    init(syntax: StringLiteralSegmentListSyntax) {
+        self.syntax = syntax
     }
     
-    private mutating func refactor() -> StringLiteralSegmentListSyntax {
+    mutating func refactor() -> StringLiteralSegmentListSyntax {
         for (index, segment) in syntax.enumerated() {
             switch segment {
             case .stringSegment(let stringSegment):

@@ -131,6 +131,7 @@
       }
     },
     "double_format" : {
+      "comment" : "This is not a string format. It is plain text.",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {

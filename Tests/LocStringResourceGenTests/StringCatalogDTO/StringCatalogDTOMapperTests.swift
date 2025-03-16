@@ -4,6 +4,32 @@ import Testing
 @Suite struct StringCatalogDTOMapperTests {
     private let sut: StringCatalogDTOMapper = .init()
     
+    @Test func localizationItems_comment() throws {
+        // Given
+        let dto = StringCatalogDTO(
+            version: "1.0",
+            sourceLanguage: "en",
+            strings: ["greeting": StringDTO(
+                comment: "Hello or Hi",
+                localizations: [
+                    "en": LocalizationDTO(
+                        stringUnit: StringUnitDTO(state: "translated", value: "Hello"))
+                ])])
+        
+        // When
+        let items = try sut.localizationItems(from: dto)
+        
+        // Then
+        #expect(items == [
+            LocalizationItem(
+                key: "greeting",
+                defaultValue: "Hello",
+                rawDefaultValue: "Hello",
+                translationComment: "Hello or Hi",
+                memberDeclaration: .property("greeting"))
+        ])
+    }
+    
     @Test func localizationItems_property() throws {
         // Given
         let dto = StringCatalogDTO(

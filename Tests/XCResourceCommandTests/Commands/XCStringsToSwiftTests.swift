@@ -19,7 +19,7 @@ private enum Fixture {
               }
             },
             "cancel" : {
-              "comment" : "Cancel",
+              "comment" : "Cancellation",
               "extractionState" : "migrated",
               "localizations" : {
                 "en" : {
@@ -58,6 +58,8 @@ private enum Fixture {
             }
             
             /// Cancel
+            ///
+            /// Cancellation
             static var cancel: Self {
                 .init("cancel",
                       defaultValue: "Cancel",
@@ -104,6 +106,8 @@ private enum Fixture {
             }
             
             /// Cancel
+            ///
+            /// Cancellation
             static var cancel: Self {
                 .init("cancel",
                       defaultValue: "Cancel",
