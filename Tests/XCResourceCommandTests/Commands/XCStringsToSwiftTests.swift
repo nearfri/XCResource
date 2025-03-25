@@ -139,7 +139,7 @@ private enum Fixture {
         try XCStringsToSwift.runAsRoot(arguments: [
             "--catalog-path", catalogURL.path,
             "--swift-file-path", sourceCodeURL.path,
-            "--bundle", "forClass:BundleFinder.self",
+            "--bundle", ".forClass(BundleFinder.self)",
         ])
         
         // Then
@@ -167,7 +167,7 @@ private enum Fixture {
         try XCStringsToSwift.runAsRoot(arguments: [
             "--catalog-path", catalogURL.path,
             "--swift-file-path", sourceCodeURL.path,
-            "--bundle", "forClass:BundleFinder.self",
+            "--bundle", ".forClass(BundleFinder.self)",
         ])
         
         // Then

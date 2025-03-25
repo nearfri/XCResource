@@ -25,7 +25,8 @@ struct XCStringsToSwift: ParsableCommand {
     
     @Option var catalogPath: String
     
-    @Option var bundle: LocalizationItem.BundleDescription = Default.bundle
+    @Option(help: ArgumentHelp(valueName: LocalizationItem.BundleDescription.joinedAllValuesString))
+    var bundle: LocalizationItem.BundleDescription = Default.bundle
     
     @Option var swiftFilePath: String
     

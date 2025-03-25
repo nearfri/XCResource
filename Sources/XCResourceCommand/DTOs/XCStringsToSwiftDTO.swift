@@ -13,15 +13,7 @@ struct XCStringsToSwiftDTO: CommandDTO {
     func toCommand() throws -> ParsableCommand {
         typealias Default = XCStringsToSwift.Default
         
-        let bundle = try self.bundle.map({
-            guard let bundle = LocalizationItem.BundleDescription(argument: $0) else {
-                throw ValueValidationError(
-                    key: CodingKeys.bundle.stringValue,
-                    value: $0,
-                    valueDescription: LocalizationItem.BundleDescription.joinedAllValuesString)
-            }
-            return bundle
-        })
+        let bundle = self.bundle.map({ LocalizationItem.BundleDescription(rawValue: $0) })
         
         var command = XCStringsToSwift()
         command.catalogPath = catalogPath

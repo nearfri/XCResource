@@ -10,7 +10,7 @@ private enum Fixture {
             {
                 "commandName": "xcstrings2swift",
                 "catalogPath": "%@",
-                "bundle": "atURL:Bundle.module.bundleURL",
+                "bundle": ".atURL(Bundle.module.bundleURL)",
                 "swiftFilePath": "%@"
             },
             {

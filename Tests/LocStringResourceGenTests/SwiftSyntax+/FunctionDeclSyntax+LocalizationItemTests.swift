@@ -9,7 +9,7 @@ import SwiftSyntax
             defaultValue: "Hello world",
             rawDefaultValue: "",
             table: "LocalizableSystem",
-            bundle: .forClass("ResourceBundleClass.self"),
+            bundle: ".forClass(ResourceBundleClass.self)",
             memberDeclaration: .method("someFunction", [
                 .init(firstName: "count1", type: "Int"),
                 .init(firstName: "count2", type: "Int")
@@ -32,7 +32,7 @@ import SwiftSyntax
             defaultValue: "Hello world",
             rawDefaultValue: "",
             table: "LocalizableSystem",
-            bundle: .forClass("ResourceBundleClass.self"),
+            bundle: ".forClass(ResourceBundleClass.self)",
             memberDeclaration: .method("someFunction", [
                 .init(firstName: "name", type: "String"),
                 .init(firstName: "count1", type: "Int", defaultValue: "1"),
