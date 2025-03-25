@@ -140,8 +140,8 @@ struct StringCatalogDTOMapper {
                 case .percentSign:
                     result.replaceSubrange(formatUnit.range, with: "%")
                 case .placeholder(let placeholder):
-                    let variableName = placeholder.variableName ?? "param\(paramIndex)"
-                    result.replaceSubrange(formatUnit.range, with: "\\(\(variableName))")
+                    let interpolation = interpolation(from: placeholder, index: paramIndex)
+                    result.replaceSubrange(formatUnit.range, with: interpolation)
                     paramIndex -= 1
                 }
             }
@@ -152,12 +152,40 @@ struct StringCatalogDTOMapper {
                 .compactMap(\.placeholder)
                 .enumerated()
                 .map { index, placeholder in
-                    let variableName = placeholder.variableName ?? "param\(index + 1)"
-                    return "\\(\(variableName))"
+                    return interpolation(from: placeholder, index: index + 1)
                 }
             
             return "\(interpolations.joined(separator: " "))\n\(dto.escapedValue)"
                 .replacing(.newlineSequence, with: "\n")
+        }
+    }
+    
+    private func interpolation(from placeholder: FormatPlaceholder, index: Int) -> String {
+        let variableName = placeholder.variableName ?? "param\(index)"
+        
+        let needsSpecifier: Bool = {
+            if placeholder.isPluralVariable {
+                return false
+            }
+            
+            let hasFlags = !placeholder.flags.isEmpty
+            let hasWidthOrPrecision = placeholder.width != nil || placeholder.precision != nil
+            
+            let length = placeholder.length
+            let hasUsualLength = length == nil || length == .long || length == .longLong
+            
+            let conversion = placeholder.conversion
+            let hasUsualConversion = [
+                .decimal, .int, .unsigned, .float, .object
+            ].contains(conversion)
+            
+            return hasFlags || hasWidthOrPrecision || !hasUsualLength || !hasUsualConversion
+        }()
+        
+        if needsSpecifier {
+            return "\\(\(variableName), specifier: \"\(placeholder.stringValueWithoutIndex)\")"
+        } else {
+            return "\\(\(variableName))"
         }
     }
     
@@ -180,5 +208,50 @@ private extension StringUnitDTO {
         return value
             .replacingOccurrences(of: "\\", with: "\\\\")
             .replacingOccurrences(of: "\"", with: "\\\"")
+    }
+}
+
+private extension FormatPlaceholder {
+    var stringValueWithoutIndex: String {
+        var result = "%"
+        
+        for flag in flags {
+            result.append(flag.rawValue)
+        }
+        
+        if let width {
+            result += width.stringValue
+        }
+        
+        if let precision {
+            result += "." + precision.stringValue
+        }
+        
+        if let length {
+            result += length.rawValue
+        }
+        
+        result.append(conversion.rawValue)
+        
+        if let variableName {
+            result += "\(variableName)@"
+        }
+        
+        return result
+    }
+}
+
+private extension FormatPlaceholder.Width {
+    var stringValue: String {
+        switch self {
+        case .static(let value):
+            return "\(value)"
+        case .dynamic(let index):
+            if let index {
+                return "*\(index)$"
+            } else {
+                return "*"
+            }
+        }
     }
 }
