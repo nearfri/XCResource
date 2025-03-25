@@ -32,7 +32,7 @@ struct CommentsFormatter {
                 in: StringLiteralFormatter.Context(
                     maxSingleLineColumns: context.maxSingleLineColumns,
                     maxMultilineColumns: context.maxMultilineColumns),
-                escapingMarkdown: type == .localizationValue)
+                escapingMarkdown: true)
             
             var formatter = LocalizationValueFormatter(syntax: formattedSyntax.segments)
             
@@ -54,10 +54,10 @@ private struct LocalizationValueFormatter {
     }
     
     mutating func refactor() -> StringLiteralSegmentListSyntax {
-        for (index, segment) in syntax.enumerated() {
+        for segment in syntax {
             switch segment {
             case .stringSegment(let stringSegment):
-                append(stringSegment, isLastSegment: index == syntax.count - 1)
+                append(stringSegment)
             case .expressionSegment(let expressionSegment):
                 append(expressionSegment)
             }
@@ -66,7 +66,7 @@ private struct LocalizationValueFormatter {
         return StringLiteralSegmentListSyntax(segments)
     }
     
-    private mutating func append(_ stringSegment: StringSegmentSyntax, isLastSegment: Bool) {
+    private mutating func append(_ stringSegment: StringSegmentSyntax) {
         var segment = stringSegment
         
         let text = segment.content.text

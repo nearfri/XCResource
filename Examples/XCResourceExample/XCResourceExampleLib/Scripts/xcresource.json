@@ -48,7 +48,7 @@
         {
             "commandName": "xcstrings2swift",
             "catalogPath": "Sources/Resources/Resources/Localizable.xcstrings",
-            "bundle": "atURL:Bundle.module.bundleURL",
+            "bundle": ".atURL(Bundle.module.bundleURL)",
             "swiftFilePath": "Sources/Resources/ResourceAccess/LocalizedStringResource+.swift"
         }
     ]

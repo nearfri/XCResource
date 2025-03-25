@@ -52,7 +52,7 @@ https://github.com/user-attachments/assets/16073e8f-9ad9-4e9c-b945-d542efd656f7
         {
             "commandName": "xcstrings2swift",
             "catalogPath": "Sources/Resources/Resources/Localizable.xcstrings",
-            "bundle": "atURL:Bundle.module.bundleURL",
+            "bundle": ".atURL(Bundle.module.bundleURL)",
             "swiftFilePath": "Sources/Resources/ResourceAccess/LocalizedStringResource+.swift"
         }
     ]

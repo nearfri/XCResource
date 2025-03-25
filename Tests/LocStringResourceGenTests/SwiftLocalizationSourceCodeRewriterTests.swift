@@ -31,13 +31,13 @@ import TestUtil
                   defaultValue: "Italic",
                   rawDefaultValue: "",
                   table: "TextSystem",
-                  bundle: .forClass("ResourceBundleClass.self"), 
+                  bundle: ".forClass(ResourceBundleClass.self)",
                   memberDeclaration: .property("italic")),
             .init(key: "underline",
                   defaultValue: "Underline",
                   rawDefaultValue: "",
                   table: "TextSystem",
-                  bundle: .forClass("ResourceBundleClass.self"),
+                  bundle: ".forClass(ResourceBundleClass.self)",
                   memberDeclaration: .property("underline")),
         ]
         
@@ -107,7 +107,7 @@ import TestUtil
                   defaultValue: "Italic",
                   rawDefaultValue: "",
                   table: "TextSystem",
-                  bundle: .forClass("ResourceBundleClass.self"),
+                  bundle: ".forClass(ResourceBundleClass.self)",
                   memberDeclaration: .property("italic")),
         ]
         
@@ -160,7 +160,7 @@ import TestUtil
                   defaultValue: "Italic",
                   rawDefaultValue: "",
                   table: "TextSystem",
-                  bundle: .forClass("ResourceBundleClass.self"),
+                  bundle: ".forClass(ResourceBundleClass.self)",
                   memberDeclaration: .property("italic")),
         ]
         

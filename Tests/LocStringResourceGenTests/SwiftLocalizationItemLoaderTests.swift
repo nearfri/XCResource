@@ -35,7 +35,7 @@ import SwiftParser
                 defaultValue: "Underline",
                 rawDefaultValue: "",
                 table: "TextSystem",
-                bundle: .forClass("FakeClass.self"),
+                bundle: ".forClass(FakeClass.self)",
                 developerComments: ["dev comments"],
                 memberDeclaration: .property("underline"))
         ])
@@ -71,7 +71,7 @@ import SwiftParser
                 defaultValue: #"My dog ate \(appleCount) today!"#,
                 rawDefaultValue: "",
                 table: "TextSystem",
-                bundle: .forClass("FakeClass.self"),
+                bundle: ".forClass(FakeClass.self)",
                 memberDeclaration: .method("dogEatingApples", [
                     .init(firstName: "appleCount", type: "Int")
                 ]))
@@ -116,7 +116,7 @@ import SwiftParser
                 defaultValue: "Underline",
                 rawDefaultValue: "",
                 table: "TextSystem",
-                bundle: .forClass("FakeClass.self"),
+                bundle: ".forClass(FakeClass.self)",
                 developerComments: ["dev comments"],
                 memberDeclaration: .property("underline")),
             LocalizationItem(
@@ -124,7 +124,7 @@ import SwiftParser
                 defaultValue: "Hello",
                 rawDefaultValue: "",
                 table: "TextSystem",
-                bundle: .forClass("FakeClass.self"),
+                bundle: ".forClass(FakeClass.self)",
                 memberDeclaration: .property("greeting"))
         ])
     }

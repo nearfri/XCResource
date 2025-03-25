@@ -9,7 +9,7 @@ import SwiftSyntax
             defaultValue: "Hello world",
             rawDefaultValue: "",
             table: "LocalizableSystem",
-            bundle: .forClass("ResourceBundleClass.self"),
+            bundle: ".forClass(ResourceBundleClass.self)",
             memberDeclaration: .property("someVariable"))
         
         #expect(VariableDeclSyntax(localizationItem).description == """

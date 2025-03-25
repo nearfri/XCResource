@@ -18,7 +18,7 @@ Below is an example configuration:
         {
             "commandName": "xcstrings2swift",
             "catalogPath": "Sources/ExampleLib/Resources/Localizable.xcstrings",
-            "bundle": "atURL:Bundle.module.bundleURL",
+            "bundle": ".atURL(Bundle.module.bundleURL)",
             "swiftFilePath": "Sources/ExampleLib/ResourceAccess/LocalizedStringResource+.swift"
         },
         {
@@ -64,7 +64,7 @@ These commands let you control how resources are handled and how Swift code is g
 Option | Description
 -------|------------
 `catalogPath` | The path to the `.xcstrings` file.
-`bundle` | Specifies the bundle containing the strings file. Possible values: `main`, `atURL:<url-getter>` or `forClass:<class-type>`. Default: `main`.
+`bundle` | Specifies the bundle containing the strings file. See [`LocalizedStringResource.BundleDescription`](https://developer.apple.com/documentation/foundation/localizedstringresource/bundledescription). Default: `.main`.
 `swiftFilePath` | The path where the generated Swift file will be saved.
 `resourceTypeName` | The name of the generated resource type. Default: `LocalizedStringResource`.
 

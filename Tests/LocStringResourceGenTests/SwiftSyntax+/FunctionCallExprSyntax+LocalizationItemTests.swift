@@ -36,7 +36,7 @@ import SwiftSyntax
             key: "some_key",
             defaultValue: #"This file is \(fileSize) bytes."#,
             rawDefaultValue: "",
-            bundle: .forClass("ResourceBundleClass.self"),
+            bundle: ".forClass(ResourceBundleClass.self)",
             memberDeclaration: .method("some_key", [.init(firstName: "fileSize", type: "Int")]))
         
         #expect(FunctionCallExprSyntax(localizationItem).description == #"""
@@ -51,7 +51,7 @@ import SwiftSyntax
             key: "some_key",
             defaultValue: "Hello\nWorld!",
             rawDefaultValue: "",
-            bundle: .forClass("ResourceBundleClass.self"),
+            bundle: ".forClass(ResourceBundleClass.self)",
             memberDeclaration: .property("some_key"))
         
         #expect(FunctionCallExprSyntax(localizationItem).description == #"""

@@ -33,7 +33,7 @@ In the `xcresource.json` file, include the `xcstrings2swift` command to specify 
         {
             "commandName": "xcstrings2swift",
             "catalogPath": "Sources/ExampleLib/Resources/Localizable.xcstrings",
-            "bundle": "atURL:Bundle.module.bundleURL",
+            "bundle": ".atURL(Bundle.module.bundleURL)",
             "swiftFilePath": "Sources/ExampleLib/ResourceAccess/LocalizedStringResource+.swift"
         }
     ]

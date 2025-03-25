@@ -80,7 +80,7 @@ private let configurationTemplate = """
         {
             "commandName": "xcstrings2swift",
             "catalogPath": "<#xcstrings file path#>",
-            "bundle": "<#main|atURL:<url-getter>|forClass:<class-type>#>",
+            "bundle": "<#.main|.atURL(<url-getter>)|.forClass(<class-type>)#>",
             "swiftFilePath": "<#swift file path#>",
             "resourceTypeName": "LocalizedStringResource"
         }

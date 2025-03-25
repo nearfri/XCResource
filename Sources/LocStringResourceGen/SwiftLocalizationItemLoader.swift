@@ -132,7 +132,7 @@ private class SourceFileVisitor: SyntaxVisitor {
                 currentItem.table = string(from: stringLiteral)
             }
         case .identifier("bundle"):
-            currentItem.bundle = bundle(from: node.expression) ?? .main
+            currentItem.bundle = .init(rawValue: node.expression.trimmedDescription)
         default:
             break
         }
@@ -149,31 +149,6 @@ private class SourceFileVisitor: SyntaxVisitor {
                 partialResult += expSegment.description
             }
         }
-    }
-    
-    private func bundle(from node: ExprSyntax) -> LocalizationItem.BundleDescription? {
-        if let node = MemberAccessExprSyntax(node) {
-            if case .identifier(let id) = node.declName.baseName.tokenKind, id == "main" {
-                return .main
-            }
-        }
-        
-        if let node = FunctionCallExprSyntax(node) {
-            guard let calledExpression = MemberAccessExprSyntax(node.calledExpression),
-                  case .identifier(let id) = calledExpression.declName.baseName.tokenKind
-            else { return nil }
-            
-            switch id {
-            case "atURL":
-                return .atURL(node.arguments.trimmedDescription)
-            case "forClass":
-                return .forClass(node.arguments.trimmedDescription)
-            default:
-                return nil
-            }
-        }
-        
-        return nil
     }
     
     private func finishCurrentItem() {
