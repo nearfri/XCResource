@@ -74,7 +74,7 @@ private struct LocalizationValueFormatter {
         if text.contains(.newlineSequence) {
             segment.content = .stringSegment(text.replacing(.newlineSequence, with: "\\\n"))
         } else if segment.trailingTrivia == .backslash + .newline {
-            segment = segment.with(\.trailingTrivia, Trivia())
+            segment.trailingTrivia = Trivia()
             segment.content = .stringSegment(text + "\n")
         }
         
@@ -82,7 +82,10 @@ private struct LocalizationValueFormatter {
     }
     
     private mutating func append(_ expressionSegment: ExpressionSegmentSyntax) {
-        segments.append(.stringSegment(StringSegmentSyntax(content: .stringSegment("\\"))))
-        segments.append(.expressionSegment(expressionSegment))
+        let text = expressionSegment.description.replacing(/["*\\]/) { match in
+            "\\\(match.output)"
+        }
+        
+        segments.append(.stringSegment(StringSegmentSyntax(content: .stringSegment(text))))
     }
 }

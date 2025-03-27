@@ -78,7 +78,7 @@ import Testing
     @Test func commentsFromContent_atInterpolation_insertBackslash() throws {
         // Given
         let string = #"""
-            \(filename) will be deleted.
+            \(count, specifier: "%5lld") files will be deleted.
             This action cannot be undone.
             """#
         
@@ -86,11 +86,11 @@ import Testing
         let comments = CommentsFormatter.comments(
             from: string,
             type: .localizationValue,
-            context: CommentsFormatter.Context(maxSingleLineColumns: 50, maxMultilineColumns: 50))
+            context: CommentsFormatter.Context(maxSingleLineColumns: 80, maxMultilineColumns: 80))
         
         // Then
         #expect(comments == [
-            "\\\\(filename) will be deleted.\\",
+            "\\\\(count, specifier: \\\"%5lld\\\") files will be deleted.\\",
             "This action cannot be undone.",
         ])
     }

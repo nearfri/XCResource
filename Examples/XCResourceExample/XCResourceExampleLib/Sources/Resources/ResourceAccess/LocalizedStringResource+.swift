@@ -47,7 +47,8 @@ public extension LocalizedStringResource {
     static var doubleFormat: Self {
         .init("double_format",
               defaultValue: "%lf works for doubles when formatting.",
-              bundle: .atURL(Bundle.module.bundleURL))
+              bundle: .atURL(Bundle.module.bundleURL),
+              comment: "This is not a string format. It is plain text.")
     }
     
     /// Copy
@@ -106,7 +107,7 @@ public extension LocalizedStringResource {
               bundle: .atURL(Bundle.module.bundleURL))
     }
     
-    /// The task is \\(fractionCompleted, specifier: "%.2lf")% complete.
+    /// The task is \\(fractionCompleted, specifier: \"%.2lf\")% complete.
     static func taskProgress(fractionCompleted: Double) -> Self {
         .init("task_progress",
               defaultValue: "The task is \(fractionCompleted, specifier: "%.2lf")% complete.",

@@ -33,6 +33,18 @@ extension FunctionCallExprSyntax {
                 LabeledExprSyntax(label: "bundle", expression: ExprSyntax(item.bundle))
                     .with(\.leadingTrivia, leadingTrivia)
             }
+            
+            if let comment = item.translationComment?.escapedForStringLiteral {
+                LabeledExprSyntax(
+                    label: "comment",
+                    expression: IndentIncreaser.indent(
+                        StringLiteralFormatter.refactor(
+                            syntax: StringLiteralExprSyntax(contentLiteral: comment),
+                            in: StringLiteralFormatter.Context()),
+                        indentation: indentInMultilineString)
+                )
+                .with(\.leadingTrivia, leadingTrivia)
+            }
         }
     }
 }
