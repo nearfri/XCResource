@@ -64,7 +64,8 @@ private enum Fixture {
                 .init("cancel",
                       defaultValue: "Cancel",
                       table: "CustomLocalizable",
-                      bundle: .forClass(BundleFinder.self))
+                      bundle: .forClass(BundleFinder.self),
+                      comment: "Cancellation")
             }
         }
         
@@ -112,7 +113,8 @@ private enum Fixture {
                 .init("cancel",
                       defaultValue: "Cancel",
                       table: "CustomLocalizable",
-                      bundle: .forClass(BundleFinder.self))
+                      bundle: .forClass(BundleFinder.self),
+                      comment: "Cancellation")
             }
         }
         

@@ -205,9 +205,7 @@ struct StringCatalogDTOMapper {
 
 private extension StringUnitDTO {
     var escapedValue: String {
-        return value
-            .replacingOccurrences(of: "\\", with: "\\\\")
-            .replacingOccurrences(of: "\"", with: "\\\"")
+        return value.escapedForStringLiteral
     }
 }
 

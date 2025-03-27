@@ -63,4 +63,40 @@ import SwiftSyntax
                   bundle: .forClass(ResourceBundleClass.self))
             """#)
     }
+    
+    @Test func initWithLocalizationItem_withComment() throws {
+        let localizationItem = LocalizationItem(
+            key: "some_key",
+            defaultValue: "Hello World!",
+            rawDefaultValue: "",
+            translationComment: "Greeting. e.g. \"Hi\"",
+            memberDeclaration: .property("some_key"))
+        
+        #expect(FunctionCallExprSyntax(localizationItem).description == #"""
+            .init("some_key",
+                  defaultValue: "Hello World!",
+                  comment: "Greeting. e.g. \"Hi\"")
+            """#)
+        
+        print(FunctionCallExprSyntax(localizationItem).description)
+    }
+    
+    @Test func initWithLocalizationItem_withMultilineComment() throws {
+        let localizationItem = LocalizationItem(
+            key: "some_key",
+            defaultValue: "Hello World!",
+            rawDefaultValue: "",
+            translationComment: "Greeting\nHi\nHello",
+            memberDeclaration: .property("some_key"))
+        
+        #expect(FunctionCallExprSyntax(localizationItem).description == #"""
+            .init("some_key",
+                  defaultValue: "Hello World!",
+                  comment: """
+                    Greeting
+                    Hi
+                    Hello
+                    """)
+            """#)
+    }
 }
