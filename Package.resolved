@@ -1,5 +1,5 @@
 {
-  "originHash" : "21ced3ca1824ca52dd5bf3127a50c89c444e8864ed96a6c0dafe0fed848ad323",
+  "originHash" : "ed09b52d74640ada3d7cd8bff9e0ec82c662e3139bc010cd91ee07e0478498a7",
   "pins" : [
     {
       "identity" : "strix",
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-syntax",
       "state" : {
-        "revision" : "0687f71944021d616d34d922343dcef086855920",
-        "version" : "600.0.1"
+        "revision" : "f99ae8aa18f0cf0d53481901f88a0991dc3bd4a2",
+        "version" : "601.0.1"
       }
     }
   ],

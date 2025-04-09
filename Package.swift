@@ -18,7 +18,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.1.4"),
-        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.1"),
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "601.0.1"),
 //        .package(url: "https://github.com/swiftlang/swift--docc-plugin.git", from: "1.4.3"),
         .package(url: "https://github.com/nearfri/Strix.git", from: "2.4.6"),
     ],
