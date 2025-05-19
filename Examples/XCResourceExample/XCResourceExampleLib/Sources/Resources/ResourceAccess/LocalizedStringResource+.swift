@@ -100,6 +100,13 @@ public extension LocalizedStringResource {
               bundle: .atURL(Bundle.module.bundleURL))
     }
     
+    /// \\(itemCount) items deleted
+    static func itemDeletedToast(itemCount: Int) -> Self {
+        .init("item_deleted_toast",
+              defaultValue: "\(itemCount) items deleted",
+              bundle: .atURL(Bundle.module.bundleURL))
+    }
+    
     /// ^[\\(count) person]\(inflect: true)
     static func people(count: Int) -> Self {
         .init("people",
