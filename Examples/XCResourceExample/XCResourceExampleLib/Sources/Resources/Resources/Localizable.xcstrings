@@ -262,6 +262,40 @@
         }
       }
     },
+    "item_deleted_toast" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Item deleted"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%lld items deleted"
+                }
+              }
+            }
+          }
+        },
+        "ko" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld개의 아이템을 지웠습니다"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "people" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {

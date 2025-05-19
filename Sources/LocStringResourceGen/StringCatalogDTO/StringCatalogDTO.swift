@@ -16,7 +16,7 @@ struct StringDTO: Codable, Hashable, Sendable {
 // optional: substitutions
 struct LocalizationDTO: Codable, Hashable, Sendable {
     var stringUnit: StringUnitDTO?
-    var variations: DeviceVariationsDTO?
+    var variations: VariationsDTO?
     var substitutions: [String: SubstitutionDTO]? // %#@key@
 }
 
@@ -31,15 +31,115 @@ struct SubstitutionDTO: Codable, Hashable, Sendable {
     var variations: PluralVariationsDTO
 }
 
+enum VariationsDTO: Codable, Hashable, Sendable {
+    case device(DeviceVariationsDTO)
+    case plural(PluralVariationsDTO)
+    
+    enum CodingKeys: String, CodingKey {
+        case device
+        case plural
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let keyedContainer = try decoder.container(keyedBy: CodingKeys.self)
+        let singleContainer = try decoder.singleValueContainer()
+        
+        switch keyedContainer.allKeys.first {
+        case .device:
+            self = .device(try singleContainer.decode(DeviceVariationsDTO.self))
+        case .plural:
+            self = .plural(try singleContainer.decode(PluralVariationsDTO.self))
+        default:
+            throw DecodingError.typeMismatch(VariationsDTO.self, .init(
+                codingPath: keyedContainer.codingPath,
+                debugDescription: "Expected either 'device' or 'plural' key in VariationsDTO"))
+        }
+    }
+    
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.singleValueContainer()
+        
+        switch self {
+        case .device(let deviceVariationsDTO):
+            try container.encode(deviceVariationsDTO)
+        case .plural(let pluralVariationsDTO):
+            try container.encode(pluralVariationsDTO)
+        }
+    }
+}
+
 struct DeviceVariationsDTO: Codable, Hashable, Sendable {
-    var device: [String: VariationValueDTO] // key: DeviceDTO
+    var device: [String: DeviceVariationValueDTO] // key: DeviceDTO
+    
+    var valuesByDevice: [DeviceDTO: DeviceVariationValueDTO] {
+        return device.reduce(into: [:]) { partialResult, each in
+            let (deviceName, variationValueDTO) = each
+            if let deviceDTO = DeviceDTO(rawValue: deviceName) {
+                partialResult[deviceDTO] = variationValueDTO
+            }
+        }
+    }
+}
+
+enum DeviceVariationValueDTO: Codable, Hashable, Sendable {
+    case stringUnit(StringUnitDTO)
+    case variations(PluralVariationsDTO)
+    
+    var stringUnit: StringUnitDTO? {
+        switch self {
+        case .stringUnit(let stringUnitDTO):
+            return stringUnitDTO
+        case .variations(let pluralVariationsDTO):
+            return pluralVariationsDTO.primaryStringUnit
+        }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case stringUnit
+        case variations
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        switch container.allKeys.first {
+        case .stringUnit:
+            self = .stringUnit(try container.decode(StringUnitDTO.self, forKey: .stringUnit))
+        case .variations:
+            self = .variations(try container.decode(PluralVariationsDTO.self, forKey: .variations))
+        default:
+            throw DecodingError.typeMismatch(VariationsDTO.self, .init(
+                codingPath: container.codingPath,
+                debugDescription: """
+                    Expected either 'stringUnit' or 'variations' key in VariationValueDTO
+                    """))
+        }
+    }
+    
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        switch self {
+        case .stringUnit(let stringUnitDTO):
+            try container.encode(stringUnitDTO, forKey: .stringUnit)
+        case .variations(let pluralVariationsDTO):
+            try container.encode(pluralVariationsDTO, forKey: .variations)
+        }
+    }
 }
 
 struct PluralVariationsDTO: Codable, Hashable, Sendable {
-    var plural: [String: VariationValueDTO] // key: PluralDTO
+    var plural: [String: PluralVariationValueDTO] // key: PluralDTO
+    
+    var primaryStringUnit: StringUnitDTO? {
+        if let valueDTO = plural[PluralDTO.other.rawValue] {
+            return valueDTO.stringUnit
+        }
+        return plural.sorted(by: { $0.key < $1.key }).first?.value.stringUnit
+    }
 }
 
-struct VariationValueDTO: Codable, Hashable, Sendable {
+struct PluralVariationValueDTO: Codable, Hashable, Sendable {
     var stringUnit: StringUnitDTO
 }
 

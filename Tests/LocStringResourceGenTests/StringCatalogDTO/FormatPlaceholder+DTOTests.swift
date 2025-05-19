@@ -23,7 +23,7 @@ import StrixParsers
             argNum: 2,
             formatSpecifier: "lld",
             variations: PluralVariationsDTO(plural: [
-                "other": VariationValueDTO(
+                "other": PluralVariationValueDTO(
                     stringUnit: StringUnitDTO(state: "translated", value: "%arg apples"))
             ]))
         

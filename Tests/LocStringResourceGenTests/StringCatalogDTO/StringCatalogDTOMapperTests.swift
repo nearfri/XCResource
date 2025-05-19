@@ -83,12 +83,12 @@ import Testing
             sourceLanguage: "en",
             strings: ["tutorial1": StringDTO(localizations: [
                 "en": LocalizationDTO(
-                    variations: DeviceVariationsDTO(device: [
-                        "iphone": VariationValueDTO(stringUnit: StringUnitDTO(state: "translated",
-                                                                              value: "Tap here")),
-                        "mac": VariationValueDTO(stringUnit: StringUnitDTO(state: "translated",
-                                                                           value: "Click here")),
-                    ]))
+                    variations: .device(DeviceVariationsDTO(device: [
+                        "iphone": .stringUnit(StringUnitDTO(state: "translated",
+                                                            value: "Tap here")),
+                        "mac": .stringUnit(StringUnitDTO(state: "translated",
+                                                         value: "Click here")),
+                    ])))
             ])])
         
         // When
@@ -220,11 +220,11 @@ import Testing
                             argNum: 1,
                             formatSpecifier: "lld",
                             variations: PluralVariationsDTO(plural: [
-                                "zero": VariationValueDTO(stringUnit: StringUnitDTO(
+                                "zero": PluralVariationValueDTO(stringUnit: StringUnitDTO(
                                     state: "new", value: "no apples")),
-                                "one": VariationValueDTO(stringUnit: StringUnitDTO(
+                                "one": PluralVariationValueDTO(stringUnit: StringUnitDTO(
                                     state: "new", value: "one apple")),
-                                "other": VariationValueDTO(stringUnit: StringUnitDTO(
+                                "other": PluralVariationValueDTO(stringUnit: StringUnitDTO(
                                     state: "new", value: "%arg apples")),
                             ]))
                     ])

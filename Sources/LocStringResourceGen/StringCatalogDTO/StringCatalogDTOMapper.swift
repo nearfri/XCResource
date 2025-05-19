@@ -76,30 +76,27 @@ struct StringCatalogDTOMapper {
     }
     
     private func stringUnitDTO(from dto: LocalizationDTO) -> StringUnitDTO? {
-        if let stringUnit = dto.stringUnit {
-            return stringUnit
+        if let stringUnitDTO = dto.stringUnit {
+            return stringUnitDTO
         }
         
-        guard let variations = dto.variations else {
+        guard let variationsDTO = dto.variations else {
             return nil
         }
         
-        let stringUnitDTOsByDevice: [DeviceDTO: StringUnitDTO] = variations.device
-            .reduce(into: [:]) { partialResult, each in
-                let (deviceName, variationValueDTO) = each
-                if let deviceDTO = DeviceDTO(rawValue: deviceName) {
-                    partialResult[deviceDTO] = variationValueDTO.stringUnit
-                }
+        switch variationsDTO {
+        case .device(let deviceVariationsDTO):
+            let valuesByDevice = deviceVariationsDTO.valuesByDevice
+            let preferredDeviceDTOs: [DeviceDTO] = [.iPhone, .mac, .other]
+            if let deviceDTO = preferredDeviceDTOs.first(where: { valuesByDevice[$0] != nil }) {
+                return valuesByDevice[deviceDTO]?.stringUnit
             }
-        
-        let preferredDeviceDTOs: [DeviceDTO] = [.iPhone, .mac, .other]
-        for preferredDeviceDTO in preferredDeviceDTOs {
-            if let stringUnitDTO = stringUnitDTOsByDevice[preferredDeviceDTO] {
-                return stringUnitDTO
-            }
+            return valuesByDevice
+                .sorted(by: { $0.key.rawValue < $1.key.rawValue })
+                .first?.value.stringUnit
+        case .plural(let pluralVariationsDTO):
+            return pluralVariationsDTO.primaryStringUnit
         }
-        
-        return stringUnitDTOsByDevice.first?.value
     }
     
     private func formatInfo(
