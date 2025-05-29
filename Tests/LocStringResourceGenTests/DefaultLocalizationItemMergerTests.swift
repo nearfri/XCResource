@@ -91,21 +91,23 @@ import Testing
         // Given
         let itemsInCatalog: [LocalizationItem] = [
             .init(key: "hello",
-                  defaultValue: "Hello \\(param1)!! \\(param2) percent.",
-                  rawDefaultValue: "Hello %@!! %f percent.",
+                  defaultValue: "Hello \\(param1)!! \\(param2) percent. \\(param3).",
+                  rawDefaultValue: "Hello %@!! %f percent. %@.",
                   memberDeclaration: .method("hello", [
                     .init(firstName: "_", secondName: "param1", type: "String"),
                     .init(firstName: "_", secondName: "param2", type: "Float"),
+                    .init(firstName: "_", secondName: "param3", type: "String"),
                   ])),
         ]
         
         let itemsInSourceCode: [LocalizationItem] = [
             .init(key: "hello",
-                  defaultValue: "Hello \\(name)!! \\(progress) percent.",
+                  defaultValue: "Hello \\(name)!! \\(progress) percent. \\(resource).",
                   rawDefaultValue: "",
                   memberDeclaration: .method("greeting", [
                     .init(firstName: "name", type: "AttributedString"),
                     .init(firstName: "progress", type: "Double"),
+                    .init(firstName: "resource", type: "LocalizedStringResource"),
                   ])),
         ]
         
@@ -116,11 +118,12 @@ import Testing
         // Then
         #expect(newItems == [
             .init(key: "hello",
-                  defaultValue: "Hello \\(name)!! \\(progress) percent.",
-                  rawDefaultValue: "Hello %@!! %f percent.",
+                  defaultValue: "Hello \\(name)!! \\(progress) percent. \\(resource).",
+                  rawDefaultValue: "Hello %@!! %f percent. %@.",
                   memberDeclaration: .method("greeting", [
                     .init(firstName: "name", type: "AttributedString"),
                     .init(firstName: "progress", type: "Double"),
+                    .init(firstName: "resource", type: "LocalizedStringResource"),
                   ])),
         ])
     }

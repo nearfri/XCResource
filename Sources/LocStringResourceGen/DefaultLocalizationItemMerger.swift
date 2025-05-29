@@ -60,13 +60,23 @@ private extension LocalizationItem {
         
         guard typesInSourceCode.count == typesInCatalog.count else { return false }
         
-        return zip(typesInSourceCode, typesInCatalog).allSatisfy {
-            switch ($0, $1) {
-            case ("AttributedString", "String"), ("Double", "Float"):
+        let compatibleTypes: [String: Set<String>] = [
+            "Float": ["Double"],
+            "String": [
+                "AttributedString",
+                // CustomLocalizedStringResourceConvertible types
+                "AppIntentError",
+                "CLPlacemark",
+                "LocalizedStringResource",
+                "ManagedAppDistributionError",
+            ],
+        ]
+        
+        return zip(typesInCatalog, typesInSourceCode).allSatisfy { typeInCatalog, typeInCode in
+            if typeInCatalog == typeInCode {
                 return true
-            default:
-                return $0 == $1
             }
+            return compatibleTypes[typeInCatalog]?.contains(typeInCode) ?? false
         }
     }
 }
