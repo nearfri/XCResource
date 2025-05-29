@@ -38,6 +38,8 @@ class DefaultLocalizationItemMerger: LocalizationItemMerger {
                 } catch {
                     assertionFailure("\(error)")
                 }
+            } else {
+                newItem.memberDeclaration.id = itemInSourceCode.memberDeclaration.id
             }
             
             newItem.developerComments = itemInSourceCode.developerComments

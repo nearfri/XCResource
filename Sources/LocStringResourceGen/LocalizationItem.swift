@@ -8,9 +8,19 @@ extension LocalizationItem {
         case method(String, [Parameter])
         
         public var id: String {
-            switch self {
-            case .property(let id), .method(let id, _):
-                return id
+            get {
+                switch self {
+                case .property(let id), .method(let id, _):
+                    return id
+                }
+            }
+            set {
+                switch self {
+                case .property:
+                    self = .property(newValue)
+                case .method(_, let parameters):
+                    self = .method(newValue, parameters)
+                }
             }
         }
     }

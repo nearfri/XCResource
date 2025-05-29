@@ -26,7 +26,7 @@ import Testing
             .init(key: "hello",
                   defaultValue: "Hello \\(name)!!",
                   rawDefaultValue: "",
-                  memberDeclaration: .method("hello", [
+                  memberDeclaration: .method("greeting", [
                     .init(firstName: "name", type: "String"),
                   ])),
         ]
@@ -40,7 +40,7 @@ import Testing
             .init(key: "hello",
                   defaultValue: "Hello \\(name)!!",
                   rawDefaultValue: "Hello %@!!",
-                  memberDeclaration: .method("hello", [
+                  memberDeclaration: .method("greeting", [
                     .init(firstName: "name", type: "String"),
                   ])),
             .init(key: "bye",
@@ -67,7 +67,7 @@ import Testing
             .init(key: "hello",
                   defaultValue: "Hello \\(code)!!",
                   rawDefaultValue: "",
-                  memberDeclaration: .method("hello", [
+                  memberDeclaration: .method("greeting", [
                     .init(firstName: "code", type: "Int"),
                   ])),
         ]
@@ -81,7 +81,7 @@ import Testing
             .init(key: "hello",
                   defaultValue: "Hello \\(param1)!!",
                   rawDefaultValue: "Hello %@!!",
-                  memberDeclaration: .method("hello", [
+                  memberDeclaration: .method("greeting", [
                     .init(firstName: "_", secondName: "param1", type: "String"),
                   ])),
         ])
@@ -103,7 +103,7 @@ import Testing
             .init(key: "hello",
                   defaultValue: "Hello \\(name)!! \\(progress) percent.",
                   rawDefaultValue: "",
-                  memberDeclaration: .method("hello", [
+                  memberDeclaration: .method("greeting", [
                     .init(firstName: "name", type: "AttributedString"),
                     .init(firstName: "progress", type: "Double"),
                   ])),
@@ -118,7 +118,7 @@ import Testing
             .init(key: "hello",
                   defaultValue: "Hello \\(name)!! \\(progress) percent.",
                   rawDefaultValue: "Hello %@!! %f percent.",
-                  memberDeclaration: .method("hello", [
+                  memberDeclaration: .method("greeting", [
                     .init(firstName: "name", type: "AttributedString"),
                     .init(firstName: "progress", type: "Double"),
                   ])),
@@ -141,7 +141,7 @@ import Testing
                   defaultValue: "100\\(param1)uccess",
                   rawDefaultValue: "",
                   developerComments: ["xcresource:verbatim"],
-                  memberDeclaration: .method("success100", [
+                  memberDeclaration: .method("successAll", [
                     .init(firstName: "_", secondName: "param1", type: "UnsafePointer<UInt8>"),
                   ])),
         ]
@@ -156,7 +156,7 @@ import Testing
                   defaultValue: "100% success",
                   rawDefaultValue: "100% success",
                   developerComments: ["xcresource:verbatim"],
-                  memberDeclaration: .property("success100")),
+                  memberDeclaration: .property("successAll")),
         ])
     }
 }
