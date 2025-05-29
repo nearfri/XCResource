@@ -62,7 +62,9 @@ private extension LocalizationItem {
         
         return zip(typesInSourceCode, typesInCatalog).allSatisfy {
             switch ($0, $1) {
-            case ("AttributedString", "String"), ("Double", "Float"):
+            case ("AttributedString", "String"),
+                ("LocalizedStringResource", "String"),
+                ("Double", "Float"):
                 return true
             default:
                 return $0 == $1
