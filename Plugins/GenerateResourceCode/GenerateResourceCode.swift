@@ -75,25 +75,7 @@ extension GenerateResourceCode: XcodeCommandPlugin {
         
         let toolArguments = toolArguments(context: context, pluginArguments: arguments)
         
-        var processError: Error?
-        
-        let semaphore = DispatchSemaphore(value: 0)
-        
-        Task {
-            do {
-                try await Process.run(toolURL, arguments: toolArguments)
-            } catch {
-                processError = error
-            }
-            
-            semaphore.signal()
-        }
-        
-        semaphore.wait()
-        
-        if let processError {
-            throw processError
-        }
+        try Process.run(toolURL, arguments: toolArguments)
     }
 }
 

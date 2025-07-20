@@ -1,6 +1,16 @@
 import Foundation
 
 extension Process {
+    static func run(_ url: URL, arguments: [String]) throws {
+        let process = Process()
+        process.executableURL = url
+        process.arguments = arguments
+        
+        try process.run()
+        process.waitUntilExit()
+        try process.validateTermination()
+    }
+    
     static func run(_ url: URL, arguments: [String]) async throws {
         let process = Process()
         process.executableURL = url
