@@ -1,22 +1,22 @@
 {
-  "originHash" : "ed09b52d74640ada3d7cd8bff9e0ec82c662e3139bc010cd91ee07e0478498a7",
+  "originHash" : "2b39783fd1282404291d6a5115384b8cc0e929ceb0d22f83d32767fcf27b6b99",
   "pins" : [
     {
       "identity" : "strix",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/nearfri/Strix",
+      "location" : "https://github.com/nearfri/Strix.git",
       "state" : {
-        "revision" : "820b86fadfebd1852dc28f5ade49c3dc1677953b",
-        "version" : "2.4.6"
+        "revision" : "0f4ebc2180e3504d02f5884b2d6a8d1db69ece29",
+        "version" : "2.4.8"
       }
     },
     {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser",
+      "location" : "https://github.com/apple/swift-argument-parser.git",
       "state" : {
-        "revision" : "41982a3656a71c768319979febd796c6fd111d5c",
-        "version" : "1.5.0"
+        "revision" : "309a47b2b1d9b5e991f36961c983ecec72275be3",
+        "version" : "1.6.1"
       }
     },
     {

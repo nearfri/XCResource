@@ -181,6 +181,32 @@ import Testing
         ])
     }
     
+    @Test func localizationItems_method_namedFormatSpecifier() throws {
+        // Given
+        let dto = StringCatalogDTO(
+            version: "1.0",
+            sourceLanguage: "en",
+            strings: ["number": StringDTO(localizations: [
+                "en": LocalizationDTO(
+                    stringUnit: StringUnitDTO(
+                        state: "translated", value: "number = %1$(num)10.5lf"))
+            ])])
+        
+        // When
+        let items = try sut.localizationItems(from: dto)
+        
+        // Then
+        #expect(items == [
+            LocalizationItem(
+                key: "number",
+                defaultValue: "number = \\(num, specifier: \"%10.5lf\")",
+                rawDefaultValue: "number = %1$(num)10.5lf",
+                memberDeclaration: .method("number", [
+                    LocalizationItem.Parameter(firstName: "num", type: "Double")
+                ]))
+        ])
+    }
+    
     @Test func localizationItems_method_sortParameters() throws {
         // Given
         let dto = StringCatalogDTO(

@@ -9,6 +9,7 @@ struct StringCatalogDTO: Codable, Hashable, Sendable {
 struct StringDTO: Codable, Hashable, Sendable {
     var comment: String?
     var extractionState: String? // extracted_with_value, manual, migrated
+    var generatesSymbol: Bool?
     var localizations: [String: LocalizationDTO] // key: language
 }
 

@@ -33,7 +33,8 @@ private struct ParserGenerator {
     var formatUnits: Parser<[FormatUnit]> {
         typealias SpecInfoParser = Parser<(specifier: FormatSpecifier?, substring: Substring)>
         
-        let formatSpecifier: SpecInfoParser = Parser.formatSpecifier.map({ (Optional($0), $1) })
+        let formatSpecifier: SpecInfoParser = Parser.namedFormatSpecifier
+            .map({ (Optional($0), $1) })
         
         let anyCharacter: SpecInfoParser = Parser.anyCharacter.map({ (nil, $1) })
         
