@@ -12,6 +12,7 @@ import Foundation
                 "cancel" : {
                   "comment" : "Cancel",
                   "extractionState" : "migrated",
+                  "generatesSymbol" : false,
                   "localizations" : {
                     "en" : {
                       "stringUnit" : {
@@ -39,6 +40,7 @@ import Foundation
                 "cancel": StringDTO(
                     comment: "Cancel",
                     extractionState: "migrated",
+                    generatesSymbol: false,
                     localizations: [
                         "en": LocalizationDTO(
                             stringUnit: StringUnitDTO(state: "translated", value: "Cancel")),

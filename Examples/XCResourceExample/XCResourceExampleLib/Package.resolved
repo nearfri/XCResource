@@ -1,13 +1,13 @@
 {
-  "originHash" : "f05b719d92bb68fe85ac7fb60c943dbd8e065beac3c3bd0deaaf2351a4931f5b",
+  "originHash" : "adb24e9be561cc40a8329e115d943aa52e5cbf56401056a30ea64b9fe95b6f3a",
   "pins" : [
     {
       "identity" : "strix",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nearfri/Strix",
       "state" : {
-        "revision" : "820b86fadfebd1852dc28f5ade49c3dc1677953b",
-        "version" : "2.4.6"
+        "revision" : "0f4ebc2180e3504d02f5884b2d6a8d1db69ece29",
+        "version" : "2.4.8"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-syntax",
       "state" : {
-        "revision" : "0687f71944021d616d34d922343dcef086855920",
-        "version" : "600.0.1"
+        "revision" : "f99ae8aa18f0cf0d53481901f88a0991dc3bd4a2",
+        "version" : "601.0.1"
       }
     }
   ],

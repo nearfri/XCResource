@@ -1,13 +1,13 @@
 {
-  "originHash" : "84d303a83481ac36311e2f7b3fc812e8e0ec19f60ca0fd3278ee256caabc78d7",
+  "originHash" : "adb24e9be561cc40a8329e115d943aa52e5cbf56401056a30ea64b9fe95b6f3a",
   "pins" : [
     {
       "identity" : "strix",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nearfri/Strix.git",
       "state" : {
-        "revision" : "820b86fadfebd1852dc28f5ade49c3dc1677953b",
-        "version" : "2.4.6"
+        "revision" : "0f4ebc2180e3504d02f5884b2d6a8d1db69ece29",
+        "version" : "2.4.8"
       }
     },
     {

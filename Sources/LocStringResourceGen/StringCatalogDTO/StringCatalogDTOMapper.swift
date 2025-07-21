@@ -158,7 +158,7 @@ struct StringCatalogDTOMapper {
     }
     
     private func interpolation(from placeholder: FormatPlaceholder, index: Int) -> String {
-        let variableName = placeholder.variableName ?? "param\(index)"
+        let name = placeholder.resolvedName ?? "param\(index)"
         
         let needsSpecifier: Bool = {
             if placeholder.isPluralVariable {
@@ -180,16 +180,16 @@ struct StringCatalogDTOMapper {
         }()
         
         if needsSpecifier {
-            return "\\(\(variableName), specifier: \"\(placeholder.stringValueWithoutIndex)\")"
+            return "\\(\(name), specifier: \"\(placeholder.stringValueWithoutIndex)\")"
         } else {
-            return "\\(\(variableName))"
+            return "\\(\(name))"
         }
     }
     
     private func methodParameters(from formatUnits: [FormatUnit]) -> [LocalizationItem.Parameter] {
         return formatUnits.compactMap(\.placeholder).enumerated().map { index, placeholder in
-            let firstName = placeholder.variableName ?? "_"
-            let secondName = placeholder.variableName == nil ? "param\(index + 1)" : nil
+            let firstName = placeholder.resolvedName ?? "_"
+            let secondName = placeholder.resolvedName == nil ? "param\(index + 1)" : nil
             let type = String(formatPlaceholder: placeholder)
             
             return LocalizationItem.Parameter(
