@@ -9,7 +9,10 @@ import Foundation
         
         #expect(URL(filePath: "~", expandingTilde: true) == homeURL)
         
-        #expect(URL(filePath: "~", expandingTilde: false) != homeURL)
+        if #unavailable(macOS 26) {
+            #expect(URL(filePath: "~", expandingTilde: false) != homeURL)
+        }
+        
         #expect(URL(filePath: "~", expandingTilde: false) == URL(filePath: "~"))
         
         #expect(URL(filePath: "~/hello/world", expandingTilde: true) ==
