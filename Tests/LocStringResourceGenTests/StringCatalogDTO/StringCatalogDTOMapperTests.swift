@@ -233,6 +233,31 @@ import Testing
         ])
     }
     
+    @Test func localizationItems_method_duplicatedParameters() throws {
+        // Given
+        let dto = StringCatalogDTO(
+            version: "1.0",
+            sourceLanguage: "en",
+            strings: ["greeting": StringDTO(localizations: [
+                "en": LocalizationDTO(
+                    stringUnit: StringUnitDTO(state: "new", value: "hello %1$@, %1$@"))
+            ])])
+        
+        // When
+        let items = try sut.localizationItems(from: dto)
+        
+        // Then
+        #expect(items == [
+            LocalizationItem(
+                key: "greeting",
+                defaultValue: "hello \\(param1), \\(param1)",
+                rawDefaultValue: "hello %1$@, %1$@",
+                memberDeclaration: .method("greeting", [
+                    LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "String")
+                ]))
+        ])
+    }
+    
     @Test func localizationItems_method_substitutions() throws {
         // Given
         let dto = StringCatalogDTO(
@@ -268,6 +293,90 @@ import Testing
                 memberDeclaration: .method("eatingApples", [
                     .init(firstName: "_", secondName: "param1", type: "String"),
                     .init(firstName: "appleCount", type: "Int")
+                ]))
+        ])
+    }
+    
+    @Test func localizationItems_method_containsOnlySubstitutions() throws {
+        // Given
+        let dto = StringCatalogDTO(
+            version: "1.0",
+            sourceLanguage: "en",
+            strings: ["search_results": StringDTO(localizations: [
+                "en": LocalizationDTO(
+                    stringUnit: StringUnitDTO(state: "new", value: "%#@count@"),
+                    substitutions: [
+                        "count": SubstitutionDTO(
+                            argNum: 1,
+                            formatSpecifier: "lld",
+                            variations: PluralVariationsDTO(plural: [
+                                "zero": PluralVariationValueDTO(stringUnit: StringUnitDTO(
+                                    state: "new", value: "No results")),
+                                "one": PluralVariationValueDTO(stringUnit: StringUnitDTO(
+                                    state: "new", value: "One result")),
+                                "other": PluralVariationValueDTO(stringUnit: StringUnitDTO(
+                                    state: "new", value: "Many results")),
+                            ]))
+                    ])
+            ])])
+        
+        // When
+        let items = try sut.localizationItems(from: dto)
+        
+        // Then
+        #expect(items == [
+            LocalizationItem(
+                key: "search_results",
+                defaultValue: "\\(count)\nMany results",
+                rawDefaultValue: "%#@count@",
+                memberDeclaration: .method("searchResults", [
+                    .init(firstName: "count", type: "Int")
+                ]))
+        ])
+    }
+    
+    @Test func localizationItems_method_substitutions_additionalArgument() throws {
+        // Given
+        let dto = StringCatalogDTO(
+            version: "1.0",
+            sourceLanguage: "en",
+            strings: ["eating_apples": StringDTO(localizations: [
+                "en": LocalizationDTO(
+                    stringUnit: StringUnitDTO(state: "new", value: "%1$#@arg1@"),
+                    substitutions: [
+                        "arg1": SubstitutionDTO(
+                            argNum: 1,
+                            formatSpecifier: "lld",
+                            variations: PluralVariationsDTO(plural: [
+                                "zero": PluralVariationValueDTO(stringUnit: StringUnitDTO(
+                                    state: "new", value: "no apples")),
+                                "one": PluralVariationValueDTO(stringUnit: StringUnitDTO(
+                                    state: "new", value: "%1$lld apple")),
+                                "other": PluralVariationValueDTO(stringUnit: StringUnitDTO(
+                                    state: "new", value: "%2$@ apples")),
+                            ]))
+                    ])
+            ])])
+        
+        // When
+        let items = try sut.localizationItems(from: dto)
+        
+        // Then
+        #expect(items[0].key == "eating_apples")
+        #expect(items[0].defaultValue == "\\(arg1) \\(param2)\n%2$@ apples")
+        #expect(items[0].rawDefaultValue == "%1$#@arg1@")
+        #expect(items[0].memberDeclaration == .method("eatingApples", [
+            .init(firstName: "arg1", type: "Int"),
+            .init(firstName: "_", secondName: "param2", type: "String")
+        ]))
+        #expect(items == [
+            LocalizationItem(
+                key: "eating_apples",
+                defaultValue: "\\(arg1) \\(param2)\n%2$@ apples",
+                rawDefaultValue: "%1$#@arg1@",
+                memberDeclaration: .method("eatingApples", [
+                    .init(firstName: "arg1", type: "Int"),
+                    .init(firstName: "_", secondName: "param2", type: "String")
                 ]))
         ])
     }

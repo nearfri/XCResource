@@ -4,7 +4,7 @@ import StrixParsers
 
 struct FormatUnit: Equatable, Sendable {
     var specifier: FormatSpecifier
-    var range: Range<String.Index>
+    var range: Range<String.Index>?
     
     var placeholder: FormatPlaceholder? {
         switch specifier {
@@ -17,7 +17,7 @@ struct FormatUnit: Equatable, Sendable {
 }
 
 extension FormatUnit {
-    init(placeholder: FormatPlaceholder, range: Range<String.Index>) {
+    init(placeholder: FormatPlaceholder, range: Range<String.Index>?) {
         self.specifier = .placeholder(placeholder)
         self.range = range
     }
