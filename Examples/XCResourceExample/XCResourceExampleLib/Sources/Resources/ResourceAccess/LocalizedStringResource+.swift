@@ -114,6 +114,28 @@ public extension LocalizedStringResource {
               bundle: .atURL(Bundle.module.bundleURL))
     }
     
+    /// \\(count) \\(count, format: .number)\
+    /// %2$@ results
+    static func searchResult(count: Int) -> Self {
+        .init("search_results",
+              defaultValue: """
+                \(count) \(count, format: .number)
+                %2$@ results
+                """,
+              bundle: .atURL(Bundle.module.bundleURL))
+    }
+    
+    /// \\(count)\
+    /// Many results
+    static func simpleSearchResults(count: Int) -> Self {
+        .init("simple_search_results",
+              defaultValue: """
+                \(count)
+                Many results
+                """,
+              bundle: .atURL(Bundle.module.bundleURL))
+    }
+    
     /// The task is \\(fractionCompleted, specifier: \"%.2lf\")% complete.
     static func taskProgress(fractionCompleted: Double) -> Self {
         .init("task_progress",

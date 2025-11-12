@@ -21,6 +21,8 @@ public struct ContentView: View {
                 .aspectRatio(contentMode: .fit)
                 .layoutPriority(1)
             
+            Text(.searchResult(count: 1))
+            
             Text(.dogEatingApples(dogName: dogName, appleCount: 1))
                 .font(.custom(.openSansRegular, size: 16))
                 .bold(isBold)

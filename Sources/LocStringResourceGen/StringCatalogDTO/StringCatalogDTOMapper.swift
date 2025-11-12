@@ -5,8 +5,13 @@ import StrixParsers
 
 extension StringCatalogDTOMapper {
     private struct FormatInfo {
-        let substitutedFormatUnits: [FormatUnit]
-        let sortedFormatUnits: [FormatUnit]
+        var formatUnits: [FormatUnit] = []
+        
+        var additionalFormatUnits: [FormatUnit] = []
+        
+        var allUniqueFormatUnits: [FormatUnit] {
+            return (formatUnits + additionalFormatUnits).removingDuplicatePlaceholderIndices()
+        }
     }
     
     enum Error: Swift.Error {
@@ -58,9 +63,15 @@ struct StringCatalogDTOMapper {
         let formatInfo = try formatInfo(from: stringUnitDTO,
                                         substitutions: dto.substitutions ?? [:])
         
-        let defaultValue = defaultValue(from: stringUnitDTO, formatInfo: formatInfo)
+        let defaultValue = defaultValue(
+            from: stringUnitDTO,
+            formatInfo: formatInfo,
+            substitutions: dto.substitutions ?? [:]
+        )
         
-        let methodParameters = methodParameters(from: formatInfo.sortedFormatUnits)
+        let methodParameters = methodParameters(
+            from: formatInfo.allUniqueFormatUnits.sortedByPlaceholderIndex()
+        )
         
         let memberDeclaration = if methodParameters.isEmpty {
             LocalizationItem.MemberDeclaration.property(key.toIdentifier())
@@ -105,55 +116,128 @@ struct StringCatalogDTOMapper {
     ) throws -> FormatInfo {
         let formatUnits = try formatUnitsParser.run(dto.escapedValue)
         
-        let substitutedFormatUnits = try formatUnits.map { formatUnit in
+        return try formatUnits.reduce(into: FormatInfo()) { partialResult, formatUnit in
             guard let placeholder = formatUnit.placeholder,
                   let variableName = placeholder.variableName,
                   let substitution = substitutions[variableName]
-            else { return formatUnit }
+            else {
+                partialResult.formatUnits.append(formatUnit)
+                return
+            }
             
-            let substitutedPlaceholder = try placeholder.applying(substitution,
-                                                                  using: formatPlaceholderParser)
+            let substitutedPlaceholder = try placeholder.applying(
+                substitution,
+                using: formatPlaceholderParser
+            )
             
-            return FormatUnit(placeholder: substitutedPlaceholder, range: formatUnit.range)
+            let substitutedFormatUnit = FormatUnit(
+                placeholder: substitutedPlaceholder,
+                range: formatUnit.range
+            )
+            
+            let additionalFormatUnits = try additionalFormatUnits(
+                from: substitution,
+                basePlaceholder: substitutedPlaceholder
+            )
+            
+            partialResult.formatUnits.append(substitutedFormatUnit)
+            partialResult.additionalFormatUnits.append(contentsOf: additionalFormatUnits)
         }
-        
-        let formatUnitComparator = KeyPathComparator(\FormatUnit.placeholder?.index)
-        let sortedFormatUnits = substitutedFormatUnits.sorted(using: formatUnitComparator)
-        
-        return FormatInfo(substitutedFormatUnits: substitutedFormatUnits,
-                          sortedFormatUnits: sortedFormatUnits)
     }
     
-    private func defaultValue(from dto: StringUnitDTO, formatInfo: FormatInfo) -> String {
-        let substitutedFormatUnits = formatInfo.substitutedFormatUnits
-        let sortedFormatUnits = formatInfo.sortedFormatUnits
+    private func additionalFormatUnits(
+        from substitution: SubstitutionDTO,
+        basePlaceholder: FormatPlaceholder
+    ) throws -> [FormatUnit] {
+        return try substitution.variations.plural
+            .flatMap({ _, variationValueDTO in
+                try formatUnitsParser.run(variationValueDTO.stringUnit.escapedValue)
+            })
+            .compactMap(\.placeholder)
+            .map({
+                var placeholder = $0
+                placeholder.index = placeholder.index ?? basePlaceholder.index
+                return FormatUnit(placeholder: placeholder, range: nil)
+            })
+            .filter({ $0.placeholder?.index != basePlaceholder.index })
+            .sorted(using: KeyPathComparator(\.placeholder?.index))
+            .removingDuplicatePlaceholderIndices()
+    }
+    
+    private func defaultValue(
+        from dto: StringUnitDTO,
+        formatInfo: FormatInfo,
+        substitutions: [String: SubstitutionDTO]
+    ) -> String {
+        let template = defaultValueTemplate(
+            from: dto,
+            formatInfo: formatInfo,
+            substitutions: substitutions
+        )
         
-        if sortedFormatUnits == substitutedFormatUnits {
-            var result = dto.escapedValue
-            var paramIndex = substitutedFormatUnits.count(where: { $0.placeholder != nil })
+        if let template {
+            var result = template
+            var paramIndex = formatInfo.formatUnits.count(where: { $0.placeholder != nil })
             
-            for formatUnit in substitutedFormatUnits.reversed() {
+            for formatUnit in formatInfo.formatUnits.reversed() {
+                guard let range = formatUnit.range else { continue }
+                
                 switch formatUnit.specifier {
                 case .percentSign:
-                    result.replaceSubrange(formatUnit.range, with: "%")
+                    result.replaceSubrange(range, with: "%")
                 case .placeholder(let placeholder):
-                    let interpolation = interpolation(from: placeholder, index: paramIndex)
-                    result.replaceSubrange(formatUnit.range, with: interpolation)
+                    let index = placeholder.index ?? paramIndex
+                    let interpolation = interpolation(from: placeholder, index: index)
+                    result.replaceSubrange(range, with: interpolation)
                     paramIndex -= 1
                 }
             }
             
             return result.replacing(.newlineSequence, with: "\n")
         } else {
-            let interpolations = sortedFormatUnits
+            let interpolations = formatInfo
+                .allUniqueFormatUnits
+                .sortedByPlaceholderIndex()
                 .compactMap(\.placeholder)
                 .enumerated()
                 .map { index, placeholder in
                     return interpolation(from: placeholder, index: index + 1)
                 }
             
-            return "\(interpolations.joined(separator: " "))\n\(dto.escapedValue)"
+            let stringUnit = substitutions.values.first?.variations.primaryStringUnit ?? dto
+            
+            return "\(interpolations.joined(separator: " "))\n\(stringUnit.escapedValue)"
                 .replacing(.newlineSequence, with: "\n")
+        }
+    }
+    
+    private func defaultValueTemplate(
+        from dto: StringUnitDTO,
+        formatInfo: FormatInfo,
+        substitutions: [String: SubstitutionDTO]
+    ) -> String? {
+        let formatUnits = formatInfo.formatUnits
+        
+        let hasAdditionalFormatUnits = !formatInfo.additionalFormatUnits.isEmpty
+        
+        var areFormatUnitsSorted: Bool {
+            let uniqueFormatUnits = formatInfo.formatUnits.removingDuplicatePlaceholderIndices()
+            return uniqueFormatUnits == uniqueFormatUnits.sortedByPlaceholderIndex()
+        }
+        
+        var containsOnlySubstitutions: Bool {
+            let stringValue = dto.escapedValue
+            let stringUnitRanges = RangeSet(stringValue.startIndex..<stringValue.endIndex)
+            let placeholderRanges = RangeSet(
+                formatUnits.filter({ $0.placeholder != nil }).compactMap(\.range)
+            )
+            return placeholderRanges == stringUnitRanges && !substitutions.isEmpty
+        }
+        
+        if !hasAdditionalFormatUnits && areFormatUnitsSorted && !containsOnlySubstitutions {
+            return dto.escapedValue
+        } else {
+            return nil
         }
     }
     
@@ -248,5 +332,28 @@ private extension FormatPlaceholder.Width {
                 return "*"
             }
         }
+    }
+}
+
+private extension [FormatUnit] {
+    func sortedByPlaceholderIndex() -> [FormatUnit] {
+        return sorted(using: KeyPathComparator(\.placeholder?.index))
+    }
+    
+    func removingDuplicatePlaceholderIndices() -> [FormatUnit] {
+        typealias PartialResult = (formatUnits: [FormatUnit], containedIndices: Set<Int>)
+        
+        return reduce(into: ([], []) as PartialResult) { partialResult, formatUnit in
+            guard let index = formatUnit.placeholder?.index else {
+                partialResult.formatUnits.append(formatUnit)
+                return
+            }
+            
+            if !partialResult.containedIndices.contains(index) {
+                partialResult.formatUnits.append(formatUnit)
+                partialResult.containedIndices.insert(index)
+            }
+        }
+        .formatUnits
     }
 }
