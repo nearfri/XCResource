@@ -136,12 +136,15 @@ public extension LocalizedStringResource {
               bundle: .atURL(Bundle.module.bundleURL))
     }
     
-    /// \\(ratings) \\(ratings, format: .number)\
+    /// \\(ratings) \\(ratings, format: format)\
     /// %2$@ ratings
-    static func storeRatings(_ ratings: Int) -> Self {
+    static func storeRatings(
+        _ ratings: Int,
+        format: some FormatStyle<Int, String> & Sendable = .number
+    ) -> Self {
         .init("store_ratings",
               defaultValue: """
-                \(ratings) \(ratings, format: .number)
+                \(ratings) \(ratings, format: format)
                 %2$@ ratings
                 """,
               bundle: .atURL(Bundle.module.bundleURL))

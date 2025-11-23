@@ -78,6 +78,49 @@ import SwiftParser
         ])
     }
     
+    @Test func load_method_complexParameter() throws {
+        // Given
+        let source = #"""
+            import Foundation
+            import UIKit
+            
+            private class FakeClass {}
+            
+            extension LocalizedStringResource {
+            /// My dog ate \(appleCount) today!
+            static func apples(
+                count: Int,
+                format: some FormatStyle<Int, String> & Sendable = .number
+            ) -> Self {
+                .init("apples",
+                  defaultValue: "\(count, format: format) apples!",
+                  table: "TextSystem",
+                  bundle: .forClass(FakeClass.self))
+            }
+            
+            """#
+        let sut = SwiftLocalizationItemLoader()
+        
+        // When
+        let items = try sut.load(source: source, resourceTypeName: "LocalizedStringResource")
+        
+        // Then
+        #expect(items == [
+            LocalizationItem(
+                key: "apples",
+                defaultValue: #"\(count, format: format) apples!"#,
+                rawDefaultValue: "",
+                table: "TextSystem",
+                bundle: ".forClass(FakeClass.self)",
+                memberDeclaration: .method("apples", [
+                    .init(firstName: "count", type: "Int"),
+                    .init(firstName: "format",
+                          type: "some FormatStyle<Int, String> & Sendable",
+                          defaultValue: ".number"),
+                ]))
+        ])
+    }
+    
     @Test func load_manyItems() throws {
         // Given
         let source = """

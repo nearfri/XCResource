@@ -98,7 +98,7 @@ private class SourceFileVisitor: SyntaxVisitor {
         return LocalizationItem.Parameter(
             firstName: node.firstName.text,
             secondName: node.secondName?.text,
-            type: IdentifierTypeSyntax(node.type)?.name.text ?? "Never",
+            type: node.type.trimmedDescription,
             defaultValue: node.defaultValue?.value.trimmedDescription)
     }
     
