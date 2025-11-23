@@ -136,6 +136,17 @@ public extension LocalizedStringResource {
               bundle: .atURL(Bundle.module.bundleURL))
     }
     
+    /// \\(ratings) \\(ratings, format: .number)\
+    /// %2$@ ratings
+    static func storeRatings(_ ratings: Int) -> Self {
+        .init("store_ratings",
+              defaultValue: """
+                \(ratings) \(ratings, format: .number)
+                %2$@ ratings
+                """,
+              bundle: .atURL(Bundle.module.bundleURL))
+    }
+    
     /// The task is \\(fractionCompleted, specifier: \"%.2lf\")% complete.
     static func taskProgress(fractionCompleted: Double) -> Self {
         .init("task_progress",

@@ -1,8 +1,9 @@
 import Foundation
 import Strix
 import StrixParsers
+import XCResourceUtil
 
-struct FormatUnit: Equatable, Sendable {
+struct FormatUnit: Equatable, Sendable, SettableByKeyPath {
     var specifier: FormatSpecifier
     var range: Range<String.Index>?
     

@@ -19,6 +19,22 @@ struct LocalizationDTO: Codable, Hashable, Sendable {
     var stringUnit: StringUnitDTO?
     var variations: VariationsDTO?
     var substitutions: [String: SubstitutionDTO]? // %#@key@
+    
+    var allStringUnits: [StringUnitDTO] {
+        var result = stringUnit.map({ [$0] }) ?? []
+        
+        if let variations {
+            result.append(contentsOf: variations.allStringUnits)
+        }
+        
+        if let substitutions {
+            for (_, substitution) in substitutions {
+                result.append(contentsOf: substitution.allStringUnits)
+            }
+        }
+        
+        return result
+    }
 }
 
 struct StringUnitDTO: Codable, Hashable, Sendable {
@@ -30,6 +46,10 @@ struct SubstitutionDTO: Codable, Hashable, Sendable {
     var argNum: Int?
     var formatSpecifier: String // lld, lf
     var variations: PluralVariationsDTO
+    
+    var allStringUnits: [StringUnitDTO] {
+        return variations.allStringUnits
+    }
 }
 
 enum VariationsDTO: Codable, Hashable, Sendable {
@@ -67,10 +87,34 @@ enum VariationsDTO: Codable, Hashable, Sendable {
             try container.encode(pluralVariationsDTO)
         }
     }
+    
+    var allStringUnits: [StringUnitDTO] {
+        switch self {
+        case .device(let deviceVariationsDTO):
+            return deviceVariationsDTO.allStringUnits
+        case .plural(let pluralVariationsDTO):
+            return pluralVariationsDTO.allStringUnits
+        }
+    }
 }
 
 struct DeviceVariationsDTO: Codable, Hashable, Sendable {
     var device: [String: DeviceVariationValueDTO] // key: DeviceDTO
+    
+    var allStringUnits: [StringUnitDTO] {
+        return device.values.flatMap(\.allStringUnits)
+    }
+    
+    var primaryStringUnit: StringUnitDTO? {
+        let valuesByDevice = valuesByDevice
+        let preferredDeviceDTOs: [DeviceDTO] = [.iPhone, .mac, .other]
+        if let deviceDTO = preferredDeviceDTOs.first(where: { valuesByDevice[$0] != nil }) {
+            return valuesByDevice[deviceDTO]?.primaryStringUnit
+        }
+        return valuesByDevice
+            .sorted(by: { $0.key.rawValue < $1.key.rawValue })
+            .first?.value.primaryStringUnit
+    }
     
     var valuesByDevice: [DeviceDTO: DeviceVariationValueDTO] {
         return device.reduce(into: [:]) { partialResult, each in
@@ -85,15 +129,6 @@ struct DeviceVariationsDTO: Codable, Hashable, Sendable {
 enum DeviceVariationValueDTO: Codable, Hashable, Sendable {
     case stringUnit(StringUnitDTO)
     case variations(PluralVariationsDTO)
-    
-    var stringUnit: StringUnitDTO? {
-        switch self {
-        case .stringUnit(let stringUnitDTO):
-            return stringUnitDTO
-        case .variations(let pluralVariationsDTO):
-            return pluralVariationsDTO.primaryStringUnit
-        }
-    }
     
     enum CodingKeys: String, CodingKey {
         case stringUnit
@@ -127,10 +162,32 @@ enum DeviceVariationValueDTO: Codable, Hashable, Sendable {
             try container.encode(pluralVariationsDTO, forKey: .variations)
         }
     }
+    
+    var allStringUnits: [StringUnitDTO] {
+        switch self {
+        case .stringUnit(let stringUnitDTO):
+            return [stringUnitDTO]
+        case .variations(let pluralVariationsDTO):
+            return pluralVariationsDTO.allStringUnits
+        }
+    }
+    
+    var primaryStringUnit: StringUnitDTO? {
+        switch self {
+        case .stringUnit(let stringUnitDTO):
+            return stringUnitDTO
+        case .variations(let pluralVariationsDTO):
+            return pluralVariationsDTO.primaryStringUnit
+        }
+    }
 }
 
 struct PluralVariationsDTO: Codable, Hashable, Sendable {
     var plural: [String: PluralVariationValueDTO] // key: PluralDTO
+    
+    var allStringUnits: [StringUnitDTO] {
+        return plural.values.map(\.stringUnit)
+    }
     
     var primaryStringUnit: StringUnitDTO? {
         if let valueDTO = plural[PluralDTO.other.rawValue] {

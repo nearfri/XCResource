@@ -56,17 +56,16 @@ struct StringCatalogDTOMapper {
         from dto: LocalizationDTO,
         key: String
     ) throws -> LocalizationItem {
-        guard let stringUnitDTO = stringUnitDTO(from: dto) else {
+        guard let primaryStringUnitDTO = primaryStringUnit(from: dto) else {
             throw Error.stringUnitDoesNotExist(key: key)
         }
         
-        let formatInfo = try formatInfo(from: stringUnitDTO,
-                                        substitutions: dto.substitutions ?? [:])
+        let formatInfo = try formatInfo(from: dto, primaryStringUnit: primaryStringUnitDTO)
         
-        let defaultValue = defaultValue(
-            from: stringUnitDTO,
-            formatInfo: formatInfo,
-            substitutions: dto.substitutions ?? [:]
+        let defaultValue = try defaultValue(
+            from: primaryStringUnitDTO,
+            localization: dto,
+            formatInfo: formatInfo
         )
         
         let methodParameters = methodParameters(
@@ -82,11 +81,11 @@ struct StringCatalogDTOMapper {
         return LocalizationItem(
             key: key,
             defaultValue: defaultValue,
-            rawDefaultValue: stringUnitDTO.escapedValue,
+            rawDefaultValue: primaryStringUnitDTO.escapedValue,
             memberDeclaration: memberDeclaration)
     }
     
-    private func stringUnitDTO(from dto: LocalizationDTO) -> StringUnitDTO? {
+    private func primaryStringUnit(from dto: LocalizationDTO) -> StringUnitDTO? {
         if let stringUnitDTO = dto.stringUnit {
             return stringUnitDTO
         }
@@ -97,29 +96,51 @@ struct StringCatalogDTOMapper {
         
         switch variationsDTO {
         case .device(let deviceVariationsDTO):
-            let valuesByDevice = deviceVariationsDTO.valuesByDevice
-            let preferredDeviceDTOs: [DeviceDTO] = [.iPhone, .mac, .other]
-            if let deviceDTO = preferredDeviceDTOs.first(where: { valuesByDevice[$0] != nil }) {
-                return valuesByDevice[deviceDTO]?.stringUnit
-            }
-            return valuesByDevice
-                .sorted(by: { $0.key.rawValue < $1.key.rawValue })
-                .first?.value.stringUnit
+            return deviceVariationsDTO.primaryStringUnit
         case .plural(let pluralVariationsDTO):
             return pluralVariationsDTO.primaryStringUnit
         }
     }
     
     private func formatInfo(
-        from dto: StringUnitDTO,
-        substitutions: [String: SubstitutionDTO]
+        from localization: LocalizationDTO,
+        primaryStringUnit: StringUnitDTO
     ) throws -> FormatInfo {
-        let formatUnits = try formatUnitsParser.run(dto.escapedValue)
+        let substitutions = localization.substitutions
+        
+        var result = try formatInfo(from: primaryStringUnit, substitutions: substitutions)
+        
+        var additionalFormatUnits = result.additionalFormatUnits
+        
+        var placeholderIndices = Set(result.allUniqueFormatUnits.compactMap(\.placeholder?.index))
+        
+        for stringUnit in localization.allStringUnits {
+            let formatInfo = try formatInfo(from: stringUnit, substitutions: substitutions)
+            for formatUnit in formatInfo.allUniqueFormatUnits {
+                guard let placeholderIndex = formatUnit.placeholder?.index,
+                      !placeholderIndices.contains(placeholderIndex)
+                else { continue }
+                
+                placeholderIndices.insert(placeholderIndex)
+                additionalFormatUnits.append(formatUnit.with(\.range, nil))
+            }
+        }
+        
+        result.additionalFormatUnits = additionalFormatUnits.sortedByPlaceholderIndex()
+        
+        return result
+    }
+    
+    private func formatInfo(
+        from stringUnit: StringUnitDTO,
+        substitutions: [String: SubstitutionDTO]?
+    ) throws -> FormatInfo {
+        let formatUnits = try formatUnitsParser.run(stringUnit.escapedValue)
         
         return try formatUnits.reduce(into: FormatInfo()) { partialResult, formatUnit in
             guard let placeholder = formatUnit.placeholder,
                   let variableName = placeholder.variableName,
-                  let substitution = substitutions[variableName]
+                  let substitution = substitutions?[variableName]
             else {
                 partialResult.formatUnits.append(formatUnit)
                 return
@@ -160,20 +181,16 @@ struct StringCatalogDTOMapper {
                 return FormatUnit(placeholder: placeholder, range: nil)
             })
             .filter({ $0.placeholder?.index != basePlaceholder.index })
-            .sorted(using: KeyPathComparator(\.placeholder?.index))
+            .sortedByPlaceholderIndex()
             .removingDuplicatePlaceholderIndices()
     }
     
     private func defaultValue(
         from dto: StringUnitDTO,
-        formatInfo: FormatInfo,
-        substitutions: [String: SubstitutionDTO]
-    ) -> String {
-        let template = defaultValueTemplate(
-            from: dto,
-            formatInfo: formatInfo,
-            substitutions: substitutions
-        )
+        localization: LocalizationDTO,
+        formatInfo: FormatInfo
+    ) throws -> String {
+        let template = try defaultValueTemplate(from: dto, formatInfo: formatInfo)
         
         if let template {
             var result = template
@@ -204,7 +221,7 @@ struct StringCatalogDTOMapper {
                     return interpolation(from: placeholder, index: index + 1)
                 }
             
-            let stringUnit = substitutions.values.first?.variations.primaryStringUnit ?? dto
+            let stringUnit = try stringUnitForAlternativeDefaultValue(from: localization) ?? dto
             
             return "\(interpolations.joined(separator: " "))\n\(stringUnit.escapedValue)"
                 .replacing(.newlineSequence, with: "\n")
@@ -213,11 +230,8 @@ struct StringCatalogDTOMapper {
     
     private func defaultValueTemplate(
         from dto: StringUnitDTO,
-        formatInfo: FormatInfo,
-        substitutions: [String: SubstitutionDTO]
-    ) -> String? {
-        let formatUnits = formatInfo.formatUnits
-        
+        formatInfo: FormatInfo
+    ) throws -> String? {
         let hasAdditionalFormatUnits = !formatInfo.additionalFormatUnits.isEmpty
         
         var areFormatUnitsSorted: Bool {
@@ -225,20 +239,22 @@ struct StringCatalogDTOMapper {
             return uniqueFormatUnits == uniqueFormatUnits.sortedByPlaceholderIndex()
         }
         
-        var containsOnlySubstitutions: Bool {
-            let stringValue = dto.escapedValue
-            let stringUnitRanges = RangeSet(stringValue.startIndex..<stringValue.endIndex)
-            let placeholderRanges = RangeSet(
-                formatUnits.filter({ $0.placeholder != nil }).compactMap(\.range)
-            )
-            return placeholderRanges == stringUnitRanges && !substitutions.isEmpty
-        }
+        guard !hasAdditionalFormatUnits, areFormatUnitsSorted,
+              try !containsOnlySubstitutions(in: dto)
+        else { return nil }
         
-        if !hasAdditionalFormatUnits && areFormatUnitsSorted && !containsOnlySubstitutions {
-            return dto.escapedValue
-        } else {
-            return nil
-        }
+        return dto.escapedValue
+    }
+    
+    private func containsOnlySubstitutions(in dto: StringUnitDTO) throws -> Bool {
+        let stringValue = dto.escapedValue
+        let formatUnits = try formatUnitsParser.run(stringValue)
+        let stringUnitRanges = RangeSet(stringValue.startIndex..<stringValue.endIndex)
+        let substitutionRanges = RangeSet(
+            formatUnits.filter({ $0.placeholder?.variableName != nil }).compactMap(\.range)
+        )
+        
+        return substitutionRanges == stringUnitRanges
     }
     
     private func interpolation(from placeholder: FormatPlaceholder, index: Int) -> String {
@@ -268,6 +284,24 @@ struct StringCatalogDTOMapper {
         } else {
             return "\\(\(name))"
         }
+    }
+    
+    private func stringUnitForAlternativeDefaultValue(
+        from dto: LocalizationDTO
+    ) throws -> StringUnitDTO? {
+        if let variations = dto.variations {
+            switch variations {
+            case .device(let deviceVariationsDTO):
+                guard let stringUnit = deviceVariationsDTO.primaryStringUnit else { return nil }
+                if try !containsOnlySubstitutions(in: stringUnit) {
+                    return stringUnit
+                }
+            case .plural(let pluralVariationsDTO):
+                return pluralVariationsDTO.primaryStringUnit
+            }
+        }
+        
+        return dto.substitutions?.values.first?.variations.primaryStringUnit
     }
     
     private func methodParameters(from formatUnits: [FormatUnit]) -> [LocalizationItem.Parameter] {
