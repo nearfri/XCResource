@@ -62,12 +62,12 @@ https://github.com/user-attachments/assets/16073e8f-9ad9-4e9c-b945-d542efd656f7
 #### Generated Code
 ```swift
 public extension LocalizedStringResource {
-    /// \"\\(param1)\" will be deleted.\
+    /// \"\\(arg1)\" will be deleted.\
     /// This action cannot be undone.
-    static func alertDeleteFile(_ param1: String) -> Self {
+    static func alertDeleteFile(_ arg1: String) -> Self {
         .init("alert_delete_file",
               defaultValue: """
-                \"\(param1)\" will be deleted.
+                \"\(arg1)\" will be deleted.
                 This action cannot be undone.
                 """,
               bundle: .atURL(Bundle.module.bundleURL))

@@ -9,16 +9,16 @@ import Testing
         // Given
         let itemsInCatalog: [LocalizationItem] = [
             .init(key: "hello",
-                  defaultValue: "Hello \\(param1)!!",
+                  defaultValue: "Hello \\(arg1)!!",
                   rawDefaultValue: "Hello %@!!",
                   memberDeclaration: .method("hello", [
-                    .init(firstName: "_", secondName: "param1", type: "String"),
+                    .init(firstName: "_", secondName: "arg1", type: "String"),
                   ])),
             .init(key: "bye",
-                  defaultValue: "Bye \\(param1)!!",
+                  defaultValue: "Bye \\(arg1)!!",
                   rawDefaultValue: "Bye %@!!",
                   memberDeclaration: .method("bye", [
-                    .init(firstName: "_", secondName: "param1", type: "String"),
+                    .init(firstName: "_", secondName: "arg1", type: "String"),
                   ])),
         ]
         
@@ -44,10 +44,10 @@ import Testing
                     .init(firstName: "name", type: "String"),
                   ])),
             .init(key: "bye",
-                  defaultValue: "Bye \\(param1)!!",
+                  defaultValue: "Bye \\(arg1)!!",
                   rawDefaultValue: "Bye %@!!",
                   memberDeclaration: .method("bye", [
-                    .init(firstName: "_", secondName: "param1", type: "String"),
+                    .init(firstName: "_", secondName: "arg1", type: "String"),
                   ])),
         ])
     }
@@ -56,10 +56,10 @@ import Testing
         // Given
         let itemsInCatalog: [LocalizationItem] = [
             .init(key: "hello",
-                  defaultValue: "Hello \\(param1)!!",
+                  defaultValue: "Hello \\(arg1)!!",
                   rawDefaultValue: "Hello %@!!",
                   memberDeclaration: .method("hello", [
-                    .init(firstName: "_", secondName: "param1", type: "String"),
+                    .init(firstName: "_", secondName: "arg1", type: "String"),
                   ])),
         ]
         
@@ -79,10 +79,10 @@ import Testing
         // Then
         #expect(newItems == [
             .init(key: "hello",
-                  defaultValue: "Hello \\(param1)!!",
+                  defaultValue: "Hello \\(arg1)!!",
                   rawDefaultValue: "Hello %@!!",
                   memberDeclaration: .method("greeting", [
-                    .init(firstName: "_", secondName: "param1", type: "String"),
+                    .init(firstName: "_", secondName: "arg1", type: "String"),
                   ])),
         ])
     }
@@ -91,12 +91,12 @@ import Testing
         // Given
         let itemsInCatalog: [LocalizationItem] = [
             .init(key: "hello",
-                  defaultValue: "Hello \\(param1)!! \\(param2) percent. \\(param3).",
+                  defaultValue: "Hello \\(arg1)!! \\(arg2) percent. \\(arg3).",
                   rawDefaultValue: "Hello %@!! %f percent. %@.",
                   memberDeclaration: .method("hello", [
-                    .init(firstName: "_", secondName: "param1", type: "String"),
-                    .init(firstName: "_", secondName: "param2", type: "Float"),
-                    .init(firstName: "_", secondName: "param3", type: "String"),
+                    .init(firstName: "_", secondName: "arg1", type: "String"),
+                    .init(firstName: "_", secondName: "arg2", type: "Float"),
+                    .init(firstName: "_", secondName: "arg3", type: "String"),
                   ])),
         ]
         
@@ -132,20 +132,20 @@ import Testing
         // Given
         let itemsInCatalog: [LocalizationItem] = [
             .init(key: "success100",
-                  defaultValue: "100\\(param1)uccess",
+                  defaultValue: "100\\(arg1)uccess",
                   rawDefaultValue: "100% success",
                   memberDeclaration: .method("success100", [
-                    .init(firstName: "_", secondName: "param1", type: "UnsafePointer<UInt8>"),
+                    .init(firstName: "_", secondName: "arg1", type: "UnsafePointer<UInt8>"),
                   ])),
         ]
         
         let itemsInSourceCode: [LocalizationItem] = [
             .init(key: "success100",
-                  defaultValue: "100\\(param1)uccess",
+                  defaultValue: "100\\(arg1)uccess",
                   rawDefaultValue: "",
                   developerComments: ["xcresource:verbatim"],
                   memberDeclaration: .method("successAll", [
-                    .init(firstName: "_", secondName: "param1", type: "UnsafePointer<UInt8>"),
+                    .init(firstName: "_", secondName: "arg1", type: "UnsafePointer<UInt8>"),
                   ])),
         ]
         

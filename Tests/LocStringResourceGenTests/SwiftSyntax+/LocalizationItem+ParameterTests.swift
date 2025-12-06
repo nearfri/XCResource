@@ -91,10 +91,10 @@ import Testing
         // Given
         var item = LocalizationItem(
             key: "key",
-            defaultValue: "Hello, \\(param1)!!",
+            defaultValue: "Hello, \\(arg1)!!",
             rawDefaultValue: "Hello, %@!!",
             memberDeclaration: .method("key", [
-                .init(firstName: "_", secondName: "param1", type: "String")
+                .init(firstName: "_", secondName: "arg1", type: "String")
             ]))
         
         let otherItem = LocalizationItem(
@@ -114,7 +114,7 @@ import Testing
             defaultValue: "Hello, \\(name)!!",
             rawDefaultValue: "Hello, %@!!",
             memberDeclaration: .method("key", [
-                .init(firstName: "_", secondName: "param1", type: "String")
+                .init(firstName: "_", secondName: "arg1", type: "String")
             ])))
     }
     
@@ -122,11 +122,11 @@ import Testing
         // Given
         var item = LocalizationItem(
             key: "key",
-            defaultValue: "Hello, \\(param1) and \\(param2)!!",
+            defaultValue: "Hello, \\(arg1) and \\(arg2)!!",
             rawDefaultValue: "Hello, %@ and %@!!",
             memberDeclaration: .method("key", [
-                .init(firstName: "_", secondName: "param1", type: "String"),
-                .init(firstName: "_", secondName: "param2", type: "String"),
+                .init(firstName: "_", secondName: "arg1", type: "String"),
+                .init(firstName: "_", secondName: "arg2", type: "String"),
             ]))
         
         let otherItem = LocalizationItem(
@@ -147,10 +147,10 @@ import Testing
         // Given
         var item = LocalizationItem(
             key: "key",
-            defaultValue: "Hello, \\(param1)!!\nWorld!!",
+            defaultValue: "Hello, \\(arg1)!!\nWorld!!",
             rawDefaultValue: "Hello, %@\nWorld!!",
             memberDeclaration: .method("key", [
-                .init(firstName: "_", secondName: "param1", type: "String")
+                .init(firstName: "_", secondName: "arg1", type: "String")
             ]))
         
         let otherItem = LocalizationItem(
@@ -170,28 +170,28 @@ import Testing
             defaultValue: "Hello, \\(name)!!\nWorld!!",
             rawDefaultValue: "Hello, %@\nWorld!!",
             memberDeclaration: .method("key", [
-                .init(firstName: "_", secondName: "param1", type: "String")
+                .init(firstName: "_", secondName: "arg1", type: "String")
             ])))
     }
     
     @Test(arguments: [
         (
-            "Number \\(param1)!!", "Number %lf!!",
+            "Number \\(arg1)!!", "Number %lf!!",
             "Number \\(number, specifier: \"%.6lf\")!!",
             "Number \\(number)!!"
         ),
         (
-            "Number \\(param1, specifier: \"%.3lf\")!!", "Number %.3lf!!",
+            "Number \\(arg1, specifier: \"%.3lf\")!!", "Number %.3lf!!",
             "Number \\(number)!!",
             "Number \\(number, specifier: \"%.3lf\")!!"
         ),
         (
-            "Number \\(param1, specifier: \"%.3lf\")!!", "Number %.3lf!!",
+            "Number \\(arg1, specifier: \"%.3lf\")!!", "Number %.3lf!!",
             "Number \\(number, specifier: \"%.6lf\")!!",
             "Number \\(number, specifier: \"%.3lf\")!!"
         ),
         (
-            "Number \\(param1, specifier: \"%.3lf\")!!", "Number %.3lf!!",
+            "Number \\(arg1, specifier: \"%.3lf\")!!", "Number %.3lf!!",
             "Number \\(placeholder: .double, specifier: \"%.6lf\")!!",
             "Number \\(placeholder: .double, specifier: \"%.3lf\")!!"
         ),
@@ -208,7 +208,7 @@ import Testing
             defaultValue: value,
             rawDefaultValue: rawValue,
             memberDeclaration: .method("key", [
-                .init(firstName: "_", secondName: "param1", type: "Double")
+                .init(firstName: "_", secondName: "arg1", type: "Double")
             ]))
         
         let otherItem = LocalizationItem(
@@ -228,7 +228,7 @@ import Testing
             defaultValue: resultValue,
             rawDefaultValue: rawValue,
             memberDeclaration: .method("key", [
-                .init(firstName: "_", secondName: "param1", type: "Double")
+                .init(firstName: "_", secondName: "arg1", type: "Double")
             ])))
     }
 }

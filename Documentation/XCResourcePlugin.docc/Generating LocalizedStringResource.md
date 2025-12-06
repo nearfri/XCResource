@@ -53,12 +53,12 @@ When a localized string includes a format specifier such as `%@`,
 XCResource automatically generates a function with a parameter for the placeholder. For example:
 
 ```swift
-/// \"\\(param1)\" will be deleted.\
+/// \"\\(arg1)\" will be deleted.\
 /// This action cannot be undone.
-static func alertDeleteFile(_ param1: String) -> Self {
+static func alertDeleteFile(_ arg1: String) -> Self {
     .init("alert_delete_file",
           defaultValue: """
-            \"\(param1)\" will be deleted.
+            \"\(arg1)\" will be deleted.
             This action cannot be undone.
             """,
           bundle: .atURL(Bundle.module.bundleURL))
@@ -89,10 +89,10 @@ XCResource supports [`String.LocalizationValue.StringInterpolation`](https://dev
 ```swift
 // Generated code
 
-/// Hello, \\(param1).
-static func greeting(_ param1: String) -> Self {
+/// Hello, \\(arg1).
+static func greeting(_ arg1: String) -> Self {
     .init("greeting",
-          defaultValue: "Hello, \(param1).",
+          defaultValue: "Hello, \(arg1).",
           bundle: .atURL(Bundle.module.bundleURL))
 }
 
@@ -110,10 +110,10 @@ static func greeting(attributedName: AttributedString) -> Self {
 ```swift
 // Generated code
 
-/// The total price is \\(param1).
-static func price(_ param1: String) -> Self {
+/// The total price is \\(arg1).
+static func price(_ arg1: String) -> Self {
     .init("price",
-          defaultValue: "The total price is \(param1).",
+          defaultValue: "The total price is \(arg1).",
           bundle: .atURL(Bundle.module.bundleURL))
 }
 
@@ -138,10 +138,10 @@ In some cases, you might want format specifiers like `%lf` to stay as literal te
 By default, XCResource generates a function that treats the specifier as a placeholder.
 
 ```swift
-/// \\(param1) works for doubles when formatting.
-static func doubleFormat(_ param1: Double) -> Self {
+/// \\(arg1) works for doubles when formatting.
+static func doubleFormat(_ arg1: Double) -> Self {
     .init("double_format",
-          defaultValue: "\(param1) works for doubles when formatting.",
+          defaultValue: "\(arg1) works for doubles when formatting.",
           bundle: .atURL(Bundle.module.bundleURL))
 }
 ```
@@ -150,10 +150,10 @@ To keep the specifier unchanged, use the `xcresource:verbatim` comment directive
 
 ```swift
 // xcresource:verbatim
-/// \\(param1) works for doubles when formatting.
-static func doubleFormat(_ param1: Double) -> Self {
+/// \\(arg1) works for doubles when formatting.
+static func doubleFormat(_ arg1: Double) -> Self {
     .init("double_format",
-          defaultValue: "\(param1) works for doubles when formatting.",
+          defaultValue: "\(arg1) works for doubles when formatting.",
           bundle: .atURL(Bundle.module.bundleURL))
 }
 ```

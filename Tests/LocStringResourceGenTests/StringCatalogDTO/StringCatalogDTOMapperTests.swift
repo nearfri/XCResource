@@ -121,10 +121,10 @@ import Testing
         #expect(items == [
             LocalizationItem(
                 key: "greeting",
-                defaultValue: "Hello, \\(param1)",
+                defaultValue: "Hello, \\(arg1)",
                 rawDefaultValue: "Hello, %@",
                 memberDeclaration: .method("greeting", [
-                    LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "String")
+                    LocalizationItem.Parameter(firstName: "_", secondName: "arg1", type: "String")
                 ]))
         ])
     }
@@ -146,10 +146,10 @@ import Testing
         #expect(items == [
             LocalizationItem(
                 key: "common_greeting",
-                defaultValue: "Hello, \\(param1)",
+                defaultValue: "Hello, \\(arg1)",
                 rawDefaultValue: "Hello, %@",
                 memberDeclaration: .method("commonGreeting", [
-                    LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "String")
+                    LocalizationItem.Parameter(firstName: "_", secondName: "arg1", type: "String")
                 ]))
         ])
     }
@@ -172,11 +172,11 @@ import Testing
         #expect(items == [
             LocalizationItem(
                 key: "numbers",
-                defaultValue: "number1 = \\(param1), number2 = \\(param2, specifier: \"%10.5lf\")",
+                defaultValue: "number1 = \\(arg1), number2 = \\(arg2, specifier: \"%10.5lf\")",
                 rawDefaultValue: "number1 = %1$lld, number2 = %2$10.5lf",
                 memberDeclaration: .method("numbers", [
-                    LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "Int"),
-                    LocalizationItem.Parameter(firstName: "_", secondName: "param2", type: "Double")
+                    LocalizationItem.Parameter(firstName: "_", secondName: "arg1", type: "Int"),
+                    LocalizationItem.Parameter(firstName: "_", secondName: "arg2", type: "Double")
                 ]))
         ])
     }
@@ -224,11 +224,11 @@ import Testing
         #expect(items == [
             LocalizationItem(
                 key: "profile",
-                defaultValue: "\\(param1) \\(param2)\nname: %2$@, age: %1$lld",
+                defaultValue: "\\(arg1) \\(arg2)\nname: %2$@, age: %1$lld",
                 rawDefaultValue: "name: %2$@, age: %1$lld",
                 memberDeclaration: .method("profile", [
-                    LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "Int"),
-                    LocalizationItem.Parameter(firstName: "_", secondName: "param2", type: "String")
+                    LocalizationItem.Parameter(firstName: "_", secondName: "arg1", type: "Int"),
+                    LocalizationItem.Parameter(firstName: "_", secondName: "arg2", type: "String")
                 ]))
         ])
     }
@@ -250,10 +250,10 @@ import Testing
         #expect(items == [
             LocalizationItem(
                 key: "greeting",
-                defaultValue: "hello \\(param1), \\(param1)",
+                defaultValue: "hello \\(arg1), \\(arg1)",
                 rawDefaultValue: "hello %1$@, %1$@",
                 memberDeclaration: .method("greeting", [
-                    LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "String")
+                    LocalizationItem.Parameter(firstName: "_", secondName: "arg1", type: "String")
                 ]))
         ])
     }
@@ -282,10 +282,10 @@ import Testing
         #expect(items == [
             LocalizationItem(
                 key: "apples",
-                defaultValue: "\\(param1) apples",
+                defaultValue: "\\(arg1) apples",
                 rawDefaultValue: "%lld apples",
                 memberDeclaration: .method("apples", [
-                    .init(firstName: "_", secondName: "param1", type: "Int"),
+                    .init(firstName: "_", secondName: "arg1", type: "Int"),
                 ]))
         ])
     }
@@ -320,10 +320,10 @@ import Testing
         #expect(items == [
             LocalizationItem(
                 key: "eating_apples",
-                defaultValue: "\\(param1) ate \\(appleCount).",
+                defaultValue: "\\(arg1) ate \\(appleCount).",
                 rawDefaultValue: "%@ ate %#@appleCount@.",
                 memberDeclaration: .method("eatingApples", [
-                    .init(firstName: "_", secondName: "param1", type: "String"),
+                    .init(firstName: "_", secondName: "arg1", type: "String"),
                     .init(firstName: "appleCount", type: "Int")
                 ]))
         ])
@@ -391,11 +391,11 @@ import Testing
         try #require(items.count == 1)
         let item = items[0]
         #expect(item.key == "apples")
-        #expect(item.defaultValue == "\\(param1) \\(param2)\n%2$@ apples")
+        #expect(item.defaultValue == "\\(arg1) \\(arg2)\n%2$@ apples")
         #expect(item.rawDefaultValue == "%2$@ apples")
         #expect(item.memberDeclaration == .method("apples", [
-            .init(firstName: "_", secondName: "param1", type: "Int"),
-            .init(firstName: "_", secondName: "param2", type: "String")
+            .init(firstName: "_", secondName: "arg1", type: "Int"),
+            .init(firstName: "_", secondName: "arg2", type: "String")
         ]))
     }
     
@@ -429,20 +429,20 @@ import Testing
         try #require(items.count == 1)
         let item = items[0]
         #expect(item.key == "eating_apples")
-        #expect(item.defaultValue == "\\(arg1) \\(param2)\n%2$@ apples")
+        #expect(item.defaultValue == "\\(arg1) \\(arg2)\n%2$@ apples")
         #expect(item.rawDefaultValue == "%1$#@arg1@")
         #expect(item.memberDeclaration == .method("eatingApples", [
             .init(firstName: "arg1", type: "Int"),
-            .init(firstName: "_", secondName: "param2", type: "String")
+            .init(firstName: "_", secondName: "arg2", type: "String")
         ]))
         #expect(items == [
             LocalizationItem(
                 key: "eating_apples",
-                defaultValue: "\\(arg1) \\(param2)\n%2$@ apples",
+                defaultValue: "\\(arg1) \\(arg2)\n%2$@ apples",
                 rawDefaultValue: "%1$#@arg1@",
                 memberDeclaration: .method("eatingApples", [
                     .init(firstName: "arg1", type: "Int"),
-                    .init(firstName: "_", secondName: "param2", type: "String")
+                    .init(firstName: "_", secondName: "arg2", type: "String")
                 ]))
         ])
     }
@@ -471,12 +471,12 @@ import Testing
         try #require(items.count == 1)
         let item = items[0]
         #expect(item.key == "apples")
-        #expect(item.defaultValue == "\\(param1) \\(param2) \\(param3)\n%1$@ and %3$@ apples")
+        #expect(item.defaultValue == "\\(arg1) \\(arg2) \\(arg3)\n%1$@ and %3$@ apples")
         #expect(item.rawDefaultValue == "%1$@ and %3$@ apples")
         #expect(item.memberDeclaration == .method("apples", [
-            .init(firstName: "_", secondName: "param1", type: "String"),
-            .init(firstName: "_", secondName: "param2", type: "Int"),
-            .init(firstName: "_", secondName: "param3", type: "String")
+            .init(firstName: "_", secondName: "arg1", type: "String"),
+            .init(firstName: "_", secondName: "arg2", type: "Int"),
+            .init(firstName: "_", secondName: "arg3", type: "String")
         ]))
     }
     
@@ -510,12 +510,12 @@ import Testing
         try #require(items.count == 1)
         let item = items[0]
         #expect(item.key == "eating_apples")
-        #expect(item.defaultValue == "\\(param1) \\(arg2) \\(param3)\n%1$@ and %3$@ apples")
+        #expect(item.defaultValue == "\\(arg1) \\(arg2) \\(arg3)\n%1$@ and %3$@ apples")
         #expect(item.rawDefaultValue == "%2$#@arg2@")
         #expect(item.memberDeclaration == .method("eatingApples", [
-            .init(firstName: "_", secondName: "param1", type: "String"),
+            .init(firstName: "_", secondName: "arg1", type: "String"),
             .init(firstName: "arg2", type: "Int"),
-            .init(firstName: "_", secondName: "param3", type: "String"),
+            .init(firstName: "_", secondName: "arg3", type: "String"),
         ]))
     }
     
@@ -563,10 +563,10 @@ import Testing
         #expect(items == [
             LocalizationItem(
                 key: "alert_delete_file",
-                defaultValue: "\\\"\\(param1)\\\" will be deleted. '\\\\' is called a backslash.",
+                defaultValue: "\\\"\\(arg1)\\\" will be deleted. '\\\\' is called a backslash.",
                 rawDefaultValue: "\\\"%@\\\" will be deleted. '\\\\' is called a backslash.",
                 memberDeclaration: .method("alertDeleteFile", [
-                    .init(firstName: "_", secondName: "param1", type: "String")
+                    .init(firstName: "_", secondName: "arg1", type: "String")
                 ]))
         ])
     }
@@ -612,11 +612,11 @@ import Testing
         #expect(items == [
             LocalizationItem(
                 key: "juice",
-                defaultValue: "Hello, \\(param1). This is 100% \\(param2) juice.",
+                defaultValue: "Hello, \\(arg1). This is 100% \\(arg2) juice.",
                 rawDefaultValue: "Hello, %@. This is 100%% %@ juice.",
                 memberDeclaration: .method("juice", [
-                    .init(firstName: "_", secondName: "param1", type: "String"),
-                    .init(firstName: "_", secondName: "param2", type: "String"),
+                    .init(firstName: "_", secondName: "arg1", type: "String"),
+                    .init(firstName: "_", secondName: "arg2", type: "String"),
                 ]))
         ])
     }
@@ -640,11 +640,11 @@ import Testing
         #expect(items == [
             LocalizationItem(
                 key: "sample",
-                defaultValue: "\\(param1) \\(param2)\npercent: %%, str: %2$@, int: %1$lld",
+                defaultValue: "\\(arg1) \\(arg2)\npercent: %%, str: %2$@, int: %1$lld",
                 rawDefaultValue: "percent: %%, str: %2$@, int: %1$lld",
                 memberDeclaration: .method("sample", [
-                    LocalizationItem.Parameter(firstName: "_", secondName: "param1", type: "Int"),
-                    LocalizationItem.Parameter(firstName: "_", secondName: "param2", type: "String")
+                    LocalizationItem.Parameter(firstName: "_", secondName: "arg1", type: "Int"),
+                    LocalizationItem.Parameter(firstName: "_", secondName: "arg2", type: "String")
                 ]))
         ])
     }

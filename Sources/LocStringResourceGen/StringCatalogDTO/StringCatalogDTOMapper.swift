@@ -258,7 +258,7 @@ struct StringCatalogDTOMapper {
     }
     
     private func interpolation(from placeholder: FormatPlaceholder, index: Int) -> String {
-        let name = placeholder.resolvedName ?? "param\(index)"
+        let name = placeholder.resolvedName ?? "arg\(index)"
         
         let needsSpecifier: Bool = {
             if placeholder.isPluralVariable {
@@ -307,7 +307,7 @@ struct StringCatalogDTOMapper {
     private func methodParameters(from formatUnits: [FormatUnit]) -> [LocalizationItem.Parameter] {
         return formatUnits.compactMap(\.placeholder).enumerated().map { index, placeholder in
             let firstName = placeholder.resolvedName ?? "_"
-            let secondName = placeholder.resolvedName == nil ? "param\(index + 1)" : nil
+            let secondName = placeholder.resolvedName == nil ? "arg\(index + 1)" : nil
             let type = String(formatPlaceholder: placeholder)
             
             return LocalizationItem.Parameter(
