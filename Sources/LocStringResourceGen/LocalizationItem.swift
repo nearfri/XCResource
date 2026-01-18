@@ -74,6 +74,7 @@ public struct LocalizationItem: Hashable, Sendable, SettableByKeyPath {
     
     public var translationComment: String?
     public var developerComments: [String]
+    public var attributes: [String] // AttributeListSyntax
     public var memberDeclaration: MemberDeclaration
     
     public init(
@@ -84,6 +85,7 @@ public struct LocalizationItem: Hashable, Sendable, SettableByKeyPath {
         bundle: BundleDescription = .main,
         translationComment: String? = nil,
         developerComments: [String] = [],
+        attributes: [String] = [],
         memberDeclaration: MemberDeclaration
     ) {
         self.key = key
@@ -93,6 +95,7 @@ public struct LocalizationItem: Hashable, Sendable, SettableByKeyPath {
         self.bundle = bundle
         self.translationComment = translationComment
         self.developerComments = developerComments
+        self.attributes = attributes
         self.memberDeclaration = memberDeclaration
     }
     

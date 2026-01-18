@@ -43,6 +43,7 @@ class DefaultLocalizationItemMerger: LocalizationItemMerger {
             }
             
             newItem.developerComments = itemInSourceCode.developerComments
+            newItem.attributes = itemInSourceCode.attributes
             
             return newItem
         }

@@ -16,6 +16,7 @@ extension VariableDeclSyntax {
                 )
                 .with(\.trailingTrivia, .newline)
             }
+            .with(\.attributes, AttributeListSyntax(attributes: item.attributes))
             .with(\.leadingTrivia, Trivia(stringLiteral: item.commentsSourceCode))
         } catch {
             preconditionFailure("\(error)")

@@ -63,6 +63,7 @@ private class SourceFileVisitor: SyntaxVisitor {
         
         currentItem.developerComments = developerComments(in: node.leadingTrivia)
         currentItem.memberDeclaration = .property(idPattern.identifier.text)
+        currentItem.attributes = attributes(from: node.attributes)
         
         isInMemberBlockItem = true
         
@@ -88,6 +89,7 @@ private class SourceFileVisitor: SyntaxVisitor {
         
         currentItem.developerComments = developerComments(in: node.leadingTrivia)
         currentItem.memberDeclaration = .method(name, parameters)
+        currentItem.attributes = attributes(from: node.attributes)
         
         isInMemberBlockItem = true
         
@@ -111,6 +113,10 @@ private class SourceFileVisitor: SyntaxVisitor {
             .comments(from: trivia)
             .filter({ $0.isForDeveloper })
             .map(\.text)
+    }
+    
+    private func attributes(from attributeList: AttributeListSyntax) -> [String] {
+        return attributeList.map(\.trimmedDescription)
     }
     
     override func visit(_ node: LabeledExprSyntax) -> SyntaxVisitorContinueKind {
