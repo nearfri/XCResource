@@ -10,6 +10,7 @@ import SwiftSyntax
             rawDefaultValue: "",
             table: "LocalizableSystem",
             bundle: ".forClass(ResourceBundleClass.self)",
+            attributes: ["@available(*, deprecated)", "@CustomAttribute"],
             memberDeclaration: .method("someFunction", [
                 .init(firstName: "count1", type: "Int"),
                 .init(firstName: "count2", type: "Int")
@@ -17,6 +18,8 @@ import SwiftSyntax
         
         #expect(FunctionDeclSyntax(localizationItem).description == """
             /// Hello world
+            @available(*, deprecated)
+            @CustomAttribute
             static func someFunction(count1: Int, count2: Int) -> Self {
                 .init("some_key",
                       defaultValue: "Hello world",

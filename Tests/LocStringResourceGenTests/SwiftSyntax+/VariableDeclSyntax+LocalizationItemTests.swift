@@ -10,10 +10,13 @@ import SwiftSyntax
             rawDefaultValue: "",
             table: "LocalizableSystem",
             bundle: ".forClass(ResourceBundleClass.self)",
+            attributes: ["@available(*, deprecated)", "@CustomAttribute"],
             memberDeclaration: .property("someVariable"))
         
         #expect(VariableDeclSyntax(localizationItem).description == """
             /// Hello world
+            @available(*, deprecated)
+            @CustomAttribute
             static var someVariable: Self {
                 .init("some_key",
                       defaultValue: "Hello world",

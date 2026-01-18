@@ -9,6 +9,7 @@ extension FunctionDeclSyntax {
         }
         
         self = FunctionDeclSyntax(
+            attributes: AttributeListSyntax(attributes: item.attributes),
             modifiers: [DeclModifierSyntax(name: .keyword(.static), trailingTrivia: .space)],
             name: TokenSyntax.identifier(methodName, leadingTrivia: .space),
             signature: FunctionSignatureSyntax(

@@ -15,6 +15,8 @@ import SwiftParser
             extension LocalizedStringResource {
             // dev comments
             /// Underline
+            @available(*, deprecated)
+            @CustomAttribute
             static var underline: Self {
                 .init("style_underline",
                   defaultValue: "Underline",
@@ -37,6 +39,7 @@ import SwiftParser
                 table: "TextSystem",
                 bundle: ".forClass(FakeClass.self)",
                 developerComments: ["dev comments"],
+                attributes: ["@available(*, deprecated)", "@CustomAttribute"],
                 memberDeclaration: .property("underline"))
         ])
     }
@@ -51,6 +54,8 @@ import SwiftParser
             
             extension LocalizedStringResource {
             /// My dog ate \(appleCount) today!
+            @available(*, deprecated)
+            @CustomAttribute
             static func dogEatingApples(appleCount: Int) -> Self {
                 .init("dog_eating_apples",
                   defaultValue: "My dog ate \(appleCount) today!",
@@ -72,6 +77,7 @@ import SwiftParser
                 rawDefaultValue: "",
                 table: "TextSystem",
                 bundle: ".forClass(FakeClass.self)",
+                attributes: ["@available(*, deprecated)", "@CustomAttribute"],
                 memberDeclaration: .method("dogEatingApples", [
                     .init(firstName: "appleCount", type: "Int")
                 ]))
