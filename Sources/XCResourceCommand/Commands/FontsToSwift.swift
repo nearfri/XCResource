@@ -21,6 +21,7 @@ struct FontsToSwift: ParsableCommand {
     // MARK: - Default values
     
     enum Default {
+        static let dependencies: [String] = ["Foundation"]
         static let bundle: String = "Bundle.main"
         static let transformsToLatin: Bool = false
         static let stripsCombiningMarks: Bool = false
@@ -33,6 +34,9 @@ struct FontsToSwift: ParsableCommand {
     @Option var resourcesPath: String
     
     @Option var swiftFilePath: String
+    
+    @Option(parsing: .upToNextOption)
+    var dependencies: [String] = Default.dependencies
     
     @Option var resourceTypeName: String
     
@@ -86,7 +90,11 @@ struct FontsToSwift: ParsableCommand {
         
         print(headerComment, terminator: "\n\n", to: &stream)
         
-        print("import Foundation", terminator: "\n\n", to: &stream)
+        for dependency in dependencies {
+            print("import \(dependency)", to: &stream)
+        }
+        
+        print("", to: &stream)
         
         if !excludesTypeDeclaration {
             print(codes.typeDeclaration, terminator: "\n\n", to: &stream)

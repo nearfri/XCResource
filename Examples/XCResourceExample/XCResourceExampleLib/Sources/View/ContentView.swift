@@ -92,9 +92,7 @@ private struct TextStyleData {
     var imageKey: ImageKey
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .environment(\.locale, Locale(identifier: "ko"))
-    }
+#Preview {
+    ContentView()
+        .environment(\.locale, Locale(identifier: "ko"))
 }

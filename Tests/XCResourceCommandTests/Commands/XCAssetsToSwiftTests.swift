@@ -82,6 +82,7 @@ private enum Fixture {
             "--xcassets-path", SampleData.assetURL().path,
             "--asset-type", "colorset",
             "--swift-file-path", swiftFileURL.path,
+            "--dependencies", "Foundation",
             "--resource-type-name", "ColorKey",
             "--bundle", "Bundle.module",
         ])
@@ -105,6 +106,7 @@ private enum Fixture {
             "--xcassets-path", SampleData.assetURL().path,
             "--asset-type", "colorset",
             "--swift-file-path", swiftFileURL.path,
+            "--dependencies", "Foundation",
             "--resource-type-name", "ColorKey",
             "--bundle", "Bundle.module",
             "--access-level", "public",

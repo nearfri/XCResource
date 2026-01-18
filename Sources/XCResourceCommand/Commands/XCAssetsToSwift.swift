@@ -27,6 +27,7 @@ struct XCAssetsToSwift: ParsableCommand {
     
     enum Default {
         static let assetTypes: [AssetType] = []
+        static let dependencies: [String] = ["Foundation"]
         static let bundle: String = "Bundle.main"
         static let excludesTypeDeclaration: Bool = false
     }
@@ -46,6 +47,9 @@ struct XCAssetsToSwift: ParsableCommand {
     var assetTypes: [AssetType] = Default.assetTypes
     
     @Option var swiftFilePath: String
+    
+    @Option(parsing: .upToNextOption)
+    var dependencies: [String] = Default.dependencies
     
     @Option var resourceTypeName: String
     
@@ -82,7 +86,11 @@ struct XCAssetsToSwift: ParsableCommand {
         
         print(headerComment, terminator: "\n\n", to: &stream)
         
-        print("import Foundation", terminator: "\n\n", to: &stream)
+        for dependency in dependencies {
+            print("import \(dependency)", to: &stream)
+        }
+        
+        print("", to: &stream)
         
         if !excludesTypeDeclaration {
             print(codes.typeDeclaration, terminator: "\n\n", to: &stream)

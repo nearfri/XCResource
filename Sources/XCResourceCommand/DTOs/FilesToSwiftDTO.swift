@@ -8,6 +8,7 @@ struct FilesToSwiftDTO: CommandDTO {
     var resourcesPath: String
     var filePattern: String
     var swiftFilePath: String
+    var dependencies: [String]?
     var resourceTypeName: String
     var preservesRelativePath: Bool?
     var relativePathPrefix: String?
@@ -32,6 +33,7 @@ struct FilesToSwiftDTO: CommandDTO {
         command.resourcesPath = resourcesPath
         command.filePattern = filePattern
         command.swiftFilePath = swiftFilePath
+        command.dependencies = dependencies ?? Default.dependencies
         command.resourceTypeName = resourceTypeName
         command.preservesRelativePath = preservesRelativePath ?? Default.preservesRelativePath
         command.relativePathPrefix = relativePathPrefix
