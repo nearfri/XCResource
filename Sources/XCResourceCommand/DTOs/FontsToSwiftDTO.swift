@@ -7,6 +7,7 @@ struct FontsToSwiftDTO: CommandDTO {
     
     var resourcesPath: String
     var swiftFilePath: String
+    var dependencies: [String]?
     var resourceTypeName: String
     var resourceListName: String?
     var transformsToLatin: Bool?
@@ -33,6 +34,7 @@ struct FontsToSwiftDTO: CommandDTO {
         var command = FontsToSwift()
         command.resourcesPath = resourcesPath
         command.swiftFilePath = swiftFilePath
+        command.dependencies = dependencies ?? Default.dependencies
         command.resourceTypeName = resourceTypeName
         command.resourceListName = resourceListName
         command.transformsToLatin = transformsToLatin ?? Default.transformsToLatin

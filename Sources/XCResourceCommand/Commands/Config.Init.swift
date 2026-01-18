@@ -49,7 +49,11 @@ private let configurationTemplate = """
                 "<#If not specified, all asset types are exported.#>"
             ],
             "swiftFilePath": "<#swift file path#>",
+            "dependencies": [
+                "<#Module dependencies#>"
+            ],
             "resourceTypeName": "<#resource type name#>",
+            "bundle": "<#Bundle.main#>",
             "accessLevel": null,
             "excludesTypeDeclaration": false
         },
@@ -58,7 +62,12 @@ private let configurationTemplate = """
             "resourcesPath": "<#resourcesPath#>",
             "filePattern": "<#(?i)\\.(jpeg|jpg)$#>",
             "swiftFilePath": "<#swift file path#>",
+            "dependencies": [
+                "<#Module dependencies#>"
+            ],
             "resourceTypeName": "<#resource type name#>",
+            "preservesRelativePath": true,
+            "relativePathPrefix": null,
             "bundle": "<#Bundle.main#>",
             "accessLevel": null,
             "excludesTypeDeclaration": false
@@ -67,6 +76,9 @@ private let configurationTemplate = """
             "commandName": "fonts2swift",
             "resourcesPath": "<#resourcesPath#>",
             "swiftFilePath": "<#swift file path#>",
+            "dependencies": [
+                "<#Module dependencies#>"
+            ],
             "resourceTypeName": "<#resource type name#>",
             "resourceListName": null,
             "transformsToLatin": false,

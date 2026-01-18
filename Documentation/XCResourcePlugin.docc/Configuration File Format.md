@@ -75,6 +75,7 @@ Option | Description
 -------|------------
 `resourcesPath` | The path to the folder containing font resources.
 `swiftFilePath` | The path where the generated Swift file will be saved.
+`dependencies` | An array of module names to import in the generated Swift file. Default: `Foundation`.
 `resourceTypeName` | The name of the generated font resource type.
 `resourceListName` | The name of the list containing all font resources.
 `transformsToLatin` | Whether to transform font identifiers to Latin characters. Default: `false`.
@@ -93,6 +94,7 @@ Option | Description
 `resourcesPath` | The path to the folder containing resource files.
 `filePattern` | A regex pattern to match files.
 `swiftFilePath` | The path where the generated Swift file will be saved.
+`dependencies` | An array of module names to import in the generated Swift file. Default: `Foundation`.
 `resourceTypeName` | The name of the generated resource type.
 `preservesRelativePath` | Whether to preserve relative paths. Set to `false` if using the [*process rule*](https://developer.apple.com/documentation/xcode/bundling-resources-with-a-swift-package#Explicitly-declare-or-exclude-resources). Default: `true`.
 `relativePathPrefix` | A prefix to prepend to relative paths. Default: `null`.
@@ -108,6 +110,8 @@ Option | Description
 `xcassetsPaths` | An array of paths to `.xcassets` directories.
 `assetTypes` | An array of asset types to include, e.g., `imageset`, `colorset`, `symbolset`, `dataset`. If empty, all types are included by default.
 `swiftFilePath` | The path where the generated Swift file will be saved.
+`dependencies` | An array of module names to import in the generated Swift file. Default: `Foundation`.
 `resourceTypeName` | The name of the generated resource type.
+`bundle` | Specifies the bundle containing the font resources. Default: `Bundle.main`.
 `accessLevel` | The access level for the generated code. Default: `null`.
 `excludesTypeDeclaration` | Whether to exclude the type declaration in the generated code. Default: `false`.

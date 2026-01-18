@@ -21,6 +21,7 @@ struct FilesToSwift: ParsableCommand {
     // MARK: - Default values
     
     enum Default {
+        static let dependencies: [String] = ["Foundation"]
         static let preservesRelativePath: Bool = true
         static let bundle: String = "Bundle.main"
         static let excludesTypeDeclaration: Bool = false
@@ -33,6 +34,9 @@ struct FilesToSwift: ParsableCommand {
     @Option var filePattern: String
     
     @Option var swiftFilePath: String
+    
+    @Option(parsing: .upToNextOption)
+    var dependencies: [String] = Default.dependencies
     
     @Option var resourceTypeName: String
     
@@ -76,7 +80,11 @@ struct FilesToSwift: ParsableCommand {
         
         print(headerComment, terminator: "\n\n", to: &stream)
         
-        print("import Foundation", terminator: "\n\n", to: &stream)
+        for dependency in dependencies {
+            print("import \(dependency)", to: &stream)
+        }
+        
+        print("", to: &stream)
         
         if !excludesTypeDeclaration {
             print(codes.typeDeclaration, terminator: "\n\n", to: &stream)

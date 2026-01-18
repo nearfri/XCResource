@@ -8,6 +8,7 @@ struct XCAssetsToSwiftDTO: CommandDTO {
     var xcassetsPaths: [String]
     var assetTypes: [String]?
     var swiftFilePath: String
+    var dependencies: [String]?
     var resourceTypeName: String
     var bundle: String?
     var accessLevel: String?
@@ -39,6 +40,7 @@ struct XCAssetsToSwiftDTO: CommandDTO {
         command.assetCatalogPaths = xcassetsPaths
         command.assetTypes = assetTypes ?? Default.assetTypes
         command.swiftFilePath = swiftFilePath
+        command.dependencies = dependencies ?? Default.dependencies
         command.resourceTypeName = resourceTypeName
         command.bundle = bundle ?? Default.bundle
         command.accessLevel = accessLevel
