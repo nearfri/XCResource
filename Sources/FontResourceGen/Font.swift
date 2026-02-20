@@ -1,10 +1,12 @@
 import Foundation
+import CoreText
 import XCResourceUtil
 
 struct Font: Equatable, Sendable, SettableByKeyPath {
     var fontName: String
     var familyName: String
     var style: String
+    var symbolicTraits: CTFontSymbolicTraits
     var relativePath: String
     
     func id(transformingToLatin: Bool, strippingCombiningMarks: Bool) -> String {

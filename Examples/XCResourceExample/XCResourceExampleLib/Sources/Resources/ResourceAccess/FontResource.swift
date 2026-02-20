@@ -2,11 +2,13 @@
 // Do Not Edit Directly!
 
 import Foundation
+import CoreText
 
-public struct FontResource: Hashable, Sendable {
+public struct FontResource: Equatable, Sendable {
     public let fontName: String
     public let familyName: String
     public let style: String
+    public let symbolicTraits: CTFontSymbolicTraits
     public let relativePath: String
     public let bundle: Bundle
     
@@ -14,12 +16,14 @@ public struct FontResource: Hashable, Sendable {
         fontName: String,
         familyName: String,
         style: String,
+        symbolicTraits: CTFontSymbolicTraits,
         relativePath: String,
         bundle: Bundle
     ) {
         self.fontName = fontName
         self.familyName = familyName
         self.style = style
+        self.symbolicTraits = symbolicTraits
         self.relativePath = relativePath
         self.bundle = bundle
     }
@@ -64,6 +68,7 @@ public extension FontResource {
         fontName: "Cambria",
         familyName: "Cambria",
         style: "Regular",
+        symbolicTraits: [],
         relativePath: "Fonts/Cambria.ttc",
         bundle: Bundle.module)
     
@@ -73,6 +78,7 @@ public extension FontResource {
         fontName: "CambriaMath",
         familyName: "Cambria Math",
         style: "Regular",
+        symbolicTraits: [],
         relativePath: "Fonts/Cambria.ttc",
         bundle: Bundle.module)
     
@@ -82,6 +88,7 @@ public extension FontResource {
         fontName: "OpenSans-Bold",
         familyName: "Open Sans",
         style: "Bold",
+        symbolicTraits: [.traitBold],
         relativePath: "Fonts/OpenSans/OpenSans-Bold.ttf",
         bundle: Bundle.module)
     
@@ -89,6 +96,7 @@ public extension FontResource {
         fontName: "OpenSans-BoldItalic",
         familyName: "Open Sans",
         style: "Bold Italic",
+        symbolicTraits: [.traitItalic, .traitBold],
         relativePath: "Fonts/OpenSans/OpenSans-BoldItalic.ttf",
         bundle: Bundle.module)
     
@@ -96,6 +104,7 @@ public extension FontResource {
         fontName: "OpenSans-ExtraBold",
         familyName: "Open Sans",
         style: "ExtraBold",
+        symbolicTraits: [.traitBold],
         relativePath: "Fonts/OpenSans/OpenSans-ExtraBold.ttf",
         bundle: Bundle.module)
     
@@ -103,6 +112,7 @@ public extension FontResource {
         fontName: "OpenSans-ExtraBoldItalic",
         familyName: "Open Sans",
         style: "ExtraBold Italic",
+        symbolicTraits: [.traitItalic, .traitBold],
         relativePath: "Fonts/OpenSans/OpenSans-ExtraBoldItalic.ttf",
         bundle: Bundle.module)
     
@@ -110,6 +120,7 @@ public extension FontResource {
         fontName: "OpenSans-Italic",
         familyName: "Open Sans",
         style: "Italic",
+        symbolicTraits: [.traitItalic],
         relativePath: "Fonts/OpenSans/OpenSans-Italic.ttf",
         bundle: Bundle.module)
     
@@ -117,6 +128,7 @@ public extension FontResource {
         fontName: "OpenSans-Light",
         familyName: "Open Sans",
         style: "Light",
+        symbolicTraits: [],
         relativePath: "Fonts/OpenSans/OpenSans-Light.ttf",
         bundle: Bundle.module)
     
@@ -124,6 +136,7 @@ public extension FontResource {
         fontName: "OpenSans-LightItalic",
         familyName: "Open Sans",
         style: "Light Italic",
+        symbolicTraits: [.traitItalic],
         relativePath: "Fonts/OpenSans/OpenSans-LightItalic.ttf",
         bundle: Bundle.module)
     
@@ -131,6 +144,7 @@ public extension FontResource {
         fontName: "OpenSans-Medium",
         familyName: "Open Sans",
         style: "Medium",
+        symbolicTraits: [],
         relativePath: "Fonts/OpenSans/OpenSans-Medium.ttf",
         bundle: Bundle.module)
     
@@ -138,6 +152,7 @@ public extension FontResource {
         fontName: "OpenSans-MediumItalic",
         familyName: "Open Sans",
         style: "Medium Italic",
+        symbolicTraits: [.traitItalic],
         relativePath: "Fonts/OpenSans/OpenSans-MediumItalic.ttf",
         bundle: Bundle.module)
     
@@ -145,6 +160,7 @@ public extension FontResource {
         fontName: "OpenSans-Regular",
         familyName: "Open Sans",
         style: "Regular",
+        symbolicTraits: [],
         relativePath: "Fonts/OpenSans/OpenSans-Regular.ttf",
         bundle: Bundle.module)
     
@@ -152,6 +168,7 @@ public extension FontResource {
         fontName: "OpenSans-SemiBold",
         familyName: "Open Sans",
         style: "SemiBold",
+        symbolicTraits: [.traitBold],
         relativePath: "Fonts/OpenSans/OpenSans-SemiBold.ttf",
         bundle: Bundle.module)
     
@@ -159,6 +176,7 @@ public extension FontResource {
         fontName: "OpenSans-SemiBoldItalic",
         familyName: "Open Sans",
         style: "SemiBold Italic",
+        symbolicTraits: [.traitItalic, .traitBold],
         relativePath: "Fonts/OpenSans/OpenSans-SemiBoldItalic.ttf",
         bundle: Bundle.module)
 }

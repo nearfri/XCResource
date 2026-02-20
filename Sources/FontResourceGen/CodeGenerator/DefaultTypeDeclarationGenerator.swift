@@ -5,10 +5,11 @@ class DefaultTypeDeclarationGenerator: TypeDeclarationGenerator {
         let accessLevel = accessLevel.map({ $0 + " " }) ?? ""
         
         return """
-            \(accessLevel)struct \(resourceTypeName): Hashable, Sendable {
+            \(accessLevel)struct \(resourceTypeName): Equatable, Sendable {
                 \(accessLevel)let fontName: String
                 \(accessLevel)let familyName: String
                 \(accessLevel)let style: String
+                \(accessLevel)let symbolicTraits: CTFontSymbolicTraits
                 \(accessLevel)let relativePath: String
                 \(accessLevel)let bundle: Bundle
                 
@@ -16,12 +17,14 @@ class DefaultTypeDeclarationGenerator: TypeDeclarationGenerator {
                     fontName: String,
                     familyName: String,
                     style: String,
+                    symbolicTraits: CTFontSymbolicTraits,
                     relativePath: String,
                     bundle: Bundle
                 ) {
                     self.fontName = fontName
                     self.familyName = familyName
                     self.style = style
+                    self.symbolicTraits = symbolicTraits
                     self.relativePath = relativePath
                     self.bundle = bundle
                 }

@@ -1,4 +1,5 @@
 import Foundation
+import CoreText
 
 class DefaultValueDeclarationGenerator: ValueDeclarationGenerator {
     func generateValueListDeclaration(for request: ValueDeclarationRequest) -> String? {
@@ -71,6 +72,7 @@ class DefaultValueDeclarationGenerator: ValueDeclarationGenerator {
                         fontName: "\(font.fontName)",
                         familyName: "\(font.familyName)",
                         style: "\(font.style)",
+                        symbolicTraits: \(font.symbolicTraits.description),
                         relativePath: "\(relativePath(of: font, for: request))",
                         bundle: \(request.bundle))
                 
@@ -94,5 +96,28 @@ class DefaultValueDeclarationGenerator: ValueDeclarationGenerator {
         }
         
         return result
+    }
+}
+
+extension CTFontSymbolicTraits {
+    fileprivate var description: String {
+        let allTraits: [(trait: CTFontSymbolicTraits, string: String)] = [
+            (.traitItalic, ".traitItalic"),
+            (.traitBold, ".traitBold"),
+            (.traitExpanded, ".traitExpanded"),
+            (.traitCondensed, ".traitCondensed"),
+            (.traitMonoSpace, ".traitMonoSpace"),
+            (.traitVertical, ".traitVertical"),
+            (.traitUIOptimized, ".traitUIOptimized"),
+            (.traitColorGlyphs, ".traitColorGlyphs"),
+            (.traitComposite, ".traitComposite"),
+        ]
+        
+        let joinedTraits = allTraits
+            .filter({ contains($0.trait) })
+            .map(\.string)
+            .joined(separator: ", ")
+        
+        return "[\(joinedTraits)]"
     }
 }

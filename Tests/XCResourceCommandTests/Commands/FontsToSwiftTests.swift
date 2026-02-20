@@ -10,11 +10,13 @@ private enum Fixture {
     // Do Not Edit Directly!
     
     import Foundation
+    import CoreText
     
-    public struct FontResource: Hashable, Sendable {
+    public struct FontResource: Equatable, Sendable {
         public let fontName: String
         public let familyName: String
         public let style: String
+        public let symbolicTraits: CTFontSymbolicTraits
         public let relativePath: String
         public let bundle: Bundle
         
@@ -22,12 +24,14 @@ private enum Fixture {
             fontName: String,
             familyName: String,
             style: String,
+            symbolicTraits: CTFontSymbolicTraits,
             relativePath: String,
             bundle: Bundle
         ) {
             self.fontName = fontName
             self.familyName = familyName
             self.style = style
+            self.symbolicTraits = symbolicTraits
             self.relativePath = relativePath
             self.bundle = bundle
         }
@@ -74,6 +78,7 @@ private enum Fixture {
             fontName: "Avenir-Book",
             familyName: "Avenir",
             style: "Book",
+            symbolicTraits: [],
             relativePath: "Fonts/Avenir.ttc",
             bundle: Bundle.main)
         
@@ -81,6 +86,7 @@ private enum Fixture {
             fontName: "Avenir-BookOblique",
             familyName: "Avenir",
             style: "Book Oblique",
+            symbolicTraits: [.traitItalic],
             relativePath: "Fonts/Avenir.ttc",
             bundle: Bundle.main)
     """

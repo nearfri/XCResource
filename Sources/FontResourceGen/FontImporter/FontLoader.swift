@@ -16,10 +16,12 @@ class FontLoader {
             let postScriptName = CTFontCopyPostScriptName(font) as String
             let familyName = CTFontCopyFamilyName(font) as String
             let style = (CTFontCopyAttribute(font, kCTFontStyleNameAttribute) as? String) ?? ""
+            let symbolicTraits = CTFontGetSymbolicTraits(font)
             
             return Font(fontName: postScriptName,
                         familyName: familyName,
                         style: style,
+                        symbolicTraits: symbolicTraits,
                         relativePath: path)
         }
     }
