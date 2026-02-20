@@ -210,6 +210,67 @@ LottieView(.hello)
 | `files2swift`        | Scans directory for matching files and generates code.       |
 | `xcassets2swift`     | Scans `.xcassets` directory and generates code.              |
 
+## Example
+This repository includes an [example](https://github.com/nearfri/XCResource/tree/main/Examples) of using the plugin.
+
+## Architecture
+```mermaid
+graph TD
+    subgraph Plugin
+        P["Generate Resource Code<br/><i>plugin</i>"]
+    end
+
+    subgraph Executable
+        CLI["xcresource<br/><i>executableTarget</i>"]
+    end
+
+    subgraph Command
+        CMD["XCResourceCommand<br/><i>target</i>"]
+    end
+
+    subgraph "Core Modules"
+        LOC["LocStringResourceGen"]
+        FONT["FontResourceGen"]
+        FILE["FileResourceGen"]
+        ASSET["AssetResourceGen"]
+        UTIL["XCResourceUtil"]
+    end
+
+    subgraph "External Dependencies"
+        AP["ArgumentParser<br/><i>swift-argument-parser</i>"]
+        SS["SwiftSyntax<br/>SwiftParser<br/>SwiftSyntaxBuilder<br/>SwiftRefactor<br/><i>swift-syntax</i>"]
+        ST["StrixParsers<br/><i>Strix</i>"]
+    end
+
+    P --> CLI
+    CLI --> CMD
+    CMD --> AP
+    CMD --> LOC
+    CMD --> FONT
+    CMD --> FILE
+    CMD --> ASSET
+    CMD --> UTIL
+
+    LOC --> SS
+    LOC --> ST
+    LOC --> UTIL
+    FONT --> UTIL
+    FILE --> UTIL
+    ASSET --> UTIL
+
+    style P fill:#e8f5e9,stroke:#4caf50
+    style CLI fill:#fff3e0,stroke:#ff9800
+    style CMD fill:#e3f2fd,stroke:#2196f3
+    style LOC fill:#fce4ec,stroke:#e91e63
+    style FONT fill:#f3e5f5,stroke:#9c27b0
+    style FILE fill:#f3e5f5,stroke:#9c27b0
+    style ASSET fill:#f3e5f5,stroke:#9c27b0
+    style UTIL fill:#fffde7,stroke:#fbc02d
+    style AP fill:#eceff1,stroke:#607d8b
+    style SS fill:#eceff1,stroke:#607d8b
+    style ST fill:#eceff1,stroke:#607d8b
+```
+
 ## Documentation
 For more information about the plugin, check the documentation on Swift Package Index.
   - [XCResource Documentation](https://swiftpackageindex.com/nearfri/xcresource/documentation/documentation)
@@ -219,9 +280,6 @@ For more information about the plugin, check the documentation on Swift Package 
     - [Generating FontResource](https://swiftpackageindex.com/nearfri/xcresource/documentation/documentation/generating-fontresource)
   - Advanced
     - [Configuration File Format](https://swiftpackageindex.com/nearfri/xcresource/documentation/documentation/configuration-file-format)
-
-### Example
-This repository includes an [example](https://github.com/nearfri/XCResource/tree/main/Examples) of using the plugin.
 
 ## License
 XCResource is distributed under the MIT license. For more details, see the LICENSE file.
