@@ -4,17 +4,20 @@ import TestUtil
 
 private enum Fixture {
     static let fonts: [Font] = [
+        Font(fontName: "Avenir-BlackOblique",
+             familyName: "Avenir",
+             style: "Black Oblique",
+             symbolicTraits: [.traitItalic, .traitBold],
+             relativePath: "Fonts/Avenir.ttc"),
         Font(fontName: "Avenir-Heavy",
              familyName: "Avenir",
-             style: "heavy",
-             relativePath: "Fonts/Avenir.ttc"),
-        Font(fontName: "Avenir-Light",
-             familyName: "Avenir",
-             style: "light",
+             style: "Heavy",
+             symbolicTraits: [.traitBold],
              relativePath: "Fonts/Avenir.ttc"),
         Font(fontName: "ZapfDingbatsITC",
              familyName: "Zapf Dingbats",
              style: "regular",
+             symbolicTraits: [],
              relativePath: "Fonts/Zapf.ttf"),
     ]
     
@@ -22,6 +25,7 @@ private enum Fixture {
         Font(fontName: "대한-Light",
              familyName: "대한",
              style: "light",
+             symbolicTraits: [],
              relativePath: "Fonts/대한.ttf"),
     ]
 }
@@ -51,8 +55,8 @@ private enum Fixture {
             public extension FontResource {
                 static let all: [FontResource] = [
                     // Avenir
+                    .avenirBlackOblique,
                     .avenirHeavy,
-                    .avenirLight,
                     
                     // Zapf Dingbats
                     .zapfDingbatsRegular,
@@ -142,6 +146,7 @@ private enum Fixture {
                     fontName: "대한-Light",
                     familyName: "대한",
                     style: "light",
+                    symbolicTraits: [],
                     relativePath: "대한.ttf",
                     bundle: Bundle.main)
             }
@@ -173,6 +178,7 @@ private enum Fixture {
                     fontName: "대한-Light",
                     familyName: "대한",
                     style: "light",
+                    symbolicTraits: [],
                     relativePath: "대한.ttf",
                     bundle: Bundle.main)
             }
@@ -200,17 +206,19 @@ private enum Fixture {
             public extension FontResource {
                 // MARK: Avenir
                 
-                static let avenirHeavy: FontResource = .init(
-                    fontName: "Avenir-Heavy",
+                static let avenirBlackOblique: FontResource = .init(
+                    fontName: "Avenir-BlackOblique",
                     familyName: "Avenir",
-                    style: "heavy",
+                    style: "Black Oblique",
+                    symbolicTraits: [.traitItalic, .traitBold],
                     relativePath: "Fonts/Avenir.ttc",
                     bundle: Bundle.main)
                 
-                static let avenirLight: FontResource = .init(
-                    fontName: "Avenir-Light",
+                static let avenirHeavy: FontResource = .init(
+                    fontName: "Avenir-Heavy",
                     familyName: "Avenir",
-                    style: "light",
+                    style: "Heavy",
+                    symbolicTraits: [.traitBold],
                     relativePath: "Fonts/Avenir.ttc",
                     bundle: Bundle.main)
                 
@@ -220,6 +228,7 @@ private enum Fixture {
                     fontName: "ZapfDingbatsITC",
                     familyName: "Zapf Dingbats",
                     style: "regular",
+                    symbolicTraits: [],
                     relativePath: "Fonts/Zapf.ttf",
                     bundle: Bundle.main)
             }
@@ -247,17 +256,19 @@ private enum Fixture {
             public extension FontResource {
                 // MARK: Avenir
                 
-                static let avenirHeavy: FontResource = .init(
-                    fontName: "Avenir-Heavy",
+                static let avenirBlackOblique: FontResource = .init(
+                    fontName: "Avenir-BlackOblique",
                     familyName: "Avenir",
-                    style: "heavy",
+                    style: "Black Oblique",
+                    symbolicTraits: [.traitItalic, .traitBold],
                     relativePath: "Avenir.ttc",
                     bundle: Bundle.main)
                 
-                static let avenirLight: FontResource = .init(
-                    fontName: "Avenir-Light",
+                static let avenirHeavy: FontResource = .init(
+                    fontName: "Avenir-Heavy",
                     familyName: "Avenir",
-                    style: "light",
+                    style: "Heavy",
+                    symbolicTraits: [.traitBold],
                     relativePath: "Avenir.ttc",
                     bundle: Bundle.main)
                 
@@ -267,6 +278,7 @@ private enum Fixture {
                     fontName: "ZapfDingbatsITC",
                     familyName: "Zapf Dingbats",
                     style: "regular",
+                    symbolicTraits: [],
                     relativePath: "Zapf.ttf",
                     bundle: Bundle.main)
             }
@@ -294,17 +306,19 @@ private enum Fixture {
             public extension FontResource {
                 // MARK: Avenir
                 
-                static let avenirHeavy: FontResource = .init(
-                    fontName: "Avenir-Heavy",
+                static let avenirBlackOblique: FontResource = .init(
+                    fontName: "Avenir-BlackOblique",
                     familyName: "Avenir",
-                    style: "heavy",
+                    style: "Black Oblique",
+                    symbolicTraits: [.traitItalic, .traitBold],
                     relativePath: "Resources/Fonts/Avenir.ttc",
                     bundle: Bundle.main)
                 
-                static let avenirLight: FontResource = .init(
-                    fontName: "Avenir-Light",
+                static let avenirHeavy: FontResource = .init(
+                    fontName: "Avenir-Heavy",
                     familyName: "Avenir",
-                    style: "light",
+                    style: "Heavy",
+                    symbolicTraits: [.traitBold],
                     relativePath: "Resources/Fonts/Avenir.ttc",
                     bundle: Bundle.main)
                 
@@ -314,6 +328,7 @@ private enum Fixture {
                     fontName: "ZapfDingbatsITC",
                     familyName: "Zapf Dingbats",
                     style: "regular",
+                    symbolicTraits: [],
                     relativePath: "Resources/Fonts/Zapf.ttf",
                     bundle: Bundle.main)
             }

@@ -19,6 +19,7 @@ private extension Font {
         self.init(fontName: fontName,
                   familyName: fontName,
                   style: style,
+                  symbolicTraits: [],
                   relativePath: relativePath)
     }
 }

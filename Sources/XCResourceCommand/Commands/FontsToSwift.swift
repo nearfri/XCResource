@@ -21,7 +21,7 @@ struct FontsToSwift: ParsableCommand {
     // MARK: - Default values
     
     enum Default {
-        static let dependencies: [String] = ["Foundation"]
+        static let dependencies: [String] = ["Foundation", "CoreText"]
         static let bundle: String = "Bundle.main"
         static let transformsToLatin: Bool = false
         static let stripsCombiningMarks: Bool = false

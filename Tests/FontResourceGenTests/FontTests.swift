@@ -4,7 +4,13 @@ import Testing
 @Suite struct FontTests {
     @Test func id_camelCased() throws {
         // Given
-        let font = Font(fontName: "", familyName: "Arial", style: "", relativePath: "")
+        let font = Font(
+            fontName: "",
+            familyName: "Arial",
+            style: "",
+            symbolicTraits: [],
+            relativePath: ""
+        )
         
         // When
         let id = font.id(transformingToLatin: false, strippingCombiningMarks: false)
@@ -15,7 +21,13 @@ import Testing
     
     @Test func id_appendStyle() throws {
         // Given
-        let font = Font(fontName: "", familyName: "Arial", style: "Regular", relativePath: "")
+        let font = Font(
+            fontName: "",
+            familyName: "Arial",
+            style: "Regular",
+            symbolicTraits: [],
+            relativePath: ""
+        )
         
         // When
         let id = font.id(transformingToLatin: false, strippingCombiningMarks: false)
@@ -27,7 +39,13 @@ import Testing
     
     @Test func id_hangulToLatin() throws {
         // Given
-        let font = Font(fontName: "", familyName: "Arial산토끼", style: "", relativePath: "")
+        let font = Font(
+            fontName: "",
+            familyName: "Arial산토끼",
+            style: "",
+            symbolicTraits: [],
+            relativePath: ""
+        )
         
         // When
         let id = font.id(transformingToLatin: true, strippingCombiningMarks: false)
@@ -38,7 +56,13 @@ import Testing
     
     @Test func id_chineseToLatin() throws {
         // Given
-        let font = Font(fontName: "", familyName: "Arial小野兔", style: "", relativePath: "")
+        let font = Font(
+            fontName: "",
+            familyName: "Arial小野兔",
+            style: "",
+            symbolicTraits: [],
+            relativePath: ""
+        )
         
         // When
         let id = font.id(transformingToLatin: true, strippingCombiningMarks: false)
@@ -49,7 +73,13 @@ import Testing
     
     @Test func id_strippingCombiningMarks() throws {
         // Given
-        let font = Font(fontName: "", familyName: "café façade", style: "", relativePath: "")
+        let font = Font(
+            fontName: "",
+            familyName: "café façade",
+            style: "",
+            symbolicTraits: [],
+            relativePath: ""
+        )
         
         // When
         let id = font.id(transformingToLatin: false, strippingCombiningMarks: true)
@@ -60,7 +90,13 @@ import Testing
     
     @Test func id_chineseToLatinAndStrippingCombiningMarks() throws {
         // Given
-        let font = Font(fontName: "", familyName: "Arial小野兔", style: "", relativePath: "")
+        let font = Font(
+            fontName: "",
+            familyName: "Arial小野兔",
+            style: "",
+            symbolicTraits: [],
+            relativePath: ""
+        )
         
         // When
         let id = font.id(transformingToLatin: true, strippingCombiningMarks: true)
