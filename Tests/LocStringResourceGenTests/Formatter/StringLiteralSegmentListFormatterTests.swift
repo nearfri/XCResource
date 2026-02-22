@@ -138,10 +138,11 @@ import SwiftSyntax
     @Test func refactor_escapingMarkdown() throws {
         // Given
         let string = #"""
-            1234567 \(number, format: .number) 8912345
+            1234567 \(number, format: .number) # 8912345
             ## H2
             **bold** _italic_ ~~strikethrough~~ `code`
             hello * world
+              hell o   world
             > blockquote
             1. ordered list
             - unordered list
@@ -161,10 +162,11 @@ import SwiftSyntax
         // Then
         #expect(formattedSyntax.description == ###"""
             """
-            1234567 \(number, format: .number) 8912345
+            1234567 \(number, format: .number) # 8912345
             \## H2
             \*\*bold\*\* \_italic\_ \~\~strikethrough\~\~ \`code\`
             hello * world
+            &nbsp; hell o &nbsp; world
             \> blockquote
             1\. ordered list
             \- unordered list
