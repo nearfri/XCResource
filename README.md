@@ -258,17 +258,17 @@ graph TD
     FILE --> UTIL
     ASSET --> UTIL
 
-    style P fill:#e8f5e9,stroke:#4caf50
-    style CLI fill:#fff3e0,stroke:#ff9800
-    style CMD fill:#e3f2fd,stroke:#2196f3
-    style LOC fill:#fce4ec,stroke:#e91e63
-    style FONT fill:#f3e5f5,stroke:#9c27b0
-    style FILE fill:#f3e5f5,stroke:#9c27b0
-    style ASSET fill:#f3e5f5,stroke:#9c27b0
-    style UTIL fill:#fffde7,stroke:#fbc02d
-    style AP fill:#eceff1,stroke:#607d8b
-    style SS fill:#eceff1,stroke:#607d8b
-    style ST fill:#eceff1,stroke:#607d8b
+    style P fill:#e8f5e9,stroke:#4caf50,color:#000000
+    style CLI fill:#fff3e0,stroke:#ff9800,color:#000000
+    style CMD fill:#e3f2fd,stroke:#2196f3,color:#000000
+    style LOC fill:#fce4ec,stroke:#e91e63,color:#000000
+    style FONT fill:#f3e5f5,stroke:#9c27b0,color:#000000
+    style FILE fill:#f3e5f5,stroke:#9c27b0,color:#000000
+    style ASSET fill:#f3e5f5,stroke:#9c27b0,color:#000000
+    style UTIL fill:#fffde7,stroke:#fbc02d,color:#000000
+    style AP fill:#eceff1,stroke:#607d8b,color:#000000
+    style SS fill:#eceff1,stroke:#607d8b,color:#000000
+    style ST fill:#eceff1,stroke:#607d8b,color:#000000
 ```
 
 ## Documentation
