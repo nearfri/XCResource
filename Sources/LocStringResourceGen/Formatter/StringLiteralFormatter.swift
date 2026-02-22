@@ -66,7 +66,7 @@ private struct StringLiteralSegmentListFormatter {
         let text = stringSegment.content.text
         
         let words = if escapingMarkdown {
-            text.addingMarkdownEscapes().words
+            text.addingMarkdownEscapes(isAtStartOfLine: currentColumns == 0).words
         } else {
             text.words
         }
@@ -110,8 +110,8 @@ private extension String {
         return matches(of: /\S*\s*/).map({ String($0.output) })
     }
     
-    func addingMarkdownEscapes() -> String {
-        return replacing(/([*<_~])(\1*)/) { match in
+    func addingMarkdownEscapes(isAtStartOfLine: Bool) -> String {
+        var result = replacing(/([*<_~])(\1*)/) { match in
             let prev = match.output.0.base[..<match.range.lowerBound].last ?? " "
             let next = match.output.0.base[match.range.upperBound...].first ?? " "
             if prev.isWhitespace && next.isWhitespace {
@@ -119,14 +119,33 @@ private extension String {
             }
             return "\\\(match.output.1)\(match.output.2.addingBackslashes())"
         }
-        .replacing(/^( *)((#+ )|(>+)|([\-+*|] ))/) { match in
+        .replacing(/[(`]/) { match in
+            "\\\(match.output)"
+        }
+        
+        guard isAtStartOfLine else {
+            return result.replacingMultipleSpacesWithNBSP()
+        }
+        
+        result = result.replacing(/^( *)((#+ )|(>+)|([\-+*|] ))/) { match in
             "\(match.output.1)\\\(match.output.2)"
         }
         .replacing(/^( *)([1-9]+)(\. )/) { match in
             "\(match.output.1)\(match.output.2)\\\(match.output.3)"
         }
-        .replacing(/[(`]/) { match in
-            "\\\(match.output)"
+        .replacing(/^\ /) { _ in
+            "&nbsp;"
+        }
+        .replacingMultipleSpacesWithNBSP()
+        
+        return result
+    }
+    
+    private func replacingMultipleSpacesWithNBSP() -> String {
+        return replacing(/\ {2,}/) { match in
+            var result = String(repeating: " &nbsp;", count: match.0.count / 2)
+            result += match.0.count.isMultiple(of: 2) ? "" : " "
+            return result
         }
     }
 }
