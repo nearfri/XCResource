@@ -12,7 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../"),
-//        .package(url: "https://github.com/nearfri/XCResource-plugin.git", from: "1.1.6"),
+//        .package(url: "https://github.com/nearfri/XCResource-plugin.git", from: "1.1.7"),
     ],
     targets: [
         // MARK: - Core Modules
