@@ -11,6 +11,7 @@ public struct FontResource: Equatable, Sendable {
     public let symbolicTraits: CTFontSymbolicTraits
     public let relativePath: String
     public let bundle: Bundle
+    public let url: URL
     
     public init(
         fontName: String,
@@ -26,10 +27,7 @@ public struct FontResource: Equatable, Sendable {
         self.symbolicTraits = symbolicTraits
         self.relativePath = relativePath
         self.bundle = bundle
-    }
-    
-    public var url: URL {
-        return URL(filePath: relativePath, relativeTo: bundle.resourceURL).standardizedFileURL
+        self.url = URL(filePath: relativePath, relativeTo: bundle.resourceURL).standardizedFileURL
     }
     
     public var path: String {
