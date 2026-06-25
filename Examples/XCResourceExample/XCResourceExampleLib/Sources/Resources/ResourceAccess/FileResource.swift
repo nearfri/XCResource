@@ -6,14 +6,12 @@ import Foundation
 public struct FileResource: Hashable, Sendable {
     public let relativePath: String
     public let bundle: Bundle
+    public let url: URL
     
     public init(relativePath: String, bundle: Bundle) {
         self.relativePath = relativePath
         self.bundle = bundle
-    }
-    
-    public var url: URL {
-        return URL(filePath: relativePath, relativeTo: bundle.resourceURL).standardizedFileURL
+        self.url = URL(filePath: relativePath, relativeTo: bundle.resourceURL).standardizedFileURL
     }
     
     public var path: String {
